@@ -28,16 +28,20 @@ Editor ≠ published: settings/records from MCP editor; visual/text from live si
 
 Shared chrome: SiteShell header (RU/EN, logo, Agent, Menu) + footer — already accepted.
 
-1. **Hero** (~100svh, ZB `749387570` RU): ice `#e6eefc`; seal `slogan-red.png` («QUI QUAERIT, REPERIT!»); oversized **Пивоварня** (H2) / **gletcher** (H1) with bottle **video** between layers; clickable layer → `/beer`.
-2. **Brand statement** — «Мы создаем особенное пиво…».
-3. **Promo trio** — equipment / distribution / nearby map teasers → B2B or `/map`.
-4. **B2B + tours** — «Оставить заявку» (`/russian-craft-beer`), «Забронировать экскурсию» (`/tours`).
-5. **Feature bands** — магазин, экскурсии, география, новости, продукция (CTAs to production or local `/beer`).
+1. **Hero** (~100svh, ZB `749387570` RU): ice `#e6eefc`; seal `slogan-red.png` («QUI QUAERIT, REPERIT!»); oversized **Пивоварня** (H2) / **gletcher** (H1) with bottle **video** between layers; clickable layer → `/beer`; lead under fold.
+2. **MOA non-alco banner** — ZB `1060490961` → `/beer/milk-of-amnesia-non-alco` (`public/home/banner-moa-nonalco.png`). RU Confirmed; EN peer Open (shown on both in v1).
+3. **B2B + sales map** — ZB `749421571` RU / `762053147` EN: two bordered ice cards → `/russian-craft-beer` and `/map` (EN `/en/map`).
+4. **Tours CTA** — ZB `749426691` RU / `762053148` EN: title + 3 points + crocodile (`public/home/crocodile.png`) + «Забронировать экскурсию» → `/tours`.
+5. **Menu flex grid** — ZB `749502712`: 3×2 cards (продукция / новости / партнёрам / география / экскурсии / магазин) with `menu-*.png` thumbs → local `/beer` or production peers.
 6. **Blog teasers** — 4 posts (Tilda Feed); categories БИБЛИОТЕКА / НОВОСТИ / МЕРОПРИЯТИЯ.
-7. **Newsletter** — email + «Подписаться» (submit backend Open).
+7. **Newsletter / subscribe** — ZB `751210003` (EN peer `762056776`): crocodile (`crodile-subscribe.png`) + form + privacy note → `/policy`. Submit backend Open.
 8. Footer (SiteShell).
 
-EN live is leaner: hero BREWERY (H1) / GLETCHER (H2) — **heading tags inverted vs RU**; promo/B2B/map; fewer mid bands; blog + newsletter. Match locale-specific copy; do not force RU block count onto EN.
+EN live is leaner: hero BREWERY (H1) / GLETCHER (H2) — **heading tags inverted vs RU**; B2B/map cards; fewer mid bands; blog + newsletter. Match locale-specific copy; do not force RU block count onto EN. Seasonal fest banners deferred.
+
+### Window upscale (Confirmed Tilda + Next)
+
+Mid-blocks (MOA, B2B/map, features, blog, newsletter) use `HomeWindowStage`: matched artboard screen 320…1400, `scale = windowWidth / screen` — same as header `ab_upscale: window`. Hero stays viewport-fluid (`vw` / `svh`).
 
 ## Media
 
@@ -45,6 +49,9 @@ EN live is leaner: hero BREWERY (H1) / GLETCHER (H2) — **heading tags inverted
 |-------|--------|-------|
 | Bottle video | Owner delivery | Delivery: `public/vid/herobottle/{bottle.webm,bottle.mp4,bottle-alpha.webm}`. Masters/scratch under `.tmp/vid/herobottle/` (opaque black matte). Contour flood-fill: `scripts/herobottle-contour-alpha.py`. Hero cuts matte by **border-connected** contour (keeps dark glass). CDN later via `NEXT_PUBLIC_HERO_BOTTLE_BASE`. |
 | Seal | `static.tildacdn.com/.../slogan-red.png` | `public/home/slogan-red.png` |
+| MOA banner | ZB `1060490961` / owner PNG | `public/home/banner-moa-nonalco.png` |
+| Partnership icon | Tilda PNG (CDN 403 from agent) | `public/home/partnership-icon.png` |
+| Map pin | Tilda `Group_64.svg` (local copy) | `public/home/map-pin.svg` |
 | Bottle height | ≥ 60svh (target ~70–78svh) | `HomeHeroBottle` |
 
 ## RU block map (MCP `get_page_records`, tplid)

@@ -64,28 +64,6 @@ export const HOME_FEATURES: HomeFeature[] = [
   },
 ];
 
-export const HOME_PROMOS: {
-  id: string;
-  bodyKey: string;
-  href: { kind: "external"; key: ExternalNavKey };
-}[] = [
-  {
-    id: "equipment",
-    bodyKey: "promoEquipment",
-    href: { kind: "external", key: "b2b" },
-  },
-  {
-    id: "distribution",
-    bodyKey: "promoDistribution",
-    href: { kind: "external", key: "b2b" },
-  },
-  {
-    id: "nearby",
-    bodyKey: "promoNearby",
-    href: { kind: "external", key: "map" },
-  },
-];
-
 const BLOG_RU: HomeBlogTeaser[] = [
   {
     id: "homebrew-day",

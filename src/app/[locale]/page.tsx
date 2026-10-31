@@ -4,11 +4,14 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { SiteShell } from "@/components/site-shell";
 import { HomeHero } from "@/components/home/home-hero";
+import { HomeMoaBanner } from "@/components/home/home-moa-banner";
 import { HomePromos } from "@/components/home/home-promos";
-import { HomeFeatures } from "@/components/home/home-features";
+import { HomeToursCta } from "@/components/home/home-tours-cta";
+import { HomeMenuGrid } from "@/components/home/home-menu-grid";
 import { HomeBlog } from "@/components/home/home-blog";
 import { HomeNewsletter } from "@/components/home/home-newsletter";
 import { getHomeBlogTeasers } from "@/content/home";
+import { HOME_MENU_CARDS } from "@/content/home-menu";
 import {
   DEFAULT_LOCALE,
   isPublishedLocale,
@@ -56,32 +59,35 @@ export default async function Home({ params }: HomePageProps) {
 
   const promoLabels = {
     promosAria: t("promosAria"),
-    promoEquipment: t("promoEquipment"),
-    promoDistribution: t("promoDistribution"),
-    promoNearby: t("promoNearby"),
+    b2bTitle: t("b2bTitle"),
+    b2bBullet1: t("b2bBullet1"),
+    b2bBullet2: t("b2bBullet2"),
+    b2bBullet3: t("b2bBullet3"),
+    b2bCta: t("b2bCta"),
+    mapTitleLine1: t("mapTitleLine1"),
+    mapTitleLine2: t("mapTitleLine2"),
+    mapBody: t("mapBody"),
+    mapCta: t("mapCta"),
   };
 
-  const featureLabels = {
-    featuresAria: t("featuresAria"),
-    featureMapTitle: t("featureMapTitle"),
-    featureMapBody: t("featureMapBody"),
-    featureMapCta: t("featureMapCta"),
-    featureB2bTitle: t("featureB2bTitle"),
-    featureB2bBody: t("featureB2bBody"),
-    featureB2bCta: t("featureB2bCta"),
-    featureShopTitle: t("featureShopTitle"),
-    featureShopBody: t("featureShopBody"),
-    featureShopCta: t("featureShopCta"),
-    featureToursTitle: t("featureToursTitle"),
-    featureToursBody: t("featureToursBody"),
-    featureToursCta: t("featureToursCta"),
-    featureCatalogTitle: t("featureCatalogTitle"),
-    featureCatalogBody: t("featureCatalogBody"),
-    featureCatalogCta: t("featureCatalogCta"),
-    featureBlogTitle: t("featureBlogTitle"),
-    featureBlogBody: t("featureBlogBody"),
-    featureBlogCta: t("featureBlogCta"),
+  const toursLabels = {
+    toursAria: t("toursAria"),
+    titleStrong: t("toursTitleStrong"),
+    titleRest: t("toursTitleRest"),
+    point1: t("toursPoint1"),
+    point2: t("toursPoint2"),
+    point3: t("toursPoint3"),
+    cta: t("toursCta"),
   };
+
+  const menuLabels: Record<string, string> = {
+    menuAria: t("menuAria"),
+  };
+  for (const card of HOME_MENU_CARDS) {
+    menuLabels[card.titleKey] = t(card.titleKey);
+    menuLabels[card.bodyKey] = t(card.bodyKey);
+    menuLabels[card.ctaKey] = t(card.ctaKey);
+  }
 
   return (
     <SiteShell>
@@ -91,14 +97,19 @@ export default async function Home({ params }: HomePageProps) {
         lead={t("lead")}
         catalogAria={t("heroCatalogAria")}
       />
+      <HomeMoaBanner ariaLabel={t("moaBannerAria")} />
       <HomePromos locale={published} labels={promoLabels} />
-      <HomeFeatures locale={published} labels={featureLabels} />
+      <HomeToursCta locale={published} labels={toursLabels} />
+      <HomeMenuGrid locale={published} labels={menuLabels} />
       <HomeBlog title={t("blogTitle")} items={blog} />
       <HomeNewsletter
+        locale={published}
         title={t("newsletterTitle")}
         lead={t("newsletterLead")}
         placeholder={t("newsletterPlaceholder")}
         submit={t("newsletterSubmit")}
+        privacy={t("newsletterPrivacy")}
+        privacyLinkLabel={t("newsletterPrivacyLink")}
         pendingNote={t("newsletterPending")}
       />
     </SiteShell>

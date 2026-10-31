@@ -73,20 +73,30 @@ function computePlan(): VideoPlan {
     };
   } else {
     const narrow = window.innerWidth < 768;
-    // Runtime contour cut on opaque matte (exact silhouette, no slab fill).
-    // Re-enable `HOME_BOTTLE_VIDEO.webmAlpha` after frames are reprocessed
-    // with scripts/herobottle-contour-alpha.py --close 5.
+    const alphaOk =
+      document.createElement("video").canPlayType('video/webm; codecs="vp9"') !==
+      "";
+    // Prefer contour-cut VP9+alpha; opaque webm/mp4 → runtime contour cut.
+    const sources: VideoSource[] = [];
+    if (alphaOk) {
+      sources.push({
+        src: HOME_BOTTLE_VIDEO.webmAlpha,
+        type: 'video/webm; codecs="vp9"',
+        alpha: true,
+      });
+    }
+    sources.push(
+      { src: HOME_BOTTLE_VIDEO.webm, type: "video/webm" },
+      {
+        src: HOME_BOTTLE_VIDEO.mp4,
+        type: 'video/mp4; codecs="avc1.4d401e"',
+      },
+    );
     next = {
       allowVideo: true,
-      hasAlpha: false,
+      hasAlpha: alphaOk,
       preload: narrow ? "metadata" : "auto",
-      sources: [
-        { src: HOME_BOTTLE_VIDEO.webm, type: "video/webm" },
-        {
-          src: HOME_BOTTLE_VIDEO.mp4,
-          type: 'video/mp4; codecs="avc1.4d401e"',
-        },
-      ],
+      sources,
     };
   }
 
@@ -451,8 +461,8 @@ function BottleVideo({
 }
 
 /**
- * Hero bottle ≥ 60svh. Matte cut by contour (border flood-fill), not by
- * punching holes in dark glass. Masters/scratch: `.tmp/vid/herobottle/`.
+ * Hero bottle — ZB 749387570 html `1710519761468`:
+ * ~37%×66% @1200, wider on small screens. Matte via contour flood-fill.
  * `HOME_BOTTLE_VIDEO` can later point at CDN / Object Storage.
  */
 export function HomeHeroBottle() {
@@ -461,7 +471,7 @@ export function HomeHeroBottle() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute top-[46%] left-1/2 z-[15] h-[max(60svh,min(70svh,40rem))] w-[min(48vw,22rem)] -translate-x-1/2 -translate-y-1/2 sm:w-[min(36vw,24rem)]"
+      className="pointer-events-none absolute top-[46%] left-1/2 z-[15] h-[min(66svh,42rem)] w-[86vw] -translate-x-1/2 -translate-y-1/2 sm:h-[66svh] sm:w-[55vw] md:w-[34vw] lg:w-[37vw] xl:w-[30vw]"
     >
       {plan.allowVideo && plan.sources.length > 0 ? (
         <BottleVideo

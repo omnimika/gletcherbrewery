@@ -230,11 +230,13 @@ export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
             >
               <a
                 href={productionHref("agent", locale)}
-                className="font-display inline-flex items-center justify-center rounded-full font-extrabold tracking-wide text-gletcher-white uppercase"
+                className="font-display inline-flex items-center justify-center rounded-full tracking-normal text-gletcher-white uppercase"
                 style={{
                   height: "var(--ctrl-h)",
                   width: "var(--agent-w)",
                   fontSize: "calc(var(--font) * 1.12)",
+                  /* Prod ZB: weight 100 → Extended */
+                  fontWeight: 100,
                   background:
                     "radial-gradient(circle at center, rgba(253,102,102,0.78) 0%, rgba(229,55,60,1) 64%)",
                 }}
@@ -251,7 +253,7 @@ export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
                 ref={menuButtonRef}
                 type="button"
                 onClick={() => setMenuOpen((v) => !v)}
-                className={`font-display inline-flex items-center justify-center rounded-full border border-gletcher-navy font-extrabold tracking-wide text-gletcher-navy uppercase transition-[background-color,color,border-color] duration-300 ease-out ${
+                className={`font-display inline-flex items-center justify-center rounded-full border border-gletcher-navy tracking-normal text-gletcher-navy uppercase transition-[background-color,color,border-color] duration-300 ease-out ${
                   solidChrome ? "" : "bg-gletcher-ice/85"
                 }`}
                 style={{
@@ -259,6 +261,8 @@ export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
                   width: "var(--menu-w)",
                   fontSize: "calc(var(--font) * 1.12)",
                   gap: `calc(8px * var(--hs))`,
+                  /* Prod ZB: weight 700 → Condensed */
+                  fontWeight: 700,
                 }}
                 aria-expanded={menuOpen}
                 aria-controls="main-nav-dialog"

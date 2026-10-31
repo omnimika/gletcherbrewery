@@ -17,7 +17,7 @@
 
 - MCP: project `1212341`, RU `49072461`, EN `50620901`; hero ZB `749387570`.
 - Baseline: `docs/discovery/HOME_PAGE_BASELINE.md`.
-- UI: `HomeHero` (video + seal + H2/H1), promos, features, blog fixture, newsletter UI-only.
+- UI: `HomeHero` (video + seal + H2/H1), `HomeMoaBanner`, `HomePromos` (ZB 749421571 two cards), features, blog fixture, newsletter UI-only.
 - Не ломать принятые `/beer` и product template; Cynic не трогать.
 
 ## Критерии приёмки home
