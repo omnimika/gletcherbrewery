@@ -16,8 +16,19 @@ type ProductGalleryProps = {
   cards: CatalogCard[];
 };
 
+/** Mirrors breakpoints in product-gallery.module.css */
+function catalogColsForWidth(width: number): number {
+  if (width >= 1400) return 5;
+  if (width >= 960) return 4;
+  if (width >= 640) return 3;
+  if (width >= 480) return 2;
+  return 1;
+}
+
 export function ProductGallery({ cards }: ProductGalleryProps) {
   const [filter, setFilter] = useState<ProductFilterId>("all");
+  const [cols, setCols] = useState(4);
+  const [mounted, setMounted] = useState(false);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const t = useTranslations("beer");
   const tA11y = useTranslations("a11y");
@@ -26,6 +37,17 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
     () => filterCatalogCards(cards, filter),
     [cards, filter],
   );
+
+  /** After mount only — avoids SSR/client mismatch on arrow chrome. */
+  const overflows = mounted && products.length > cols;
+
+  useEffect(() => {
+    setMounted(true);
+    const update = () => setCols(catalogColsForWidth(window.innerWidth));
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   useEffect(() => {
     const track = scrollerRef.current;
@@ -41,30 +63,37 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
   };
 
   return (
-    <section className="relative w-full">
-      <div className="relative z-20 -mb-2 px-4 sm:px-8">
+    <section className="relative flex min-h-0 w-full flex-1 flex-col">
+      <div className="relative z-20 shrink-0 -mb-2 px-4 sm:px-8">
         <ProductFilterChips active={filter} onChange={setFilter} />
       </div>
 
       <div className={`${styles.stage} -mt-2`}>
-        <button
-          type="button"
-          onClick={() => scrollBy(-1)}
-          className={`${styles.arrow} ${styles.arrowPrev}`}
-          aria-label={tA11y("prevBeers")}
-        >
-          ←
-        </button>
-        <button
-          type="button"
-          onClick={() => scrollBy(1)}
-          className={`${styles.arrow} ${styles.arrowNext}`}
-          aria-label={tA11y("nextBeers")}
-        >
-          →
-        </button>
+        {overflows ? (
+          <>
+            <button
+              type="button"
+              onClick={() => scrollBy(-1)}
+              className={`${styles.arrow} ${styles.arrowPrev}`}
+              aria-label={tA11y("prevBeers")}
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollBy(1)}
+              className={`${styles.arrow} ${styles.arrowNext}`}
+              aria-label={tA11y("nextBeers")}
+            >
+              →
+            </button>
+          </>
+        ) : null}
 
-        <div ref={scrollerRef} className={styles.track}>
+        <div
+          ref={scrollerRef}
+          className={`${styles.track} ${overflows ? styles.trackOverflow : ""}`}
+        >
           {products.map((product, index) => (
             <div key={product.id} className={styles.slot}>
               <div className={styles.slotInner}>

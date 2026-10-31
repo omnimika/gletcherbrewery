@@ -54,6 +54,20 @@ const LISTING_BY_ID = new Map(
   CATALOG_PRODUCTS.map((p) => [p.slug, p] as const),
 );
 
+const BADGE_ORDER: ProductBadge[] = ["new", "alcofree", "discontinued"];
+
+function mergeBadges(
+  listing?: ProductBadge[],
+  fromProps?: readonly string[],
+): ProductBadge[] {
+  const set = new Set<ProductBadge>();
+  for (const b of listing ?? []) set.add(b);
+  for (const b of fromProps ?? []) {
+    if (b === "new" || b === "alcofree" || b === "discontinued") set.add(b);
+  }
+  return BADGE_ORDER.filter((b) => set.has(b));
+}
+
 function translationStatus(locale: AppLocale, props: ProductProps): TranslationStatus {
   if (!isPublishedLocale(locale)) return "missing";
   const slug = props.slugs[locale];
@@ -100,9 +114,10 @@ export const CATALOG: CatalogProductRecord[] = PRODUCT_PROPS.map((props) => {
     id: props.id,
     category: listing?.category ?? toCategory(props.category),
     image: listing?.image ?? "",
-    badges: (listing?.badges ??
-      (props.badges.filter((b) => b === "new" || b === "alcofree") as ProductBadge[])),
-    outOfStock: listing?.outOfStock,
+    badges: mergeBadges(listing?.badges, props.badges),
+    outOfStock: Boolean(
+      listing?.outOfStock || props.badges.includes("discontinued"),
+    ),
     specs: props.specs,
     translations,
   };

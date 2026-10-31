@@ -11,7 +11,7 @@
 
 export type ProductCategory = "classic" | "craft" | "limited" | "aged";
 
-export type ProductBadge = "new" | "alcofree";
+export type ProductBadge = "new" | "alcofree" | "discontinued";
 
 export type CatalogProduct = {
   slug: string;
@@ -141,6 +141,8 @@ export const CATALOG_PRODUCTS: CatalogProduct[] = [
     title: "Iron Woods Milk Stout",
     category: "craft",
     image: BOTTLE.ironMilk,
+    badges: ["discontinued"],
+    outOfStock: true,
   },
   {
     slug: "ruby-road",
@@ -178,6 +180,8 @@ export const CATALOG_PRODUCTS: CatalogProduct[] = [
     title: "Brut Grapefruit",
     category: "limited",
     image: BOTTLE.brut,
+    badges: ["discontinued"],
+    outOfStock: true,
   },
   {
     slug: "hop-dragon",
@@ -185,6 +189,8 @@ export const CATALOG_PRODUCTS: CatalogProduct[] = [
     title: "Hop Dragon",
     category: "limited",
     image: BOTTLE.hopDragon,
+    badges: ["discontinued"],
+    outOfStock: true,
   },
   {
     slug: "tour-de-grapefruit",

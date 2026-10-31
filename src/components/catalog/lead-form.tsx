@@ -25,7 +25,7 @@ export function LeadForm() {
 
   return (
     <section className="border-t border-gletcher-navy/10 bg-gletcher-ice">
-      <div className="mx-auto grid max-w-[1100px] gap-10 px-6 py-16 sm:px-10 lg:grid-cols-2 lg:items-end">
+      <div className="mx-auto grid max-w-[1100px] gap-8 px-6 pt-6 pb-10 sm:px-10 sm:pt-8 sm:pb-12 lg:grid-cols-2 lg:items-start">
         <div>
           <p className="text-sm font-semibold tracking-[0.2em] text-gletcher-navy/70 uppercase">
             {t("eyebrow")}

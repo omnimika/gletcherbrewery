@@ -14,7 +14,7 @@
 | `category` | — | Confirmed (owner groups CSV) |
 | `title` | shared brand name | Confirmed |
 | `url` | RU canonical | Confirmed |
-| `badge` | — | Confirmed (`new`, `alcofree`, `discontinued`) |
+| `badge` | — | Confirmed (`new` lime New!/Новинка!; `alcofree` sky 0% Alco / Безалкогольное 0%; `discontinued` red Out of Stock / Нет в наличии) |
 | `abv`, `og`, `ibu` | shared (locale-invariant) | Confirmed from pages |
 | `style`, `malts`, `hops` | shared; stored in **CapitalCase** (Title Case; `IPA`/`APA`/`EBC`/`R.I.S.` kept; camelCase brands e.g. `MelaBeech` preserved) | Confirmed |
 | `bottleVol`, `kegVol` | shared | Confirmed; keg **absent** on Cynic & Hop Dragon pages |

@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { CatalogCard } from "@/content/catalog-filter";
+import type { ProductBadge } from "@/content/products";
 
 type ProductCardProps = {
   product: CatalogCard;
@@ -8,8 +12,15 @@ type ProductCardProps = {
   priority?: boolean;
 };
 
+const BADGE_CLASS: Record<ProductBadge, string> = {
+  new: "bg-gletcher-new text-gletcher-navy",
+  alcofree: "bg-gletcher-sky text-gletcher-navy",
+  discontinued: "bg-gletcher-red text-gletcher-white",
+};
+
 export function ProductCard({ product, priority = false }: ProductCardProps) {
   const badges = product.badges ?? [];
+  const t = useTranslations("badges");
 
   return (
     <Link
@@ -17,10 +28,17 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       className="group relative block h-full w-full"
       aria-label={product.title}
     >
-      {badges.includes("new") ? (
-        <span className="pointer-events-none absolute top-[4%] right-[10%] z-10 rotate-[-12deg] rounded-sm bg-gletcher-new px-2 py-0.5 text-[10px] font-black tracking-wide text-gletcher-navy uppercase shadow-sm">
-          New!
-        </span>
+      {badges.length > 0 ? (
+        <div className="pointer-events-none absolute top-[3%] right-[6%] z-10 flex max-w-[46%] flex-col items-end gap-1">
+          {badges.map((badge) => (
+            <span
+              key={badge}
+              className={`rotate-[-12deg] rounded-sm px-2 py-0.5 text-[10px] font-black tracking-wide uppercase shadow-sm ${BADGE_CLASS[badge]}`}
+            >
+              {t(badge)}
+            </span>
+          ))}
+        </div>
       ) : null}
       <div className="relative h-full w-full">
         <Image
@@ -28,7 +46,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           alt=""
           fill
           sizes="(min-width:1400px) 20vw, (min-width:960px) 25vw, (min-width:640px) 33vw, (min-width:480px) 50vw, 100vw"
-          className="object-contain object-top transition-transform duration-300 group-hover:-translate-y-1"
+          className="object-contain object-bottom transition-transform duration-300 group-hover:-translate-y-1"
           priority={priority}
         />
       </div>

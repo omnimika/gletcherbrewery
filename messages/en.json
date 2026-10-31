@@ -79,5 +79,10 @@
     "foodPairing": "Food pairing",
     "malts": "Malts",
     "hops": "Hops"
+  },
+  "badges": {
+    "new": "New!",
+    "alcofree": "0% Alco",
+    "discontinued": "Out of Stock"
   }
 }
