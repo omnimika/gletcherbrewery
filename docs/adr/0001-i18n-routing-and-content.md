@@ -85,12 +85,18 @@ Compatible with `products` + `product_translations` (one entity, many locales). 
 
 ## Implementation verification (31.10.2026)
 
-Accepted architecture is not a visual/quality sign-off. The current `81713e4`
-slice is assessed in the [follow-up review](../reviews/2026-10-31-follow-up.md)
-and [Cursor task](../CURSOR_NEXT_STEPS.md). Form/detail UI translations, home
-metadata and permanentRedirect are implemented; gallery lint, focus origin,
-contrast, source parity and runtime/SEO validation remain. HTTP 308 aliases
-must not be described as 301 legacy redirects. The old self-inert menu is fixed.
+Accepted architecture is distinct from owner acceptance and verification.
+`/beer` is owner-accepted. The current `9e0ee8e` + product working tree is
+assessed in the [product review](../reviews/2026-10-31-product-template.md)
+and [Cursor task](../CURSOR_NEXT_STEPS.md). Lint/typecheck pass; new product
+components are server-rendered, UI labels and Intl formatting are implemented.
+Product-template visual acceptance, H1 variants and runtime/SEO checks remain.
+HTTP 308 aliases must not be described as 301 legacy redirects.
+
+The current menu keeps shared header chrome interactive and inerts only
+`#site-content`; age gate still inerts `#site-root`. This differs from the
+earlier section 6 description. Resolve the accessible dialog/focus scope in
+T02 before documenting that implementation as a completed a11y decision.
 
 Before enabling another language, also address current implementation limits:
 
@@ -100,7 +106,9 @@ Before enabling another language, also address current implementation limits:
 - `LocaleSwitch` must distinguish a missing published page peer from a missing
   optional override. Its current Partial<string> input falls back to pathname
   for undefined; its null check does not match the declared type. The existing
-  complete RU/EN dataset does not exercise that case.
+  complete RU/EN dataset does not exercise that case. Product v1 now relies on
+  the shared header switcher without per-entity peers; address missing/draft
+  peers there too. Different complete RU/EN slugs currently resolve via redirect.
 - Recheck required message coverage, locale font glyphs, number formatting,
   draft/missing pages, SEO and 404 for the newly enabled locale.
 - Home/listing metadata also hard-code RU/EN peers. Derive them from publication

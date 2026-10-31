@@ -10,6 +10,11 @@ type ProductCardProps = {
   product: CatalogCard;
   /** LCP/first-viewport hint — independent of marketing badges. */
   priority?: boolean;
+  /**
+   * Loop clones stay in the DOM for infinite scroll but must not be
+   * focusable or announced (T03).
+   */
+  inertClone?: boolean;
 };
 
 const BADGE_CLASS: Record<ProductBadge, string> = {
@@ -18,7 +23,11 @@ const BADGE_CLASS: Record<ProductBadge, string> = {
   discontinued: "bg-gletcher-red text-gletcher-white",
 };
 
-export function ProductCard({ product, priority = false }: ProductCardProps) {
+export function ProductCard({
+  product,
+  priority = false,
+  inertClone = false,
+}: ProductCardProps) {
   const badges = product.badges ?? [];
   const t = useTranslations("badges");
 
@@ -26,7 +35,10 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
     <Link
       href={product.href}
       className="group relative block h-full w-full"
-      aria-label={product.title}
+      aria-label={inertClone ? undefined : product.title}
+      aria-hidden={inertClone || undefined}
+      tabIndex={inertClone ? -1 : undefined}
+      data-clone={inertClone ? "1" : undefined}
     >
       {badges.length > 0 ? (
         <div className="pointer-events-none absolute top-[3%] right-[6%] z-10 flex max-w-[46%] flex-col items-end gap-1">

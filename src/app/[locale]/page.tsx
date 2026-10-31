@@ -4,7 +4,12 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { SiteShell } from "@/components/site-shell";
-import { DEFAULT_LOCALE, isPublishedLocale } from "@/i18n/locales";
+import {
+  DEFAULT_LOCALE,
+  isPublishedLocale,
+  type PublishedLocale,
+} from "@/i18n/locales";
+import { productionHref } from "@/lib/site-links";
 import { routing } from "@/i18n/routing";
 
 type HomePageProps = {
@@ -68,12 +73,12 @@ export default async function Home({ params }: HomePageProps) {
           >
             {t("ctaCatalog")}
           </Link>
-          <Link
-            href="/agent"
+          <a
+            href={productionHref("agent", locale as PublishedLocale)}
             className="border border-gletcher-navy px-6 py-3 text-sm font-semibold tracking-wide text-gletcher-navy uppercase transition-colors hover:bg-gletcher-navy hover:text-gletcher-white"
           >
             {t("ctaAgent")}
-          </Link>
+          </a>
         </div>
       </section>
     </SiteShell>

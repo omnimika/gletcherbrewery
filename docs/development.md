@@ -1,7 +1,7 @@
 # Локальная разработка
 
-Статус: Bootstrap завершён; реализованы каркас и начальные RU/EN home/list/detail.
-RU доступен без префикса, EN — под `/en`. Приёмка и открытые дефекты описаны
+Статус: Bootstrap завершён, `/beer` принят; product template v1 ожидает приёмки.
+Home пока стартовый. RU без префикса, EN под `/en`. Текущие проверки и дефекты описаны
 в [текущем задании Cursor](CURSOR_NEXT_STEPS.md) и `ROADMAP.md`.
 Серверные бизнес-интеграции относятся к последующим этапам.
 
@@ -72,7 +72,12 @@ ABC Gravity Trial используются только для локально�
 
 `build` и `dev` создают `.next` и могут обновлять `next-env.d.ts`; эти команды
 не входят в режим строгого read-only ревью. Результаты текущего ревью:
-[81713e4, 2026-10-31](reviews/2026-10-31-follow-up.md).
+[9e0ee8e + product dirty tree, 2026-10-31](reviews/2026-10-31-product-template.md).
+
+`src/components/product` — серверные hero/detail/specs/related;
+`src/content/product-media.ts` — cover/logo по stable ID;
+`src/lib/format-spec.ts` — числовое отображение. Source baseline:
+[PRODUCT_PAGE_BASELINE](discovery/PRODUCT_PAGE_BASELINE.md).
 
 Исходники Tilda доступны Cursor через MCP. Сбор доказательств и сверка
 editor/published: [TILDA_MCP_WORKFLOW](discovery/TILDA_MCP_WORKFLOW.md).

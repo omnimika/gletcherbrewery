@@ -85,6 +85,7 @@ function headerChromeServer(): HeaderChrome {
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const chromeRef = useRef<HTMLElement>(null);
   const locale = useLocale() as PublishedLocale;
   const t = useTranslations("nav");
   const tA11y = useTranslations("a11y");
@@ -103,9 +104,19 @@ export function SiteHeader() {
     return () => window.removeEventListener("keydown", onKey);
   }, [menuOpen]);
 
+  // Expose chrome height to the document so product heroes can fill 100svh
+  // under the fixed header (cancel spacer via negative margin).
+  useEffect(() => {
+    const hh = vars["--hh" as keyof CSSProperties];
+    if (typeof hh === "string") {
+      document.documentElement.style.setProperty("--hh", hh);
+    }
+  }, [vars]);
+
   return (
     <div style={vars}>
       <header
+        ref={chromeRef}
         className={`fixed inset-x-0 top-0 isolate ${
           menuOpen ? "z-[120]" : "z-[100]"
         }`}
@@ -203,6 +214,7 @@ export function SiteHeader() {
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
         triggerRef={menuButtonRef}
+        chromeRef={chromeRef}
         chromeVars={vars}
       />
     </div>

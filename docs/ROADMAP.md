@@ -1,7 +1,7 @@
 # Gletcher Brewery — Roadmap и технический план миграции
 
-> Версия: 0.7 (31 октября 2026 г.)
-> Статус: HEAD `81713e4`; RU/EN срез реализован, TypeScript PASS, lint FAIL в галерее. MCP Tilda подключён в Cursor. Этапы 2–3 ждут source/browser сверки, UX и визуальной приёмки `/beer`; этап 4 начат.
+> Версия: 0.8 (31 октября 2026 г.)
+> Статус: `/beer` принят владельцем. HEAD `9e0ee8e` + рабочее дерево product template v1: TypeScript/ESLint PASS. Этап 4 — завершение и приёмка `/beer/{slug}`; свежий build/browser текущего среза Codex не выполнял.
 > Для репозитория: поместить в `docs/ROADMAP.md`.
 
 ## 1. Концепция
@@ -95,9 +95,9 @@ Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCB
 |---|---|---|
 | 0. Bootstrap | Работающий локально Next.js + TS + Tailwind и чистый Git | **Done** (проверено 31.10.2026) |
 | 1. Site Discovery | Реестр URL, UI-инвентаризация, SEO/контент и кандидат эталона | **Done** — эталон `/beer` утверждён |
-| 2. Design Foundation | Минимальная дизайн-система и общий каркас | **In progress** — chrome + portal overlays; i18n shell |
-| 3. Reference Page | Одна принятая адаптивная эталонная страница | **In progress** — `/beer` RU/EN; визуальная приёмка владельца открыта |
-| 4. Public Migration | Публичные страницы, каталог/блог, SEO, контент | **Started** — `[locale]`, next-intl, catalog by id, `/beer/[slug]` |
+| 2. Design Foundation | Минимальная дизайн-система и общий каркас | **Baseline accepted** вместе с `/beer`; общие accessibility follow-ups отдельно |
+| 3. Reference Page | Одна принятая адаптивная эталонная страница | **Accepted владельцем 31.10.2026** — `/beer`; повторная визуальная приёмка не требуется |
+| 4. Public Migration | Публичные страницы, каталог/блог, SEO, контент | **In progress** — product template v1, ожидает проверок и приёмки |
 | 5. Data & Infrastructure | PostgreSQL, NocoDB, серверные границы, staging | В очереди |
 | 6. Retail Map | CRM торговых точек и Mapbox | В очереди |
 | 7. Agent Gletcher | Миграция Airtable/Collabza и бонусная программа | В очереди |
@@ -148,7 +148,11 @@ Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCB
 
 **Критерий готовности:** владелец принимает визуал и UX, соблюдены SEO-атрибуты, мобильная адаптация, доступность, нет регрессий в build. Создана воспроизводимая схема переноса других страниц.
 
-**Текущий gate:** [ревью 81713e4](reviews/2026-10-31-follow-up.md): F01 lint галереи, F02 origin focus, F03 контраст языка, F04 artboard min-height, F05 display order, F06 переходы. Старые lint меню/self-inert, перевод формы/detail и отсутствие home metadata исправлены по коду. Следующий baseline получать через MCP по [протоколу](discovery/TILDA_MCP_WORKFLOW.md), включая RU/EN header/menu/footer; затем свежие проверки и визуальная приёмка. Категории/ассеты уже имеются, но порядок и геометрию сверить с актуальным источником.
+**Статус gate:** `/beer` принят владельцем по актуальным инструкциям AGENTS §7.
+Старые lint/focus-origin/contrast/min-height/order исправлены по коду, ссылки
+header/menu/footer используют временный production mapping. Новые T02–T04
+[ревью](reviews/2026-10-31-product-template.md) — точечные функциональные
+доработки общего интерфейса, не повторное согласование визуала каталога.
 
 **Перед массовым переносом:** проверить реализацию [Accepted ADR i18n](adr/0001-i18n-routing-and-content.md): RU/EN URL, ID/slug-map, published peers, fallback и SEO. Next-intl уже установлен. Сербская письменность, шрифты и допуск остальных локалей остаются открытыми; изменение статуса ADR не заменяет проверки реализации.
 
@@ -156,7 +160,14 @@ Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCB
 
 **Работы:** переносить страницы **по шаблонам и общим компонентам**, а не случайным порядком URL: каталог и карточки, блог и статьи, разделы о пивоварне/партнёрах, юридические страницы, формы. Составить редакционную модель CMS и принять отдельный ADR для rich-content редактора; NocoDB не считать автоматически полноценной заменой CMS. Для интеграционно сложных страниц (карта, агент, экскурсии) сначала сохранить публичный UI, а реальные данные и операции подключить на профильных этапах.
 
-**Начатый срез:** имеются locale layouts, RU/EN home/list/detail, messages, registry и catalog adapter. Завершить [задачи Cursor](CURSOR_NEXT_STEPS.md) и проверить разные slug Milk of Amnesia/Brainstorm, постоянные aliases, корневой layout/404, HTML lang и SEO. `sr`/`hy`/`ka`/`de` добавляются после перевода и отдельной проверки публикации; публичные URL не создавать одним fallback текста.
+**Текущий срез:** product template v1 по [Friday baseline](discovery/PRODUCT_PAGE_BASELINE.md):
+hero/detail/specs/related, media по stable ID и Cynic fallback, RU/EN/Intl.
+Закрыть T01 H1 всех media-веток и [задачи Cursor](CURSOR_NEXT_STEPS.md),
+проверить Friday/Ausweis/Cynic desktop/mobile и все 36 canonical detail по SEO/
+контенту. После приёмки выбрать один следующий шаблон (кандидат home); главная
+пока стартовая заглушка. Массовый перенос до product gate не начинать.
+`sr`/`hy`/`ka`/`de` требуют перевода/шрифтов и publication checks; fallback
+сам по себе не создаёт публичную версию.
 
 **Критерий готовности:** публичные маршруты сопоставлены с исходными, SEO-метаданные/canonical/sitemap/redirects спланированы, медиа оптимизированы, дизайн последователен; не делаем DNS cutover.
 
@@ -260,7 +271,10 @@ tour_types ──1:N── tour_slots ──1:N── bookings ──1:N── p
 
 ## 8. Что потребуется от владельца проекта — в правильном порядке
 
-**Сейчас (этапы 2–3):** визуальный sign-off `/beer` после исправлений и сверки через подключённый MCP Tilda, desktop/mobile и шрифты. Категории/badges/PNG уже отражены в материалах; фактический ALL order расходится с локальным контрактом и требует сверки. Новых production-ключей для этого не требуется.
+**Сейчас (этап 4):** `/beer` уже принят; следующий sign-off — product template
+после T01 и проверок Friday/Ausweis/Cynic. Приёмка структуры и визуального языка
+не требует pixel-perfect всех координат Zero Block. Исходники доступны через
+MCP Cursor; новых production-ключей для этого не требуется.
 
 **Для завершения RU/EN среза этапа 4:** подтвердить UX и полноту обязательных локализованных полей; i18n ADR уже Accepted. Для будущего сербского выбрать письменность, для остальных локалей — приоритет перевода и шрифты. Юридические тексты и market-specific условия требуют отдельного подтверждения; язык сам не определяет рынок.
 
@@ -268,11 +282,17 @@ tour_types ──1:N── tour_slots ──1:N── bookings ──1:N── p
 
 ## 9. Следующее задание Cursor Agent
 
-1. Прочитать [задание](CURSOR_NEXT_STEPS.md), [актуальное ревью](reviews/2026-10-31-follow-up.md), Accepted ADR и [MCP workflow](discovery/TILDA_MCP_WORKFLOW.md). Сохранить пользовательский diff `messages/ru.json`; повторить Git-проверку.
-2. Исправить lint галереи; снять read-only source baseline RU/EN через MCP, различая editor/published и разрешая противоречия старых описаний.
-3. Исправить origin focus, контраст языка, min-height/upscale, display order, переходы. Переводы/home metadata, scroll reset, client-safe фильтрация и preload уже исправлены по коду — проверить, не повторять без причины.
-4. Проверить HTTP/SEO/404/planned locales, клавиатуру/touch и 390×844, 960×900, 1200×600, 1440×900, 200% zoom. Выполнить lint/typecheck/build и локальный запуск; собрать реальные evidence.
-5. Предъявить срез владельцу, после приёмки выбрать один следующий публичный шаблон этапа 4. Backend остаётся на этапах 5+; commit/push/production — по отдельному разрешению. [Готовый промпт](CURSOR_REVIEW_PROMPT.md).
+1. Прочитать [задание](CURSOR_NEXT_STEPS.md), [ревью product template](reviews/2026-10-31-product-template.md), [baseline](discovery/PRODUCT_PAGE_BASELINE.md), Accepted ADR и [MCP workflow](discovery/TILDA_MCP_WORKFLOW.md). Проверить Git, сохранить dirty/untracked файлы.
+2. Исправить T01 H1 всех media-вариантов, точечные T02–T04 общего интерфейса;
+   T05 preload оценить по Network. Каталог повторно на визуальную приёмку не возвращать.
+3. MCP/source/browser сверка Friday RU/EN, Ausweis с logo overlay, Cynic fallback;
+   масштаб бутылки, hero/header, related policy и полнота legal notices.
+4. Проверить все 36 canonical detail, HTTP aliases/404/planned locales, keyboard/
+   touch, 390×844 и 1440×900, короткий viewport и 200% zoom. Выполнить свежие
+   lint/typecheck/build и локальный запуск; собрать реальные evidence.
+5. Предъявить product template владельцу; затем один следующий публичный шаблон,
+   начиная с source baseline. Backend — этапы 5+; commit/push/production — отдельно.
+   [Готовый промпт](CURSOR_REVIEW_PROMPT.md).
 
 ## 10. Результаты аудита
 

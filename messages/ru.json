@@ -78,8 +78,18 @@
   "product": {
     "style": "Стиль",
     "foodPairing": "С чем пить",
+    "expect": "Чего ожидать",
+    "aboutTaste": "О вкусе",
+    "pairing": "советуем вместе",
+    "strength": "Крепость",
+    "gravity": "Плотность",
+    "bitterness": "Горечь",
     "malts": "Солод",
-    "hops": "Хмель"
+    "hops": "Хмель",
+    "bottle": "Бутылка",
+    "keg": "Кег",
+    "related": "Попробуйте также",
+    "backToCatalog": "К каталогу"
   },
   "badges": {
     "new": "Новинка!",

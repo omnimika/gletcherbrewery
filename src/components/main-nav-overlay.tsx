@@ -29,6 +29,11 @@ type MainNavOverlayProps = {
   onClose: () => void;
   /** Menu toggle in the fixed header — restored on close. */
   triggerRef: RefObject<HTMLElement | null>;
+  /**
+   * Live header chrome (locale + close/X). Included in the modal Tab cycle
+   * so visible controls stay reachable (T02).
+   */
+  chromeRef: RefObject<HTMLElement | null>;
   /** Same window-upscale CSS vars as the header (portal is outside that tree). */
   chromeVars: CSSProperties;
 };
@@ -41,6 +46,7 @@ export function MainNavOverlay({
   open,
   onClose,
   triggerRef,
+  chromeRef,
   chromeVars,
 }: MainNavOverlayProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -48,7 +54,10 @@ export function MainNavOverlay({
   const t = useTranslations("nav");
   const tA11y = useTranslations("a11y");
 
-  useFocusTrap(dialogRef, open, { restoreFocus: false });
+  useFocusTrap(dialogRef, open, {
+    restoreFocus: false,
+    additionalRefs: [chromeRef],
+  });
 
   useEffect(() => {
     if (!open) return;

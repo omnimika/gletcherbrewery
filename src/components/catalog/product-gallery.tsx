@@ -123,6 +123,19 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
 
     goMiddle();
 
+    const syncFocusToMiddle = () => {
+      const active = document.activeElement;
+      if (!(active instanceof HTMLElement) || !track.contains(active)) return;
+      if (active.dataset.clone !== "1") return;
+      const slot = active.closest(`.${styles.slot}`);
+      const index = slot?.getAttribute("data-index");
+      if (index == null) return;
+      const target = track.querySelector<HTMLElement>(
+        `.${styles.slot}[data-copy="${middleCopy}"][data-index="${index}"] a`,
+      );
+      target?.focus({ preventScroll: true });
+    };
+
     const normalize = () => {
       if (jumpingRef.current) return;
       const one = track.scrollWidth / copies;
@@ -138,7 +151,10 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
         left -= one;
         shifted = true;
       }
-      if (!shifted) return;
+      if (!shifted) {
+        syncFocusToMiddle();
+        return;
+      }
       jumpingRef.current = true;
       const prev = track.style.scrollBehavior;
       track.style.scrollBehavior = "auto";
@@ -146,14 +162,17 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
       requestAnimationFrame(() => {
         track.style.scrollBehavior = prev;
         jumpingRef.current = false;
+        syncFocusToMiddle();
       });
     };
 
     track.addEventListener("scroll", normalize, { passive: true });
     track.addEventListener("scrollend", normalize);
+    track.addEventListener("focusin", syncFocusToMiddle);
     return () => {
       track.removeEventListener("scroll", normalize);
       track.removeEventListener("scrollend", normalize);
+      track.removeEventListener("focusin", syncFocusToMiddle);
     };
   }, [canLoop, copies, middleCopy, products, cols, filter]);
 
@@ -196,16 +215,26 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
           ref={scrollerRef}
           className={`${styles.track} ${canLoop ? styles.trackOverflow : ""}`}
         >
-          {looped.map(({ product, key, copy, indexInSet }) => (
-            <div key={key} className={styles.slot}>
-              <div className={styles.slotInner}>
-                <ProductCard
-                  product={product}
-                  priority={copy === middleCopy && indexInSet === 0}
-                />
+          {looped.map(({ product, key, copy, indexInSet }) => {
+            const isMiddle = !canLoop || copy === middleCopy;
+            return (
+              <div
+                key={key}
+                className={styles.slot}
+                data-copy={copy}
+                data-index={indexInSet}
+                aria-hidden={isMiddle ? undefined : true}
+              >
+                <div className={styles.slotInner}>
+                  <ProductCard
+                    product={product}
+                    priority={isMiddle && indexInSet === 0}
+                    inertClone={!isMiddle}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

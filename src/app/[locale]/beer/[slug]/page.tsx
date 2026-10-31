@@ -1,25 +1,26 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound, permanentRedirect } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { SiteShell } from "@/components/site-shell";
-import { LocaleSwitch } from "@/components/locale-switch";
+import { ProductHero } from "@/components/product/product-hero";
+import { ProductDetail } from "@/components/product/product-detail";
+import { ProductRelated } from "@/components/product/product-related";
 import {
-  getProductById,
+  getCatalogCards,
   isTranslationPublished,
   pickCopy,
   productAlternates,
   productPublicPath,
   resolveProduct,
 } from "@/content/catalog";
+import { getProductMedia } from "@/content/product-media";
 import {
   DEFAULT_LOCALE,
   type PublishedLocale,
   isPublishedLocale,
 } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
-import { Link } from "@/i18n/navigation";
 
 type ProductPageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -29,7 +30,6 @@ export async function generateStaticParams() {
   const params: { locale: string; slug: string }[] = [];
   for (const locale of routing.locales) {
     if (!isPublishedLocale(locale)) continue;
-    const { getCatalogCards } = await import("@/content/catalog");
     for (const card of getCatalogCards(locale)) {
       params.push({ locale, slug: card.slug });
     }
@@ -93,97 +93,69 @@ export default async function ProductPage({ params }: ProductPageProps) {
     permanentRedirect(dest);
   }
 
-  const tNav = await getTranslations("nav");
   const tProduct = await getTranslations("product");
+  const tFooter = await getTranslations("footer");
+
+  const title = pickCopy(product, locale, "title");
   const taste = pickCopy(product, locale, "taste");
   const about = pickCopy(product, locale, "about");
   const food = pickCopy(product, locale, "foodPairing");
   const fermentation = pickCopy(product, locale, "fermentation");
+  const media = getProductMedia(product.id);
 
-  const localeHrefs = Object.fromEntries(
-    productAlternates(product).map((alt) => {
-      // Pathname without prefix for next-intl Link locale prop
-      const tr = getProductById(product.id)?.translations[alt.locale];
-      return [alt.locale, tr ? `/beer/${tr.slug}` : undefined];
-    }),
-  ) as Partial<Record<PublishedLocale, string>>;
+  const related = getCatalogCards(locale as PublishedLocale)
+    .filter((c) => c.id !== product.id)
+    .slice(0, 12);
 
   return (
     <SiteShell>
-      <article className="mx-auto max-w-3xl px-6 py-10 sm:px-10">
-        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-          <Link
-            href="/beer"
-            className="text-sm font-semibold tracking-wide text-gletcher-navy/70 uppercase hover:text-gletcher-navy"
-          >
-            ← {tNav("products")}
-          </Link>
-          <LocaleSwitch localeHrefs={localeHrefs} />
-        </div>
+      <article>
+        <ProductHero
+          title={title}
+          coverSrc={media.cover}
+          logoSrc={media.logo}
+          bottleSrc={product.image || undefined}
+          coverHasWordmark={media.coverHasWordmark}
+        />
 
-        <div className="grid gap-10 sm:grid-cols-[minmax(0,220px)_1fr] sm:items-start">
-          <div className="relative mx-auto aspect-[3/5] w-full max-w-[220px]">
-            {product.image ? (
-              <Image
-                src={product.image}
-                alt=""
-                fill
-                className="object-contain object-top"
-                sizes="220px"
-                priority
-              />
-            ) : null}
-          </div>
+        <ProductDetail
+          locale={locale as PublishedLocale}
+          title={title}
+          taste={taste}
+          about={about}
+          foodPairing={food}
+          fermentation={fermentation}
+          bottleSrc={product.image || undefined}
+          glassSrc={media.glass}
+          specs={{
+            abv: product.specs.abv,
+            og: product.specs.og,
+            ibu: product.specs.ibu,
+            style: product.specs.style,
+            malts: product.specs.malts,
+            hops: product.specs.hops,
+            bottleVol: product.specs.bottleVol,
+            kegVol: product.specs.kegVol,
+          }}
+          labels={{
+            expect: tProduct("expect"),
+            aboutTaste: tProduct("aboutTaste"),
+            pairing: tProduct("pairing"),
+            strength: tProduct("strength"),
+            gravity: tProduct("gravity"),
+            bitterness: tProduct("bitterness"),
+            malts: tProduct("malts"),
+            hops: tProduct("hops"),
+            bottle: tProduct("bottle"),
+            keg: tProduct("keg"),
+          }}
+        />
 
-          <div>
-            <p className="text-xs font-semibold tracking-[0.2em] text-gletcher-navy/60 uppercase">
-              {product.category}
-            </p>
-            <h1 className="font-display mt-2 text-4xl text-gletcher-navy sm:text-5xl">
-              {pickCopy(product, locale, "title")}
-            </h1>
-            <p className="mt-4 text-base leading-relaxed text-gletcher-navy/85">
-              {taste}
-            </p>
+        <ProductRelated title={tProduct("related")} items={related} />
 
-            <dl className="mt-8 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
-              <div>
-                <dt className="text-gletcher-navy/50">ABV</dt>
-                <dd className="font-semibold">{product.specs.abv}%</dd>
-              </div>
-              <div>
-                <dt className="text-gletcher-navy/50">OG</dt>
-                <dd className="font-semibold">{product.specs.og}</dd>
-              </div>
-              <div>
-                <dt className="text-gletcher-navy/50">IBU</dt>
-                <dd className="font-semibold">{product.specs.ibu}</dd>
-              </div>
-              <div>
-                <dt className="text-gletcher-navy/50">{tProduct("style")}</dt>
-                <dd className="font-semibold">{product.specs.style}</dd>
-              </div>
-            </dl>
-
-            <p className="mt-6 text-sm text-gletcher-navy/70">{fermentation}</p>
-            <p className="mt-6 text-sm leading-relaxed text-gletcher-navy/85">
-              {about}
-            </p>
-            {food ? (
-              <p className="mt-6 text-sm text-gletcher-navy/80">
-                <span className="font-semibold">{tProduct("foodPairing")}: </span>
-                {food}
-              </p>
-            ) : null}
-            <p className="mt-4 text-sm text-gletcher-navy/70">
-              <span className="font-semibold">{tProduct("malts")}: </span>
-              {product.specs.malts}
-              <br />
-              <span className="font-semibold">{tProduct("hops")}: </span>
-              {product.specs.hops}
-            </p>
-          </div>
-        </div>
+        <p className="bg-gletcher-ice px-4 pb-12 text-center text-xs font-semibold tracking-wide text-gletcher-navy/55 uppercase">
+          {tFooter("drinkResponsibly")}
+        </p>
       </article>
     </SiteShell>
   );

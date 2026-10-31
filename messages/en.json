@@ -78,8 +78,18 @@
   "product": {
     "style": "Style",
     "foodPairing": "Food pairing",
+    "expect": "What to expect",
+    "aboutTaste": "About the taste",
+    "pairing": "Pairs well with",
+    "strength": "Strength",
+    "gravity": "Gravity",
+    "bitterness": "Bitterness",
     "malts": "Malts",
-    "hops": "Hops"
+    "hops": "Hops",
+    "bottle": "Bottle",
+    "keg": "Keg",
+    "related": "Try these too",
+    "backToCatalog": "Back to catalogue"
   },
   "badges": {
     "new": "New!",

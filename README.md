@@ -2,11 +2,12 @@
 
 Поэтапный перенос действующего сайта на Next.js App Router, TypeScript strict
 и Tailwind CSS. Подключён next-intl; реализован начальный RU/EN каталог.
-Приёмка UI и завершение проверок остаются открытыми.
+Эталон `/beer` принят владельцем; product template v1 ожидает проверок и приёмки.
 
 - [Инструкции агентов](AGENTS.md)
 - [Текущее задание Cursor](docs/CURSOR_NEXT_STEPS.md)
-- [Актуальное ревью](docs/reviews/2026-10-31-follow-up.md)
+- [Актуальное ревью](docs/reviews/2026-10-31-product-template.md)
+- [Baseline шаблона сорта](docs/discovery/PRODUCT_PAGE_BASELINE.md)
 - [MCP Tilda и исходники](docs/discovery/TILDA_MCP_WORKFLOW.md)
 - [Готовый промпт Cursor](docs/CURSOR_REVIEW_PROMPT.md)
 - [ROADMAP](docs/ROADMAP.md)

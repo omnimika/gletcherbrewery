@@ -11,7 +11,30 @@ type FocusTrapOptions = {
    * (e.g. after removing `inert` from `#site-root`).
    */
   restoreFocus?: boolean;
+  /** Extra containers included in the Tab cycle (e.g. live header chrome). */
+  additionalRefs?: RefObject<HTMLElement | null>[];
 };
+
+function collectFocusables(
+  containers: (HTMLElement | null | undefined)[],
+): HTMLElement[] {
+  const seen = new Set<HTMLElement>();
+  const out: HTMLElement[] = [];
+  for (const container of containers) {
+    if (!container) continue;
+    for (const el of container.querySelectorAll<HTMLElement>(FOCUSABLE)) {
+      if (el.hasAttribute("disabled") || el.tabIndex === -1) continue;
+      if (seen.has(el)) continue;
+      seen.add(el);
+      out.push(el);
+    }
+  }
+  // Match natural Tab order across split containers (header + portal dialog).
+  out.sort((a, b) =>
+    a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1,
+  );
+  return out;
+}
 
 export function useFocusTrap(
   containerRef: RefObject<HTMLElement | null>,
@@ -19,6 +42,7 @@ export function useFocusTrap(
   options: FocusTrapOptions = {},
 ) {
   const restoreFocus = options.restoreFocus !== false;
+  const additionalRefs = options.additionalRefs;
 
   useEffect(() => {
     if (!active) return;
@@ -31,12 +55,14 @@ export function useFocusTrap(
         : null;
 
     const focusables = () =>
-      [...container.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
-        (el) => !el.hasAttribute("disabled") && el.tabIndex !== -1,
-      );
+      collectFocusables([
+        container,
+        ...(additionalRefs?.map((r) => r.current) ?? []),
+      ]);
 
-    const first = focusables()[0];
-    first?.focus();
+    // Prefer first item inside the dialog; fall back to any trap target.
+    const dialogFirst = collectFocusables([container])[0];
+    (dialogFirst ?? focusables()[0])?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Tab") return;
@@ -47,12 +73,20 @@ export function useFocusTrap(
       }
       const firstItem = items[0];
       const lastItem = items[items.length - 1];
-      if (event.shiftKey && document.activeElement === firstItem) {
+      const activeEl = document.activeElement;
+      if (event.shiftKey && activeEl === firstItem) {
         event.preventDefault();
         lastItem.focus();
-      } else if (!event.shiftKey && document.activeElement === lastItem) {
+      } else if (!event.shiftKey && activeEl === lastItem) {
         event.preventDefault();
         firstItem.focus();
+      } else if (
+        activeEl instanceof HTMLElement &&
+        !items.includes(activeEl)
+      ) {
+        // Focus escaped (e.g. browser quirk) — pull back into the trap.
+        event.preventDefault();
+        (event.shiftKey ? lastItem : firstItem).focus();
       }
     };
 
@@ -63,5 +97,5 @@ export function useFocusTrap(
         previouslyFocused?.focus();
       }
     };
-  }, [active, containerRef, restoreFocus]);
+  }, [active, containerRef, restoreFocus, additionalRefs]);
 }
