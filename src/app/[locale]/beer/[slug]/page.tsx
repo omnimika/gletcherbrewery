@@ -11,6 +11,7 @@ import {
   isTranslationPublished,
   pickCopy,
   productAlternates,
+  productPathname,
   productPublicPath,
   resolveProduct,
 } from "@/content/catalog";
@@ -107,8 +108,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
     .filter((c) => c.id !== product.id)
     .slice(0, 12);
 
+  const localeHrefs: Partial<Record<PublishedLocale, string>> = {};
+  for (const code of ["ru", "en"] as const) {
+    const path = productPathname(product, code);
+    if (path) localeHrefs[code] = path;
+  }
+
   return (
-    <SiteShell>
+    <SiteShell localeHrefs={localeHrefs}>
       <article>
         <ProductHero
           title={title}

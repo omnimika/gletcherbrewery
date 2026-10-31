@@ -1,47 +1,47 @@
 # Текущее задание Cursor Agent
 
-Дата: 31.10.2026. Ветка `first-front`, dirty tree поверх `9e0ee8e`.
-[Ревью](reviews/2026-10-31-product-template.md), [baseline](discovery/PRODUCT_PAGE_BASELINE.md).
+Дата: 31.10.2026. Product template принят владельцем поверх `6f84465`
+(dirty tree A01–A03 + peer locale hrefs, без commit на момент приёмки).
+[Ревью](reviews/2026-10-31-product-acceptance.md),
+[baseline](discovery/PRODUCT_PAGE_BASELINE.md), [промпт](CURSOR_REVIEW_PROMPT.md).
 
-## Статус gate `/beer`
+## Статус gates
 
-Владелец **принял** `/beer` (31.10.2026). Повторную визуальную приёмку каталога
-не открывать.
+| Gate | Статус |
+|------|--------|
+| `/beer` каталог | **Принят** владельцем 31.10.2026 — не открывать повторно |
+| `/beer/{slug}` product template | **Принят** владельцем 31.10.2026 |
+| Cynic visual polish | **Owner follow-up** — владелец поправит позже; Cursor не трогать |
 
-## Product template v1 — код готов к приёмке владельца
-
-### Исправления ревью (этот проход)
+## Product template v1 — закрыт
 
 | ID | Статус | Что сделано |
 |----|--------|-------------|
-| T01 | Fixed | Единый `<h1 className="sr-only">` во всех media-ветках ProductHero |
-| T02 | Fixed | Focus trap меню включает live header chrome (`chromeRef`) |
-| T03 | Fixed | Loop-клоны `inertClone` / `tabIndex=-1`; focus sync в middle copy |
-| T04 | Fixed | Home CTA Agent → `productionHref("agent")` |
-| T05 | Fixed | Убран `priority` у нижеэкранной бутылки; hover glass без preload |
+| T01–T05 | Fixed | H1, menu keyboard, loop clones, home Agent, preload |
+| A01 | Fixed | `#about` `md:min-h`, без clip overflow-hidden |
+| A02 | Fixed | dialog shell включает header controls |
+| A03 | Fixed | stable focus trap lifecycle |
+| Peer locale + hash | Fixed | `localeHrefs` / Brainstorm / MoA |
 
-### Анимации / медиа (запрос владельца)
+Evidence lint/tsc/build/browser — в предыдущей редакции этого файла и baseline.
 
-- Cover/logo → якорь `#about` (smooth scroll).
-- Bottle hover → glass fade (ассеты `public/catalog/glasses/*` из `tmp/БОКАЛЫ GLETCHER`).
-- Иконки объёмов: `/svg_bottle.svg`, `/svg_keg.svg`.
-- Нет glass delivery: underground, brut, tour, cynic — hover не активен.
+## Следующее задание Cursor
 
-### Свежие проверки (Cursor, Node 25.5.0)
+1. **Commit** product-template diff — только по явному разрешению владельца.
+2. После commit: **один** следующий шаблон этапа 4 — **home `/`**.
+   - Read-only MCP Tilda + browser: RU/EN source baseline
+     (`docs/discovery/TILDA_MCP_WORKFLOW.md`), editor ≠ published.
+   - Зафиксировать секции, URL, SEO, медиа, CTA, критерии приёмки
+     в `docs/discovery/` (новый HOME baseline).
+   - Реализация поверх принятого SiteShell/header/footer; не ломать `/beer`.
+3. Backend / NocoDB / Mapbox / новые локали — не сейчас.
 
-- `tsc --noEmit`, ESLint changed files, `npm run build` — PASS (42 SSG paths).
-- Production `next start --hostname localhost`: **36/36** canonical RU/EN detail
-  → HTTP 200 + ровно один H1.
-- Browser: Friday + Ausweis hero/H1; home agent → `gletcherbrewery.com/agent`.
-- Известное ограничение: `next start --hostname 127.0.0.1` даёт redirect loop
-  next-intl (использовать `localhost`).
+## Отложенные требования
 
-## Критерий закрытия этапа
-
-Визуальная приёмка product template **владельцем**. До неё следующий публичный
-шаблон (home) не начинать. Commit/push — по отдельному разрешению.
+- Cynic — правка владельца.
+- Related first-12 — Proposed.
+- Полный исходный legal notice — backlog до production (AGENTS).
 
 ## Не сейчас
 
-Home/map/agent/tours backend, NocoDB, новые локали, pixel-perfect Zero Block,
-полный legal notice «вред чрезмерного употребления» (пока только drink-responsibly).
+map/agent/tours backend, NocoDB, `sr`/`hy`/`ka`/`de`, pixel-perfect Zero Block.

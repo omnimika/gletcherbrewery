@@ -6,7 +6,7 @@
 
 - [Инструкции агентов](AGENTS.md)
 - [Текущее задание Cursor](docs/CURSOR_NEXT_STEPS.md)
-- [Актуальное ревью](docs/reviews/2026-10-31-product-template.md)
+- [Актуальное ревью](docs/reviews/2026-10-31-product-acceptance.md)
 - [Baseline шаблона сорта](docs/discovery/PRODUCT_PAGE_BASELINE.md)
 - [MCP Tilda и исходники](docs/discovery/TILDA_MCP_WORKFLOW.md)
 - [Готовый промпт Cursor](docs/CURSOR_REVIEW_PROMPT.md)

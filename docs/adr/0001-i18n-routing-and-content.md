@@ -86,17 +86,21 @@ Compatible with `products` + `product_translations` (one entity, many locales). 
 ## Implementation verification (31.10.2026)
 
 Accepted architecture is distinct from owner acceptance and verification.
-`/beer` is owner-accepted. The current `9e0ee8e` + product working tree is
-assessed in the [product review](../reviews/2026-10-31-product-template.md)
+`/beer` is owner-accepted. The current clean `6f84465` is
+assessed in the [acceptance review](../reviews/2026-10-31-product-acceptance.md)
 and [Cursor task](../CURSOR_NEXT_STEPS.md). Lint/typecheck pass; new product
 components are server-rendered, UI labels and Intl formatting are implemented.
-Product-template visual acceptance, H1 variants and runtime/SEO checks remain.
+All 36 hero variants now have one H1 in static render. Product-template visual
+acceptance, overflow/reflow, hash navigation and runtime/SEO checks remain.
 HTTP 308 aliases must not be described as 301 legacy redirects.
 
 The current menu keeps shared header chrome interactive and inerts only
 `#site-content`; age gate still inerts `#site-root`. This differs from the
 earlier section 6 description. Resolve the accessible dialog/focus scope in
-T02 before documenting that implementation as a completed a11y decision.
+remaining A02 before documenting that implementation as a completed a11y decision.
+Adding header refs to the keyboard trap fixed reachability, but does not change
+the dialog accessibility subtree. Hash preservation is implemented for native
+anchors; verify History API/client navigation separately before claiming coverage.
 
 Before enabling another language, also address current implementation limits:
 

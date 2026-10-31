@@ -1,6 +1,6 @@
 # Gletcher Brewery — AGENTS.md
 
-> Версия: 0.8 (31 октября 2026 г.)
+> Версия: 0.9 (31 октября 2026 г.)
 > Назначение: единые постоянные инструкции для Cursor Agent и OpenAI Codex.  
 > Подробный план реализации: `docs/ROADMAP.md` (при размещении файла из поставки в проекте).  
 > **Не считать этот документ подтверждением неизвестных деталей исходной системы.**
@@ -144,15 +144,14 @@
 **Строго соблюдать очередность `docs/ROADMAP.md`:** (0) Bootstrap Next.js → (1) Site Discovery → (2) базовая дизайн-система → (3) одна эталонная страница → (4) остальной публичный сайт → (5+) backend, NocoDB, Mapbox, бонусы и бронирования. Преждевременная разработка CRM/Mapbox не является текущей задачей.
 
 1. Bootstrap и Discovery готовы; эталон `/beer` **принят владельцем** (31.10.2026).
-2. Текущее задание: `docs/CURSOR_NEXT_STEPS.md` — шаблон `/beer/{slug}` v1 в коде
-   (baseline `docs/discovery/PRODUCT_PAGE_BASELINE.md`); ждёт исправления H1,
-   проверки media-вариантов и визуальной приёмки. Ревью `9e0ee8e` + dirty tree:
-   `docs/reviews/2026-10-31-product-template.md`; lint/typecheck PASS.
+2. Product template `/beer/{slug}` **принят владельцем** (31.10.2026). Cynic visual
+   polish — follow-up владельца, Cursor не правит. Dirty tree A01–A03 ждёт
+   **явного разрешения на commit**. Затем этап 4: один шаблон **home `/`**
+   (MCP baseline → критерии → реализация). См. `docs/CURSOR_NEXT_STEPS.md`.
 3. ADR 0001 **Accepted**; next-intl RU/EN. `sr`/`hy`/`ka`/`de` — Open.
-4. Массовый перенос прочих публичных страниц — после приёмки product template.
+4. Массовый перенос прочих публичных страниц — после home (по одному шаблону).
 5. Критерии закрытия — код + свежие проверки; не подменять browser/build старым отчётом.
-6. Новые общие accessibility-задачи меню/loop и остаток home `/agent` — точечные
-   функциональные исправления. Они не отменяют принятие визуала `/beer`.
+6. Принятые `/beer` и product template повторно на визуальную приёмку не открывать.
 
 Подробная архитектура CRM, data model, миграции Airtable, выбор ORM/Auth/CMS и инфраструктурные ADR — отдельные будущие задачи по этапам, а не блокеры инвентаризации сайта.
 
@@ -164,7 +163,8 @@
 - `docs/discovery/PRODUCT_PROPS_INVENTORY.md` — props карточек пива RU/EN + контракт под будущие локали.
 - `docs/adr/0001-i18n-routing-and-content.md` — маршрутизация и модель контента для `ru`/`en`/`sr`/`hy`/`ka`/`de`.
 - `docs/CURSOR_NEXT_STEPS.md` — актуальное задание Cursor с критериями приёмки; обновлять после подтверждённых изменений.
-- `docs/reviews/2026-10-31-product-template.md` — актуальное ревью `9e0ee8e` + рабочий product template, проверки и приоритеты.
+- `docs/reviews/2026-10-31-product-acceptance.md` — актуальное ревью `6f84465`, статусы исправлений и приёмочные проверки.
+- `docs/reviews/2026-10-31-product-template.md` — историческое ревью `9e0ee8e` + рабочего дерева.
 - `docs/discovery/PRODUCT_PAGE_BASELINE.md` — source baseline Friday и media-варианты шаблона.
 - `docs/reviews/2026-10-31-follow-up.md` — историческое ревью `81713e4`.
 - `docs/reviews/2026-10-31-current-state.md` — историческое ревью `5b4910d`.

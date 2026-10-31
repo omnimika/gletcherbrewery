@@ -72,7 +72,13 @@ ABC Gravity Trial используются только для локально�
 
 `build` и `dev` создают `.next` и могут обновлять `next-env.d.ts`; эти команды
 не входят в режим строгого read-only ревью. Результаты текущего ревью:
-[9e0ee8e + product dirty tree, 2026-10-31](reviews/2026-10-31-product-template.md).
+[6f84465, 2026-10-31](reviews/2026-10-31-product-acceptance.md).
+
+Cursor ранее сообщил рабочий production-start с `--hostname localhost` и loop
+с `127.0.0.1`. Для текущего QA использовать localhost; IP-проблему считать
+отдельной невоспроизведённой здесь диагностикой. NextURL нормализует loopback,
+но это не доказывает причину полного server loop; приложить HTTP/Host chain
+перед изменением routing или зависимостей.
 
 `src/components/product` — серверные hero/detail/specs/related;
 `src/content/product-media.ts` — cover/logo по stable ID;

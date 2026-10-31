@@ -48,16 +48,24 @@ No category chip and no in-page locale switch / back-link on production content 
 - Pixel-perfect Tilda Zero Block geometry is **not** required for v1;
   structure and visual language must match production.
 
-## Evidence (31.10.2026 Cursor)
+## Evidence (31.10.2026, Cursor A01–A03 + QA)
 
-- Build PASS; 36/36 canonical detail HTTP 200 + single H1 on `localhost:3000`.
-- Browser spot-check: `/beer/friday-avenue-apa`, `/beer/ausweis` (logo overlay + H1).
-- Missing glass files (no hover): cynic, underground-ale, brut-grapefruit,
+Baseline commit `6f84465` + dirty tree (без commit): A01 min-h `#about`,
+A02 dialog shell, A03 focus trap, product `localeHrefs` peer slugs.
+
+- lint / tsc / build PASS (Node 25.5.0); `next start` localhost:3000.
+- 36/36 canonical detail HTTP 200 + single H1.
+- Browser: Friday/Ausweis/Cynic `#about`; 1280×500 / 1024×600 без clip;
+  menu dialog contains locale/close; resize keeps focus; Brainstorm/MoA
+  RU↔EN peer slug + `#about`; related + Back/Forward.
+- Missing glass (no hover): cynic, underground-ale, brut-grapefruit,
   tour-de-grapefruit.
+
+Подробности: `docs/CURSOR_NEXT_STEPS.md`. Sign-off — владелец.
 
 ## Verification and acceptance matrix (Codex follow-up)
 
-Current review: [9e0ee8e + working tree](../reviews/2026-10-31-product-template.md).
+Current review: [clean 6f84465](../reviews/2026-10-31-product-acceptance.md).
 The MCP provenance above was recorded by Cursor, not independently repeated
 by Codex. Public RU/EN Friday content was read; no new pixel-comparison was made.
 `/beer` is already owner-accepted; this template has a separate acceptance gate.
@@ -71,9 +79,12 @@ by Codex. Public RU/EN Friday content was read; no new pixel-comparison was made
 
 All 36 canonical detail need content/SEO/media checks. Visual matrix minimum:
 390×844 and 1440×900 plus short viewport, 200% zoom, keyboard/touch.
-Current template has no H1 in 16 logo-overlay products (T01); fix before sign-off.
-Check physical bottle size with padded source PNG (contain vs Tilda cover),
-hero/header first paint/resize/navigation, and below-fold preload.
+T01 is fixed: in-memory React render confirms one H1 for all 36 RU/EN heroes.
+All 48 cover/logo/glass references exist; 14 products have glass, missing cases
+above are intentional. Below-fold priority has been removed (T05).
+Check A01 fixed-height overflow: long RU/EN copy must remain fully readable at
+1024×600, 1280×500 and 200% zoom. Check header/modal scope, stable focus, hero
+anchor and locale/hash navigation, especially MoA/Brainstorm and Back/Forward.
 
 Related `first 12 other cards` is temporary **Proposed** editorial policy,
 not a confirmed recommendation rule. Record a decision before finalizing it.

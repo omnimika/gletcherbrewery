@@ -25,15 +25,16 @@ type LocaleSwitchProps = {
   scaled?: boolean;
 };
 
-function useLocationHash() {
+function useLocationHash(pathname: string) {
   const [hash, setHash] = useState("");
 
   useEffect(() => {
     const sync = () => setHash(window.location.hash);
     sync();
+    // Native hashchange misses History API navigations (Next Link).
     window.addEventListener("hashchange", sync);
     return () => window.removeEventListener("hashchange", sync);
-  }, []);
+  }, [pathname]);
 
   return hash;
 }
@@ -57,7 +58,7 @@ export function LocaleSwitch({
 }: LocaleSwitchProps) {
   const locale = useLocale() as PublishedLocale;
   const pathname = usePathname();
-  const hash = useLocationHash();
+  const hash = useLocationHash(pathname);
   const t = useTranslations("a11y");
 
   if (variant === "header") {

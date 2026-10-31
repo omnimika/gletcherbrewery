@@ -1,10 +1,7 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties, type RefObject } from "react";
-import { createPortal } from "react-dom";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { useFocusTrap } from "@/lib/use-focus-trap";
 import {
   productionHref,
   type ExternalNavKey,
@@ -24,72 +21,21 @@ const NAV_ITEMS: {
   { key: "blog", labelKey: "blog" },
 ];
 
-type MainNavOverlayProps = {
-  open: boolean;
+type MainNavPanelProps = {
   onClose: () => void;
-  /** Menu toggle in the fixed header — restored on close. */
-  triggerRef: RefObject<HTMLElement | null>;
-  /**
-   * Live header chrome (locale + close/X). Included in the modal Tab cycle
-   * so visible controls stay reachable (T02).
-   */
-  chromeRef: RefObject<HTMLElement | null>;
-  /** Same window-upscale CSS vars as the header (portal is outside that tree). */
-  chromeVars: CSSProperties;
 };
 
 /**
- * Full-screen nav under the live header chrome (no duplicate locale/close).
- * Header keeps window-upscale controls; burger morphs to X in place.
+ * Menu body under the live header chrome. Dialog role lives on the SiteHeader
+ * shell so locale/close stay inside the modal accessibility subtree (A02).
  */
-export function MainNavOverlay({
-  open,
-  onClose,
-  triggerRef,
-  chromeRef,
-  chromeVars,
-}: MainNavOverlayProps) {
-  const dialogRef = useRef<HTMLDivElement>(null);
+export function MainNavPanel({ onClose }: MainNavPanelProps) {
   const locale = useLocale() as PublishedLocale;
   const t = useTranslations("nav");
-  const tA11y = useTranslations("a11y");
 
-  useFocusTrap(dialogRef, open, {
-    restoreFocus: false,
-    additionalRefs: [chromeRef],
-  });
-
-  useEffect(() => {
-    if (!open) return;
-    const trigger = triggerRef.current;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    // Keep header interactive (same chrome / toggle); inert only page content.
-    const content = document.getElementById("site-content");
-    content?.setAttribute("inert", "");
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      content?.removeAttribute("inert");
-      queueMicrotask(() => trigger?.focus());
-    };
-  }, [open, triggerRef]);
-
-  if (!open || typeof document === "undefined") return null;
-
-  const portalTarget =
-    document.getElementById("portal-root") ?? document.body;
-
-  return createPortal(
-    <div
-      ref={dialogRef}
-      id="main-nav-dialog"
-      className="animate-menu-fade fixed inset-x-0 bottom-0 z-[110] flex flex-col overflow-y-auto overscroll-contain bg-gletcher-ice"
-      style={{ ...chromeVars, top: "var(--hh)" }}
-      role="dialog"
-      aria-modal="true"
-      aria-label={tA11y("mainMenu")}
-    >
-      <nav className="flex min-h-0 flex-1 flex-col items-center justify-center px-4 py-6">
+  return (
+    <>
+      <nav className="flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto overscroll-contain px-4 py-6">
         <ul className="flex w-full max-w-[760px] flex-col items-center gap-1 sm:gap-2">
           {NAV_ITEMS.map((item, index) => (
             <li
@@ -148,7 +94,9 @@ export function MainNavOverlay({
           {t("signup")}
         </a>
       </div>
-    </div>,
-    portalTarget,
+    </>
   );
 }
+
+/** @deprecated Prefer MainNavPanel; kept name for import clarity in reviews. */
+export const MainNavOverlay = MainNavPanel;

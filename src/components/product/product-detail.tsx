@@ -37,7 +37,8 @@ type ProductDetailProps = {
 };
 
 /**
- * `#about` variety block: one screen on tablet/desktop (100svh − header).
+ * `#about` variety block: at least one screen on tablet/desktop (100svh − header)
+ * when content fits; grows with copy on short windows / zoom / long text.
  * Media + copy fill the width; type/spacing scale with viewport.
  */
 export function ProductDetail({
@@ -57,11 +58,11 @@ export function ProductDetail({
   return (
     <section
       id="about"
-      className="relative z-10 scroll-mt-[var(--hh,84px)] bg-gletcher-ice md:h-[calc(100svh-var(--hh,84px))] md:max-h-[calc(100svh-var(--hh,84px))] md:overflow-hidden"
+      className="relative z-10 scroll-mt-[var(--hh,84px)] bg-gletcher-ice md:min-h-[calc(100svh-var(--hh,84px))]"
     >
-      <div className="box-border flex h-full w-full flex-col gap-6 px-[clamp(1rem,2.5vw,2rem)] py-8 md:grid md:grid-cols-[minmax(17rem,0.44fr)_minmax(0,1fr)] md:items-stretch md:gap-[clamp(1.25rem,3vw,2.75rem)] md:px-[clamp(1.25rem,3.5vw,3rem)] md:py-[clamp(0.85rem,2.2svh,1.65rem)] md:pb-[clamp(1rem,2.8svh,1.85rem)]">
+      <div className="box-border flex w-full flex-col gap-6 px-[clamp(1rem,2.5vw,2rem)] py-8 md:grid md:min-h-[calc(100svh-var(--hh,84px))] md:grid-cols-[minmax(17rem,0.44fr)_minmax(0,1fr)] md:items-stretch md:gap-[clamp(1.25rem,3vw,2.75rem)] md:px-[clamp(1.25rem,3.5vw,3rem)] md:py-[clamp(0.85rem,2.2svh,1.65rem)] md:pb-[clamp(1rem,2.8svh,1.85rem)]">
         {/* Left: G + bottle/glass — fully visible, no crop */}
-        <div className="relative mx-auto aspect-[3/5] w-full max-w-[24rem] md:mx-0 md:aspect-auto md:h-full md:max-w-none md:min-h-0">
+        <div className="relative mx-auto aspect-[3/5] w-full max-w-[24rem] md:mx-0 md:aspect-auto md:min-h-0 md:max-w-none md:self-stretch">
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.42]"
@@ -85,8 +86,8 @@ export function ProductDetail({
           ) : null}
         </div>
 
-        {/* Right: continuous stack — no large empty band between copy and specs */}
-        <div className="flex min-h-0 min-w-0 flex-col justify-center gap-[clamp(1rem,2.8svh,1.85rem)] md:h-full md:overflow-hidden">
+        {/* Right: continuous stack — no clip; grows with content */}
+        <div className="flex min-w-0 flex-col justify-center gap-[clamp(1rem,2.8svh,1.85rem)]">
           <div className="min-w-0">
             <p className="text-[clamp(0.68rem,1.4svh,0.75rem)] font-semibold tracking-[0.2em] text-gletcher-navy/55 uppercase">
               {labels.expect}

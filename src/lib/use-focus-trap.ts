@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type RefObject } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -13,6 +13,12 @@ type FocusTrapOptions = {
   restoreFocus?: boolean;
   /** Extra containers included in the Tab cycle (e.g. live header chrome). */
   additionalRefs?: RefObject<HTMLElement | null>[];
+  /**
+   * Optional selector scoped to the trap container; initial focus prefers the
+   * first focusable inside the match (e.g. `"nav"` under a dialog that also
+   * includes chrome controls).
+   */
+  initialFocusWithin?: string;
 };
 
 function collectFocusables(
@@ -42,7 +48,12 @@ export function useFocusTrap(
   options: FocusTrapOptions = {},
 ) {
   const restoreFocus = options.restoreFocus !== false;
-  const additionalRefs = options.additionalRefs;
+  const initialFocusWithin = options.initialFocusWithin;
+  // Keep latest additionalRefs without re-running the trap effect (A03).
+  const additionalRefsRef = useRef(options.additionalRefs);
+  useEffect(() => {
+    additionalRefsRef.current = options.additionalRefs;
+  });
 
   useEffect(() => {
     if (!active) return;
@@ -57,11 +68,18 @@ export function useFocusTrap(
     const focusables = () =>
       collectFocusables([
         container,
-        ...(additionalRefs?.map((r) => r.current) ?? []),
+        ...(additionalRefsRef.current?.map((r) => r.current) ?? []),
       ]);
 
-    // Prefer first item inside the dialog; fall back to any trap target.
-    const dialogFirst = collectFocusables([container])[0];
+    // Prefer first item in initialFocusWithin (e.g. nav); else container.
+    // Runs once per active session — deps omit additionalRefs (see A03).
+    const seed =
+      initialFocusWithin != null
+        ? container.querySelector(initialFocusWithin)
+        : null;
+    const preferredRoot =
+      seed instanceof HTMLElement ? seed : container;
+    const dialogFirst = collectFocusables([preferredRoot])[0];
     (dialogFirst ?? focusables()[0])?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -97,5 +115,5 @@ export function useFocusTrap(
         previouslyFocused?.focus();
       }
     };
-  }, [active, containerRef, restoreFocus, additionalRefs]);
+  }, [active, containerRef, restoreFocus, initialFocusWithin]);
 }
