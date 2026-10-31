@@ -1,0 +1,93 @@
+{
+  "projectid": 3005660,
+  "plan": "Pro2",
+  "counts": {
+    "total": 19,
+    "airtable": 17,
+    "bipium": 2,
+    "nocodb": 0
+  },
+  "integrations": [
+    {
+      "name": "Бипиум: Zero ЛК ЧЕКИ",
+      "backend": "Bipium"
+    },
+    {
+      "name": "Бипиум Zero ЛК ИНФО (Имя, Email, Баланс…)",
+      "backend": "Bipium"
+    },
+    {
+      "name": "Zero: ЛК ИНФО (Имя, Email, Город, Баланс (+за все время))",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Заявки агентов",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Чеки - история офлайн покупок",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Email",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Zero: ЛК ИНФО (Уровень, Статус, Приз, До следующего уровня, Реферальная ссылка)",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Уровень",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Статус",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Биркоины",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Биркоины вывод",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Каталог спецпредложений (bonus)",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Каталог спецпредложений",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Спецпредложения - бонусная система",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Реферальная ссылка",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Списание бонусов из корзины",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Мои покупки Gletcher - Заголовок",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Мои покупки Gletcher",
+      "backend": "Airtable"
+    },
+    {
+      "name": "Мои Заказы Gletcher Shop",
+      "backend": "Airtable"
+    }
+  ],
+  "notes": [
+    "Endpoints served as transfer.collabza.ru/s3/<uuid>.js — UUIDs omitted from this summary file intentionally can be re-read from Collabza UI",
+    "Collabza UI offers migration to NocoDB; currently 0 NocoDB integrations",
+    "Auth for gletcher site members is Tilda Members; Collabza bridges Zero Block fields to Airtable/Bipium"
+  ]
+}

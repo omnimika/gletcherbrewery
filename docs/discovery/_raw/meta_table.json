@@ -1,0 +1,1214 @@
+[
+  {
+    "path": "/",
+    "http": "200",
+    "title": "Gletcher Brewery | Пивоварня Глетчер",
+    "description": "Gletcher Brewery — российская крафтовая пивоварня. Импортное качество и вкусовое разнообразие, но по цене российского пива. Кеги и бутылки для баров, ресторанов и пабов. Надёжные поставки, премиальные сорта и гибкие условия сотрудничества. Производитель и",
+    "canonical": "https://www.gletcherbrewery.com",
+    "h1": [
+      "gletcher"
+    ],
+    "h2": [
+      "Пивоварня"
+    ],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "49072461",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "В КАТАЛОГ",
+      "В МАГАЗИН",
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ",
+      "ЗАБРОНИРОВАТЬ",
+      "ЗАБРОНИРОВАТЬ ЭКСКУРСИЮ",
+      "ИСКАТЬ",
+      "ОСТАВИТЬ ЗАЯВКУ",
+      "ПЕРЕЙТИ НА КАРТУ",
+      "СМОТРЕТЬ",
+      "ЧИТАТЬ"
+    ],
+    "beer_links": [
+      "/beer/milk-of-amnesia-non-alco"
+    ],
+    "tposts": []
+  },
+  {
+    "path": "/beer",
+    "http": "200",
+    "title": "Каталог | Пивоварня Глетчер",
+    "description": "Каталог продукции",
+    "canonical": "https://www.gletcherbrewery.com/beer",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "16494049",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [
+      "/beer/ausweis",
+      "/beer/blue-monkey",
+      "/beer/bowler-ipa",
+      "/beer/brainstorm",
+      "/beer/brut-grapefruit",
+      "/beer/cynic",
+      "/beer/friday-avenue-apa",
+      "/beer/heidegger-hell",
+      "/beer/hop-dragon",
+      "/beer/iron-woods-dry-stout",
+      "/beer/iron-woods-milk-stout",
+      "/beer/milk-of-amnesia-non-alco",
+      "/beer/milk-of-amnesia-v-tropic",
+      "/beer/nut-butter",
+      "/beer/rouge-de-fleur",
+      "/beer/ruby-road",
+      "/beer/tour-de-grapefruit",
+      "/beer/underground-ale"
+    ],
+    "tposts": []
+  },
+  {
+    "path": "/blog",
+    "http": "200",
+    "title": "Блог | Gletcher Brewery",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/blog",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "13085895",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ",
+      "подписаться"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/blog-all",
+    "http": "200",
+    "title": "Блог: Все записи | Gletcher Brewery",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/blog-all",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "22876155",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ",
+      "подписаться"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/map",
+    "http": "200",
+    "title": "Карта Продаж | Пивоварня Глетчер",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/map",
+    "h1": [],
+    "h2": [
+      "${featurePop.properties.Title}"
+    ],
+    "forms": 1,
+    "mapbox": true,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "18984340",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/agent",
+    "http": "200",
+    "title": "Агент Глетчер | Gletcher Brewery | Пивоварня Глетчер",
+    "description": "Бонусная и реферальная программа для ценителей пива. Стань амбассадором Gletcher и получай ценные призы от нашей пивоварни!",
+    "canonical": "https://www.gletcherbrewery.com/agent",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "44414247",
+    "hreflang": [],
+    "social": [],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ",
+      "зарегистрироваться"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/tours",
+    "http": "200",
+    "title": "Экскурсии | Gletcher Brewery | Пивной тур с дегустацией на пивоварне Глетчер",
+    "description": "Экскурсия на пивоваренный завод – это отличный способ провести время с друзьями, коллегами или деловыми партнерами! Вас ждёт незабываемое путешествие по всем этапам производства, а также дегустация всех доступных сортов пива на нашем пивзаводе.",
+    "canonical": "https://www.gletcherbrewery.com/tours",
+    "h1": [
+      "завод",
+      "экскурсия",
+      "на пивоваренный"
+    ],
+    "h2": [],
+    "forms": 3,
+    "mapbox": false,
+    "yclients": true,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "9644391",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ",
+      "ЗАБРОНИРОВАТЬ",
+      "ЗАБРОНИРОВАТЬ ГАСТРО ТУР",
+      "ЗАБРОНИРОВАТЬ ИГРУ",
+      "Забронировать удобную для Вас дату, уточнить детали и обсудить все Ваши пожелания вы сможете с нашим менеджером."
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/shop",
+    "http": "200",
+    "title": "Магазин | Пивоварня Глетчер",
+    "description": "Мерчандайз и прочие приятности",
+    "canonical": "https://www.gletcherbrewery.com/shop",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "16494410",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/partnership",
+    "http": "200",
+    "title": "Партнёрам | Пивоварня Глетчер | Gletcher Brewery — поставки крафтового пива в кегах и бутылках для HoReCa, баров и магазинов | Оптовые поставки пива",
+    "description": "Профессиональные поставки крафтового пива от Gletcher Brewery — кеги и бутылки для баров, ресторанов, HoReCa и розничных точек. Стратегические партнерские программы, гибкие условия опта, доставка и поддержка. Узнайте о наших сортах, возможностях сотруднич",
+    "canonical": "https://www.gletcherbrewery.com/partnership",
+    "h1": [
+      "РОССИЙСКОЕ КРАФТОВОЕ ПИВО ОПТОМ И НА ЛЮБОЙ ВКУС"
+    ],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "16901090",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [
+      "/beer/ausweis",
+      "/beer/blue-monkey",
+      "/beer/bowler-ipa",
+      "/beer/brainstorm-apa-alcohol-free",
+      "/beer/friday-avenue-APA",
+      "/beer/heidegger-hell",
+      "/beer/iron-woods-dry-stout",
+      "/beer/iron-woods-milk-stout",
+      "/beer/milk-of-amnesia-v-tropic",
+      "/beer/nut-butter",
+      "/beer/rouge-de-fleur",
+      "/beer/ruby-road",
+      "/beer/tour-de-grapefruit",
+      "/beer/underground-ale"
+    ],
+    "tposts": []
+  },
+  {
+    "path": "/contacts",
+    "http": "200",
+    "title": "Контакты | Пивоварня Глетчер",
+    "description": "Контакты",
+    "canonical": "https://www.gletcherbrewery.com/contacts",
+    "h1": [
+      "КОНТАКТЫ"
+    ],
+    "h2": [
+      "СВЯЖИТЕСЬ С НАМИ",
+      "СВЯЖИТЕСЬ С НАМИ"
+    ],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "8475727",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/policy",
+    "http": "200",
+    "title": "Политика Конфиденциальности | Пивоварня Глетчер",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/policy",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "13473864",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/shopping-rules",
+    "http": "200",
+    "title": "Правила Магазина | Пивоварня Глетчер",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/shopping-rules",
+    "h1": [
+      "ПРАВИЛА МАГАЗИНА"
+    ],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "13866555",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/en",
+    "http": "200",
+    "title": "Gletcher Brewery | Official Website",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/en",
+    "h1": [
+      "BREWERY"
+    ],
+    "h2": [
+      "GLETCHER"
+    ],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "50620901",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "BOOK A TOUR"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/en/beer",
+    "http": "200",
+    "title": "Our Beers | Gletcher Brewery",
+    "description": "Product Catalog",
+    "canonical": "https://www.gletcherbrewery.com/en/beer",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "50623499",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/en/tours",
+    "http": "200",
+    "title": "Tours on brewery | Gletcher Brewery",
+    "description": "An excursion to the brewery is a great way to spend time with friends, colleagues or business partners! You will have an unforgettable journey through all stages of production, as well as a tasting of all available beers at our brewery.",
+    "canonical": "https://www.gletcherbrewery.com/en/tours",
+    "h1": [
+      "BREWERY",
+      "GUIDED TOURS",
+      "OF THE"
+    ],
+    "h2": [],
+    "forms": 5,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "61456185",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "BOOK",
+      "BOOKING",
+      "Book a date that is convenient for you, and we will call you back. You can clarify the details and discuss all your wishes with our manager.",
+      "Sign up for a group tour",
+      "Sign up for a tasting tour",
+      "Sign up for an individual tour",
+      "ЗАБРОНИРОВАТЬ ГАСТРО ТУР",
+      "ЗАБРОНИРОВАТЬ ИГРУ",
+      "Забронировать удобную для Вас дату, уточнить детали и обсудить все Ваши пожелания вы сможете с нашим менеджером."
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/en/partnership",
+    "http": "200",
+    "title": "Partnership | Gletcher Brewery",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/en/partnership",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "55450707",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/en/map",
+    "http": "200",
+    "title": "Map | Gletcher Brewery",
+    "description": "Here you can find our distribution network.",
+    "canonical": "https://www.gletcherbrewery.com/en/map",
+    "h1": [],
+    "h2": [
+      "${featurePop.properties.Title}"
+    ],
+    "forms": 1,
+    "mapbox": true,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "55450185",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/en/blog",
+    "http": "200",
+    "title": "Blog | Gletcher Brewery",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/en/blog",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "51497329",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/horeca",
+    "http": "200",
+    "title": "Российское крафтовое пиво оптом | Пивоварня Глетчер",
+    "description": "Широчайший выбор сортов от пивоварни и оборудование для бара под ключ. Мы имеем собственные филиалы и представительства в крупных городах России: Москва, Санкт-Петербург, Нижний Новгород, Екатеринбург, Челябинск, Краснодар, Геленджик, Крым, а также широку",
+    "canonical": "https://www.gletcherbrewery.com/horeca",
+    "h1": [],
+    "h2": [
+      "Почему импортное пиво больше не выгодно?"
+    ],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "103271966",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/aging",
+    "http": "200",
+    "title": "CYNIC. Русский Имперский Стаут | Пивоварня Глетчер",
+    "description": "Мягкий коньячный аромат, глубокий насыщенный пряный вкус, бескомпромиссный императорский характер – всё это в новом CYNIC RIS от Gletcher Brewery.",
+    "canonical": "https://www.gletcherbrewery.com/aging",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "100794856",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [
+      "/beer/ausweis",
+      "/beer/blue-monkey",
+      "/beer/bowler-ipa",
+      "/beer/brainstorm-apa-alcohol-free",
+      "/beer/cynic",
+      "/beer/friday-avenue-APA",
+      "/beer/heidegger-hell",
+      "/beer/iron-woods-dry-stout",
+      "/beer/iron-woods-milk-stout",
+      "/beer/milk-of-amnesia-v-tropic",
+      "/beer/nut-butter",
+      "/beer/rouge-de-fleur",
+      "/beer/ruby-road",
+      "/beer/tour-de-grapefruit",
+      "/beer/underground-ale"
+    ],
+    "tposts": []
+  },
+  {
+    "path": "/10-years",
+    "http": "200",
+    "title": "Нам 10 лет! | Пивоварня Глетчер",
+    "description": "В честь 10-летия нашей пивоварни мы предлагаем вам принять участие в нашем конкурсе и выиграть призы!",
+    "canonical": "https://www.gletcherbrewery.com/10-years",
+    "h1": [
+      "Нам 10 лет!"
+    ],
+    "h2": [],
+    "forms": 1,
+    "mapbox": true,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "17960662",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/restaurant",
+    "http": "200",
+    "title": "Ресторан | Gletcher Brewery | Проведение банкетов и других мероприятий",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/restaurant",
+    "h1": [
+      "BREWER'S HOUSE"
+    ],
+    "h2": [],
+    "forms": 2,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "31289111",
+    "hreflang": [],
+    "social": [
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ЗАБРОНИРОВАТЬ",
+      "ЗАБРОНИРОВАТЬ ДЕГУСТАЦИЮ ",
+      "Забронировать"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/members/lk",
+    "http": "200",
+    "title": "‎",
+    "description": null,
+    "canonical": null,
+    "h1": [],
+    "h2": [],
+    "forms": 0,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": false,
+    "ga": false,
+    "tilda_page": "44958479",
+    "hreflang": [],
+    "social": [],
+    "cta_sample": [],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/beer/friday-avenue-apa",
+    "http": "200",
+    "title": "Friday Avenue APA | Gletcher Brewery",
+    "description": "Легкий и питкий сладковатый АРА с нотами ананаса и манго.",
+    "canonical": "https://www.gletcherbrewery.com/beer/friday-avenue-apa",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "13179167",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [
+      "/beer/ausweis",
+      "/beer/blue-monkey",
+      "/beer/bowler-ipa",
+      "/beer/brainstorm-apa-alcohol-free",
+      "/beer/cynic",
+      "/beer/friday-avenue-APA",
+      "/beer/friday-avenue-apa",
+      "/beer/heidegger-hell",
+      "/beer/iron-woods-dry-stout",
+      "/beer/iron-woods-milk-stout",
+      "/beer/milk-of-amnesia-non-alco",
+      "/beer/milk-of-amnesia-v-tropic",
+      "/beer/nut-butter",
+      "/beer/rouge-de-fleur",
+      "/beer/ruby-road",
+      "/beer/tour-de-grapefruit",
+      "/beer/underground-ale"
+    ],
+    "tposts": []
+  },
+  {
+    "path": "/beer/bowler-ipa",
+    "http": "200",
+    "title": "Bowler IPA | Gletcher Brewery",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/beer/bowler-ipa",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "14951415",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [
+      "/beer/ausweis",
+      "/beer/blue-monkey",
+      "/beer/bowler-ipa",
+      "/beer/brainstorm-apa-alcohol-free",
+      "/beer/cynic",
+      "/beer/friday-avenue-APA",
+      "/beer/heidegger-hell",
+      "/beer/iron-woods-dry-stout",
+      "/beer/iron-woods-milk-stout",
+      "/beer/milk-of-amnesia-non-alco",
+      "/beer/milk-of-amnesia-v-tropic",
+      "/beer/nut-butter",
+      "/beer/rouge-de-fleur",
+      "/beer/ruby-road",
+      "/beer/tour-de-grapefruit",
+      "/beer/underground-ale"
+    ],
+    "tposts": []
+  },
+  {
+    "path": "/beer/heidegger-hell",
+    "http": "200",
+    "title": "Heidegger Hell | Пивоварня Глетчер",
+    "description": "Классическое светлое пиво низового брожения для истинных ценителей старых немецких традиций. Hell не зря считается одним из самых популярных напитков не только в Германии, но и во всем мире, ведь его отличает характерный узнаваемый букет и превосходное не",
+    "canonical": "https://www.gletcherbrewery.com/beer/heidegger-hell",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "26673432",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [
+      "/beer/ausweis",
+      "/beer/blue-monkey",
+      "/beer/bowler-ipa",
+      "/beer/brainstorm-apa-alcohol-free",
+      "/beer/cynic",
+      "/beer/friday-avenue-APA",
+      "/beer/heidegger-hell",
+      "/beer/iron-woods-dry-stout",
+      "/beer/iron-woods-milk-stout",
+      "/beer/milk-of-amnesia-non-alco",
+      "/beer/milk-of-amnesia-v-tropic",
+      "/beer/nut-butter",
+      "/beer/rouge-de-fleur",
+      "/beer/ruby-road",
+      "/beer/tour-de-grapefruit",
+      "/beer/underground-ale"
+    ],
+    "tposts": []
+  },
+  {
+    "path": "/gletcher-goes-vegan",
+    "http": "200",
+    "title": "GLETCHER GOES VEGAN",
+    "description": "А вы знали, что 5 сортов нашего пива подходит для веганов?",
+    "canonical": "https://www.gletcherbrewery.com/gletcher-goes-vegan",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "9892928",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/blog/carte-blanche",
+    "http": "200",
+    "title": "CARTE BLANCHE",
+    "description": "Жара в городе – даёшь полный карт-бланш гурманам!",
+    "canonical": "https://www.gletcherbrewery.com/blog/carte-blanche",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "9894227",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/vacancies",
+    "http": "200",
+    "title": "Вакансии | Пивоварня Глетчер",
+    "description": "Вакансии пивоварни Gletcher — присоединяйтесь к нашей команде!",
+    "canonical": "https://www.gletcherbrewery.com/vacancies",
+    "h1": [
+      "ВАКАНСИИ"
+    ],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "40428857",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery",
+      "https://www.instagram.com/gletcher_brewery/"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/about",
+    "http": "200",
+    "title": "О нас | Gletcher Brewery | Пивоварня Глетчер",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/about",
+    "h1": [
+      "gletcher",
+      "ВКУС",
+      "ДЛЯ ТЕХ,",
+      "КТО ИЩЕТ"
+    ],
+    "h2": [
+      "Пивоварня"
+    ],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "71867465",
+    "hreflang": [],
+    "social": [
+      "https://t.me/brainstorm_motor_fest",
+      "https://t.me/brewershouse",
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/brainstormfest",
+      "https://vk.com/brewershouse",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ",
+      "забронировать экскурсию",
+      "зарегистрироваться"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/header",
+    "http": "200",
+    "title": "Header",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/header",
+    "h1": [],
+    "h2": [],
+    "forms": 0,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "17060973",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery",
+      "https://www.facebook.com/gletcherbrewery",
+      "https://www.instagram.com/gletcher_brewery/"
+    ],
+    "cta_sample": [],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/footer",
+    "http": "200",
+    "title": "footer new",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/footer",
+    "h1": [],
+    "h2": [],
+    "forms": 0,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "8475744",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/tours/check",
+    "http": "200",
+    "title": "Экскурсия на пивоварню | Gletcher Brewery | Дегустация крафтового пива",
+    "description": "Экскурсия на пивоварню – это отличный способ провести время с друзьями, коллегами или деловыми партнерами! Вас ждёт незабываемое путешествие по всем этапам производства, а также дегустация всех доступных сортов пива на нашем пивзаводе.",
+    "canonical": "https://www.gletcherbrewery.com/tours/check",
+    "h1": [
+      "ПРОВЕРКА ПОДЛИННОСТИ СЕРТИФИКАТА",
+      "ЭКСКУРСИЯ НА ПИВОВАРЕННЫЙ ЗАВОД"
+    ],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "38525198",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ",
+      "ЗАБРОНИРОВАТЬ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/tours/preorder",
+    "http": "200",
+    "title": "Экскурсия на пивоварню | Gletcher Brewery | Дегустация крафтового пива",
+    "description": "Экскурсия на пивоварню – это отличный способ провести время с друзьями, коллегами или деловыми партнерами! Вас ждёт незабываемое путешествие по всем этапам производства, а также дегустация всех доступных сортов пива на нашем пивзаводе.",
+    "canonical": "https://www.gletcherbrewery.com/tours/preorder",
+    "h1": [
+      "ПРЕДОПЛАТА ЭКСКУРСИИ",
+      "ЭКСКУРСИЯ НА ПИВОВАРЕННЫЙ ЗАВОД"
+    ],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "31142962",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ",
+      "ЗАБРОНИРОВАТЬ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/russian-craft-beer",
+    "http": "200",
+    "title": "Российское крафтовое пиво оптом | Пивоварня Глетчер",
+    "description": "Широчайший выбор сортов от пивоварни и оборудование для бара под ключ. Мы имеем собственные филиалы и представительства в крупных городах России: Москва, Санкт-Петербург, Нижний Новгород, Екатеринбург, Челябинск, Краснодар, Геленджик, Крым, а также широку",
+    "canonical": "https://www.gletcherbrewery.com/russian-craft-beer",
+    "h1": [
+      "РОССИЙСКОЕ КРАФТОВОЕ ПИВО ОПТОМ И НА ЛЮБОЙ ВКУС"
+    ],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "26419950",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [
+      "/beer/ausweis",
+      "/beer/blue-monkey",
+      "/beer/bowler-ipa",
+      "/beer/brainstorm-apa-alcohol-free",
+      "/beer/friday-avenue-APA",
+      "/beer/heidegger-hell",
+      "/beer/iron-woods-dry-stout",
+      "/beer/milk-of-amnesia-v-tropic",
+      "/beer/nut-butter",
+      "/beer/rouge-de-fleur",
+      "/beer/ruby-road",
+      "/beer/underground-ale"
+    ],
+    "tposts": []
+  },
+  {
+    "path": "/catalog_production",
+    "http": "404",
+    "title": "Gletcher Brewery | Пивоварня Глетчер",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/error",
+    "h1": [],
+    "h2": [],
+    "forms": 0,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "44083409",
+    "hreflang": [],
+    "social": [],
+    "cta_sample": [],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/error",
+    "http": "200",
+    "title": "Gletcher Brewery | Пивоварня Глетчер",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/error",
+    "h1": [],
+    "h2": [],
+    "forms": 0,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "44083409",
+    "hreflang": [],
+    "social": [],
+    "cta_sample": [],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/ex-test",
+    "http": "200",
+    "title": "Blank page",
+    "description": null,
+    "canonical": "https://www.gletcherbrewery.com/ex-test",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "38517006",
+    "hreflang": [],
+    "social": [
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/even-more-vegan",
+    "http": "200",
+    "title": "Новые позиции в каталоге Vegan Society",
+    "description": "Еще 3 сорта пива веган-френдли",
+    "canonical": "https://www.gletcherbrewery.com/even-more-vegan",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "13132461",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  },
+  {
+    "path": "/ipa-not-apa",
+    "http": "200",
+    "title": "Почему Bowler IPA не APA?",
+    "description": "Oтвет на вопрос почему Bowler IPA, содержащий только американские хмели, не называется APA.",
+    "canonical": "https://www.gletcherbrewery.com/ipa-not-apa",
+    "h1": [],
+    "h2": [],
+    "forms": 1,
+    "mapbox": false,
+    "yclients": false,
+    "collabza": false,
+    "metrika": true,
+    "ga": true,
+    "tilda_page": "16187043",
+    "hreflang": [],
+    "social": [
+      "https://t.me/gletcherbrewery",
+      "https://vk.com/gletcherbrewery"
+    ],
+    "cta_sample": [
+      "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+    ],
+    "beer_links": [],
+    "tposts": []
+  }
+]

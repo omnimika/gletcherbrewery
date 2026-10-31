@@ -1,0 +1,244 @@
+[
+  {
+    "path": "/",
+    "final_url": "https://www.gletcherbrewery.com/",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/beer",
+    "final_url": "https://www.gletcherbrewery.com/beer",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/blog",
+    "final_url": "https://www.gletcherbrewery.com/blog",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/blog-all",
+    "final_url": "https://www.gletcherbrewery.com/blog-all",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/map",
+    "final_url": "https://www.gletcherbrewery.com/map",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/agent",
+    "final_url": "https://www.gletcherbrewery.com/agent",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/tours",
+    "final_url": "https://www.gletcherbrewery.com/tours",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/shop",
+    "final_url": "https://www.gletcherbrewery.com/shop",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/partnership",
+    "final_url": "https://www.gletcherbrewery.com/partnership",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/contacts",
+    "final_url": "https://www.gletcherbrewery.com/contacts",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/policy",
+    "final_url": "https://www.gletcherbrewery.com/policy",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/shopping-rules",
+    "final_url": "https://www.gletcherbrewery.com/shopping-rules",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/en",
+    "final_url": "https://www.gletcherbrewery.com/en",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/en/beer",
+    "final_url": "https://www.gletcherbrewery.com/en/beer",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/en/tours",
+    "final_url": "https://www.gletcherbrewery.com/en/tours",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/en/partnership",
+    "final_url": "https://www.gletcherbrewery.com/en/partnership",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/en/map",
+    "final_url": "https://www.gletcherbrewery.com/en/map",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/en/blog",
+    "final_url": "https://www.gletcherbrewery.com/en/blog",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/horeca",
+    "final_url": "https://www.gletcherbrewery.com/horeca",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/aging",
+    "final_url": "https://www.gletcherbrewery.com/aging",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/10-years",
+    "final_url": "https://www.gletcherbrewery.com/10-years",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/restaurant",
+    "final_url": "https://www.gletcherbrewery.com/restaurant",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/members/lk",
+    "final_url": "https://www.gletcherbrewery.com/members/lk",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/beer/friday-avenue-apa",
+    "final_url": "https://www.gletcherbrewery.com/beer/friday-avenue-apa",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/beer/bowler-ipa",
+    "final_url": "https://www.gletcherbrewery.com/beer/bowler-ipa",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/beer/heidegger-hell",
+    "final_url": "https://www.gletcherbrewery.com/beer/heidegger-hell",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/gletcher-goes-vegan",
+    "final_url": "https://www.gletcherbrewery.com/gletcher-goes-vegan",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/blog/carte-blanche",
+    "final_url": "https://www.gletcherbrewery.com/blog/carte-blanche",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/vacancies",
+    "final_url": "https://www.gletcherbrewery.com/vacancies",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/about",
+    "final_url": "https://www.gletcherbrewery.com/about",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/footer",
+    "final_url": "https://www.gletcherbrewery.com/footer",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/header",
+    "final_url": "https://www.gletcherbrewery.com/header",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null
+  },
+  {
+    "path": "/sitemap-store.xml",
+    "final_url": "https://www.gletcherbrewery.com/sitemap-store.xml",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null,
+    "loc_count": 0,
+    "locs_sample": []
+  },
+  {
+    "path": "/sitemap-feeds.xml",
+    "final_url": "https://www.gletcherbrewery.com/sitemap-feeds.xml",
+    "status": 0,
+    "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)>",
+    "content_type": null,
+    "loc_count": 0,
+    "locs_sample": []
+  }
+]

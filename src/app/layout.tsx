@@ -3,8 +3,12 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Gletcher Brewery",
-  description: "Gletcher Brewery — сайт пивоварни.",
+  title: {
+    default: "Gletcher Brewery",
+    template: "%s | Gletcher Brewery",
+  },
+  description: "Пивоварня Глетчер — современное пивоварение с 2011 года.",
+  metadataBase: new URL("https://www.gletcherbrewery.com"),
 };
 
 export default function RootLayout({

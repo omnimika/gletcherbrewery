@@ -43,3 +43,8 @@ next-env.d.ts
 
 # local tooling and logs
 *.log
+
+# local drop zone for large source packs (moved selections live under assets/)
+/tmp/
+/assets/brand/fonts/**/*Trial*
+/public/fonts/*Trial*

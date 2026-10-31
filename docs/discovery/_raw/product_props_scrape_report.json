@@ -1,0 +1,114 @@
+[
+  {
+    "slug": "ausweis",
+    "enSlug": "ausweis",
+    "issues": [],
+    "foodEn": "seafood and fish, aged cheese, banana pie"
+  },
+  {
+    "slug": "heidegger-hell",
+    "enSlug": "heidegger-hell",
+    "issues": [],
+    "foodEn": "pig shank, weiswurst sausage, brezel"
+  },
+  {
+    "slug": "rouge-de-fleur",
+    "enSlug": "rouge-de-fleur",
+    "issues": [],
+    "foodEn": "desserts, dark chokolate, cheddar cheese"
+  },
+  {
+    "slug": "milk-of-amnesia-non-alco",
+    "enSlug": "milk-of-amnesia-non-alco",
+    "issues": [],
+    "foodEn": "tom yam soup, asian cuisine, grill meat"
+  },
+  {
+    "slug": "milk-of-amnesia-v-tropic",
+    "enSlug": "milk-of-amnesia",
+    "issues": [],
+    "foodEn": "fermented cheese, spiced dishes, burgers"
+  },
+  {
+    "slug": "brainstorm",
+    "enSlug": "brainstorm-apa-alcohol-free",
+    "issues": [],
+    "foodEn": "gorgonzola cheese, pork ribs, indian cuisine"
+  },
+  {
+    "slug": "blue-monkey",
+    "enSlug": "blue-monkey",
+    "issues": [],
+    "foodEn": "fruits, white fish, seafood"
+  },
+  {
+    "slug": "nut-butter",
+    "enSlug": "nut-butter",
+    "issues": [],
+    "foodEn": "grilled salmon, torn beef, cheeses and desserts"
+  },
+  {
+    "slug": "bowler-ipa",
+    "enSlug": "bowler-ipa",
+    "issues": [],
+    "foodEn": "desserts, asian cuisine, burgers"
+  },
+  {
+    "slug": "underground-ale",
+    "enSlug": "underground-ale",
+    "issues": [],
+    "foodEn": "fish and chips, roast pork, roast beef"
+  },
+  {
+    "slug": "friday-avenue-apa",
+    "enSlug": "friday-avenue-apa",
+    "issues": [],
+    "foodEn": "spicy cheese, cheeseburger, banana split"
+  },
+  {
+    "slug": "iron-woods-dry-stout",
+    "enSlug": "iron-woods-dry-stout",
+    "issues": [],
+    "foodEn": "dried meat, oysters, chocolate pudding"
+  },
+  {
+    "slug": "iron-woods-milk-stout",
+    "enSlug": "iron-woods-milk-stout",
+    "issues": [],
+    "foodEn": "ice cream, barbecue beef, profiteroles"
+  },
+  {
+    "slug": "ruby-road",
+    "enSlug": "ruby-road",
+    "issues": [],
+    "foodEn": "soft cheese, ham, salads"
+  },
+  {
+    "slug": "brut-grapefruit",
+    "enSlug": "brut-grapefruit",
+    "issues": [],
+    "foodEn": "pie, seafood, fish dishes"
+  },
+  {
+    "slug": "hop-dragon",
+    "enSlug": "hop-dragon",
+    "issues": [
+      "note:no-kegVol-on-page"
+    ],
+    "foodEn": "chic wings in sweet and sour sauce, Mexican tacos, Indian cuisine"
+  },
+  {
+    "slug": "tour-de-grapefruit",
+    "enSlug": "tour-de-grapefruit",
+    "issues": [],
+    "foodEn": "fresh salad, seafood, fish dishes"
+  },
+  {
+    "slug": "cynic",
+    "enSlug": "cynic",
+    "issues": [
+      "note:no-kegVol-on-page"
+    ],
+    "foodEn": "ice-cream, red meat, brauny, aged cheese"
+  }
+]

@@ -1,0 +1,632 @@
+[
+  {
+    "id": "ausweis",
+    "category": "CLASSIC",
+    "title": "Ausweis",
+    "urlRu": "https://www.gletcherbrewery.com/beer/ausweis",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/ausweis",
+    "slugRu": "ausweis",
+    "slugEn": "ausweis",
+    "badge": "",
+    "specs": {
+      "abv": "5,2",
+      "og": "13",
+      "ibu": "15",
+      "style": "Weisbier",
+      "malts": "Wheat Malt, Pilsner, Munich Malt, Caramel Malt",
+      "hops": "Bobek",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Полное тело, завершающееся нотками спелого банана, гармоничная вкусо-ароматическая композиция",
+        "about": "Откройте для себя пшеничный сорт пива Ausweis – настоящий шедевр, созданный из натуральных ингредиентов премиального качества. Получился настоящий золотой стандарт: вода, солод и хмель премиального качества. Основу составили ингредиенты из Германии: четыре солода с идеально сбалансированными параметрами цвета и ферментации, а также умеренно горький и ароматный словенский хмель Bobek Styrian Golding.",
+        "foodPairing": "морепродукты и рыба, выдержанный сыр, банановый пирог",
+        "fermentation": "Верховое брожжение"
+      },
+      "en": {
+        "taste": "Full body, ending with notes of ripe banana, harmonious flavor and aromatic composition",
+        "about": "A new wheat variety brewed strictly according to the Rheinheitsgebot Beer purity Law of 1516. It turned out to be a real gold standard: water, malt and hops of premium quality. The basis was made up of ingredients from Germany: four malts with perfectly balanced color and fermentation parameters, as well as moderately bitter and aromatic Slovenian hops Bobek Styrian Golding.",
+        "foodPairing": "seafood and fish, aged cheese, banana pie",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "heidegger-hell",
+    "category": "CLASSIC",
+    "title": "Heidegger Hell",
+    "urlRu": "https://www.gletcherbrewery.com/beer/heidegger-hell",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/heidegger-hell",
+    "slugRu": "heidegger-hell",
+    "slugEn": "heidegger-hell",
+    "badge": "",
+    "specs": {
+      "abv": "4,7",
+      "og": "12",
+      "ibu": "18",
+      "style": "Helles Lager",
+      "malts": "Pilsner Malt",
+      "hops": "Nugget, Aurora, Bobek",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Искрящийся, освежающий лагер с лёгкой солодовой сладостью и утонченной хмелевой горчинкой",
+        "about": "Классическое светлое пиво низового брожения для истинных ценителей старых немецких традиций. Благородный солод Pilsner, горький немецкий хмель Nugget, ароматный древесно-хвойный хмель Aurora, а также выразительный цветочно-сосновый хмель Bobek Styrian Golding, выращенный на альпийских склонах центральной Словении. Великолепно подойдёт к простым немецким блюдам.",
+        "foodPairing": "рулька, колбаска вайсвурст, брёцель",
+        "fermentation": "НИЗОВОЕ брожение"
+      },
+      "en": {
+        "taste": "Sparkling, refreshing lager with a light malt sweetness and subtle hop bitterness",
+        "about": "Classic light beer of low fermentation for true connoisseurs of old German traditions. Noble Pilsner malt, bitter German Nugget hops, fragrant woody-coniferous Aurora hops, as well as expressive floral-pine Bobek Styrian Golding hops grown on the alpine slopes of central Slovenia. It will perfectly match simple German dishes.",
+        "foodPairing": "pig shank, weiswurst sausage, brezel",
+        "fermentation": "Bottom fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "rouge-de-fleur",
+    "category": "CLASSIC",
+    "title": "Rouge de Fleur",
+    "urlRu": "https://www.gletcherbrewery.com/beer/rouge-de-fleur",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/rouge-de-fleur",
+    "slugRu": "rouge-de-fleur",
+    "slugEn": "rouge-de-fleur",
+    "badge": "",
+    "specs": {
+      "abv": "3,8",
+      "og": "11,5",
+      "ibu": "7",
+      "style": "Kriek",
+      "malts": "Pilsner Malt",
+      "hops": "Bobek",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Фруктовый букет, начинающийся со свежей сладости и заканчивающийся тонкой кислинкой",
+        "about": "Великолепно сбалансированный, игристый и освежающий «крикенбир». Изучив все тонкости и секреты производства этого напитка, мы сварили свое вишневое пиво, по вкусу и качеству не уступающее бельгийскому. Стоит его попробовать, и вас тут же захватит аромат дикой вишни, танцуя бельгийскую чечетку на стенках бокала.",
+        "foodPairing": "десерты, тёмный шоколад, сыр чеддер",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "A fruity bouquet starting with fresh sweetness and ending with a subtle sourness",
+        "about": "A superbly balanced, sparkling and refreshing \"krikenbir\". Having studied all the subtleties and secrets of the production of this drink, we brewed our cherry beer, which is not inferior to Belgian in taste and quality. It is worth trying it, and you will immediately be captured by the aroma of wild cherries, dancing a Belgian tap dance on the walls of a glass.",
+        "foodPairing": "desserts, dark chokolate, cheddar cheese",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "milk-of-amnesia-non-alco",
+    "category": "CRAFT",
+    "title": "Milk of Amnesia non-alcoholic",
+    "urlRu": "https://www.gletcherbrewery.com/beer/milk-of-amnesia-non-alco",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/milk-of-amnesia-non-alco",
+    "slugRu": "milk-of-amnesia-non-alco",
+    "slugEn": "milk-of-amnesia-non-alco",
+    "badge": "new, alcofree",
+    "specs": {
+      "abv": "0,5",
+      "og": "N/A",
+      "ibu": "22",
+      "style": "Milkshake IPA",
+      "malts": "Pilsner Malt, Crystal Malt, Wheat Malt",
+      "hops": "Styrian Wolf, Mosaic",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Умеренно сладкий, округлый и полнотелый вкус, благодаря насыщенной фруктовой основе",
+        "about": "Мы знаем, что жизнь требует драйва 24/7. Руль, спорт, важные встречи – иногда алкоголь просто не вписывается в график. Но разве это означает, что нужно забыть о вкусе любимого крафта?",
+        "foodPairing": "сыры с плесенью, азиатская кухня, том ям, мясо гриль",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "Moderately sweet, rounded and full-bodied taste, thanks to the rich fruit base",
+        "about": "We know that life requires 24/7 drive. Driving, sports, important meetings – sometimes alcohol just doesn't fit into the schedule. But does this mean that you need to forget about the taste of your favorite craft?",
+        "foodPairing": "tom yam soup, asian cuisine, grill meat",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "milk-of-amnesia-v-tropic",
+    "category": "CRAFT",
+    "title": "Milk of Amnesia",
+    "urlRu": "https://www.gletcherbrewery.com/beer/milk-of-amnesia-v-tropic",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/milk-of-amnesia",
+    "slugRu": "milk-of-amnesia-v-tropic",
+    "slugEn": "milk-of-amnesia",
+    "badge": "",
+    "specs": {
+      "abv": "5,5",
+      "og": "14,3",
+      "ibu": "28",
+      "style": "Milkshake IPA",
+      "malts": "Pilsner Malt, Crystal Malt, Wheat Malt",
+      "hops": "Nugget, Columbus, Centenial, Mosaic",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Умеренно сладкий, округлый и полнотелый вкус, благодаря насыщенной фруктовой основе",
+        "about": "После феноменального успеха нашей «тропической амнезии» в 2018 году, мы решили включить этот напиток в постоянную линейку. По-прежнему остался дух бунтарства от наших друзей из",
+        "foodPairing": "сыры с плесенью, пряные блюда, бургеры",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "Moderately sweet, rounded and full-bodied taste, thanks to the rich fruit base",
+        "about": "After the phenomenal success of our \"tropical amnesia\" in 2018, we decided to include this drink in the permanent line. There is still a spirit of rebellion from our friends from the Anarchy Brew Co. (Great Britain), and we boldly mixed pineapple, mango and passion fruit juices, flavoring it with another portion of lactose. For the fragrance and to continue the bitterness, which depicted a nugget, Columbus, a Century and a mosaic.",
+        "foodPairing": "fermented cheese, spiced dishes, burgers",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "brainstorm",
+    "category": "CRAFT",
+    "title": "Brainstorm",
+    "urlRu": "https://www.gletcherbrewery.com/beer/brainstorm",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/brainstorm-apa-alcohol-free",
+    "slugRu": "brainstorm",
+    "slugEn": "brainstorm-apa-alcohol-free",
+    "badge": "alcofree",
+    "specs": {
+      "abv": "0,5",
+      "og": "N/A",
+      "ibu": "23",
+      "style": "Nonalcoholic APA",
+      "malts": "Pilsner Malt, Avangard",
+      "hops": "Mosaic",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Несмотря на отсутствие градусов, отличается полным, насыщенным вкусом и ярким ароматом, присущим стилю АРА",
+        "about": "Это безалкогольное освежающее пиво с великолепным вкусом, которое ничем не уступает своим собратьям, обладающим крепостью. Сочетание светлого ячменного солода от Avangard и американского хмеля Mosaic. Настоящий кладезь полезных веществ, витаминов А, С, D, калия, магния, кальция, железа, кремния, и всего, что понадобится для бодрости тела, силы духа и ясности ума. Пиво легко пьется и подойдет для всех случаев, когда необходимо воздержаться от алкоголя.",
+        "foodPairing": "сыр горгонзола, свиные рёбрышки, индийская кухня",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "Despite the lack of degrees, it is characterized by a full, rich taste and bright aroma inherent in the MACAW style",
+        "about": "This is a non-alcoholic refreshing beer with a great taste, which is in no way inferior to its counterparts with strength. A combination of light barley malt from Avangard and American Mosaic hops. A real storehouse of useful substances, vitamins A, C, D, potassium, magnesium, calcium, iron, silicon, and everything you need for body vigor, fortitude and mental clarity. Beer is easy to drink and is suitable for all cases when it is necessary to abstain from alcohol.",
+        "foodPairing": "gorgonzola cheese, pork ribs, indian cuisine",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "blue-monkey",
+    "category": "CRAFT",
+    "title": "Blue Monkey",
+    "urlRu": "https://www.gletcherbrewery.com/beer/blue-monkey",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/blue-monkey",
+    "slugRu": "blue-monkey",
+    "slugEn": "blue-monkey",
+    "badge": "",
+    "specs": {
+      "abv": "5,4",
+      "og": "12,7",
+      "ibu": "10",
+      "style": "Wheat Ale",
+      "malts": "Pale Ale, MelaBeech",
+      "hops": "Bobek",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Эль с приятной кислинкой и хмелевой горчинкой, фруктовый, чуть пряный, с гвоздичными и банановыми оттенками",
+        "about": "Лёгкое пшеничное пиво с выразительным гармоничным ароматом и мягким сладковатым послевкусием. В основе напитка использовано три вида солода, а пряный кориандр и цитрусовая цедра наделяют напиток утонченным, изящным, освежающим весенним букетом. Лучше всего этот эль сочетается с блюдами из рыбы, а также морепродуктами.",
+        "foodPairing": "фрукты, белая рыба, морепродукты",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "Ale with a pleasant sourness and hop bitterness, fruity, slightly spicy, with clove and banana shades",
+        "about": "A light wheat beer with an expressive harmonious aroma and a mild sweet aftertaste. The drink is based on three types of malt, and spicy coriander and citrus peel give the drink a refined, elegant, refreshing spring bouquet. This ale is best combined with fish dishes, as well as seafood.",
+        "foodPairing": "fruits, white fish, seafood",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "nut-butter",
+    "category": "CRAFT",
+    "title": "Nut Butter",
+    "urlRu": "https://www.gletcherbrewery.com/beer/nut-butter",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/nut-butter",
+    "slugRu": "nut-butter",
+    "slugEn": "nut-butter",
+    "badge": "",
+    "specs": {
+      "abv": "5,5",
+      "og": "14",
+      "ibu": "35",
+      "style": "Nut Brown Ale",
+      "malts": "Cara Dark Malt, Cara 120, Special B, Golden Naked Oats",
+      "hops": "Magnum, Aurora, Fuggle",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Пиво дымно-орехового цвета, Являясь родственником классического эля, отличается более ощутимой горечью, ароматом и плотностью",
+        "about": "Изучать британский сорт браун-эль мы начали совместно с одной из старейших пивоварен Великобритании —",
+        "foodPairing": "лосось на гриле, рваная говядина, сыры и десерты",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "The smoky-nutty beer, Being a relative of the classic ale, has a more noticeable bitterness, aroma and density",
+        "about": "We started studying the British brown ale variety together with one of the oldest breweries in the UK — Shepherd Neame, and we managed to preserve the unique qualities of this drink. Its sweetness does not deafen the confectionery, but gradually reveals a moderate hop bitterness and turns into a fragrant nutty trail. During fermentation, natural Italian nut extract is added, which was exclusively developed for our brewery.",
+        "foodPairing": "grilled salmon, torn beef, cheeses and desserts",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "bowler-ipa",
+    "category": "CRAFT",
+    "title": "Bowler IPA",
+    "urlRu": "https://www.gletcherbrewery.com/beer/bowler-ipa",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/bowler-ipa",
+    "slugRu": "bowler-ipa",
+    "slugEn": "bowler-ipa",
+    "badge": "",
+    "specs": {
+      "abv": "6,1",
+      "og": "14,5",
+      "ibu": "70",
+      "style": "Indian Pale Ale",
+      "malts": "Pale Ale, MelaBeech",
+      "hops": "Styrian Wolf, Chinook, Mosaic, Cascade",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Являясь родственником классического эля, отличается более ощутимой горечью, ароматом и плотностью",
+        "about": "Этот эль сварен в американском стиле с использованием хмеля из США. Результат — янтарь в бокале с выраженной горечью в послевкусии. Особого внимания заслуживает аромат, в букете которого гармонируют цитрусовые, цветочные, сосновые и фруктовые ноты. Он достигается методом «сухого охмеления», когда в конце варки добавляют ещё хмели Cascade и Мosaic.",
+        "foodPairing": "десерты, азиатская кухня, бургеры",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "Being a relative of the classic ale, it has a more noticeable bitterness, aroma and density",
+        "about": "This ale is brewed in the American style using hops from the USA. The result is amber in a glass with a pronounced bitterness in the aftertaste. The fragrance deserves special attention, in the bouquet of which citrus, floral, pine and fruit notes are in harmony. It is achieved by the method of \"dry hopping\", when at the end of cooking Cascade and Mosaic hops are added.",
+        "foodPairing": "desserts, asian cuisine, burgers",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "underground-ale",
+    "category": "CRAFT",
+    "title": "Underground Ale",
+    "urlRu": "https://www.gletcherbrewery.com/beer/underground-ale",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/underground-ale",
+    "slugRu": "underground-ale",
+    "slugEn": "underground-ale",
+    "badge": "",
+    "specs": {
+      "abv": "4,7",
+      "og": "11,8",
+      "ibu": "27",
+      "style": "Ale",
+      "malts": "Pilsner Malt, Cara 120",
+      "hops": "Styrian Wolf, Cascade",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Ощутимо солодовый вкус со смолистыми и карамельными нотами и легкой хмелевой горчинкой",
+        "about": "Традиционный английский эль с удивительным янтарным оттенком, получающимся благодаря бельгийскому карамельному солоду Cara 120. В середине кипячения мы добавили словенский цветочно-фруктовый хмель Styrian Wolf, а в конце варки и на «сухом охмелении» — американский горько- ароматный Cascade. К такому пиву предпочитают классические английские закуски: жареную свинину, ростбиф и знаменитые фиш-энд-чипс.",
+        "foodPairing": "фиш энд чипс, жареная свинина, ростбиф",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "A palpably malty taste with resinous and caramel notes and a slight hop bitterness",
+        "about": "A traditional English ale with an amazing amber hue, obtained thanks to the Belgian caramel malt Cara 120. In the middle of boiling, we added Slovenian Styrian Wolf floral and fruit hops, and at the end of cooking and on \"dry hopping\" - the American bittersweet Cascade. Classic English snacks are preferred for this beer: roast pork, roast beef and the famous fish and chips.",
+        "foodPairing": "fish and chips, roast pork, roast beef",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "friday-avenue-apa",
+    "category": "CRAFT",
+    "title": "Friday Avenue",
+    "urlRu": "https://www.gletcherbrewery.com/beer/friday-avenue-apa",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/friday-avenue-apa",
+    "slugRu": "friday-avenue-apa",
+    "slugEn": "friday-avenue-apa",
+    "badge": "",
+    "specs": {
+      "abv": "4,7",
+      "og": "11,7",
+      "ibu": "21",
+      "style": "American Pale Ale",
+      "malts": "Pale Ale, White Classiс, Oat",
+      "hops": "Mosaic",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Обновлённый чуть терпкий вкус, благодаря нотам спелого ананаса, сочного манго и весенних цветов",
+        "about": "Мир меняется, и наш Friday Avenue вместе с ним. На проспекте вечной пятницы наступила весна и расцвели цветы. Мы оставили столь любимый всеми вкус, но освежили его американским хмелем Мosaic. Тело напитка осталось легким и сладковатым. Верховое брожение лучше сбалансировало горечь и полностью раскрыло богатую ароматику. И, конечно, мы не забыли про «сухое охмеление», чтобы сделать пиво идеальным.",
+        "foodPairing": "пряный сыр, чизбургер, банановый сплит",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "An updated slightly tart taste, thanks to notes of ripe pineapple, juicy mango and spring flowers",
+        "about": "The world is changing, and our Friday Avenue is changing with it. Spring has come and flowers have bloomed on Eternal Friday Avenue. We left the taste so beloved by everyone, but refreshed it with American Mosaic hops. The body of the drink remained light and sweet. Top fermentation better balanced the bitterness and fully revealed the rich aromatics. And, of course, we did not forget about the \"dry hopping\" to make the beer perfect.",
+        "foodPairing": "spicy cheese, cheeseburger, banana split",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "iron-woods-dry-stout",
+    "category": "CRAFT",
+    "title": "Iron Woods Dry Stout",
+    "urlRu": "https://www.gletcherbrewery.com/beer/iron-woods-dry-stout",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/iron-woods-dry-stout",
+    "slugRu": "iron-woods-dry-stout",
+    "slugEn": "iron-woods-dry-stout",
+    "badge": "",
+    "specs": {
+      "abv": "4,8",
+      "og": "11",
+      "ibu": "20",
+      "style": "Dry Stout",
+      "malts": "Crystal Malt, Chocolate Malt, Black Malt, Corn Flakes",
+      "hops": "Savinski Golding, Nugget",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "СУХОЙ стаут с нотами карамели, кофейной жжёнки и пряности, а также тонким травяным ароматом хмеля",
+        "about": "Главный секрет этого стаута — благородная рецептура, в которой виртуозно соединили шесть специальных солодов. Вкус пропитан породой и характером, а кремообразная, плотная и невероятно вкусная пена гордой лавиной бурлит в стакане. Отлично сочетается с устрицами, барбекю, сырами, а также фруктовыми и шоколадными десертами. Если же заказать бокал отдельно, он сыграет мощное соло хорошего пивного вечера.",
+        "foodPairing": "вяленое мясо, устрицы, шоколадный пудинг",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "DRY stout with notes of caramel, burnt coffee and spices, as well as a subtle herbal aroma of hops",
+        "about": "The main secret of this stout is a noble recipe, in which six special malts were masterfully combined. The taste is saturated with rock and character, and creamy, dense and incredibly delicious foam is bubbling like an avalanche in a glass. It goes well with oysters, barbecue, cheeses, as well as fruit and chocolate desserts. If you order a glass separately, he will play a powerful solo of a good beer evening.",
+        "foodPairing": "dried meat, oysters, chocolate pudding",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "iron-woods-milk-stout",
+    "category": "CRAFT",
+    "title": "Iron Woods Milk Stout",
+    "urlRu": "https://www.gletcherbrewery.com/beer/iron-woods-milk-stout",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/iron-woods-milk-stout",
+    "slugRu": "iron-woods-milk-stout",
+    "slugEn": "iron-woods-milk-stout",
+    "badge": "discontinued",
+    "specs": {
+      "abv": "6,5",
+      "og": "17,5",
+      "ibu": "10",
+      "style": "Milk Stout",
+      "malts": "Pilsner Malt, Cara Malt, Cara Light Malt, Chocolate Malt, Black Malt",
+      "hops": "Savinski Golding",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Десертный стаут С МЯГКИМ СЛИВОЧНЫМ ВКУСОМ С НОТКАМИ кофе, ШОКОЛАДА, ВАНИЛИ И ЛЁГКОЙ КАРАМЕЛЬНОЙ СЛАДОСТЬЮ",
+        "about": "Iron Woods Milk Stout – следующая ступень эволюции нашего классического стаута. В приготовлении мы использовали лактозу, которая в комбинации с карамельными и шоколадными солодами дала мягкий сливочный вкус с нотками шоколада и кофе. Хмель добавлялся очень аккуратно, чтобы не сбить насыщенную ароматику солодов, но благодаря ему можно уловить слегка фруктовые ноты. Послевкусие сопровождает легкая сладость с оттенками карамели и бисквита.",
+        "foodPairing": "мороженое, говядина барбекю, мягкие сыры, профитроли",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "Dessert stout WITH A SOFT CREAMY TASTE WITH NOTES OF coffee, CHOCOLATE, VANILLA AND LIGHT CARAMEL SWEETNESS",
+        "about": "Iron Woods Milk Stout is the next step in the evolution of our classic stout. In the preparation, we used lactose, which in combination with caramel and chocolate malts gave a soft creamy taste with hints of chocolate and coffee. The hops were added very carefully so as not to knock down the rich aromatics of the malts, but thanks to it you can catch slightly fruity notes. The aftertaste is accompanied by a light sweetness with hints of caramel and sponge cake.",
+        "foodPairing": "ice cream, barbecue beef, profiteroles",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "ruby-road",
+    "category": "CRAFT",
+    "title": "Ruby Road",
+    "urlRu": "https://www.gletcherbrewery.com/beer/ruby-road",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/ruby-road",
+    "slugRu": "ruby-road",
+    "slugEn": "ruby-road",
+    "badge": "",
+    "specs": {
+      "abv": "7",
+      "og": "18",
+      "ibu": "15",
+      "style": "Strong Cherry Ale",
+      "malts": "Pilsner, Cara120, Wheat Malt",
+      "hops": "Bobek",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Выразительные 7% с фруктово-вишневым, древесным, немного танинным, чуть травянистым букетом",
+        "about": "Крепкий вишневый эль – новинка, которую ждали все знатоки стиля. Душистая вишня солирует приятным ароматом: ошеломительным, искрометным каскадом кисловато-сладких оттенков вкуса и долгим, утонченным, неповторимым цитрусовым послевкусием. Наиболее полно раскрывается в сочетании с такими блюдами, как мясо гриль, ветчина и различные мягкие сыры.",
+        "foodPairing": "мягкий сыр, ветчина, салаты",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "Expressive 7% with a fruity cherry, woody, slightly tannic, slightly herbaceous bouquet",
+        "about": "Strong cherry ale is a novelty that all connoisseurs of style have been waiting for. Fragrant cherries have a pleasant aroma: a stunning, sparkling cascade of sour-sweet flavors and a long, refined, unique citrus aftertaste. It is most fully revealed in combination with dishes such as grilled meat, ham and various soft cheeses.",
+        "foodPairing": "soft cheese, ham, salads",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "brut-grapefruit",
+    "category": "LIMITED",
+    "title": "Brut Grapefruit",
+    "urlRu": "https://www.gletcherbrewery.com/beer/brut-grapefruit",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/brut-grapefruit",
+    "slugRu": "brut-grapefruit",
+    "slugEn": "brut-grapefruit",
+    "badge": "discontinued",
+    "specs": {
+      "abv": "6,3",
+      "og": "15",
+      "ibu": "10",
+      "style": "Brut Ale",
+      "malts": "Pilsner Malt, Wheat Malt, Caramel Malt",
+      "hops": "Bobek",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "сухой вкусовой профиль, присущая",
+        "about": "Наш яркий, легкий, искристый эль с ароматом",
+        "foodPairing": "овощные салаты, морепродукты, рыбные блюда",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "dry taste profile,sparkling wine inherent in champagne and balanced taste with a slight bitterness of grapefruit",
+        "about": "Our bright, light, sparkling ale with the aroma",
+        "foodPairing": "pie, seafood, fish dishes",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "hop-dragon",
+    "category": "LIMITED",
+    "title": "Hop Dragon",
+    "urlRu": "https://www.gletcherbrewery.com/beer/hop-dragon",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/hop-dragon",
+    "slugRu": "hop-dragon",
+    "slugEn": "hop-dragon",
+    "badge": "discontinued",
+    "specs": {
+      "abv": "8",
+      "og": "18",
+      "ibu": "100",
+      "style": "Double Hopped IPA",
+      "malts": "Pale Ale, Medium",
+      "hops": "Citra, Mosaic, Columbus, Sorachi Ace, Centennial",
+      "bottleVol": "0,5",
+      "kegVol": ""
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Характерная для двойных IPA легкая сладость с приятной свежестью, сбалансированной хмелевой горечИ",
+        "about": "В честь года Дракона мы решили создать пиво Hop Dragon и, таким образом, отдать дань уважения легендарному напитку шаолиньских мастеров, любивших варить его по особому рецепту. Матово-медовый оттенок нефильтрованного тела идеально контрастирует с плотной снежно-белой пеной, а яркий аромат пяти хмелей подчеркивает экзотические нотки цитруса и маракуйи, напоминающие об индийских корнях сорта.",
+        "foodPairing": "крылышки в кисло-сладком соусе, мексиканские тако, индийская кухня",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "A light sweetness characteristic of double IPAs with a pleasant freshness, balanced hop bitterness",
+        "about": "In honor of the year of the Dragon, we decided to create a Hop Dragon beer and, thus, pay tribute to the legendary drink of the Shaolin masters who loved to brew it according to a special recipe. The matte honey shade of the unfiltered body perfectly contrasts with the dense snow-white foam, and the bright aroma of five hops emphasizes the exotic notes of citrus and passion fruit, reminiscent of the Indian roots of the variety.",
+        "foodPairing": "chic wings in sweet and sour sauce, Mexican tacos, Indian cuisine",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "tour-de-grapefruit",
+    "category": "LIMITED",
+    "title": "Tour de Grapefruit",
+    "urlRu": "https://www.gletcherbrewery.com/beer/tour-de-grapefruit",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/tour-de-grapefruit",
+    "slugRu": "tour-de-grapefruit",
+    "slugEn": "tour-de-grapefruit",
+    "badge": "new",
+    "specs": {
+      "abv": "5,4",
+      "og": "12,7",
+      "ibu": "10",
+      "style": "Fruit Wheat Ale",
+      "malts": "Pilsner Malt, Wheat Malt, Oat Malt",
+      "hops": "Bobek",
+      "bottleVol": "0,5",
+      "kegVol": "20"
+    },
+    "i18n": {
+      "ru": {
+        "taste": "Пшеничное «пушистое» пиво со свежим вкусом и выраженным цитрусово-хмелевым ароматом",
+        "about": "На сегодняшний день пшеничный эль – это один из самых популярных стилей для крафтовых экспериментов. Мы решили поддержать тренд и создали собственную интерпретацию, сделав его более ярким, и в то же время, универсальным. А наша изюминка – это натуральный сок красного грейпфрута с острова Барбадос, благодаря которому эль получился невероятно освежающим и сбалансированным. Tour de Grapefruit прекрасно подойдет как для веселой дружеской вечеринки на краю света, так и для уютных семейных посиделок дома.",
+        "foodPairing": "овощные салаты, морепродукты, рыбные блюда",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "Wheat \"fluffy\" beer with a fresh taste and a pronounced citrus-hop aroma",
+        "about": "Today, wheat ale is one of the most popular styles for craft experiments. We decided to support the trend and created our own interpretation, making it more vivid and at the same time universal. And our highlight is the natural juice of red grapefruit from the island of Barbados, which makes the ale incredibly refreshing and balanced. The Tour de Grapefruit is perfect for a fun and friendly party at the edge of the world, as well as for cozy family gatherings at home.",
+        "foodPairing": "fresh salad, seafood, fish dishes",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  },
+  {
+    "id": "cynic",
+    "category": "AGED",
+    "title": "CYNIC",
+    "urlRu": "https://www.gletcherbrewery.com/beer/cynic",
+    "urlEn": "https://www.gletcherbrewery.com/en/beer/cynic",
+    "slugRu": "cynic",
+    "slugEn": "cynic",
+    "badge": "new",
+    "specs": {
+      "abv": "12",
+      "og": "25",
+      "ibu": "35",
+      "style": "R.I.S.",
+      "malts": "Pale Ale Avanguard, Cara 120 & Special B Dingemans, Oat Malt, Roast Malt 900 EBC, Roast Malt 1200 EBC",
+      "hops": "Magnum, Avrora, Bobek",
+      "bottleVol": "0,33",
+      "kegVol": ""
+    },
+    "i18n": {
+      "ru": {
+        "taste": "МЯГКИЙ КОНЬЯЧНЫЙ АРОМАТ, ГЛУБОКИЙ насыщенныЙ ПРЯНЫЙ вкус, бескомпромиссныЙ императорскиЙ характер",
+        "about": "Русский Имперский Стаут от Пивоварни Глетчер был сварен в июне 2023 года из 6 сортов солода и 3 сортов хмеля. 365 дней пиво выдерживалось в бродильном танке. В июле 2024 г. стаут разлили в бочки из лимузенского дуба из под 25-летнего коньяка премиальной линейки «Н. Некрасов», от Новокубанского Коньячного завода. Благодаря 7 месячной выдержке во французской дубовой бочке напиток со временем приобрёл уникальные насыщенные и стойкие нотки во вкусе и аромате. Весь процесс шёл максимально натурально: без ускорителей, добавок или искусственных ароматизаторов. Только время, дерево и пиво.",
+        "foodPairing": "мороженое, красное мясо, брауни, выдержанный сыр",
+        "fermentation": "Верховое брожение"
+      },
+      "en": {
+        "taste": "The mild cognac aroma, deep rich spicy taste, uncompromising imperial character",
+        "about": "The Russian Imperial Stout from the Glacier Brewery was brewed in June 2023 from 6 malt and 3 hop varieties. The beer was aged in a fermentation tank for 365 days. In July 2024, the stout was poured into barrels of Limousin oak from the 25-year-old cognac of the premium line \"N. Nekrasov\", from the Novokubansky Brandy Factory. Due to 7 months of aging in a French oak barrel, the drink eventually acquired unique rich and persistent notes in taste and aroma. The whole process was as natural as possible: without accelerators, additives or artificial flavors. Just time, wood, and beer.",
+        "foodPairing": "ice-cream, red meat, brauny, aged cheese",
+        "fermentation": "Top fermentation"
+      }
+    },
+    "status": "Confirmed"
+  }
+]

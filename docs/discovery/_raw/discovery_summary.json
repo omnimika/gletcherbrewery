@@ -1,0 +1,2611 @@
+{
+  "sitemap_count": 76,
+  "sitemap_urls": [
+    "https://www.gletcherbrewery.com/",
+    "https://www.gletcherbrewery.com/beer",
+    "https://www.gletcherbrewery.com/tours",
+    "https://www.gletcherbrewery.com/partnership",
+    "https://www.gletcherbrewery.com/map",
+    "https://www.gletcherbrewery.com/contacts",
+    "https://www.gletcherbrewery.com/shop",
+    "https://www.gletcherbrewery.com/policy",
+    "https://www.gletcherbrewery.com/shopping-rules",
+    "https://www.gletcherbrewery.com/en",
+    "https://www.gletcherbrewery.com/en/beer",
+    "https://www.gletcherbrewery.com/en/tours",
+    "https://www.gletcherbrewery.com/en/partnership",
+    "https://www.gletcherbrewery.com/en/map",
+    "https://www.gletcherbrewery.com/en/blog",
+    "https://www.gletcherbrewery.com/en/blog-all",
+    "https://www.gletcherbrewery.com/en/beer/heidegger-hell",
+    "https://www.gletcherbrewery.com/en/beer/rouge-de-fleur",
+    "https://www.gletcherbrewery.com/en/beer/milk-of-amnesia",
+    "https://www.gletcherbrewery.com/en/beer/nut-butter",
+    "https://www.gletcherbrewery.com/en/beer/blue-monkey",
+    "https://www.gletcherbrewery.com/en/beer/friday-avenue-apa",
+    "https://www.gletcherbrewery.com/en/beer/iron-woods-dry-stout",
+    "https://www.gletcherbrewery.com/en/beer/bowler-ipa",
+    "https://www.gletcherbrewery.com/en/beer/brainstorm-apa-alcohol-free",
+    "https://www.gletcherbrewery.com/en/beer/underground-ale",
+    "https://www.gletcherbrewery.com/en/beer/ruby-road",
+    "https://www.gletcherbrewery.com/en/beer/hop-dragon",
+    "https://www.gletcherbrewery.com/en/beer/brut-grapefruit",
+    "https://www.gletcherbrewery.com/en/beer/tour-de-grapefruit",
+    "https://www.gletcherbrewery.com/en/beer/iron-woods-milk-stout",
+    "https://www.gletcherbrewery.com/blog",
+    "https://www.gletcherbrewery.com/gletcher-goes-vegan",
+    "https://www.gletcherbrewery.com/blog/carte-blanche",
+    "https://www.gletcherbrewery.com/blog/festival-v-vilnyuse-vafest-2018-litva",
+    "https://www.gletcherbrewery.com/blog/kollaboraciya-s-maisel-friends",
+    "https://www.gletcherbrewery.com/blog/kollaboraciya-s-shepherd-neame",
+    "https://www.gletcherbrewery.com/blog/festival-v-irkutske-baikal-craft-fest-2018",
+    "https://www.gletcherbrewery.com/blog/festival-v-sankt-peterburge-saint-petersburg-craft-weekend-2018",
+    "https://www.gletcherbrewery.com/blog/festival-v-minske-minsk-craft-beer-fest-2018",
+    "https://www.gletcherbrewery.com/even-more-vegan",
+    "https://www.gletcherbrewery.com/ipa-not-apa",
+    "https://www.gletcherbrewery.com/blog-all",
+    "https://www.gletcherbrewery.com/blog/expansion",
+    "https://www.gletcherbrewery.com/ex-test",
+    "https://www.gletcherbrewery.com/header",
+    "https://www.gletcherbrewery.com/10-years",
+    "https://www.gletcherbrewery.com/survey2021",
+    "https://www.gletcherbrewery.com/tours-23-february-2022",
+    "https://www.gletcherbrewery.com/servey2022",
+    "https://www.gletcherbrewery.com/members/lk",
+    "https://www.gletcherbrewery.com/agent",
+    "https://www.gletcherbrewery.com/restaurant",
+    "https://www.gletcherbrewery.com/beer/heidegger-hell",
+    "https://www.gletcherbrewery.com/beer/milk-of-amnesia-v-tropic",
+    "https://www.gletcherbrewery.com/beer/nut-butter",
+    "https://www.gletcherbrewery.com/beer/blue-monkey",
+    "https://www.gletcherbrewery.com/beer/rouge-de-fleur",
+    "https://www.gletcherbrewery.com/beer/friday-avenue-apa",
+    "https://www.gletcherbrewery.com/beer/iron-woods-dry-stout",
+    "https://www.gletcherbrewery.com/beer/bowler-ipa",
+    "https://www.gletcherbrewery.com/beer/brainstorm",
+    "https://www.gletcherbrewery.com/beer/underground-ale",
+    "https://www.gletcherbrewery.com/beer/ruby-road",
+    "https://www.gletcherbrewery.com/beer/hop-dragon",
+    "https://www.gletcherbrewery.com/beer/brut-grapefruit",
+    "https://www.gletcherbrewery.com/beer/tour-de-grapefruit",
+    "https://www.gletcherbrewery.com/beer/iron-woods-milk-stout",
+    "https://www.gletcherbrewery.com/beer/brainstorm-apa-alcohol-free",
+    "https://www.gletcherbrewery.com/beer/cynic",
+    "https://www.gletcherbrewery.com/aging",
+    "https://www.gletcherbrewery.com/horeca",
+    "https://www.gletcherbrewery.com/beer/milk-of-amnesia-non-alco",
+    "https://www.gletcherbrewery.com/en/aging",
+    "https://www.gletcherbrewery.com/en/beer/cynic",
+    "https://www.gletcherbrewery.com/en/beer/milk-of-amnesia-non-alco"
+  ],
+  "feed_locs": [
+    "https://www.gletcherbrewery.com/sitemap-feed-921152316206.xml",
+    "https://www.gletcherbrewery.com/sitemap-feed-370831704951.xml"
+  ],
+  "disallow_count": 194,
+  "disallow_paths_nonpage": [
+    "/tours/check",
+    "/tours/preorder",
+    "/about",
+    "/vacancies",
+    "/russian-craft-beer",
+    "/about-old",
+    "/error",
+    "/footer",
+    "/header-new",
+    "/en/beer/ausweis",
+    "/en/beer/avalanche",
+    "/en/beer/underground-stout",
+    "/beer/wild-barrel-mango",
+    "/beer/hop-dragon-mango",
+    "/beer/fox-hops",
+    "/beer/wts-elderflower",
+    "/beer/wts-basil",
+    "/beer/wts-tomato-chili",
+    "/beer/wts-pear-gose",
+    "/beer/wts-apricot-gose",
+    "/beer/eclipse",
+    "/beer/2018-alfa",
+    "/beer/endorfin",
+    "/beer/iron-woods-milk-stout-old",
+    "/beer/apres-ski-pils",
+    "/beer/bloody-buddy",
+    "/beer/bowler-brilliant-ale",
+    "/beer/blanche-de-fleur",
+    "/beer/coco-jungle",
+    "/beer/newspepper",
+    "/beer/pumpkin-ale",
+    "/beer/pumpkin-ale-candy-apple",
+    "/beer/carte-blanche-tangerine",
+    "/beer/carte-blanche-blackberry",
+    "/beer/carte-blanche-apricot",
+    "/beer/carte-blanche-red-grapefruit",
+    "/beer/extra-virgin",
+    "/beer/rauchbier",
+    "/beer/oatmeal-stout",
+    "/beer/summer-time-strawberry",
+    "/beer/summer-time-gooseberry",
+    "/beer/mango-ipa",
+    "/beer/saison",
+    "/beer/tanj-dipa",
+    "/beer/mechta",
+    "/beer/ketchup",
+    "/beer/koresh",
+    "/beer/yammy-jammy",
+    "/beer/gooseberry-salt",
+    "/beer/pumpkin-ale-carrot",
+    "/blog-top",
+    "/blog-bottom",
+    "/blog/post-head",
+    "/catalog_production",
+    "/indexold",
+    "/toursold",
+    "/archive-pages",
+    "/test",
+    "/index-10years",
+    "/shop-old",
+    "/en/shop",
+    "/blog-bottom-en",
+    "/blog-top-en",
+    "/en/tours-preorder",
+    "/en/klin-may-fest-2023",
+    "/module/product-page",
+    "/complain",
+    "/header-footer-en",
+    "/product-page-eng",
+    "/recommendations-slider",
+    "/klin-may-fest-2021",
+    "/assortiment-piva-v-bare",
+    "/members/signup",
+    "/members/login2",
+    "/members/recover-password",
+    "/members/purchases",
+    "/error-old",
+    "/header-old",
+    "/klin-may-fest-2023",
+    "/brainstorm-moto-fest-2023",
+    "/events/klin-may-fest-2024/breweries",
+    "/events",
+    "/events/klin-may-fest-2024",
+    "/events/klin-may-fest-2025/anketa",
+    "/events/klin-may-fest-2025",
+    "/klin-may-fest-2025",
+    "/beer/ausweis",
+    "/beer/underground-stout",
+    "/beer/avalanche",
+    "/tours-test",
+    "/members/login*",
+    "/members/signup*",
+    "Sitemap:"
+  ],
+  "beer_from_sitemap": [
+    "/beer/heidegger-hell",
+    "/beer/milk-of-amnesia-v-tropic",
+    "/beer/nut-butter",
+    "/beer/blue-monkey",
+    "/beer/rouge-de-fleur",
+    "/beer/friday-avenue-apa",
+    "/beer/iron-woods-dry-stout",
+    "/beer/bowler-ipa",
+    "/beer/brainstorm",
+    "/beer/underground-ale",
+    "/beer/ruby-road",
+    "/beer/hop-dragon",
+    "/beer/brut-grapefruit",
+    "/beer/tour-de-grapefruit",
+    "/beer/iron-woods-milk-stout",
+    "/beer/brainstorm-apa-alcohol-free",
+    "/beer/cynic",
+    "/beer/milk-of-amnesia-non-alco"
+  ],
+  "en_beer_from_sitemap": [
+    "/en/beer/heidegger-hell",
+    "/en/beer/rouge-de-fleur",
+    "/en/beer/milk-of-amnesia",
+    "/en/beer/nut-butter",
+    "/en/beer/blue-monkey",
+    "/en/beer/friday-avenue-apa",
+    "/en/beer/iron-woods-dry-stout",
+    "/en/beer/bowler-ipa",
+    "/en/beer/brainstorm-apa-alcohol-free",
+    "/en/beer/underground-ale",
+    "/en/beer/ruby-road",
+    "/en/beer/hop-dragon",
+    "/en/beer/brut-grapefruit",
+    "/en/beer/tour-de-grapefruit",
+    "/en/beer/iron-woods-milk-stout",
+    "/en/beer/cynic",
+    "/en/beer/milk-of-amnesia-non-alco"
+  ],
+  "beer_page_links": [
+    "/beer/ausweis",
+    "/beer/blue-monkey",
+    "/beer/bowler-ipa",
+    "/beer/brainstorm",
+    "/beer/brut-grapefruit",
+    "/beer/cynic",
+    "/beer/friday-avenue-apa",
+    "/beer/heidegger-hell",
+    "/beer/hop-dragon",
+    "/beer/iron-woods-dry-stout",
+    "/beer/iron-woods-milk-stout",
+    "/beer/milk-of-amnesia-non-alco",
+    "/beer/milk-of-amnesia-v-tropic",
+    "/beer/nut-butter",
+    "/beer/rouge-de-fleur",
+    "/beer/ruby-road",
+    "/beer/tour-de-grapefruit",
+    "/beer/underground-ale"
+  ],
+  "beer_category_guesses": [
+    "САЙТ ДОСТУПЕН ТОЛЬКО ДЛЯ СОВЕРШЕННОЛЕТНИХ",
+    "АГЕНТ",
+    "МЕНЮ",
+    "ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ",
+    "БЛОГ",
+    "КАРТА ПРОДАЖ",
+    "ЭКСКУРСИИ",
+    "ПРОДУКЦИЯ",
+    "CLASSIC",
+    "CRAFT",
+    "LIMITED"
+  ],
+  "tposts_blog": [],
+  "tposts_all": [],
+  "blog_titles": [],
+  "ycl_urls": [
+    "https://n1347695.yclients.com/company/1225539/personal/select-services?o=",
+    "https://n1347695.yclients.com/group-events-widget?o="
+  ],
+  "mapbox_styles": [
+    "mapbox://styles/omnicoremaps/cknj3azmg0w2t17qqmylsfz8x"
+  ],
+  "mapbox_sources": [
+    "mapbox://styles/omnicoremaps/cknj3azmg0w2t17qqmylsfz8x"
+  ],
+  "map_has_public_token": true,
+  "map_source_layers": [],
+  "map_filter_props": [],
+  "member_links": [
+    "/agent",
+    "/members/login",
+    "/members/signup",
+    "https://www.gletcherbrewery.com/agent"
+  ],
+  "header_links": [
+    "#lang",
+    "/",
+    "/about",
+    "/beer",
+    "/blog",
+    "/contacts",
+    "/en",
+    "/header",
+    "/partnership",
+    "/policy",
+    "/rss.xml",
+    "/shop",
+    "/tours",
+    "en/about",
+    "en/beer",
+    "en/blog",
+    "en/contacts",
+    "en/partnership",
+    "en/shop",
+    "en/tours",
+    "https://static.tildacdn.com",
+    "https://static.tildacdn.com/css/tilda-grid-3.0.min.css",
+    "https://static.tildacdn.com/css/tilda-zoom-2.0.min.css",
+    "https://static.tildacdn.com/tild3136-6237-4632-b565-356566383230/favicon.ico",
+    "https://static.tildacdn.com/tild6564-3365-4565-a635-323833313563/Group_8.png",
+    "https://static.tildacdn.com/ws/project1212341/tilda-blocks-page17060973.min.css?t=1775888771",
+    "https://t.me/gletcherbrewery",
+    "https://untappd.com/GletcherBrewery",
+    "https://vk.com/gletcherbrewery",
+    "https://ws.tildacdn.com",
+    "https://ws.tildacdn.com/project1212341/custom.css?t=1775888771",
+    "https://www.facebook.com/gletcherbrewery",
+    "https://www.instagram.com/gletcher_brewery/",
+    "https://yandex.ru/maps/org/1395871323/reviews?utm_source=badge&amp;utm_medium=rating&amp;utm_campaign=v1",
+    "mailto:info@gletcherbrewery.com",
+    "tel:+74959892414"
+  ],
+  "header_labels": [
+    "ПРОДУКЦИЯ",
+    "БЛОГ",
+    "ПАРТНЁРАМ",
+    "ЭКСКУРСИИ",
+    "МАГАЗИН",
+    "RU",
+    "EN"
+  ],
+  "footer_text_links": [
+    [
+      "mailto:info@gletcherbrewery.com",
+      "info@gletcherbrewery.com"
+    ],
+    [
+      "/policy",
+      "Политика конфиденциальности"
+    ],
+    [
+      "tel:+74959892414",
+      "+7 (495) 989-24-14"
+    ],
+    [
+      "https://yandex.ru/maps/org/1395871323/reviews?utm_source=badge&amp;utm_medium=rating&amp;utm_campaign=v1",
+      "5,0"
+    ],
+    [
+      "https://yandex.ru/maps/org/1395871323/reviews?utm_source=badge&amp;utm_medium=rating&amp;utm_campaign=v1",
+      "Рейтинг организации в Яндексе"
+    ]
+  ],
+  "home_headings": [
+    [
+      "h2",
+      "Пивоварня"
+    ],
+    [
+      "h1",
+      "gletcher"
+    ]
+  ],
+  "prod_friday_headings": [],
+  "partnership_fields": [
+    "viewport",
+    "yandex-verification",
+    "description",
+    "keywords",
+    "format-detection",
+    "msapplication-TileColor",
+    "msapplication-TileImage",
+    "ma_name",
+    "ma_email",
+    "form715579539",
+    "formservices[]",
+    "tildaspec-formname",
+    "phone",
+    "comment",
+    "delivery",
+    "delivery-badresponse-comment",
+    "formname",
+    "/tilda/click/rec715585432/button175680904717742200",
+    "/tilda/click/rec715585432/button175680879139298450",
+    "/tilda/click/rec715585432/button1756807407586",
+    "/tilda/click/rec715585432/button175680807591088750",
+    "/tilda/click/rec715585432/button175680793611919780",
+    "/tilda/click/rec740449400/button1714064470289"
+  ],
+  "partnership_placeholders": [
+    "ФИО",
+    "Email",
+    "+7(000)000-0000",
+    "Комментарий",
+    "Промокод"
+  ],
+  "shop_is_tilda_store": true,
+  "home_fonts": [],
+  "pages": {
+    "page__.html": {
+      "title": "Gletcher Brewery | Пивоварня Глетчер",
+      "desc": "Gletcher Brewery — российская крафтовая пивоварня. Импортное качество и вкусовое разнообразие, но по цене российского пива. Кеги и бутылки для баров, ресторанов и пабов. Надёжные поставки, премиальные сорта и гибкие условия сотрудничества. Производитель и",
+      "canon": "https://www.gletcherbrewery.com",
+      "og_image": "https://static.tildacdn.com/tild3735-6666-4531-a238-306339616237/2024-03-16_15-02-47.png",
+      "project": "1212341",
+      "page": "49072461",
+      "rec_count": 26,
+      "beer_links": [
+        "/beer/milk-of-amnesia-non-alco"
+      ],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 54,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          162
+        ],
+        [
+          "#ffffff",
+          56
+        ],
+        [
+          "#e5373c",
+          38
+        ],
+        [
+          "#e6eefc",
+          28
+        ],
+        [
+          "#93cce6",
+          11
+        ],
+        [
+          "#213561",
+          9
+        ],
+        [
+          "#0D0F49",
+          8
+        ],
+        [
+          "#aac3ff",
+          7
+        ],
+        [
+          "#e6373c",
+          6
+        ],
+        [
+          "#AAC3FF",
+          3
+        ],
+        [
+          "#0c1416",
+          3
+        ],
+        [
+          "#000000",
+          2
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#E5373C",
+          2
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__beer.html": {
+      "title": "Каталог | Пивоварня Глетчер",
+      "desc": "Каталог продукции",
+      "canon": "https://www.gletcherbrewery.com/beer",
+      "og_image": "https://static.tildacdn.com/tild6334-6134-4065-b932-363533616234/2024-05-24_17-07-50.png",
+      "project": "1212341",
+      "page": "16494049",
+      "rec_count": 28,
+      "beer_links": [
+        "/beer/ausweis",
+        "/beer/blue-monkey",
+        "/beer/bowler-ipa",
+        "/beer/brainstorm",
+        "/beer/brut-grapefruit",
+        "/beer/cynic",
+        "/beer/friday-avenue-apa",
+        "/beer/heidegger-hell",
+        "/beer/hop-dragon",
+        "/beer/iron-woods-dry-stout",
+        "/beer/iron-woods-milk-stout",
+        "/beer/milk-of-amnesia-non-alco",
+        "/beer/milk-of-amnesia-v-tropic",
+        "/beer/nut-butter",
+        "/beer/rouge-de-fleur",
+        "/beer/ruby-road",
+        "/beer/tour-de-grapefruit",
+        "/beer/underground-ale"
+      ],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 34,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          109
+        ],
+        [
+          "#e5373c",
+          50
+        ],
+        [
+          "#ffffff",
+          39
+        ],
+        [
+          "#e6eefc",
+          28
+        ],
+        [
+          "#0D0F49",
+          7
+        ],
+        [
+          "#aac3ff",
+          7
+        ],
+        [
+          "#93cce6",
+          6
+        ],
+        [
+          "#213561",
+          4
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#0c0e45",
+          2
+        ],
+        [
+          "#b7cbea",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__blog.html": {
+      "title": "Блог | Gletcher Brewery",
+      "desc": null,
+      "canon": "https://www.gletcherbrewery.com/blog",
+      "og_image": null,
+      "project": "1212341",
+      "page": "13085895",
+      "rec_count": 16,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 32,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          92
+        ],
+        [
+          "#e5373c",
+          38
+        ],
+        [
+          "#ffffff",
+          25
+        ],
+        [
+          "#e6eefc",
+          18
+        ],
+        [
+          "#aac3ff",
+          9
+        ],
+        [
+          "#0D0F49",
+          8
+        ],
+        [
+          "#93cce6",
+          6
+        ],
+        [
+          "#213561",
+          4
+        ],
+        [
+          "#000000",
+          2
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__blog-all.html": {
+      "title": "Блог: Все записи | Gletcher Brewery",
+      "desc": null,
+      "canon": "https://www.gletcherbrewery.com/blog-all",
+      "og_image": null,
+      "project": "1212341",
+      "page": "22876155",
+      "rec_count": 15,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 32,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          92
+        ],
+        [
+          "#e5373c",
+          38
+        ],
+        [
+          "#ffffff",
+          25
+        ],
+        [
+          "#e6eefc",
+          18
+        ],
+        [
+          "#aac3ff",
+          9
+        ],
+        [
+          "#0D0F49",
+          8
+        ],
+        [
+          "#93cce6",
+          6
+        ],
+        [
+          "#213561",
+          4
+        ],
+        [
+          "#000000",
+          2
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__map.html": {
+      "title": "Карта Продаж | Пивоварня Глетчер",
+      "desc": null,
+      "canon": "https://www.gletcherbrewery.com/map",
+      "og_image": "https://static.tildacdn.com/tild6663-3838-4166-b233-376639373237/GLETCHER_logo_main_R.jpg",
+      "project": "1212341",
+      "page": "18984340",
+      "rec_count": 14,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [
+        "mapbox://styles/omnicoremaps/cknj3azmg0w2t17qqmylsfz8x"
+      ],
+      "map_has_public_token": true,
+      "age_t658": true,
+      "img_count": 26,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          76
+        ],
+        [
+          "#e5373c",
+          40
+        ],
+        [
+          "#ffffff",
+          22
+        ],
+        [
+          "#e6eefc",
+          22
+        ],
+        [
+          "#93cce6",
+          8
+        ],
+        [
+          "#aac3ff",
+          8
+        ],
+        [
+          "#0D0F49",
+          7
+        ],
+        [
+          "#213561",
+          4
+        ],
+        [
+          "#ff8462",
+          3
+        ],
+        [
+          "#1c1c1c",
+          3
+        ],
+        [
+          "#a7e663",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#22c55e",
+          1
+        ],
+        [
+          "#dcd5ab",
+          1
+        ],
+        [
+          "#b7cbea",
+          1
+        ],
+        [
+          "#888888",
+          1
+        ],
+        [
+          "#f7ecd7",
+          1
+        ],
+        [
+          "#fceee6",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__agent.html": {
+      "title": "Агент Глетчер | Gletcher Brewery | Пивоварня Глетчер",
+      "desc": "Бонусная и реферальная программа для ценителей пива. Стань амбассадором Gletcher и получай ценные призы от нашей пивоварни!",
+      "canon": "https://www.gletcherbrewery.com/agent",
+      "og_image": "https://static.tildacdn.com/tild6435-6331-4334-b838-306135616437/2024-06-05_12-22-47.png",
+      "project": "1212341",
+      "page": "44414247",
+      "rec_count": 21,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 35,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          116
+        ],
+        [
+          "#ffffff",
+          38
+        ],
+        [
+          "#e5373c",
+          29
+        ],
+        [
+          "#e6eefc",
+          14
+        ],
+        [
+          "#aac3ff",
+          7
+        ],
+        [
+          "#93cce6",
+          6
+        ],
+        [
+          "#213561",
+          4
+        ],
+        [
+          "#e6eefb",
+          3
+        ],
+        [
+          "#0D0F49",
+          2
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__tours.html": {
+      "title": "Экскурсии | Gletcher Brewery | Пивной тур с дегустацией на пивоварне Глетчер",
+      "desc": "Экскурсия на пивоваренный завод – это отличный способ провести время с друзьями, коллегами или деловыми партнерами! Вас ждёт незабываемое путешествие по всем этапам производства, а также дегустация всех доступных сортов пива на нашем пивзаводе.",
+      "canon": "https://www.gletcherbrewery.com/tours",
+      "og_image": "https://static.tildacdn.com/tild3263-3738-4166-b265-316136623662/2024-05-24_17-09-17.png",
+      "project": "1212341",
+      "page": "9644391",
+      "rec_count": 24,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [
+        "https://n1347695.yclients.com/company/1225539/personal/select-services?o=",
+        "https://n1347695.yclients.com/group-events-widget?o="
+      ],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 43,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          210
+        ],
+        [
+          "#e5373c",
+          45
+        ],
+        [
+          "#ffffff",
+          41
+        ],
+        [
+          "#e6eefc",
+          25
+        ],
+        [
+          "#000000",
+          16
+        ],
+        [
+          "#0D0F49",
+          8
+        ],
+        [
+          "#213561",
+          8
+        ],
+        [
+          "#ff8462",
+          7
+        ],
+        [
+          "#aac3ff",
+          7
+        ],
+        [
+          "#93cce6",
+          6
+        ],
+        [
+          "#b8cbeb",
+          2
+        ],
+        [
+          "#62C584",
+          2
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#1c1c1c",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "name",
+        "phone",
+        "email",
+        "date",
+        "visitors",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "name",
+        "phone",
+        "email"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод",
+        "Имя",
+        "+7(000)000-0000",
+        "E-mail",
+        "Выберите дату гастротура",
+        "Имя",
+        "+7(000)000-0000",
+        "E-mail"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__shop.html": {
+      "title": "Магазин | Пивоварня Глетчер",
+      "desc": "Мерчандайз и прочие приятности",
+      "canon": "https://www.gletcherbrewery.com/shop",
+      "og_image": "https://static.tildacdn.com/tild3134-3231-4736-b235-323764386531/GLETCHER_logo_main_R.jpg",
+      "project": "1212341",
+      "page": "16494410",
+      "rec_count": 23,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 30,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          72
+        ],
+        [
+          "#e5373c",
+          31
+        ],
+        [
+          "#ffffff",
+          23
+        ],
+        [
+          "#000000",
+          13
+        ],
+        [
+          "#e6eefc",
+          13
+        ],
+        [
+          "#aac3ff",
+          11
+        ],
+        [
+          "#0D0F49",
+          7
+        ],
+        [
+          "#93cce6",
+          7
+        ],
+        [
+          "#263354",
+          5
+        ],
+        [
+          "#213561",
+          4
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#E6EEFC",
+          2
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#999999",
+          1
+        ],
+        [
+          "#E5373C",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__partnership.html": {
+      "title": "Партнёрам | Пивоварня Глетчер | Gletcher Brewery — поставки крафтового пива в кегах и бутылках для HoReCa, баров и магазинов | Оптовые поставки пива",
+      "desc": "Профессиональные поставки крафтового пива от Gletcher Brewery — кеги и бутылки для баров, ресторанов, HoReCa и розничных точек. Стратегические партнерские программы, гибкие условия опта, доставка и поддержка. Узнайте о наших сортах, возможностях сотруднич",
+      "canon": "https://www.gletcherbrewery.com/partnership",
+      "og_image": "https://static.tildacdn.com/tild6361-3830-4139-b735-396164633636/GLETCHER_logo_main_R.jpg",
+      "project": "1212341",
+      "page": "16901090",
+      "rec_count": 16,
+      "beer_links": [
+        "/beer/ausweis",
+        "/beer/blue-monkey",
+        "/beer/bowler-ipa",
+        "/beer/brainstorm-apa-alcohol-free",
+        "/beer/friday-avenue-APA",
+        "/beer/heidegger-hell",
+        "/beer/iron-woods-dry-stout",
+        "/beer/iron-woods-milk-stout",
+        "/beer/milk-of-amnesia-v-tropic",
+        "/beer/nut-butter",
+        "/beer/rouge-de-fleur",
+        "/beer/ruby-road",
+        "/beer/tour-de-grapefruit",
+        "/beer/underground-ale"
+      ],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 59,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          113
+        ],
+        [
+          "#e5373c",
+          42
+        ],
+        [
+          "#ffffff",
+          40
+        ],
+        [
+          "#e6eefc",
+          19
+        ],
+        [
+          "#0D0F49",
+          8
+        ],
+        [
+          "#aac3ff",
+          7
+        ],
+        [
+          "#93cce6",
+          6
+        ],
+        [
+          "#e6373c",
+          6
+        ],
+        [
+          "#213561",
+          5
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#E5373C",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__contacts.html": {
+      "title": "Контакты | Пивоварня Глетчер",
+      "desc": "Контакты",
+      "canon": "https://www.gletcherbrewery.com/contacts",
+      "og_image": "https://static.tildacdn.com/tild6331-3432-4539-a638-343033646331/GLETCHER_logo_main_R.jpg",
+      "project": "1212341",
+      "page": "8475727",
+      "rec_count": 18,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 30,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          62
+        ],
+        [
+          "#e5373c",
+          29
+        ],
+        [
+          "#ffffff",
+          25
+        ],
+        [
+          "#000000",
+          13
+        ],
+        [
+          "#93cce6",
+          13
+        ],
+        [
+          "#e6eefc",
+          12
+        ],
+        [
+          "#ff8462",
+          9
+        ],
+        [
+          "#0D0F49",
+          7
+        ],
+        [
+          "#aac3ff",
+          7
+        ],
+        [
+          "#213561",
+          6
+        ],
+        [
+          "#263354",
+          4
+        ],
+        [
+          "#1c1c1c",
+          4
+        ],
+        [
+          "#a7e663",
+          2
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__beer__friday-avenue-apa.html": {
+      "title": "Friday Avenue APA | Gletcher Brewery",
+      "desc": "Легкий и питкий сладковатый АРА с нотами ананаса и манго.",
+      "canon": "https://www.gletcherbrewery.com/beer/friday-avenue-apa",
+      "og_image": "https://static.tildacdn.com/tild3236-3235-4935-a636-396462386463/friday-avenue.png",
+      "project": "1212341",
+      "page": "13179167",
+      "rec_count": 19,
+      "beer_links": [
+        "/beer/ausweis",
+        "/beer/blue-monkey",
+        "/beer/bowler-ipa",
+        "/beer/brainstorm-apa-alcohol-free",
+        "/beer/cynic",
+        "/beer/friday-avenue-APA",
+        "/beer/friday-avenue-apa",
+        "/beer/heidegger-hell",
+        "/beer/iron-woods-dry-stout",
+        "/beer/iron-woods-milk-stout",
+        "/beer/milk-of-amnesia-non-alco",
+        "/beer/milk-of-amnesia-v-tropic",
+        "/beer/nut-butter",
+        "/beer/rouge-de-fleur",
+        "/beer/ruby-road",
+        "/beer/tour-de-grapefruit",
+        "/beer/underground-ale"
+      ],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 54,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          130
+        ],
+        [
+          "#e5373c",
+          29
+        ],
+        [
+          "#e6eefc",
+          25
+        ],
+        [
+          "#ffffff",
+          21
+        ],
+        [
+          "#0D0F49",
+          7
+        ],
+        [
+          "#aac3ff",
+          7
+        ],
+        [
+          "#93cce6",
+          6
+        ],
+        [
+          "#213561",
+          4
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#263354",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#191449",
+          1
+        ],
+        [
+          "#E5373C",
+          1
+        ],
+        [
+          "#B7CBEA",
+          1
+        ],
+        [
+          "#a1a1a1",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__header.html": {
+      "title": "Header",
+      "desc": null,
+      "canon": "https://www.gletcherbrewery.com/header",
+      "og_image": null,
+      "project": "1212341",
+      "page": "17060973",
+      "rec_count": 9,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": false,
+      "img_count": 20,
+      "yt": [],
+      "top_colors": [
+        [
+          "#93cce6",
+          86
+        ],
+        [
+          "#0d0f49",
+          14
+        ],
+        [
+          "#0D0F49",
+          6
+        ],
+        [
+          "#ff8462",
+          6
+        ],
+        [
+          "#e6eefc",
+          4
+        ],
+        [
+          "#ffffff",
+          3
+        ],
+        [
+          "#263354",
+          3
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [],
+      "placeholders": [],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery",
+        "https://www.facebook.com/gletcherbrewery",
+        "https://www.instagram.com/gletcher_brewery/"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__footer.html": {
+      "title": "footer new",
+      "desc": null,
+      "canon": "https://www.gletcherbrewery.com/footer",
+      "og_image": null,
+      "project": "1212341",
+      "page": "8475744",
+      "rec_count": 2,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": false,
+      "img_count": 18,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          14
+        ],
+        [
+          "#0D0F49",
+          6
+        ],
+        [
+          "#93cce6",
+          4
+        ],
+        [
+          "#e6eefc",
+          4
+        ],
+        [
+          "#ffffff",
+          3
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [],
+      "placeholders": [],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__horeca.html": {
+      "title": "Российское крафтовое пиво оптом | Пивоварня Глетчер",
+      "desc": "Широчайший выбор сортов от пивоварни и оборудование для бара под ключ. Мы имеем собственные филиалы и представительства в крупных городах России: Москва, Санкт-Петербург, Нижний Новгород, Екатеринбург, Челябинск, Краснодар, Геленджик, Крым, а также широку",
+      "canon": "https://www.gletcherbrewery.com/horeca",
+      "og_image": "https://static.tildacdn.com/tild6365-6638-4166-b639-366332353433/GLETCHER_logo_main_R.jpg",
+      "project": "1212341",
+      "page": "103271966",
+      "rec_count": 20,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 32,
+      "yt": [],
+      "top_colors": [
+        [
+          "#E5373C",
+          982
+        ],
+        [
+          "#0d0f49",
+          131
+        ],
+        [
+          "#ffffff",
+          49
+        ],
+        [
+          "#e5373c",
+          44
+        ],
+        [
+          "#e6eefc",
+          31
+        ],
+        [
+          "#0D0F49",
+          7
+        ],
+        [
+          "#aac3ff",
+          7
+        ],
+        [
+          "#93cce6",
+          6
+        ],
+        [
+          "#213561",
+          4
+        ],
+        [
+          "#e6eefb",
+          3
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#060000",
+          2
+        ],
+        [
+          "#be2b40",
+          2
+        ],
+        [
+          "#0168b1",
+          2
+        ],
+        [
+          "#f6efe3",
+          2
+        ],
+        [
+          "#c2d3ef",
+          2
+        ],
+        [
+          "#440e00",
+          2
+        ],
+        [
+          "#b4281a",
+          2
+        ],
+        [
+          "#f7c703",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__about.html": {
+      "title": "О нас | Gletcher Brewery | Пивоварня Глетчер",
+      "desc": null,
+      "canon": "https://www.gletcherbrewery.com/about",
+      "og_image": null,
+      "project": "1212341",
+      "page": "71867465",
+      "rec_count": 43,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 97,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          299
+        ],
+        [
+          "#e5373c",
+          157
+        ],
+        [
+          "#ffffff",
+          102
+        ],
+        [
+          "#000000",
+          66
+        ],
+        [
+          "#e6eefc",
+          55
+        ],
+        [
+          "#aac3ff",
+          16
+        ],
+        [
+          "#b7cbea",
+          15
+        ],
+        [
+          "#f5f5f5",
+          11
+        ],
+        [
+          "#0D0F49",
+          7
+        ],
+        [
+          "#999999",
+          7
+        ],
+        [
+          "#222222",
+          7
+        ],
+        [
+          "#93cce6",
+          6
+        ],
+        [
+          "#888a8b",
+          6
+        ],
+        [
+          "#213561",
+          5
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#e6eefb",
+          2
+        ],
+        [
+          "#fff705",
+          2
+        ],
+        [
+          "#8a8a8a",
+          2
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/brainstorm_motor_fest",
+        "https://t.me/brewershouse",
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/brainstormfest",
+        "https://vk.com/brewershouse",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__aging.html": {
+      "title": "CYNIC. Русский Имперский Стаут | Пивоварня Глетчер",
+      "desc": "Мягкий коньячный аромат, глубокий насыщенный пряный вкус, бескомпромиссный императорский характер – всё это в новом CYNIC RIS от Gletcher Brewery.",
+      "canon": "https://www.gletcherbrewery.com/aging",
+      "og_image": "https://static.tildacdn.com/tild3232-3132-4238-b439-343432623166/image.png",
+      "project": "1212341",
+      "page": "100794856",
+      "rec_count": 54,
+      "beer_links": [
+        "/beer/ausweis",
+        "/beer/blue-monkey",
+        "/beer/bowler-ipa",
+        "/beer/brainstorm-apa-alcohol-free",
+        "/beer/cynic",
+        "/beer/friday-avenue-APA",
+        "/beer/heidegger-hell",
+        "/beer/iron-woods-dry-stout",
+        "/beer/iron-woods-milk-stout",
+        "/beer/milk-of-amnesia-v-tropic",
+        "/beer/nut-butter",
+        "/beer/rouge-de-fleur",
+        "/beer/ruby-road",
+        "/beer/tour-de-grapefruit",
+        "/beer/underground-ale"
+      ],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 107,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0c1416",
+          80
+        ],
+        [
+          "#efe0ca",
+          59
+        ],
+        [
+          "#e5373c",
+          36
+        ],
+        [
+          "#0d0f49",
+          27
+        ],
+        [
+          "#ffffff",
+          23
+        ],
+        [
+          "#e6eefc",
+          13
+        ],
+        [
+          "#0D0F49",
+          7
+        ],
+        [
+          "#aac3ff",
+          7
+        ],
+        [
+          "#93cce6",
+          6
+        ],
+        [
+          "#213561",
+          4
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#263354",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#E5373C",
+          1
+        ],
+        [
+          "#B7CBEA",
+          1
+        ],
+        [
+          "#a1a1a1",
+          1
+        ],
+        [
+          "#e8d3b4",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__en.html": {
+      "title": "Gletcher Brewery | Official Website",
+      "desc": null,
+      "canon": "https://www.gletcherbrewery.com/en",
+      "og_image": "https://static.tildacdn.com/tild3735-6666-4531-a238-306339616237/2024-03-16_15-02-47.png",
+      "project": "1212341",
+      "page": "50620901",
+      "rec_count": 17,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": false,
+      "img_count": 33,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          120
+        ],
+        [
+          "#ffffff",
+          22
+        ],
+        [
+          "#e6eefc",
+          18
+        ],
+        [
+          "#93cce6",
+          9
+        ],
+        [
+          "#0D0F49",
+          7
+        ],
+        [
+          "#e5373c",
+          6
+        ],
+        [
+          "#213561",
+          5
+        ],
+        [
+          "#AAC3FF",
+          3
+        ],
+        [
+          "#000000",
+          2
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#E5373C",
+          2
+        ],
+        [
+          "#b8cbeb",
+          2
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "Name",
+        "Email",
+        "Phone",
+        "delivery-badresponse-comment"
+      ],
+      "placeholders": [
+        "Имя",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__vacancies.html": {
+      "title": "Вакансии | Пивоварня Глетчер",
+      "desc": "Вакансии пивоварни Gletcher — присоединяйтесь к нашей команде!",
+      "canon": "https://www.gletcherbrewery.com/vacancies",
+      "og_image": "https://static.tildacdn.com/tild3962-3837-4161-b638-383839633964/WhatsApp_Image_2017-.png",
+      "project": "1212341",
+      "page": "40428857",
+      "rec_count": 28,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 35,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          62
+        ],
+        [
+          "#ffffff",
+          54
+        ],
+        [
+          "#263354",
+          43
+        ],
+        [
+          "#e5373c",
+          29
+        ],
+        [
+          "#93cce6",
+          19
+        ],
+        [
+          "#1c1c1c",
+          18
+        ],
+        [
+          "#ff8462",
+          16
+        ],
+        [
+          "#e6eefc",
+          12
+        ],
+        [
+          "#213561",
+          11
+        ],
+        [
+          "#0D0F49",
+          7
+        ],
+        [
+          "#aac3ff",
+          7
+        ],
+        [
+          "#a7e663",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery",
+        "https://www.instagram.com/gletcher_brewery/"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    },
+    "page__policy.html": {
+      "title": "Политика Конфиденциальности | Пивоварня Глетчер",
+      "desc": null,
+      "canon": "https://www.gletcherbrewery.com/policy",
+      "og_image": "https://static.tildacdn.com/tild3963-6635-4130-a363-653537373965/GLETCHER_logo_main_R.jpg",
+      "project": "1212341",
+      "page": "13473864",
+      "rec_count": 11,
+      "beer_links": [],
+      "tposts": [],
+      "yclients": [],
+      "mapbox_styles": [],
+      "map_has_public_token": false,
+      "age_t658": true,
+      "img_count": 25,
+      "yt": [],
+      "top_colors": [
+        [
+          "#0d0f49",
+          62
+        ],
+        [
+          "#e5373c",
+          29
+        ],
+        [
+          "#ffffff",
+          21
+        ],
+        [
+          "#e6eefc",
+          12
+        ],
+        [
+          "#0D0F49",
+          7
+        ],
+        [
+          "#aac3ff",
+          7
+        ],
+        [
+          "#93cce6",
+          6
+        ],
+        [
+          "#213561",
+          4
+        ],
+        [
+          "#ff8462",
+          2
+        ],
+        [
+          "#000000",
+          1
+        ],
+        [
+          "#AAC3FF",
+          1
+        ],
+        [
+          "#E6EEFC",
+          1
+        ],
+        [
+          "#d8e4f7",
+          1
+        ]
+      ],
+      "input_names": [
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "formservices[]",
+        "tildaspec-formname",
+        "ma_name",
+        "ma_email",
+        "phone",
+        "delivery-badresponse-comment",
+        "formname"
+      ],
+      "placeholders": [
+        "ФИО",
+        "Email",
+        "+7(000)000-0000",
+        "Комментарий",
+        "Промокод"
+      ],
+      "social": [
+        "https://t.me/gletcherbrewery",
+        "https://vk.com/gletcherbrewery"
+      ],
+      "metrika": true,
+      "ga": true,
+      "fb_pixel": true,
+      "font_faces": []
+    }
+  }
+}
