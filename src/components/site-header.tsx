@@ -84,6 +84,7 @@ function headerChromeServer(): HeaderChrome {
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const chromeRef = useRef<HTMLElement>(null);
   const locale = useLocale() as PublishedLocale;
@@ -94,6 +95,8 @@ export function SiteHeader() {
     headerChromeClient,
     headerChromeServer,
   );
+  /** Solid bar after scroll / with menu — never frost or soft glow over covers. */
+  const solidChrome = scrolled || menuOpen;
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -103,6 +106,18 @@ export function SiteHeader() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [menuOpen]);
+
+  useEffect(() => {
+    const readY = () =>
+      window.scrollY ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+    const onScroll = () => setScrolled(readY() > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Expose chrome height to the document so product heroes can fill 100svh
   // under the fixed header (cancel spacer via negative margin).
@@ -123,7 +138,11 @@ export function SiteHeader() {
       >
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 bg-gletcher-ice/90 shadow-[0_15px_15px_15px_#e6eefc] backdrop-blur-[6px]"
+          className={`pointer-events-none absolute inset-x-0 top-0 border-b transition-[background-color,border-color] duration-300 ease-out ${
+            solidChrome
+              ? "border-gletcher-navy/10 bg-gletcher-ice"
+              : "border-transparent bg-transparent"
+          }`}
           style={{ height: "var(--hh)" }}
         />
 
@@ -151,6 +170,11 @@ export function SiteHeader() {
               alt="Gletcher Brewery since 2011"
               width={108}
               height={52}
+              className={
+                solidChrome
+                  ? undefined
+                  : "drop-shadow-[0_0_10px_rgba(230,238,252,0.95)]"
+              }
               style={{ height: "var(--logo-h)", width: "auto" }}
             />
           </Link>
@@ -161,29 +185,34 @@ export function SiteHeader() {
           >
             <a
               href={productionHref("agent", locale)}
-              className="inline-flex items-center justify-center rounded-full font-thin tracking-wide text-gletcher-white uppercase"
+              className="font-display inline-flex items-center justify-center rounded-full font-extrabold tracking-wide text-gletcher-white uppercase"
               style={{
                 height: "var(--ctrl-h)",
                 width: "var(--agent-w)",
-                fontSize: "var(--font)",
+                fontSize: "calc(var(--font) * 1.12)",
                 background:
                   "radial-gradient(circle at center, rgba(253,102,102,0.78) 0%, rgba(229,55,60,1) 64%)",
               }}
               aria-label={tA11y("agent")}
               onClick={() => setMenuOpen(false)}
             >
-              <span aria-hidden>{compact ? t("agentShort") : t("agent")}</span>
+              {/* Display face sits optically high — nudge down to button center */}
+              <span aria-hidden className="translate-y-[0.08em] leading-none">
+                {compact ? t("agentShort") : t("agent")}
+              </span>
             </a>
 
             <button
               ref={menuButtonRef}
               type="button"
               onClick={() => setMenuOpen((v) => !v)}
-              className="inline-flex items-center justify-center rounded-full border border-gletcher-navy font-bold tracking-wide text-gletcher-navy uppercase transition-[background-color,color,border-color] duration-300 ease-out"
+              className={`font-display inline-flex items-center justify-center rounded-full border border-gletcher-navy font-extrabold tracking-wide text-gletcher-navy uppercase transition-[background-color,color,border-color] duration-300 ease-out ${
+                solidChrome ? "" : "bg-gletcher-ice/85"
+              }`}
               style={{
                 height: "var(--ctrl-h)",
                 width: "var(--menu-w)",
-                fontSize: "var(--font)",
+                fontSize: "calc(var(--font) * 1.12)",
                 gap: `calc(8px * var(--hs))`,
               }}
               aria-expanded={menuOpen}
@@ -192,10 +221,10 @@ export function SiteHeader() {
             >
               {!compact ? (
                 <span
-                  className={`overflow-hidden whitespace-nowrap transition-[max-width,opacity,margin] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+                  className={`translate-y-[0.08em] leading-none overflow-hidden whitespace-nowrap transition-[max-width,opacity,margin] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
                     menuOpen
                       ? "mr-0 max-w-0 opacity-0"
-                      : "max-w-[4.5rem] opacity-100"
+                      : "max-w-[5rem] opacity-100"
                   }`}
                   aria-hidden
                 >

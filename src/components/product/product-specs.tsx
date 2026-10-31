@@ -30,11 +30,12 @@ function SpecCircle({
   label: string;
 }) {
   return (
-    <div className="flex size-[clamp(3.75rem,8svh,5.75rem)] shrink-0 flex-col items-center justify-center rounded-full border border-gletcher-navy text-center">
-      <p className="font-display text-[clamp(0.9rem,2.1svh,1.15rem)] leading-none font-extrabold text-gletcher-navy">
+    <div className="relative flex size-[clamp(4.5rem,10svh,7.75rem)] shrink-0 items-center justify-center rounded-full border border-gletcher-navy px-[0.35em] text-center xl:size-[clamp(5rem,10.5svh,8.5rem)]">
+      {/* Value sits on the geometric center; label hangs just below */}
+      <p className="font-display text-[clamp(1.35rem,3.4svh,2.15rem)] leading-none font-extrabold tracking-tight text-gletcher-navy xl:text-[clamp(1.5rem,3.7svh,2.45rem)]">
         {value}
       </p>
-      <p className="mt-[0.35em] text-[clamp(0.55rem,1.15svh,0.65rem)] font-semibold tracking-[0.12em] text-gletcher-navy/70 uppercase">
+      <p className="absolute bottom-[16%] left-1/2 w-full -translate-x-1/2 text-[clamp(0.5rem,1svh,0.625rem)] font-semibold tracking-[0.1em] text-gletcher-navy/70 uppercase">
         {label}
       </p>
     </div>
@@ -65,25 +66,25 @@ export function ProductSpecsPanel({
   const ibuDisp = isNumeric(ibu) ? `${ibuFmt} IBU` : ibuFmt;
 
   return (
-    <div className="mt-[clamp(0.25rem,1svh,0.75rem)] space-y-[clamp(0.65rem,2svh,1.25rem)]">
-      <p className="font-display text-[clamp(1.35rem,4svh,2.4rem)] leading-none tracking-wide text-gletcher-navy uppercase">
+    <div className="mt-[clamp(0.25rem,1svh,0.75rem)] space-y-[clamp(0.75rem,2.2svh,1.5rem)]">
+      <p className="font-display text-[clamp(1.5rem,calc(4.8svh+0.5vw),3.15rem)] leading-none tracking-wide text-gletcher-navy uppercase xl:text-[clamp(1.65rem,calc(5.2svh+0.6vw),3.5rem)]">
         {style}
       </p>
 
-      <div className="grid gap-[clamp(0.75rem,2svh,1.5rem)] sm:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] sm:items-start">
-        <div className="space-y-[clamp(0.65rem,1.8svh,1.25rem)]">
-          <div className="flex flex-wrap gap-[clamp(0.55rem,1.5svh,1.1rem)]">
+      <div className="grid gap-[clamp(0.85rem,2.2svh,1.75rem)] sm:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] sm:items-start">
+        <div className="space-y-[clamp(0.75rem,2svh,1.4rem)]">
+          <div className="flex flex-wrap gap-[clamp(0.65rem,1.7svh,1.35rem)]">
             <SpecCircle value={abvDisp} label={labels.strength} />
             <SpecCircle value={ogDisp} label={labels.gravity} />
             <SpecCircle value={ibuDisp} label={labels.bitterness} />
           </div>
 
           <div className="flex flex-wrap items-end gap-x-8 gap-y-2">
-            <p className="font-display max-w-[8rem] text-[clamp(0.85rem,2svh,1.1rem)] leading-tight font-extrabold tracking-wide text-gletcher-navy uppercase">
+            <p className="font-display max-w-[9rem] text-[clamp(0.95rem,2.2svh,1.25rem)] leading-tight font-extrabold tracking-wide text-gletcher-navy uppercase">
               {fermentation}
             </p>
 
-            <div className="flex flex-wrap gap-x-7 gap-y-2 text-[clamp(0.8rem,1.75svh,0.95rem)] font-semibold text-gletcher-navy">
+            <div className="flex flex-wrap gap-x-7 gap-y-2 text-[clamp(0.9rem,1.9svh,1.1rem)] font-semibold text-gletcher-navy">
               {bottleVol ? (
                 <p className="flex items-center gap-2">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -123,20 +124,20 @@ export function ProductSpecsPanel({
           </div>
         </div>
 
-        <div className="space-y-[clamp(0.55rem,1.6svh,1rem)]">
+        <div className="space-y-[clamp(0.7rem,1.9svh,1.25rem)]">
           <div>
-            <p className="text-[clamp(0.6rem,1.2svh,0.7rem)] font-semibold tracking-[0.16em] text-gletcher-navy/55 uppercase">
+            <p className="text-[clamp(0.7rem,1.35svh,0.8rem)] font-semibold tracking-[0.16em] text-gletcher-navy/55 uppercase">
               {labels.malts}
             </p>
-            <p className="mt-1 text-[clamp(0.8rem,1.75svh,0.95rem)] font-semibold tracking-wide text-gletcher-navy uppercase">
+            <p className="mt-1.5 text-[clamp(0.95rem,2.15svh,1.3rem)] font-semibold tracking-wide text-gletcher-navy uppercase xl:text-[clamp(1.05rem,2.3svh,1.45rem)]">
               {malts}
             </p>
           </div>
           <div>
-            <p className="text-[clamp(0.6rem,1.2svh,0.7rem)] font-semibold tracking-[0.16em] text-gletcher-navy/55 uppercase">
+            <p className="text-[clamp(0.7rem,1.35svh,0.8rem)] font-semibold tracking-[0.16em] text-gletcher-navy/55 uppercase">
               {labels.hops}
             </p>
-            <p className="mt-1 text-[clamp(0.8rem,1.75svh,0.95rem)] font-semibold tracking-wide text-gletcher-navy uppercase">
+            <p className="mt-1.5 text-[clamp(0.95rem,2.15svh,1.3rem)] font-semibold tracking-wide text-gletcher-navy uppercase xl:text-[clamp(1.05rem,2.3svh,1.45rem)]">
               {hops}
             </p>
           </div>

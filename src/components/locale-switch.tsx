@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import {
@@ -24,6 +25,30 @@ type LocaleSwitchProps = {
   scaled?: boolean;
 };
 
+function useLocationHash() {
+  const [hash, setHash] = useState("");
+
+  useEffect(() => {
+    const sync = () => setHash(window.location.hash);
+    sync();
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, []);
+
+  return hash;
+}
+
+function localeHref(
+  pathname: string,
+  customHref: string | undefined,
+  hash: string,
+) {
+  const base = customHref ?? pathname;
+  if (!hash) return base;
+  // Avoid doubling hash if a custom href already includes one.
+  return base.includes("#") ? base : `${base}${hash}`;
+}
+
 export function LocaleSwitch({
   localeHrefs,
   className = "",
@@ -32,6 +57,7 @@ export function LocaleSwitch({
 }: LocaleSwitchProps) {
   const locale = useLocale() as PublishedLocale;
   const pathname = usePathname();
+  const hash = useLocationHash();
   const t = useTranslations("a11y");
 
   if (variant === "header") {
@@ -59,8 +85,9 @@ export function LocaleSwitch({
           return (
             <Link
               key={code}
-              href={customHref ?? pathname}
+              href={localeHref(pathname, customHref, hash)}
               locale={code}
+              scroll={false}
               className={`inline-flex h-full items-center rounded-full uppercase transition-colors ${
                 active
                   ? "bg-gletcher-navy text-gletcher-white"
@@ -94,8 +121,9 @@ export function LocaleSwitch({
         return (
           <Link
             key={code}
-            href={customHref ?? pathname}
+            href={localeHref(pathname, customHref, hash)}
             locale={code}
+            scroll={false}
             className={`rounded-full px-2.5 py-1 transition-colors ${
               active
                 ? "bg-gletcher-navy text-gletcher-white"
