@@ -113,7 +113,7 @@
 | Категории CLASSIC/CRAFT/LIMITED/AGED, порядок и badges | **Confirmed** — owner CSV отражён в `src/content/products.ts`; AGED показывается в ALL |
 | PNG Cynic и MoA non-alcoholic | **Есть** — пути `CATALOGUE__0018_CYNIC---bottle.png` и `CATALOGUE__0017_Milk-of-Amnesia-non-alcoholic---bottle.png` существуют в `public/catalog/bottles/` |
 | Tilda full export | **Open** |
-| EN на эталоне | **Open** (по умолчанию RU only) |
+| EN на эталоне | RU/EN срез реализован в `5b4910d`; полнота UI и приёмка остаются открытыми |
 | Лицензии Trial-шрифтов | **Open** — не публиковать Trial в прод без покупки |
 
 ## 8. Неизвестные параметры (не блокируют старт этапа 2)
@@ -130,9 +130,13 @@
 
 - Tokens / fonts / `SiteShell` (AgeGate, Header, Menu, Footer)
 - Route `http://localhost:3000/beer` — hero, filters, gallery, lead form stub
-- Предыдущая реализация сообщала о green lint/typecheck/build. В ревью `a6a13a9` повторно прошли ESLint и TypeScript без incremental-кеша; build и браузерные проверки не запускались, поэтому текущая визуальная готовность не подтверждена.
+- Проверка `5b4910d` плюс пользовательский `baseUrl`: TypeScript без incremental-кеша — PASS; ESLint — FAIL (`setMounted` в эффекте меню). Build/browser в текущем ревью не запускались; прежние green-результаты не подтверждают готовность нового среза.
 - ADR: `docs/adr/0000-site-migration-strategy.md`
 
-**Open перед приёмкой:** подтверждение прав на публичные шрифты; визуальный sign-off владельца для `/beer` и RU↔EN (меню/portal, locale switch на карточке с разными slug). Категории/badges, PNG Cynic и P1 меню (`inert`/portal) закрыты в коде.
+**Open перед приёмкой:** исправления [актуального ревью](../reviews/2026-10-31-current-state.md), права на публичные шрифты, визуальный sign-off владельца для `/beer` и RU↔EN. Категории/badges, PNG Cynic и прежний P1 self-inert меню закрыты; lint и возврат фокуса — отдельные открытые замечания.
+
+Исходный scope этапа 3 выше сохранён как история выбора эталона. Фактически
+уже начат RU/EN срез этапа 4 по Accepted ADR 0001; это не закрывает визуальную
+приёмку `/beer`. Операционный порядок: [CURSOR_NEXT_STEPS](../CURSOR_NEXT_STEPS.md).
 
 Коммит/push — только по запросу.

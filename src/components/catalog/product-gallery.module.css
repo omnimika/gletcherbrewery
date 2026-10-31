@@ -100,6 +100,9 @@
     --catalog-screen: 960;
     --catalog-artboard-h: 630;
     --catalog-item-w: 25%;
+    /* Tilda artboard floor + viewport height (Observed 960–1199). */
+    min-height: calc(var(--catalog-artboard-h) * 100vw / var(--catalog-screen));
+    height: 100vh;
   }
 }
 
@@ -108,6 +111,8 @@
     --catalog-screen: 1200;
     --catalog-artboard-h: 700;
     --catalog-item-w: 25%;
+    min-height: calc(var(--catalog-artboard-h) * 100vw / var(--catalog-screen));
+    height: 100vh;
   }
 }
 
@@ -116,5 +121,7 @@
     --catalog-screen: 1400;
     --catalog-artboard-h: 876;
     --catalog-item-w: 20%;
+    min-height: calc(var(--catalog-artboard-h) * 100vw / var(--catalog-screen));
+    height: 100vh;
   }
 }

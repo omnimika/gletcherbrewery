@@ -82,3 +82,26 @@ Compatible with `products` + `product_translations` (one entity, many locales). 
 | `milk-of-amnesia-v-tropic` | `milk-of-amnesia` |
 | `brainstorm` | `brainstorm-apa-alcohol-free` |
 | others | same as RU |
+
+## Implementation verification (31.10.2026)
+
+Accepted architecture is not a visual/quality sign-off. The current `5b4910d`
+slice has remaining defects recorded in the [review](../reviews/2026-10-31-current-state.md)
+and [Cursor task](../CURSOR_NEXT_STEPS.md): lint, focus restoration, UI translation,
+redirect permanence, metadata and carousel checks. The old self-inert menu
+defect is fixed by the portal and must not be reopened as the same issue.
+
+Before enabling another language, also address current implementation limits:
+
+- `catalog.ts` builds translations and product alternates by explicitly iterating
+  RU/EN. Expand those paths through the approved registry and publication model;
+  adding a registry item alone is not sufficient today.
+- `LocaleSwitch` must distinguish a missing published page peer from a missing
+  optional override. Its current Partial<string> input falls back to pathname
+  for undefined; its null check does not match the declared type. The existing
+  complete RU/EN dataset does not exercise that case.
+- Recheck required message coverage, locale font glyphs, number formatting,
+  draft/missing pages, SEO and 404 for the newly enabled locale.
+
+Future-locale work remains gated by translation/script/font approval; these
+notes do not enable `sr`, `hy`, `ka` or `de` or choose new business rules.

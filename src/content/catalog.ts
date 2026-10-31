@@ -13,14 +13,16 @@ import {
   CATALOG_PRODUCTS,
   type ProductBadge,
   type ProductCategory,
-  type ProductFilterId,
-  productsForAllView,
 } from "@/content/products";
 import {
   PRODUCT_PROPS,
   type ProductProps,
   type ProductSpecs,
 } from "@/content/product-props";
+import type { CatalogCard } from "@/content/catalog-filter";
+
+export type { CatalogCard } from "@/content/catalog-filter";
+export { filterCatalogCards } from "@/content/catalog-filter";
 
 export type TranslationStatus = "published" | "draft" | "missing";
 
@@ -34,7 +36,7 @@ export type ProductTranslation = {
   about?: string;
   foodPairing?: string;
   fermentation?: string;
-  /** Historical path segments that 301 to `slug` for this locale */
+  /** Historical path segments that permanently redirect to `slug` for this locale */
   aliases?: string[];
 };
 
@@ -46,17 +48,6 @@ export type CatalogProductRecord = {
   outOfStock?: boolean;
   specs: ProductSpecs;
   translations: Partial<Record<AppLocale, ProductTranslation>>;
-};
-
-export type CatalogCard = {
-  id: string;
-  slug: string;
-  title: string;
-  category: ProductCategory;
-  image: string;
-  badges: ProductBadge[];
-  outOfStock?: boolean;
-  href: string;
 };
 
 const LISTING_BY_ID = new Map(
@@ -219,31 +210,6 @@ export function getCatalogCards(locale: PublishedLocale): CatalogCard[] {
     });
   }
   return cards;
-}
-
-export function filterCatalogCards(
-  cards: CatalogCard[],
-  filter: ProductFilterId,
-): CatalogCard[] {
-  if (filter === "all") {
-    const asListing = cards.map((c) => ({
-      slug: c.slug,
-      name: c.title,
-      title: c.title,
-      category: c.category,
-      image: c.image,
-      badges: c.badges,
-      outOfStock: c.outOfStock,
-    }));
-    const ordered = productsForAllView(asListing);
-    const byId = new Map(cards.map((c) => [c.id, c]));
-    // productsForAllView uses slug; map back via slug within cards
-    const bySlug = new Map(cards.map((c) => [c.slug, c]));
-    return ordered
-      .map((p) => bySlug.get(p.slug) ?? byId.get(p.slug))
-      .filter((c): c is CatalogCard => Boolean(c));
-  }
-  return cards.filter((c) => c.category === filter);
 }
 
 /** hreflang peers for a product (published locales only). */

@@ -5,10 +5,21 @@ import { useEffect, type RefObject } from "react";
 const FOCUSABLE =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
+type FocusTrapOptions = {
+  /**
+   * When false, caller must restore focus after unlocking the background
+   * (e.g. after removing `inert` from `#site-root`).
+   */
+  restoreFocus?: boolean;
+};
+
 export function useFocusTrap(
   containerRef: RefObject<HTMLElement | null>,
   active: boolean,
+  options: FocusTrapOptions = {},
 ) {
+  const restoreFocus = options.restoreFocus ?? true;
+
   useEffect(() => {
     if (!active) return;
     const container = containerRef.current;
@@ -48,7 +59,9 @@ export function useFocusTrap(
     document.addEventListener("keydown", onKeyDown);
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      previouslyFocused?.focus();
+      if (restoreFocus) {
+        previouslyFocused?.focus();
+      }
     };
-  }, [active, containerRef]);
+  }, [active, containerRef, restoreFocus]);
 }

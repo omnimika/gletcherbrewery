@@ -1,18 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { LocaleSwitch } from "@/components/locale-switch";
 import { useFocusTrap } from "@/lib/use-focus-trap";
 
-const NAV_HREFS = [
-  "/beer",
-  "/partnership",
-  "/tours",
-  "/map",
-  "/blog",
+const NAV_ITEMS = [
+  { href: "/beer", labelKey: "products" },
+  { href: "/partnership", labelKey: "partners" },
+  { href: "/tours", labelKey: "tours" },
+  { href: "/map", labelKey: "map" },
+  { href: "/blog", labelKey: "blog" },
 ] as const;
 
 type MainNavOverlayProps = {
@@ -22,28 +22,35 @@ type MainNavOverlayProps = {
 
 export function MainNavOverlay({ open, onClose }: MainNavOverlayProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
+  const triggerRef = useRef<HTMLElement | null>(null);
   const t = useTranslations("nav");
   const tA11y = useTranslations("a11y");
-  useFocusTrap(dialogRef, open);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // Focus returns only after inert is cleared (see lock effect below).
+  useFocusTrap(dialogRef, open, { restoreFocus: false });
 
   useEffect(() => {
     if (!open) return;
-    const previous = document.body.style.overflow;
+    triggerRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const root = document.getElementById("site-root");
     root?.setAttribute("inert", "");
     return () => {
-      document.body.style.overflow = previous;
+      document.body.style.overflow = previousOverflow;
       root?.removeAttribute("inert");
+      const trigger = triggerRef.current;
+      triggerRef.current = null;
+      // Restore after inert removal so the trigger can receive focus.
+      queueMicrotask(() => trigger?.focus());
     };
   }, [open]);
 
-  if (!open || !mounted) return null;
+  // `open` becomes true only after client interaction — document is available.
+  if (!open || typeof document === "undefined") return null;
 
   const portalTarget =
     document.getElementById("portal-root") ?? document.body;
@@ -71,28 +78,18 @@ export function MainNavOverlay({ open, onClose }: MainNavOverlayProps) {
 
       <nav className="flex min-h-0 flex-1 flex-col justify-center px-6 py-6 sm:px-16 lg:px-24">
         <ul className="flex flex-col items-end gap-3 sm:gap-4">
-          {NAV_HREFS.map((href, index) => (
+          {NAV_ITEMS.map((item, index) => (
             <li
-              key={href}
+              key={item.href}
               className="animate-menu-rise"
               style={{ animationDelay: `${80 + index * 60}ms` }}
             >
               <Link
-                href={href}
+                href={item.href}
                 onClick={onClose}
                 className="font-display text-4xl text-gletcher-navy transition-colors hover:text-gletcher-red sm:text-6xl lg:text-7xl"
               >
-                {t(
-                  href === "/beer"
-                    ? "products"
-                    : href === "/partnership"
-                      ? "partners"
-                      : href === "/tours"
-                        ? "tours"
-                        : href === "/map"
-                          ? "map"
-                          : "blog",
-                )}
+                {t(item.labelKey)}
               </Link>
             </li>
           ))}

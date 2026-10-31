@@ -1,12 +1,14 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import type { CatalogCard } from "@/content/catalog";
+import type { CatalogCard } from "@/content/catalog-filter";
 
 type ProductCardProps = {
   product: CatalogCard;
+  /** LCP/first-viewport hint — independent of marketing badges. */
+  priority?: boolean;
 };
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, priority = false }: ProductCardProps) {
   const badges = product.badges ?? [];
 
   return (
@@ -27,7 +29,7 @@ export function ProductCard({ product }: ProductCardProps) {
           fill
           sizes="(min-width:1400px) 20vw, (min-width:960px) 25vw, (min-width:640px) 33vw, (min-width:480px) 50vw, 100vw"
           className="object-contain object-top transition-transform duration-300 group-hover:-translate-y-1"
-          priority={product.badges?.includes("new")}
+          priority={priority}
         />
       </div>
       <span className="sr-only">{product.title}</span>

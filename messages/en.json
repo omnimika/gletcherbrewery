@@ -62,11 +62,22 @@
     "shopRules": "Shop rules"
   },
   "leadForm": {
-    "title": "Leave a request",
+    "eyebrow": "Got ideas?",
+    "title": "Write to us!",
+    "lead": "Want a favourite beer back, or to propose a recipe for a limited run?",
     "name": "Name",
     "email": "Email",
+    "comment": "Comment",
     "phone": "Phone",
     "submit": "Send",
-    "note": "We do not sell alcohol online."
+    "note": "We do not sell alcohol online.",
+    "success": "Thank you! (stub — server submit is not connected yet)",
+    "error": "Check your name and a valid email."
+  },
+  "product": {
+    "style": "Style",
+    "foodPairing": "Food pairing",
+    "malts": "Malts",
+    "hops": "Hops"
   }
 }

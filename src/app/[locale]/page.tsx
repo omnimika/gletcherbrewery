@@ -1,13 +1,38 @@
+import type { Metadata } from "next";
+import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { SiteShell } from "@/components/site-shell";
-import { hasLocale } from "next-intl";
-import { notFound } from "next/navigation";
+import { DEFAULT_LOCALE, isPublishedLocale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
 
 type HomePageProps = {
   params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: HomePageProps): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isPublishedLocale(locale)) return {};
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const path = locale === DEFAULT_LOCALE ? "/" : `/${locale}`;
+  return {
+    title: {
+      absolute: t("siteName"),
+    },
+    description: t("homeDescription"),
+    alternates: {
+      canonical: path,
+      languages: {
+        ru: "/",
+        en: "/en",
+        "x-default": "/",
+      },
+    },
+  };
+}
 
 export default async function Home({ params }: HomePageProps) {
   const { locale } = await params;

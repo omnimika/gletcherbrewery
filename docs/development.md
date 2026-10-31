@@ -1,7 +1,8 @@
 # Локальная разработка
 
-Статус: Bootstrap завершён; реализованы общий каркас и RU-эталон `/beer`.
-Визуальная приёмка и дальнейший перенос сайта описаны в `ROADMAP.md`.
+Статус: Bootstrap завершён; реализованы каркас и начальные RU/EN home/list/detail.
+RU доступен без префикса, EN — под `/en`. Приёмка и открытые дефекты описаны
+в [текущем задании Cursor](CURSOR_NEXT_STEPS.md) и `ROADMAP.md`.
 Серверные бизнес-интеграции относятся к последующим этапам.
 
 ## Требования и запуск
@@ -47,8 +48,11 @@ src/
 Псевдоним `@/*` указывает на `src/*`. `types` пока содержит `.gitkeep`.
 Страницы и `SiteShell` — серверные компоненты; меню, age gate, фильтры,
 карусель и форма используют клиентские компоненты. Отправка формы — stub.
-`product-props.ts` содержит данные RU/EN, но ещё не подключён к detail routes;
-языковая маршрутизация и message catalogs пока не реализованы.
+`product-props.ts` и listing assets объединяет `src/content/catalog.ts`:
+карточки и detail routes используют стабильный ID и published translations.
+Маршруты находятся в `src/app/[locale]`, proxy — `src/proxy.ts`, конфигурация
+локалей — `src/i18n`, сообщения — в корневом `messages/`. Часть UI ещё требует
+подключения переводов; наличие namespace в JSON само по себе этого не доказывает.
 
 Стили Tailwind CSS 4 обрабатывает официальный `@tailwindcss/turbopack` через
 `next.config.ts`; правило применяется к `src/app/globals.css`. CSS Modules

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { SiteShell } from "@/components/site-shell";
@@ -83,16 +83,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const canonicalSlug = product.translations[locale]?.slug;
   if (!canonicalSlug) notFound();
 
-  // Wrong-locale slug or alias → 301 to canonical for this locale
+  // Wrong-locale slug or alias → permanent redirect to canonical for this locale.
+  // Next.js `permanentRedirect` emits HTTP 308 (permanent); accepted for SEO canon.
   if (matchedLocale !== locale || slug !== canonicalSlug) {
     const dest =
       locale === DEFAULT_LOCALE
         ? `/beer/${canonicalSlug}`
         : `/${locale}/beer/${canonicalSlug}`;
-    redirect(dest);
+    permanentRedirect(dest);
   }
 
   const tNav = await getTranslations("nav");
+  const tProduct = await getTranslations("product");
   const taste = pickCopy(product, locale, "taste");
   const about = pickCopy(product, locale, "about");
   const food = pickCopy(product, locale, "foodPairing");
@@ -158,7 +160,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <dd className="font-semibold">{product.specs.ibu}</dd>
               </div>
               <div>
-                <dt className="text-gletcher-navy/50">Style</dt>
+                <dt className="text-gletcher-navy/50">{tProduct("style")}</dt>
                 <dd className="font-semibold">{product.specs.style}</dd>
               </div>
             </dl>
@@ -169,13 +171,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </p>
             {food ? (
               <p className="mt-6 text-sm text-gletcher-navy/80">
-                <span className="font-semibold">Food pairing: </span>
+                <span className="font-semibold">{tProduct("foodPairing")}: </span>
                 {food}
               </p>
             ) : null}
             <p className="mt-4 text-sm text-gletcher-navy/70">
+              <span className="font-semibold">{tProduct("malts")}: </span>
               {product.specs.malts}
               <br />
+              <span className="font-semibold">{tProduct("hops")}: </span>
               {product.specs.hops}
             </p>
           </div>

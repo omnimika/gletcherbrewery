@@ -64,9 +64,9 @@ See ADR 0001. Practical rules for this dataset:
 3. UI chrome (filters «ВСЕ», age gate, footer) is a separate message catalog, not product CSV columns.
 4. Do not invent Serbian/Armenian/Georgian/German product text; mark status `Open` until translation brief + owner sign-off.
 
-## 5. Next code steps (not done here)
+## 5. Implementation and remaining checks
 
-- Before wiring detail pages, unify list/detail records around a stable product ID and test a `(locale, slug)` resolver. Current `getProductProps` searches only ID/RU/EN; it does not yet resolve future locale slugs.
-- Add page publication status: `productPath` currently builds planned-locale URLs from fallback slugs, which is not proof that those pages exist. Only published peers may appear in SEO/navigation.
-- After reference-page acceptance, implement one RU/EN slice using `[locale]`, a locale-aware root layout and `src/proxy.ts` for Next.js 16, per ADR 0001.
+- `src/content/catalog.ts` now supplies stable IDs, locale-aware resolution, listing projection and publication-aware paths. Current data has 18 published RU and 18 EN records; canonical round-trip checks passed in memory.
+- `[locale]` routes, `src/proxy.ts`, registry and UI dictionaries are implemented. Planned locales do not have published product paths. Old criticism of the deprecated helper is not a current public-route failure.
+- Finish permanent alias redirects, complete UI translation and ensure the client gallery does not import full product prose through the filtering module. See [current review](../reviews/2026-10-31-current-state.md).
 - Owner review of CSV for editorial fixes before CMS import.

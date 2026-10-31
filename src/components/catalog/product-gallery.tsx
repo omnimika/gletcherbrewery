@@ -1,11 +1,11 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   filterCatalogCards,
   type CatalogCard,
-} from "@/content/catalog";
+} from "@/content/catalog-filter";
 import type { ProductFilterId } from "@/content/products";
 import { ProductCard } from "@/components/catalog/product-card";
 import { ProductFilterChips } from "@/components/catalog/product-filter-chips";
@@ -26,6 +26,12 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
     () => filterCatalogCards(cards, filter),
     [cards, filter],
   );
+
+  useEffect(() => {
+    const track = scrollerRef.current;
+    if (!track) return;
+    track.scrollLeft = 0;
+  }, [filter, products]);
 
   const scrollBy = (dir: -1 | 1) => {
     const track = scrollerRef.current;
@@ -59,10 +65,10 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
         </button>
 
         <div ref={scrollerRef} className={styles.track}>
-          {products.map((product) => (
+          {products.map((product, index) => (
             <div key={product.id} className={styles.slot}>
               <div className={styles.slotInner}>
-                <ProductCard product={product} />
+                <ProductCard product={product} priority={index === 0} />
               </div>
             </div>
           ))}
