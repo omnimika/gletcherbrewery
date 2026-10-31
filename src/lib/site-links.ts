@@ -13,6 +13,8 @@ type ExternalNavKey =
   | "tours"
   | "map"
   | "blog"
+  | "shop"
+  | "b2b"
   | "login"
   | "signup"
   | "policy";
@@ -22,6 +24,7 @@ const RU_ONLY: ReadonlySet<ExternalNavKey> = new Set([
   "login",
   "signup",
   "policy",
+  "b2b",
 ]);
 
 const PATHS: Record<ExternalNavKey, { ru: string; en?: string }> = {
@@ -30,6 +33,9 @@ const PATHS: Record<ExternalNavKey, { ru: string; en?: string }> = {
   tours: { ru: "/tours", en: "/en/tours" },
   map: { ru: "/map", en: "/en/map" },
   blog: { ru: "/blog", en: "/en/blog" },
+  shop: { ru: "/shop", en: "/en/shop" },
+  /** Live EN home also links the RU B2B landing — keep until EN peer Confirmed. */
+  b2b: { ru: "/russian-craft-beer" },
   login: { ru: "/members/login" },
   signup: { ru: "/members/signup" },
   policy: { ru: "/policy" },

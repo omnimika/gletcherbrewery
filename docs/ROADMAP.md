@@ -1,7 +1,7 @@
 # Gletcher Brewery — Roadmap и технический план миграции
 
 > Версия: 0.9 (31 октября 2026 г.)
-> Статус: `/beer` и product template `/beer/{slug}` приняты владельцем (31.10.2026). Cynic polish — owner follow-up. Dirty tree A01–A03 ждёт commit. Этап 4 далее — home `/` (MCP baseline).
+> Статус: `/beer` и product template приняты (`0df9706`). Этап 4 — home `/` v1 + baseline; ждёт приёмки. Cynic — owner follow-up.
 > Для репозитория: поместить в `docs/ROADMAP.md`.
 
 ## 1. Концепция
@@ -97,7 +97,7 @@ Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCB
 | 1. Site Discovery | Реестр URL, UI-инвентаризация, SEO/контент и кандидат эталона | **Done** — эталон `/beer` утверждён |
 | 2. Design Foundation | Минимальная дизайн-система и общий каркас | **Baseline accepted** вместе с `/beer`; общие accessibility follow-ups отдельно |
 | 3. Reference Page | Одна принятая адаптивная эталонная страница | **Accepted владельцем 31.10.2026** — `/beer`; повторная визуальная приёмка не требуется |
-| 4. Public Migration | Публичные страницы, каталог/блог, SEO, контент | **In progress** — product template принят; следующий шаблон home `/` |
+| 4. Public Migration | Публичные страницы, каталог/блог, SEO, контент | **In progress** — home `/` v1 + MCP baseline; ждёт приёмки |
 | 5. Data & Infrastructure | PostgreSQL, NocoDB, серверные границы, staging | В очереди |
 | 6. Retail Map | CRM торговых точек и Mapbox | В очереди |
 | 7. Agent Gletcher | Миграция Airtable/Collabza и бонусная программа | В очереди |

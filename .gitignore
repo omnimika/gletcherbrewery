@@ -43,6 +43,12 @@ next-env.d.ts
 
 # local tooling and logs
 *.log
+.tmp/
+
+# hero bottle: only delivery encodes in public/; masters/work live under .tmp/
+/public/vid/herobottle/masters/
+/public/vid/herobottle/work/
+/public/vid/herobottle/web/
 
 # local drop zone for large source packs (moved selections live under assets/)
 /tmp/

@@ -144,10 +144,9 @@
 **Строго соблюдать очередность `docs/ROADMAP.md`:** (0) Bootstrap Next.js → (1) Site Discovery → (2) базовая дизайн-система → (3) одна эталонная страница → (4) остальной публичный сайт → (5+) backend, NocoDB, Mapbox, бонусы и бронирования. Преждевременная разработка CRM/Mapbox не является текущей задачей.
 
 1. Bootstrap и Discovery готовы; эталон `/beer` **принят владельцем** (31.10.2026).
-2. Product template `/beer/{slug}` **принят владельцем** (31.10.2026). Cynic visual
-   polish — follow-up владельца, Cursor не правит. Dirty tree A01–A03 ждёт
-   **явного разрешения на commit**. Затем этап 4: один шаблон **home `/`**
-   (MCP baseline → критерии → реализация). См. `docs/CURSOR_NEXT_STEPS.md`.
+2. Product template `/beer/{slug}` **принят** (`0df9706`). Cynic — owner follow-up.
+   Текущее: **home `/`** — baseline `docs/discovery/HOME_PAGE_BASELINE.md` + v1 UI;
+   см. `docs/CURSOR_NEXT_STEPS.md`. Ждёт приёмки владельцем.
 3. ADR 0001 **Accepted**; next-intl RU/EN. `sr`/`hy`/`ka`/`de` — Open.
 4. Массовый перенос прочих публичных страниц — после home (по одному шаблону).
 5. Критерии закрытия — код + свежие проверки; не подменять browser/build старым отчётом.

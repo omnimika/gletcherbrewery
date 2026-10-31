@@ -1,47 +1,39 @@
 # Текущее задание Cursor Agent
 
-Дата: 31.10.2026. Product template принят владельцем поверх `6f84465`
-(dirty tree A01–A03 + peer locale hrefs, без commit на момент приёмки).
-[Ревью](reviews/2026-10-31-product-acceptance.md),
-[baseline](discovery/PRODUCT_PAGE_BASELINE.md), [промпт](CURSOR_REVIEW_PROMPT.md).
+Дата: 31.10.2026. Product template принят (`0df9706`).
+Текущий срез этапа 4: **home `/`**.
+[Baseline](discovery/HOME_PAGE_BASELINE.md), [MCP workflow](discovery/TILDA_MCP_WORKFLOW.md).
 
 ## Статус gates
 
 | Gate | Статус |
 |------|--------|
-| `/beer` каталог | **Принят** владельцем 31.10.2026 — не открывать повторно |
-| `/beer/{slug}` product template | **Принят** владельцем 31.10.2026 |
-| Cynic visual polish | **Owner follow-up** — владелец поправит позже; Cursor не трогать |
+| `/beer` каталог | **Принят** 31.10.2026 |
+| `/beer/{slug}` product template | **Принят** 31.10.2026 (`0df9706`) |
+| Cynic visual polish | **Owner follow-up** |
+| Home `/` | **In progress** — v1 implementation + baseline |
 
-## Product template v1 — закрыт
+## Home v1 (этот проход)
 
-| ID | Статус | Что сделано |
-|----|--------|-------------|
-| T01–T05 | Fixed | H1, menu keyboard, loop clones, home Agent, preload |
-| A01 | Fixed | `#about` `md:min-h`, без clip overflow-hidden |
-| A02 | Fixed | dialog shell включает header controls |
-| A03 | Fixed | stable focus trap lifecycle |
-| Peer locale + hash | Fixed | `localeHrefs` / Brainstorm / MoA |
+- MCP: project `1212341`, RU `49072461`, EN `50620901`; hero ZB `749387570`.
+- Baseline: `docs/discovery/HOME_PAGE_BASELINE.md`.
+- UI: `HomeHero` (video + seal + H2/H1), promos, features, blog fixture, newsletter UI-only.
+- Не ломать принятые `/beer` и product template; Cynic не трогать.
 
-Evidence lint/tsc/build/browser — в предыдущей редакции этого файла и baseline.
+## Критерии приёмки home
 
-## Следующее задание Cursor
+- lint / tsc / build; localhost `/` и `/en`.
+- Один H1; SEO title/description/canonical/hreflang.
+- Hero brand composition (не stub); CTAs на `/beer` и production map/tours/shop/b2b/blog.
+- Blog ≥3 teasers; newsletter без фейкового backend success.
+- 390×844 + 1440×900; без регрессии каталога/product.
+- Pixel-perfect ZB не требуется.
 
-1. **Commit** product-template diff — только по явному разрешению владельца.
-2. После commit: **один** следующий шаблон этапа 4 — **home `/`**.
-   - Read-only MCP Tilda + browser: RU/EN source baseline
-     (`docs/discovery/TILDA_MCP_WORKFLOW.md`), editor ≠ published.
-   - Зафиксировать секции, URL, SEO, медиа, CTA, критерии приёмки
-     в `docs/discovery/` (новый HOME baseline).
-   - Реализация поверх принятого SiteShell/header/footer; не ломать `/beer`.
-3. Backend / NocoDB / Mapbox / новые локали — не сейчас.
+## Следующее после приёмки home
 
-## Отложенные требования
-
-- Cynic — правка владельца.
-- Related first-12 — Proposed.
-- Полный исходный legal notice — backlog до production (AGENTS).
+Один следующий публичный шаблон (блог listing / partners / legal — выбрать с владельцем).
+Backend — этапы 5+. Commit/push — по разрешению.
 
 ## Не сейчас
 
-map/agent/tours backend, NocoDB, `sr`/`hy`/`ka`/`de`, pixel-perfect Zero Block.
+map/agent/tours backend, NocoDB, новые локали, Cynic polish.

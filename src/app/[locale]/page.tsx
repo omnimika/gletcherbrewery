@@ -2,14 +2,18 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Link } from "@/i18n/navigation";
 import { SiteShell } from "@/components/site-shell";
+import { HomeHero } from "@/components/home/home-hero";
+import { HomePromos } from "@/components/home/home-promos";
+import { HomeFeatures } from "@/components/home/home-features";
+import { HomeBlog } from "@/components/home/home-blog";
+import { HomeNewsletter } from "@/components/home/home-newsletter";
+import { getHomeBlogTeasers } from "@/content/home";
 import {
   DEFAULT_LOCALE,
   isPublishedLocale,
   type PublishedLocale,
 } from "@/i18n/locales";
-import { productionHref } from "@/lib/site-links";
 import { routing } from "@/i18n/routing";
 
 type HomePageProps = {
@@ -41,46 +45,62 @@ export async function generateMetadata({
 
 export default async function Home({ params }: HomePageProps) {
   const { locale } = await params;
-  if (!hasLocale(routing.locales, locale)) notFound();
+  if (!hasLocale(routing.locales, locale) || !isPublishedLocale(locale)) {
+    notFound();
+  }
   setRequestLocale(locale);
 
+  const published = locale as PublishedLocale;
   const t = await getTranslations("home");
+  const blog = getHomeBlogTeasers(published);
+
+  const promoLabels = {
+    promosAria: t("promosAria"),
+    promoEquipment: t("promoEquipment"),
+    promoDistribution: t("promoDistribution"),
+    promoNearby: t("promoNearby"),
+  };
+
+  const featureLabels = {
+    featuresAria: t("featuresAria"),
+    featureMapTitle: t("featureMapTitle"),
+    featureMapBody: t("featureMapBody"),
+    featureMapCta: t("featureMapCta"),
+    featureB2bTitle: t("featureB2bTitle"),
+    featureB2bBody: t("featureB2bBody"),
+    featureB2bCta: t("featureB2bCta"),
+    featureShopTitle: t("featureShopTitle"),
+    featureShopBody: t("featureShopBody"),
+    featureShopCta: t("featureShopCta"),
+    featureToursTitle: t("featureToursTitle"),
+    featureToursBody: t("featureToursBody"),
+    featureToursCta: t("featureToursCta"),
+    featureCatalogTitle: t("featureCatalogTitle"),
+    featureCatalogBody: t("featureCatalogBody"),
+    featureCatalogCta: t("featureCatalogCta"),
+    featureBlogTitle: t("featureBlogTitle"),
+    featureBlogBody: t("featureBlogBody"),
+    featureBlogCta: t("featureBlogCta"),
+  };
 
   return (
     <SiteShell>
-      <section className="relative mx-auto flex min-h-[70svh] w-full max-w-[1440px] flex-col justify-center px-6 py-20 sm:px-10">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-40"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 50% at 70% 20%, rgb(147 204 230 / 0.45), transparent 60%), radial-gradient(ellipse 60% 40% at 20% 80%, rgb(229 55 60 / 0.12), transparent 55%)",
-          }}
-          aria-hidden
-        />
-        <p className="animate-hero-rise relative text-xs font-semibold tracking-[0.25em] text-gletcher-navy/70 uppercase">
-          {t("eyebrow")}
-        </p>
-        <h1 className="font-display animate-hero-rise relative mt-4 max-w-4xl text-[clamp(3rem,12vw,8rem)] text-gletcher-navy">
-          {t("title")}
-        </h1>
-        <p className="animate-hero-rise relative mt-6 max-w-lg text-base leading-relaxed text-gletcher-navy/80 sm:text-lg">
-          {t("lead")}
-        </p>
-        <div className="animate-hero-rise relative mt-10 flex flex-wrap gap-4">
-          <Link
-            href="/beer"
-            className="bg-gletcher-red px-6 py-3 text-sm font-semibold tracking-wide text-gletcher-white uppercase transition-colors hover:bg-gletcher-deep"
-          >
-            {t("ctaCatalog")}
-          </Link>
-          <a
-            href={productionHref("agent", locale as PublishedLocale)}
-            className="border border-gletcher-navy px-6 py-3 text-sm font-semibold tracking-wide text-gletcher-navy uppercase transition-colors hover:bg-gletcher-navy hover:text-gletcher-white"
-          >
-            {t("ctaAgent")}
-          </a>
-        </div>
-      </section>
+      <HomeHero
+        breweryLabel={t("brewery")}
+        brandLabel={t("brand")}
+        lead={t("lead")}
+        catalogAria={t("heroCatalogAria")}
+      />
+      <HomePromos locale={published} labels={promoLabels} />
+      <HomeFeatures locale={published} labels={featureLabels} />
+      <HomeBlog title={t("blogTitle")} items={blog} />
+      <HomeNewsletter
+        title={t("newsletterTitle")}
+        lead={t("newsletterLead")}
+        placeholder={t("newsletterPlaceholder")}
+        submit={t("newsletterSubmit")}
+        pendingNote={t("newsletterPending")}
+      />
     </SiteShell>
   );
 }
