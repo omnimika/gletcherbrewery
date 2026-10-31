@@ -1,15 +1,18 @@
 /**
- * Catalog carousel — Tilda ZB 802918687 heights (docs/discovery/TILDA_BEER_CATALOG.md).
- * Bottles fill stage height; side crop of artboard PNG up to ~30% (object-cover).
+ * Catalog carousel — Tilda ZB 802918687 (MCP 2026-10-31).
+ * height = max(ab_height_vh * vh, ab_height px); bottles fill stage.
+ * 1200px: width-res-1200 25% → 4 cols; ab_height-res-1200 700; vh 80.
+ * 1400+: width 20% → 5 cols.
  */
 
 .stage {
   --catalog-cols: 1;
   --stage-vh: 70;
+  --stage-min: 37.25rem; /* 596px — ab_height-res-320 */
   position: relative;
   width: 100%;
-  height: calc(var(--stage-vh) * 1svh);
-  min-height: 16rem;
+  height: calc(var(--stage-vh) * 1vh);
+  min-height: var(--stage-min);
   overflow: hidden;
 }
 
@@ -23,7 +26,6 @@
   justify-content: safe center;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  /* Tight under category tabs; tiny bottom so bases can kiss the fold */
   padding-top: 0.25rem;
   padding-bottom: 0.5rem;
   box-sizing: border-box;
@@ -41,7 +43,6 @@
   position: relative;
   flex-shrink: 0;
   height: 100%;
-  /* Slightly overlap slots so zoomed bottles read denser, like Tilda strip */
   width: calc(100% / var(--catalog-cols));
 }
 
@@ -78,6 +79,7 @@
   .stage {
     --catalog-cols: 2;
     --stage-vh: 50;
+    --stage-min: 31.25rem; /* 500px */
   }
 }
 
@@ -85,6 +87,7 @@
   .stage {
     --catalog-cols: 3;
     --stage-vh: 50;
+    --stage-min: 32.5rem; /* 520px */
   }
 
   .arrow {
@@ -107,17 +110,22 @@
   .stage {
     --catalog-cols: 4;
     --stage-vh: 100;
+    --stage-min: 39.375rem; /* 630px */
   }
 }
 
 @media (min-width: 1200px) {
   .stage {
+    /* Still 4 cols: width-res-1200 = 25% */
     --stage-vh: 80;
+    --stage-min: 43.75rem; /* 700px — ab_height-res-1200 */
   }
 }
 
 @media (min-width: 1400px) {
   .stage {
     --catalog-cols: 5;
+    --stage-vh: 80;
+    --stage-min: 54.75rem; /* 876px — ab_height default */
   }
 }

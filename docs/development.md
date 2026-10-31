@@ -51,8 +51,8 @@ src/
 `product-props.ts` и listing assets объединяет `src/content/catalog.ts`:
 карточки и detail routes используют стабильный ID и published translations.
 Маршруты находятся в `src/app/[locale]`, proxy — `src/proxy.ts`, конфигурация
-локалей — `src/i18n`, сообщения — в корневом `messages/`. Часть UI ещё требует
-подключения переводов; наличие namespace в JSON само по себе этого не доказывает.
+локалей — `src/i18n`, сообщения — в корневом `messages/`. Форма и detail labels
+подключены к RU/EN сообщениям; полнота браузерного UI проверяется отдельно.
 
 Стили Tailwind CSS 4 обрабатывает официальный `@tailwindcss/turbopack` через
 `next.config.ts`; правило применяется к `src/app/globals.css`. CSS Modules
@@ -72,7 +72,11 @@ ABC Gravity Trial используются только для локально�
 
 `build` и `dev` создают `.next` и могут обновлять `next-env.d.ts`; эти команды
 не входят в режим строгого read-only ревью. Результаты текущего ревью:
-[2026-10-31](reviews/2026-10-31-current-state.md).
+[81713e4, 2026-10-31](reviews/2026-10-31-follow-up.md).
+
+Исходники Tilda доступны Cursor через MCP. Сбор доказательств и сверка
+editor/published: [TILDA_MCP_WORKFLOW](discovery/TILDA_MCP_WORKFLOW.md).
+MCP не требуется для локального запуска Next.js.
 
 ## Сохранность исходных материалов
 

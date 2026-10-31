@@ -19,6 +19,7 @@ import {
   type ProductProps,
   type ProductSpecs,
 } from "@/content/product-props";
+import { sortAllViewOrder } from "@/content/listing-order";
 import type { CatalogCard } from "@/content/catalog-filter";
 
 export type { CatalogCard } from "@/content/catalog-filter";
@@ -98,8 +99,11 @@ function buildTranslation(
   };
 }
 
-function toCategory(raw: ProductProps["category"]): ProductCategory {
-  return raw.toLowerCase() as ProductCategory;
+function toCategory(raw: ProductProps["category"] | string): ProductCategory {
+  const key = raw.toLowerCase();
+  // Legacy CSV/fixture label "AGED" → canonical "aging"
+  if (key === "aged") return "aging";
+  return key as ProductCategory;
 }
 
 /** Full catalog records (source of truth for stage-4 product work). */
@@ -224,7 +228,8 @@ export function getCatalogCards(locale: PublishedLocale): CatalogCard[] {
       href,
     });
   }
-  return cards;
+  /** Default ALL order: NEW first, out-of-stock last (see listing-order.ts). */
+  return sortAllViewOrder(cards);
 }
 
 /** hreflang peers for a product (published locales only). */

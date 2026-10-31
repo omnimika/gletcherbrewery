@@ -4,17 +4,19 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 /**
- * `#site-root` holds chrome + page content and can be marked `inert` while
- * overlays are open. Modals (age gate, main nav) render into `#portal-root`
- * so they stay interactive.
+ * Header stays interactive while the main nav is open (same chrome, burger→X).
+ * `#site-content` is marked `inert` by the menu overlay.
+ * Age gate still inerts `#site-root` (header + content) from `#portal-root`.
  */
 export function SiteShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-svh flex-col bg-gletcher-ice text-gletcher-navy">
       <div id="site-root" className="flex min-h-svh flex-1 flex-col">
         <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+        <div id="site-content" className="flex min-h-0 flex-1 flex-col">
+          <main className="flex-1">{children}</main>
+          <SiteFooter />
+        </div>
       </div>
       <div id="portal-root">
         <AgeGate />

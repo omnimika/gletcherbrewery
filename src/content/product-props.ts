@@ -44,7 +44,7 @@ export type ProductCopy = {
 
 export type ProductProps = {
   id: string;
-  category: "CLASSIC" | "CRAFT" | "LIMITED" | "AGED";
+  category: "CLASSIC" | "CRAFT" | "LIMITED" | "AGING";
   title: string;
   /** URL path segment per locale; missing locale falls back to `ru` or `en` via resolver. */
   slugs: Partial<Record<AppLocale, string>> & { ru: string; en: string };
@@ -446,7 +446,7 @@ export const PRODUCT_PROPS: ProductProps[] = [
   },
   {
     id: "cynic",
-    category: "AGED",
+    category: "AGING",
     title: "CYNIC",
     slugs: { ru: "cynic", en: "cynic" },
     badges: ["new"],

@@ -110,10 +110,10 @@
 | Логотипы | **В репо:** `assets/brand/logos/` + PDF в `docs/brand/` |
 | Бутылки CATALOGUE | **В репо:** `assets/catalog/bottles/` |
 | Обложки / сортовые лого | **В репо:** `assets/catalog/covers`, `assets/catalog/logos` |
-| Категории CLASSIC/CRAFT/LIMITED/AGED, порядок и badges | **Confirmed** — owner CSV отражён в `src/content/products.ts`; AGED показывается в ALL |
+| Категории CLASSIC/CRAFT/LIMITED/AGING, порядок и badges | **Confirmed** — owner CSV + chip AGING для CYNIC; ключ `aging` (не `aged`) |
 | PNG Cynic и MoA non-alcoholic | **Есть** — пути `CATALOGUE__0018_CYNIC---bottle.png` и `CATALOGUE__0017_Milk-of-Amnesia-non-alcoholic---bottle.png` существуют в `public/catalog/bottles/` |
-| Tilda full export | **Open** |
-| EN на эталоне | RU/EN срез реализован в `5b4910d`; полнота UI и приёмка остаются открытыми |
+| Tilda sources | **MCP доступ подтверждён** в Cursor; полный датированный snapshot и editor/published сверка открыты: [workflow](TILDA_MCP_WORKFLOW.md) |
+| EN на эталоне | RU/EN срез реализован; форма/detail labels переведены в `81713e4`, browser/visual приёмка открыта |
 | Лицензии Trial-шрифтов | **Open** — не публиковать Trial в прод без покупки |
 
 ## 8. Неизвестные параметры (не блокируют старт этапа 2)
@@ -130,10 +130,10 @@
 
 - Tokens / fonts / `SiteShell` (AgeGate, Header, Menu, Footer)
 - Route `http://localhost:3000/beer` — hero, filters, gallery, lead form stub
-- Проверка `5b4910d` плюс пользовательский `baseUrl`: TypeScript без incremental-кеша — PASS; ESLint — FAIL (`setMounted` в эффекте меню). Build/browser в текущем ревью не запускались; прежние green-результаты не подтверждают готовность нового среза.
+- Проверка `81713e4` плюс пользовательский `messages/ru.json`: TypeScript без incremental-кеша — PASS; ESLint — FAIL (`setMounted` в эффекте галереи). Старая lint-ошибка меню устранена. Build/browser в этом ревью не запускались; прежние green-результаты не подтверждают HEAD.
 - ADR: `docs/adr/0000-site-migration-strategy.md`
 
-**Open перед приёмкой:** исправления [актуального ревью](../reviews/2026-10-31-current-state.md), права на публичные шрифты, визуальный sign-off владельца для `/beer` и RU↔EN. Категории/badges, PNG Cynic и прежний P1 self-inert меню закрыты; lint и возврат фокуса — отдельные открытые замечания.
+**Open перед приёмкой:** [F01–F06 актуального ревью](../reviews/2026-10-31-follow-up.md), MCP/source/browser сверка, права на публичные шрифты, sign-off владельца. Категории/bottle assets и прежний self-inert закрыты; display order и min-height требуют сверки. RU/EN переводы и home metadata уже подключены по коду.
 
 Исходный scope этапа 3 выше сохранён как история выбора эталона. Фактически
 уже начат RU/EN срез этапа 4 по Accepted ADR 0001; это не закрывает визуальную

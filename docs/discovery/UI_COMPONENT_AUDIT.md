@@ -4,6 +4,11 @@
 > Визуальный осмотр: Cursor IDE Browser, viewport **1440×900** (desktop) и **390×844** (mobile).  
 > Статусы: **Confirmed** / **Observed** / **Assumed** / **Unknown**
 
+> Это исходные наблюдения Discovery, а не свежий browser-аудит `81713e4`.
+> Header/menu изменены; уточнить их через MCP Tilda и published view по
+> [протоколу](TILDA_MCP_WORKFLOW.md). Актуальные дефекты и ограничения проверок:
+> [повторное ревью](../reviews/2026-10-31-follow-up.md).
+
 ## 1. Визуальная система (Observed)
 
 | Токен | Значение | Источник |

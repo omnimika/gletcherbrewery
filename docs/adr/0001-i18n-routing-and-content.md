@@ -85,11 +85,12 @@ Compatible with `products` + `product_translations` (one entity, many locales). 
 
 ## Implementation verification (31.10.2026)
 
-Accepted architecture is not a visual/quality sign-off. The current `5b4910d`
-slice has remaining defects recorded in the [review](../reviews/2026-10-31-current-state.md)
-and [Cursor task](../CURSOR_NEXT_STEPS.md): lint, focus restoration, UI translation,
-redirect permanence, metadata and carousel checks. The old self-inert menu
-defect is fixed by the portal and must not be reopened as the same issue.
+Accepted architecture is not a visual/quality sign-off. The current `81713e4`
+slice is assessed in the [follow-up review](../reviews/2026-10-31-follow-up.md)
+and [Cursor task](../CURSOR_NEXT_STEPS.md). Form/detail UI translations, home
+metadata and permanentRedirect are implemented; gallery lint, focus origin,
+contrast, source parity and runtime/SEO validation remain. HTTP 308 aliases
+must not be described as 301 legacy redirects. The old self-inert menu is fixed.
 
 Before enabling another language, also address current implementation limits:
 
@@ -102,6 +103,9 @@ Before enabling another language, also address current implementation limits:
   complete RU/EN dataset does not exercise that case.
 - Recheck required message coverage, locale font glyphs, number formatting,
   draft/missing pages, SEO and 404 for the newly enabled locale.
+- Home/listing metadata also hard-code RU/EN peers. Derive them from publication
+  state. UI messages currently load only the active JSON; define required keys
+  and fallback policy separately from the product-copy fallback.
 
 Future-locale work remains gated by translation/script/font approval; these
 notes do not enable `sr`, `hy`, `ka` or `de` or choose new business rules.

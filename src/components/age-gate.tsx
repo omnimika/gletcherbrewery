@@ -10,7 +10,6 @@ export function AgeGate() {
   const [open, setOpen] = useState<boolean | null>(null);
   const titleId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLElement | null>(null);
   const t = useTranslations("ageGate");
 
   useFocusTrap(dialogRef, open === true, { restoreFocus: false });
@@ -24,10 +23,6 @@ export function AgeGate() {
 
   useEffect(() => {
     if (open !== true) return;
-    triggerRef.current =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement
-        : null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const root = document.getElementById("site-root");
@@ -35,9 +30,15 @@ export function AgeGate() {
     return () => {
       document.body.style.overflow = previousOverflow;
       root?.removeAttribute("inert");
-      const trigger = triggerRef.current;
-      triggerRef.current = null;
-      queueMicrotask(() => trigger?.focus());
+      // Continuation after gate: first focusable in chrome (not a stale body node).
+      queueMicrotask(() => {
+        document
+          .getElementById("site-root")
+          ?.querySelector<HTMLElement>(
+            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+          )
+          ?.focus();
+      });
     };
   }, [open]);
 

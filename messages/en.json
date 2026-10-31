@@ -45,7 +45,8 @@
       "all": "ALL",
       "classic": "CLASSIC",
       "craft": "CRAFT",
-      "limited": "LIMITED"
+      "limited": "LIMITED",
+      "aging": "AGING"
     }
   },
   "ageGate": {

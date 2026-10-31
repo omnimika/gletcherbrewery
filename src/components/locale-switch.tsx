@@ -15,14 +15,20 @@ type LocaleSwitchProps = {
    */
   localeHrefs?: Partial<Record<PublishedLocale, string>>;
   className?: string;
-  /** `header` matches Tilda outline pill (ZB 711698335). */
+  /**
+   * `header` — filled pills; with `scaled` height follows `--ctrl-h`
+   * (same as Агент / Меню under Tilda window-upscale).
+   */
   variant?: "default" | "header";
+  /** Use CSS vars from SiteHeader (`--ctrl-h`, `--font`, `--hs`). */
+  scaled?: boolean;
 };
 
 export function LocaleSwitch({
   localeHrefs,
   className = "",
   variant = "default",
+  scaled = false,
 }: LocaleSwitchProps) {
   const locale = useLocale() as PublishedLocale;
   const pathname = usePathname();
@@ -31,7 +37,18 @@ export function LocaleSwitch({
   if (variant === "header") {
     return (
       <div
-        className={`inline-flex h-8 items-center rounded-full border border-gletcher-navy px-1.5 text-[14px] font-extrabold tracking-wide sm:h-10 sm:px-2 lg:h-8 lg:text-[17px] ${className}`}
+        className={`inline-flex items-center rounded-full border border-gletcher-navy/25 bg-gletcher-white/70 font-semibold tracking-wide ${
+          scaled ? "" : "h-8 p-0.5 text-xs sm:h-10 lg:h-8"
+        } ${className}`}
+        style={
+          scaled
+            ? {
+                height: "var(--ctrl-h)",
+                padding: `calc(2px * var(--hs))`,
+                fontSize: `calc(12px * var(--hs))`,
+              }
+            : undefined
+        }
         role="group"
         aria-label={t("locale")}
       >
@@ -44,9 +61,16 @@ export function LocaleSwitch({
               key={code}
               href={customHref ?? pathname}
               locale={code}
-              className={`px-1.5 py-0.5 uppercase transition-opacity ${
-                active ? "opacity-100" : "opacity-20 hover:opacity-60"
+              className={`inline-flex h-full items-center rounded-full uppercase transition-colors ${
+                active
+                  ? "bg-gletcher-navy text-gletcher-white"
+                  : "text-gletcher-navy/70 hover:text-gletcher-navy"
               }`}
+              style={
+                scaled
+                  ? { paddingInline: `calc(10px * var(--hs))` }
+                  : { paddingInline: "0.625rem" }
+              }
               aria-current={active ? "page" : undefined}
             >
               {LOCALE_LABEL[code]}

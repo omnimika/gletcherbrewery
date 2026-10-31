@@ -5,6 +5,12 @@
 > Page: `16494049` · alias `beer` · title «Каталог | Пивоварня Глетчер»  
 > Status: **Confirmed** from live editor data (2026-10-31)
 
+> Provenance note: the source above was recorded by Cursor. The follow-up
+> Codex review did not independently call MCP. Reconcile editor/published and
+> the 1200px column-count difference with `TILDA_BEER_SLIDER.md` using the
+> [MCP workflow](TILDA_MCP_WORKFLOW.md). The Next.js mapping below is a proposed
+> interpretation until runtime/screenshot comparison; `height_vh` is not `svh`.
+
 ## Page block order (first screen relevant)
 
 | # | recordid | tplid | Role |
@@ -49,11 +55,19 @@ First screen implication: header + ~130px hero + **80svh carousel** ≫ 100svh �
 
 | Breakpoint | width `%` | cols | height `%` | top (px) |
 |------------|-----------|------|------------|----------|
-| 1200 / default | 20 | 5 | 85 | 105 |
+| 1400 / default | 20 | 5 | 85 | 105 |
+| 1200 | **25** | **4** | 85 | 105 |
 | 960 | 25 | 4 | 85 | 74 |
 | 640 | 33 | 3 | 86 | 63 |
 | 480 | 50 | 2 | 80 | 96 |
 | 320 | 100 | 1 | 85 | 80 |
+
+**Confirmed (MCP re-read 2026-10-31):** `width-res-1200=25` → 4 cols at 1200;
+5 cols only at default/1400 (`width=20`). Resolves prior catalog vs slider conflict.
+`ab_height-res-1200=700` with `ab_height_vh=80`. ALL visible order by `left`:
+cynic → milk-na → milk → blue-monkey → nut-butter → bowler → friday → iron-dry →
+brainstorm → ruby → underground → iron-milk → tour → heidegger → ausweis → rouge
+(+ hidden hop/brut). Stored in `src/content/listing-order.ts`.
 
 - `heightunits`: `%` of artboard → bottle slot ≈ **85% of stage height**
 - `widthunits`: `%` of artboard → column count as above

@@ -18,7 +18,7 @@ export function useFocusTrap(
   active: boolean,
   options: FocusTrapOptions = {},
 ) {
-  const restoreFocus = options.restoreFocus ?? true;
+  const restoreFocus = options.restoreFocus !== false;
 
   useEffect(() => {
     if (!active) return;

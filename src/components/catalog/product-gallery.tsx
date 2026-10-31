@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import {
   filterCatalogCards,
@@ -25,11 +25,45 @@ function catalogColsForWidth(width: number): number {
   return 1;
 }
 
+function subscribeViewport(onStoreChange: () => void) {
+  window.addEventListener("resize", onStoreChange);
+  return () => window.removeEventListener("resize", onStoreChange);
+}
+
+function catalogColsClient(): number {
+  return catalogColsForWidth(window.innerWidth);
+}
+
+function catalogColsServer(): number {
+  return 4;
+}
+
+/** Odd copy count so a true middle set exists; enough to overflow cols. */
+function loopCopyCount(productCount: number, cols: number): number {
+  if (productCount <= 1) return 1;
+  const minItems = cols + 1;
+  let needed = Math.ceil(minItems / productCount);
+  if (needed < 3) needed = 3;
+  if (needed % 2 === 0) needed += 1;
+  return needed;
+}
+
+type LoopedItem = {
+  product: CatalogCard;
+  key: string;
+  copy: number;
+  indexInSet: number;
+};
+
 export function ProductGallery({ cards }: ProductGalleryProps) {
   const [filter, setFilter] = useState<ProductFilterId>("all");
-  const [cols, setCols] = useState(4);
-  const [mounted, setMounted] = useState(false);
+  const cols = useSyncExternalStore(
+    subscribeViewport,
+    catalogColsClient,
+    catalogColsServer,
+  );
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const jumpingRef = useRef(false);
   const t = useTranslations("beer");
   const tA11y = useTranslations("a11y");
 
@@ -38,22 +72,90 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
     [cards, filter],
   );
 
-  /** After mount only — avoids SSR/client mismatch on arrow chrome. */
-  const overflows = mounted && products.length > cols;
+  /** Loop only when the strip overflows the visible columns. */
+  const canLoop = products.length > cols;
+  const copies = canLoop ? loopCopyCount(products.length, cols) : 1;
+  const middleCopy = Math.floor(copies / 2);
 
-  useEffect(() => {
-    setMounted(true);
-    const update = () => setCols(catalogColsForWidth(window.innerWidth));
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
+  const looped = useMemo((): LoopedItem[] => {
+    if (products.length === 0) return [];
+    if (!canLoop) {
+      return products.map((p, indexInSet) => ({
+        product: p,
+        key: `${p.id}-0-${indexInSet}`,
+        copy: 0,
+        indexInSet,
+      }));
+    }
+    const out: LoopedItem[] = [];
+    for (let copy = 0; copy < copies; copy++) {
+      products.forEach((p, indexInSet) => {
+        out.push({
+          product: p,
+          key: `${p.id}-${copy}-${indexInSet}`,
+          copy,
+          indexInSet,
+        });
+      });
+    }
+    return out;
+  }, [products, copies, canLoop]);
 
   useEffect(() => {
     const track = scrollerRef.current;
-    if (!track) return;
-    track.scrollLeft = 0;
-  }, [filter, products]);
+    if (!track || !canLoop) {
+      if (track) track.scrollLeft = 0;
+      return;
+    }
+
+    const goMiddle = () => {
+      const one = track.scrollWidth / copies;
+      if (one <= 0) return;
+      jumpingRef.current = true;
+      const prev = track.style.scrollBehavior;
+      track.style.scrollBehavior = "auto";
+      track.scrollLeft = one * middleCopy;
+      requestAnimationFrame(() => {
+        track.style.scrollBehavior = prev;
+        jumpingRef.current = false;
+      });
+    };
+
+    goMiddle();
+
+    const normalize = () => {
+      if (jumpingRef.current) return;
+      const one = track.scrollWidth / copies;
+      if (one <= 0) return;
+      let left = track.scrollLeft;
+      // Keep scroll inside the middle band [one, (copies-2)*one]
+      let shifted = false;
+      while (left < one) {
+        left += one;
+        shifted = true;
+      }
+      while (left >= one * (copies - 1)) {
+        left -= one;
+        shifted = true;
+      }
+      if (!shifted) return;
+      jumpingRef.current = true;
+      const prev = track.style.scrollBehavior;
+      track.style.scrollBehavior = "auto";
+      track.scrollLeft = left;
+      requestAnimationFrame(() => {
+        track.style.scrollBehavior = prev;
+        jumpingRef.current = false;
+      });
+    };
+
+    track.addEventListener("scroll", normalize, { passive: true });
+    track.addEventListener("scrollend", normalize);
+    return () => {
+      track.removeEventListener("scroll", normalize);
+      track.removeEventListener("scrollend", normalize);
+    };
+  }, [canLoop, copies, middleCopy, products, cols, filter]);
 
   const scrollBy = (dir: -1 | 1) => {
     const track = scrollerRef.current;
@@ -69,7 +171,7 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
       </div>
 
       <div className={`${styles.stage} -mt-3`}>
-        {overflows ? (
+        {canLoop ? (
           <>
             <button
               type="button"
@@ -92,12 +194,15 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
 
         <div
           ref={scrollerRef}
-          className={`${styles.track} ${overflows ? styles.trackOverflow : ""}`}
+          className={`${styles.track} ${canLoop ? styles.trackOverflow : ""}`}
         >
-          {products.map((product, index) => (
-            <div key={product.id} className={styles.slot}>
+          {looped.map(({ product, key, copy, indexInSet }) => (
+            <div key={key} className={styles.slot}>
               <div className={styles.slotInner}>
-                <ProductCard product={product} priority={index === 0} />
+                <ProductCard
+                  product={product}
+                  priority={copy === middleCopy && indexInSet === 0}
+                />
               </div>
             </div>
           ))}

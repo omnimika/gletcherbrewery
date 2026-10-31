@@ -45,7 +45,8 @@
       "all": "ВСЕ",
       "classic": "CLASSIC",
       "craft": "CRAFT",
-      "limited": "LIMITED"
+      "limited": "LIMITED",
+      "aging": "AGING"
     }
   },
   "ageGate": {
@@ -82,7 +83,7 @@
   },
   "badges": {
     "new": "Новинка!",
-    "alcofree": "Безалкогольное 0%",
+    "alcofree": "Безалкогольное",
     "discontinued": "Нет в наличии"
   }
 }

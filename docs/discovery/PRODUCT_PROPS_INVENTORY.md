@@ -68,5 +68,10 @@ See ADR 0001. Practical rules for this dataset:
 
 - `src/content/catalog.ts` now supplies stable IDs, locale-aware resolution, listing projection and publication-aware paths. Current data has 18 published RU and 18 EN records; canonical round-trip checks passed in memory.
 - `[locale]` routes, `src/proxy.ts`, registry and UI dictionaries are implemented. Planned locales do not have published product paths. Old criticism of the deprecated helper is not a current public-route failure.
-- Finish permanent alias redirects, complete UI translation and ensure the client gallery does not import full product prose through the filtering module. See [current review](../reviews/2026-10-31-current-state.md).
+- In `81713e4`, form/detail UI translation, home metadata, permanentRedirect and client-safe filtering are implemented. Runtime HTTP/SEO and fresh bundle verification remain; see [current review](../reviews/2026-10-31-follow-up.md). Listing order must be explicit and independent of PRODUCT_PROPS array order.
 - Owner review of CSV for editorial fixes before CMS import.
+
+`badge` wording above records the earlier observed copy. The current user edit
+uses RU «Безалкогольное» without `0%`; preserve it. `discontinued` is an editorial
+flag, not independently verified live stock. Reconcile source/current copy via
+[MCP workflow](TILDA_MCP_WORKFLOW.md), without deriving new business rules.

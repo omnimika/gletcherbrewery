@@ -6,7 +6,9 @@
 
 - [Инструкции агентов](AGENTS.md)
 - [Текущее задание Cursor](docs/CURSOR_NEXT_STEPS.md)
-- [Результаты ревью](docs/reviews/2026-10-31-current-state.md)
+- [Актуальное ревью](docs/reviews/2026-10-31-follow-up.md)
+- [MCP Tilda и исходники](docs/discovery/TILDA_MCP_WORKFLOW.md)
+- [Готовый промпт Cursor](docs/CURSOR_REVIEW_PROMPT.md)
 - [ROADMAP](docs/ROADMAP.md)
 - [Локальная разработка](docs/development.md)
 - [i18n ADR](docs/adr/0001-i18n-routing-and-content.md)

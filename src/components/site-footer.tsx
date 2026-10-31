@@ -1,10 +1,12 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { productionHref } from "@/lib/site-links";
+import type { PublishedLocale } from "@/i18n/locales";
 
 export function SiteFooter() {
   const t = useTranslations("footer");
+  const locale = useLocale() as PublishedLocale;
 
   return (
     <footer className="border-t border-gletcher-navy/10 bg-gletcher-ice">
@@ -41,12 +43,12 @@ export function SiteFooter() {
           <p className="font-semibold tracking-wide text-gletcher-navy uppercase">
             {t("docs")}
           </p>
-          <Link
-            href="/policy"
+          <a
+            href={productionHref("policy", locale)}
             className="block text-gletcher-navy/80 underline-offset-4 hover:underline"
           >
             {t("policy")}
-          </Link>
+          </a>
         </div>
       </div>
     </footer>

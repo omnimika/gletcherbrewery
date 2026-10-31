@@ -1,15 +1,18 @@
+import { sortAllViewOrder } from "@/content/listing-order";
+
 /**
  * Catalog fixtures for `/beer` listing (cards/filters).
  * Categories/order/badges: **Confirmed** from owner CSV
  * `tmp/Gletcher beer groups.csv` (copied to docs/discovery/_raw/).
  * Unified listing+detail: `src/content/catalog.ts` (stable id + translations).
  * Raw props fixture: `product-props.ts` / `tmp/Gletcher beer categories and props.csv`.
- * UI filters on Tilda remain ALL / CLASSIC / CRAFT / LIMITED —
- * AGED (Cynic) appears in ALL only (no AGED chip on production).
- * Categories CLASSIC/CRAFT/LIMITED/AGED — **Confirmed** from owner groups CSV.
+ * UI filters: ALL / CLASSIC / CRAFT / LIMITED / AGING (Cynic).
+ * Category key is `aging` (not `aged`). Owner CSV historically said AGED —
+ * corrected to AGING by owner 2026-10-31.
+ * ALL strip order: `listing-order.ts` (MCP ZB 802918687).
  */
 
-export type ProductCategory = "classic" | "craft" | "limited" | "aged";
+export type ProductCategory = "classic" | "craft" | "limited" | "aging";
 
 export type ProductBadge = "new" | "alcofree" | "discontinued";
 
@@ -29,6 +32,7 @@ export const PRODUCT_FILTERS = [
   { id: "classic", label: "CLASSIC" },
   { id: "craft", label: "CRAFT" },
   { id: "limited", label: "LIMITED" },
+  { id: "aging", label: "AGING" },
 ] as const;
 
 export type ProductFilterId = (typeof PRODUCT_FILTERS)[number]["id"];
@@ -56,16 +60,16 @@ const BOTTLE = {
 } as const;
 
 /**
- * Order follows owner CSV within each category.
- * ALL view: new-badged first (production hero order), then remaining CSV order.
+ * Order follows owner CSV within each category (metadata / filters).
+ * ALL / category strip order: `listing-order.ts` (MCP ALL artboard `left`).
  */
 export const CATALOG_PRODUCTS: CatalogProduct[] = [
-  // AGED
+  // AGING
   {
     slug: "cynic",
     name: "CYNIC",
     title: "Cynic Russian Imperial Stout",
-    category: "aged",
+    category: "aging",
     image: BOTTLE.cynic,
     badges: ["new"],
   },
@@ -202,14 +206,18 @@ export const CATALOG_PRODUCTS: CatalogProduct[] = [
   },
 ];
 
-/** ALL view: NEW first (Cynic, MoA NA, Tour), then remaining in CSV group order. */
+/** ALL: NEW first, out-of-stock last; relative order from listing-order.ts. */
 export function productsForAllView(
   products: CatalogProduct[] = CATALOG_PRODUCTS,
 ): CatalogProduct[] {
-  const isNew = (p: CatalogProduct) => p.badges?.includes("new");
-  const news = products.filter(isNew);
-  const rest = products.filter((p) => !isNew(p));
-  return [...news, ...rest];
+  return sortAllViewOrder(
+    products.map((p) => ({
+      id: p.slug,
+      badges: p.badges,
+      outOfStock: p.outOfStock,
+      product: p,
+    })),
+  ).map((row) => row.product);
 }
 
 export function filterProducts(
@@ -217,5 +225,5 @@ export function filterProducts(
   filter: ProductFilterId,
 ): CatalogProduct[] {
   if (filter === "all") return productsForAllView(products);
-  return products.filter((p) => p.category === filter);
+  return productsForAllView(products.filter((p) => p.category === filter));
 }

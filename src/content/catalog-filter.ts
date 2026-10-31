@@ -2,10 +2,13 @@
  * Client-safe catalog card filtering (no product body copy / PRODUCT_PROPS).
  */
 import {
-  productsForAllView,
-  type ProductBadge,
-  type ProductCategory,
-  type ProductFilterId,
+  sortAllViewOrder,
+  sortByListingOrder,
+} from "@/content/listing-order";
+import type {
+  ProductBadge,
+  ProductCategory,
+  ProductFilterId,
 } from "@/content/products";
 
 export type CatalogCard = {
@@ -25,20 +28,9 @@ export function filterCatalogCards(
   filter: ProductFilterId,
 ): CatalogCard[] {
   if (filter === "all") {
-    const asListing = cards.map((c) => ({
-      slug: c.slug,
-      name: c.title,
-      title: c.title,
-      category: c.category,
-      image: c.image,
-      badges: c.badges,
-      outOfStock: c.outOfStock,
-    }));
-    const ordered = productsForAllView(asListing);
-    const bySlug = new Map(cards.map((c) => [c.slug, c]));
-    return ordered
-      .map((p) => bySlug.get(p.slug))
-      .filter((c): c is CatalogCard => Boolean(c));
+    return sortAllViewOrder(cards);
   }
-  return cards.filter((c) => c.category === filter);
+  return sortByListingOrder(
+    cards.filter((c) => c.category === filter),
+  );
 }
