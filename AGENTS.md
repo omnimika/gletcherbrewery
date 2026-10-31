@@ -1,6 +1,6 @@
 # Gletcher Brewery — AGENTS.md
 
-> Версия: 0.9 (31 октября 2026 г.)
+> Версия: 0.10 (1 ноября 2026 г.)
 > Назначение: единые постоянные инструкции для Cursor Agent и OpenAI Codex.  
 > Подробный план реализации: `docs/ROADMAP.md` (при размещении файла из поставки в проекте).  
 > **Не считать этот документ подтверждением неизвестных деталей исходной системы.**
@@ -147,8 +147,13 @@
 2. Product template `/beer/{slug}` **принят** (`0df9706`). Cynic — owner follow-up.
    Текущее: **home `/`** — baseline `docs/discovery/HOME_PAGE_BASELINE.md` + v1 UI;
    см. `docs/CURSOR_NEXT_STEPS.md`. Ждёт приёмки владельцем.
+   Проверен чистый `2c1a9d0`: lint/typecheck PASS; ревью
+   `docs/reviews/2026-11-01-home-and-sprints.md`. Ближайший спринт — завершение home
+   (teaser URL, video fallback/ограниченная media работа, newsletter validity и RU/EN QA).
 3. ADR 0001 **Accepted**; next-intl RU/EN. `sr`/`hy`/`ka`/`de` — Open.
-4. Массовый перенос прочих публичных страниц — после home (по одному шаблону).
+4. После home — Proposed серия `docs/SPRINT_PLAN.md`: blog contract/listing →
+   article template → контент партиями → остальные публичные шаблоны по одному.
+   Очередь не разрешает массовую реализацию или установку CMS/БД заранее.
 5. Критерии закрытия — код + свежие проверки; не подменять browser/build старым отчётом.
 6. Принятые `/beer` и product template повторно на визуальную приёмку не открывать.
 
@@ -162,7 +167,10 @@
 - `docs/discovery/PRODUCT_PROPS_INVENTORY.md` — props карточек пива RU/EN + контракт под будущие локали.
 - `docs/adr/0001-i18n-routing-and-content.md` — маршрутизация и модель контента для `ru`/`en`/`sr`/`hy`/`ka`/`de`.
 - `docs/CURSOR_NEXT_STEPS.md` — актуальное задание Cursor с критериями приёмки; обновлять после подтверждённых изменений.
-- `docs/reviews/2026-10-31-product-acceptance.md` — актуальное ревью `6f84465`, статусы исправлений и приёмочные проверки.
+- `docs/reviews/2026-11-01-home-and-sprints.md` — актуальное ревью `2c1a9d0`, home и приоритеты следующего спринта.
+- `docs/SPRINT_PLAN.md` — Proposed серия спринтов этапа 4, зависимости и критерии.
+- `docs/discovery/HOME_PAGE_BASELINE.md` — source baseline и приёмка текущей home.
+- `docs/reviews/2026-10-31-product-acceptance.md` — историческое ревью `6f84465`; A01–A03 исправлены в `0df9706`.
 - `docs/reviews/2026-10-31-product-template.md` — историческое ревью `9e0ee8e` + рабочего дерева.
 - `docs/discovery/PRODUCT_PAGE_BASELINE.md` — source baseline Friday и media-варианты шаблона.
 - `docs/reviews/2026-10-31-follow-up.md` — историческое ревью `81713e4`.

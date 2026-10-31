@@ -1,7 +1,7 @@
 # Gletcher Brewery — Roadmap и технический план миграции
 
-> Версия: 0.9 (31 октября 2026 г.)
-> Статус: `/beer` и product template приняты (`0df9706`). Этап 4 — home `/` v1 + baseline; ждёт приёмки. Cynic — owner follow-up.
+> Версия: 0.10 (1 ноября 2026 г.)
+> Статус: чистый `2c1a9d0` проверен; TypeScript/ESLint PASS. `/beer` и product template приняты, A01–A03 закрыты в `0df9706`. Home RU/EN v1 реализован, ближайший gate — его завершение и приёмка. Cynic — owner follow-up. Серия следующих спринтов: `docs/SPRINT_PLAN.md`.
 > Для репозитория: поместить в `docs/ROADMAP.md`.
 
 ## 1. Концепция
@@ -91,13 +91,13 @@ Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCB
 
 > **Правило порядка:** аналитика по отдельной подсистеме допустима заранее; её реализация — только в согласованной очереди. Публикация на действующий домен, изменения production-сервисов и миграция персональных данных запрещены без отдельного согласования.
 
-| Этап | Результат | Статус на 31.10.2026 |
+| Этап | Результат | Статус на 01.11.2026 |
 |---|---|---|
 | 0. Bootstrap | Работающий локально Next.js + TS + Tailwind и чистый Git | **Done** (проверено 31.10.2026) |
 | 1. Site Discovery | Реестр URL, UI-инвентаризация, SEO/контент и кандидат эталона | **Done** — эталон `/beer` утверждён |
 | 2. Design Foundation | Минимальная дизайн-система и общий каркас | **Baseline accepted** вместе с `/beer`; общие accessibility follow-ups отдельно |
 | 3. Reference Page | Одна принятая адаптивная эталонная страница | **Accepted владельцем 31.10.2026** — `/beer`; повторная визуальная приёмка не требуется |
-| 4. Public Migration | Публичные страницы, каталог/блог, SEO, контент | **In progress** — home `/` v1 + MCP baseline; ждёт приёмки |
+| 4. Public Migration | Публичные страницы, каталог/блог, SEO, контент | **In progress** — product принят, home v1 ожидает завершения QA/приёмки |
 | 5. Data & Infrastructure | PostgreSQL, NocoDB, серверные границы, staging | В очереди |
 | 6. Retail Map | CRM торговых точек и Mapbox | В очереди |
 | 7. Agent Gletcher | Миграция Airtable/Collabza и бонусная программа | В очереди |
@@ -151,8 +151,8 @@ Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCB
 **Статус gate:** `/beer` принят владельцем по актуальным инструкциям AGENTS §7.
 Старые lint/focus-origin/contrast/min-height/order исправлены по коду, ссылки
 header/menu/footer и home используют временный production mapping. Loop clone
-links исправлены. Остаточные A02/A03 [ревью](reviews/2026-10-31-product-acceptance.md)
-— точечные функциональные доработки меню, не повторное согласование визуала каталога.
+links исправлены. A01–A03 [исторического ревью](reviews/2026-10-31-product-acceptance.md)
+закрыты по коду в `0df9706`, product template принят. Не выполнять их повторно.
 
 **Перед массовым переносом:** проверить реализацию [Accepted ADR i18n](adr/0001-i18n-routing-and-content.md): RU/EN URL, ID/slug-map, published peers, fallback и SEO. Next-intl уже установлен. Сербская письменность, шрифты и допуск остальных локалей остаются открытыми; изменение статуса ADR не заменяет проверки реализации.
 
@@ -160,10 +160,13 @@ links исправлены. Остаточные A02/A03 [ревью](reviews/20
 
 **Работы:** переносить страницы **по шаблонам и общим компонентам**, а не случайным порядком URL: каталог и карточки, блог и статьи, разделы о пивоварне/партнёрах, юридические страницы, формы. Составить редакционную модель CMS и принять отдельный ADR для rich-content редактора; NocoDB не считать автоматически полноценной заменой CMS. Для интеграционно сложных страниц (карта, агент, экскурсии) сначала сохранить публичный UI, а реальные данные и операции подключить на профильных этапах.
 
-**Текущий срез:** product template принят владельцем (Friday baseline + A01–A03).
-Cynic visual — owner follow-up. Commit dirty tree — по разрешению. Далее **один**
-шаблон: home `/` — MCP/source baseline RU/EN → критерии → реализация; не ломать
-принятые `/beer` и product pages. Массовый перенос не начинать.
+**Текущий срез:** product принят в `0df9706`, home `/` и `/en` уже реализованы
+в `6453b91`/`2c1a9d0`. Завершить [спринт 1](SPRINT_PLAN.md): H01 teaser article
+URLs, H02 video fallback, ограниченная media работа/validity и RU/EN QA из
+[ревью](reviews/2026-11-01-home-and-sprints.md). Затем приёмка home; не ломать
+принятые `/beer` и product pages, Cynic не трогать. Далее Proposed серия:
+blog content/i18n/URL contract + listing → article → партии → остальные шаблоны.
+Не начинать сразу все и не устанавливать CMS/БД ради публичного UI.
 `sr`/`hy`/`ka`/`de` требуют перевода/шрифтов и publication checks; fallback
 сам по себе не создаёт публичную версию.
 
@@ -270,8 +273,10 @@ tour_types ──1:N── tour_slots ──1:N── bookings ──1:N── p
 ## 8. Что потребуется от владельца проекта — в правильном порядке
 
 **Сейчас (этап 4):** `/beer` и product template приняты; Cynic polish у владельца.
-Следующий sign-off после commit — home `/` (MCP baseline). Pixel-perfect Zero Block
-не требуется. Исходники через MCP Cursor; новых production-ключей не нужно.
+Следующий sign-off — существующий home v1 `/` и `/en` после спринта 1.
+Product уже закоммичен; отдельного «commit dirty product tree» gate нет.
+Pixel-perfect Zero Block не требуется. Исходники через MCP Cursor; новых
+production-ключей для этого не нужно.
 
 **Для завершения RU/EN среза этапа 4:** подтвердить UX и полноту обязательных локализованных полей; i18n ADR уже Accepted. Для будущего сербского выбрать письменность, для остальных локалей — приоритет перевода и шрифты. Юридические тексты и market-specific условия требуют отдельного подтверждения; язык сам не определяет рынок.
 
@@ -279,13 +284,15 @@ tour_types ──1:N── tour_slots ──1:N── bookings ──1:N── p
 
 ## 9. Следующее задание Cursor Agent
 
-1. По разрешению владельца — commit dirty tree product template (без push, пока не сказано).
-2. Home `/`: [задание](CURSOR_NEXT_STEPS.md), [MCP workflow](discovery/TILDA_MCP_WORKFLOW.md),
-   Accepted ADR. Read-only MCP + browser → `docs/discovery/` HOME baseline RU/EN
-   (секции, SEO, медиа, CTA, критерии). Editor ≠ published.
-3. Реализация home поверх SiteShell; не открывать повторную приёмку `/beer` /
-   product template; Cynic не править (owner). Backend — этапы 5+.
-4. [Готовый промпт](CURSOR_REVIEW_PROMPT.md) обновить под home после commit.
+1. Прочитать [задание](CURSOR_NEXT_STEPS.md), [ревью](reviews/2026-11-01-home-and-sprints.md),
+   [спринты](SPRINT_PLAN.md), home baseline и Accepted ADR. Повторить Git-проверку.
+2. Выполнить **только спринт 1**: довести home v1 по подтверждённым замечаниям,
+   read-only MCP/public RU/EN source, реальные article destinations, media failures,
+   responsive/a11y/SEO и свежие lint/typecheck/build/browser. Предъявить владельцу.
+3. После home gate — один следующий спринт из Proposed серии: blog manifest +
+   publication-aware content contract + listing. Article и партии — отдельные gates.
+4. Принятые каталог/product не переоткрывать, Cynic не править. Backend — этапы 5+,
+   commit/push/production — отдельно. [Готовый промпт](CURSOR_REVIEW_PROMPT.md).
 
 ## 10. Результаты аудита
 

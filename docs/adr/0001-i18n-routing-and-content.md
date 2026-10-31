@@ -83,24 +83,23 @@ Compatible with `products` + `product_translations` (one entity, many locales). 
 | `brainstorm` | `brainstorm-apa-alcohol-free` |
 | others | same as RU |
 
-## Implementation verification (31.10.2026)
+## Implementation verification (01.11.2026)
 
 Accepted architecture is distinct from owner acceptance and verification.
-`/beer` is owner-accepted. The current clean `6f84465` is
-assessed in the [acceptance review](../reviews/2026-10-31-product-acceptance.md)
+`/beer` and product template are owner-accepted (`0df9706`). Current `2c1a9d0`
+is assessed in the [home review](../reviews/2026-11-01-home-and-sprints.md)
 and [Cursor task](../CURSOR_NEXT_STEPS.md). Lint/typecheck pass; new product
 components are server-rendered, UI labels and Intl formatting are implemented.
-All 36 hero variants now have one H1 in static render. Product-template visual
-acceptance, overflow/reflow, hash navigation and runtime/SEO checks remain.
+Home RU/EN v1 is implemented and awaits its own gate. Earlier product
+overflow/modal/focus findings A01–A03 are closed by code; don't reopen them.
+Home messages have matching 140/140 keys; this does not publish new languages.
 HTTP 308 aliases must not be described as 301 legacy redirects.
 
-The current menu keeps shared header chrome interactive and inerts only
-`#site-content`; age gate still inerts `#site-root`. This differs from the
-earlier section 6 description. Resolve the accessible dialog/focus scope in
-remaining A02 before documenting that implementation as a completed a11y decision.
-Adding header refs to the keyboard trap fixed reachability, but does not change
-the dialog accessibility subtree. Hash preservation is implemented for native
-anchors; verify History API/client navigation separately before claiming coverage.
+Implementation detail replacing the earlier portal description in section 6:
+menu now uses one dialog shell containing header controls and panel; it inerts
+`#site-content`, while age gate outside the page still inerts `#site-root`.
+The accepted UX is preserved. Hash state now re-syncs on pathname changes;
+keep locale/hash/client-navigation checks in regression QA.
 
 Before enabling another language, also address current implementation limits:
 
@@ -110,9 +109,10 @@ Before enabling another language, also address current implementation limits:
 - `LocaleSwitch` must distinguish a missing published page peer from a missing
   optional override. Its current Partial<string> input falls back to pathname
   for undefined; its null check does not match the declared type. The existing
-  complete RU/EN dataset does not exercise that case. Product v1 now relies on
-  the shared header switcher without per-entity peers; address missing/draft
-  peers there too. Different complete RU/EN slugs currently resolve via redirect.
+  complete RU/EN dataset does not exercise that case. Product peers are now
+  passed through SiteShell to the header, avoiding an unnecessary cross-slug
+  redirect for complete translations. Missing/draft peer entries still need an
+  explicit contract. Resolve this before partial blog translation publication.
 - Recheck required message coverage, locale font glyphs, number formatting,
   draft/missing pages, SEO and 404 for the newly enabled locale.
 - Home/listing metadata also hard-code RU/EN peers. Derive them from publication
@@ -121,3 +121,6 @@ Before enabling another language, also address current implementation limits:
 
 Future-locale work remains gated by translation/script/font approval; these
 notes do not enable `sr`, `hy`, `ka` or `de` or choose new business rules.
+
+The proposed [sprint series](../SPRINT_PLAN.md) applies this publication model to
+blog entities before article batches; it does not select/install a CMS or backend.

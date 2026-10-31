@@ -64,34 +64,39 @@ export const HOME_FEATURES: HomeFeature[] = [
   },
 ];
 
+/**
+ * RU teaser destinations Confirmed 01.11.2026 from published home
+ * `https://www.gletcherbrewery.com/` (also in feed sitemap 921152316206).
+ * Do not substitute listing `/blog` or guessed short slugs.
+ */
 const BLOG_RU: HomeBlogTeaser[] = [
   {
     id: "homebrew-day",
     category: "БИБЛИОТЕКА",
     title:
       "День легализации домашнего пивоварения: как homebrew изменил крафтовое пиво",
-    href: "https://www.gletcherbrewery.com/blog-all/tpost/homebrew",
+    href: "https://www.gletcherbrewery.com/blog-all/tpost/homebrewing-craft-beer-history",
     date: "14.10",
   },
   {
     id: "beer-pizza",
     category: "НОВОСТИ",
     title: "9 октября — День пива и пиццы: идеальные сочетания от Gletcher",
-    href: "https://www.gletcherbrewery.com/blog-all/tpost/beer-pizza",
+    href: "https://www.gletcherbrewery.com/blog-all/tpost/913cadd4f1-9-oktyabrya-den-piva-i-pitstsi-idealnie",
     date: "09.10",
   },
   {
     id: "barrel-aged",
     category: "БИБЛИОТЕКА",
     title: "Barrel-Aged Beer Day: День выдержанного в бочках пива",
-    href: "https://www.gletcherbrewery.com/blog-all/tpost/barrel",
+    href: "https://www.gletcherbrewery.com/blog-all/tpost/barrel-aged-beer-day-2026",
     date: "02.10",
   },
   {
     id: "afisha",
     category: "МЕРОПРИЯТИЯ",
     title: "Афиша Gletcher Brewery: WINEPARK, Поляна Пикник и Chicano Day",
-    href: "https://www.gletcherbrewery.com/blog-all/tpost/afisha",
+    href: "https://www.gletcherbrewery.com/blog-all/tpost/cf46mag0n1-afisha-gletcher-brewery-winepark-polyana",
     date: "23.09",
   },
 ];
@@ -124,13 +129,9 @@ const BLOG_EN: HomeBlogTeaser[] = [
   },
 ];
 
-/** Prefer real production tpost URLs from live EN scrape; RU uses blog listing until paths Confirmed. */
+/** Production tpost URLs for home teasers (RU Confirmed 01.11.2026; EN from live scrape). */
 export function getHomeBlogTeasers(locale: PublishedLocale): HomeBlogTeaser[] {
-  if (locale === "en") return BLOG_EN;
-  return BLOG_RU.map((item) => ({
-    ...item,
-    href: "https://www.gletcherbrewery.com/blog",
-  }));
+  return locale === "en" ? BLOG_EN : BLOG_RU;
 }
 
 /**

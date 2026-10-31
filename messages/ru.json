@@ -97,7 +97,8 @@
     "newsletterSubmit": "Подписаться",
     "newsletterPrivacy": "Нажимая на кнопку «Подписаться» вы соглашаетесь на обработку персональных данных согласно нашей",
     "newsletterPrivacyLink": "политике конфиденциальности",
-    "newsletterPending": "Подписка скоро заработает на новом сайте. Пока напишите нам на info@gletcherbrewery.com."
+    "newsletterPending": "Подписка скоро заработает на новом сайте. Пока напишите нам на info@gletcherbrewery.com.",
+    "newsletterInvalid": "Введите корректный e-mail."
   },
   "beer": {
     "eyebrow": "Наша пивная линейка представляет",

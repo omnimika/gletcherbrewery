@@ -111,6 +111,7 @@ export default async function Home({ params }: HomePageProps) {
         privacy={t("newsletterPrivacy")}
         privacyLinkLabel={t("newsletterPrivacyLink")}
         pendingNote={t("newsletterPending")}
+        invalidNote={t("newsletterInvalid")}
       />
     </SiteShell>
   );

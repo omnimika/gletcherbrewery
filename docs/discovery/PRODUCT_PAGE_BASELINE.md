@@ -65,10 +65,13 @@ A02 dialog shell, A03 focus trap, product `localeHrefs` peer slugs.
 
 ## Verification and acceptance matrix (Codex follow-up)
 
-Current review: [clean 6f84465](../reviews/2026-10-31-product-acceptance.md).
+Historical review: [clean 6f84465](../reviews/2026-10-31-product-acceptance.md).
+Product template and A01–A03 were subsequently accepted/closed in `0df9706`.
+Current work is [home](../reviews/2026-11-01-home-and-sprints.md); this matrix is
+retained for regression QA, not a request to repeat product visual acceptance.
 The MCP provenance above was recorded by Cursor, not independently repeated
 by Codex. Public RU/EN Friday content was read; no new pixel-comparison was made.
-`/beer` is already owner-accepted; this template has a separate acceptance gate.
+`/beer` and this template are owner-accepted. Cynic visual polish stays with owner.
 
 | Variant | Example | Required check |
 |---|---|---|

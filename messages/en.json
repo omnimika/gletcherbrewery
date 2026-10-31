@@ -97,7 +97,8 @@
     "newsletterSubmit": "Subscribe",
     "newsletterPrivacy": "By clicking on the \"Subscribe\" button, you agree to the processing of personal data in accordance with our",
     "newsletterPrivacyLink": "privacy policy",
-    "newsletterPending": "Subscriptions will return on the new site soon. Meanwhile write to info@gletcherbrewery.com."
+    "newsletterPending": "Subscriptions will return on the new site soon. Meanwhile write to info@gletcherbrewery.com.",
+    "newsletterInvalid": "Enter a valid e-mail."
   },
   "beer": {
     "eyebrow": "Our beer line presents",

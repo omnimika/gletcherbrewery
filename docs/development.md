@@ -1,7 +1,8 @@
 # Локальная разработка
 
-Статус: Bootstrap завершён, `/beer` принят; product template v1 ожидает приёмки.
-Home пока стартовый. RU без префикса, EN под `/en`. Текущие проверки и дефекты описаны
+Статус на 01.11.2026: Bootstrap, `/beer` и product template приняты;
+home RU/EN v1 ожидает завершения QA и приёмки. RU без префикса, EN под `/en`.
+Текущие проверки и дефекты описаны
 в [текущем задании Cursor](CURSOR_NEXT_STEPS.md) и `ROADMAP.md`.
 Серверные бизнес-интеграции относятся к последующим этапам.
 
@@ -16,8 +17,11 @@ npm ci
 npm run dev
 ```
 
-Приложение доступно по адресу http://localhost:3000. Переменные окружения
-на этом этапе не требуются; `.env.example` оставлен как безопасный шаблон.
+Приложение доступно по адресу http://localhost:3000. Текущие dev/start scripts
+используют `--hostname 0.0.0.0 --port 3000` для локального/LAN preview;
+allowedDevOrigins задан в `next.config.ts`. Для same-origin hero переменные
+окружения не требуются. Опциональный публичный `NEXT_PUBLIC_HERO_BOTTLE_BASE`
+описан в `.env.example`; перед внешним origin проверить CORS/canvas fallback.
 
 Проверки:
 
@@ -72,7 +76,7 @@ ABC Gravity Trial используются только для локально�
 
 `build` и `dev` создают `.next` и могут обновлять `next-env.d.ts`; эти команды
 не входят в режим строгого read-only ревью. Результаты текущего ревью:
-[6f84465, 2026-10-31](reviews/2026-10-31-product-acceptance.md).
+[2c1a9d0, 2026-11-01](reviews/2026-11-01-home-and-sprints.md).
 
 Cursor ранее сообщил рабочий production-start с `--hostname localhost` и loop
 с `127.0.0.1`. Для текущего QA использовать localhost; IP-проблему считать
@@ -84,6 +88,12 @@ Cursor ранее сообщил рабочий production-start с `--hostname 
 `src/content/product-media.ts` — cover/logo по stable ID;
 `src/lib/format-spec.ts` — числовое отображение. Source baseline:
 [PRODUCT_PAGE_BASELINE](discovery/PRODUCT_PAGE_BASELINE.md).
+
+Home-компоненты — `src/components/home`, fixtures — `src/content/home.ts` и
+`home-menu.ts`. Delivery video tracked в `public/vid/herobottle`; masters/work
+в `.tmp`/ignored. Видеофайлы не нужно получать из приватной машины для checkout.
+Фактический preload/CPU/render fallback и font fallback проверяются отдельно.
+[Home baseline](discovery/HOME_PAGE_BASELINE.md), [спринты](SPRINT_PLAN.md).
 
 Исходники Tilda доступны Cursor через MCP. Сбор доказательств и сверка
 editor/published: [TILDA_MCP_WORKFLOW](discovery/TILDA_MCP_WORKFLOW.md).

@@ -335,14 +335,17 @@ function BottleVideo({
   preload: "metadata" | "auto";
   hasAlpha: boolean;
 }) {
+  const rootRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [videoOk, setVideoOk] = useState(false);
+  /** True only after a successful canvas frame (H02). */
+  const [frameOk, setFrameOk] = useState(false);
 
   useEffect(() => {
+    const root = rootRef.current;
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    if (!video || !canvas) return;
+    if (!root || !video || !canvas) return;
 
     const ctx = canvas.getContext("2d", {
       willReadFrequently: !hasAlpha,
@@ -353,85 +356,134 @@ function BottleVideo({
     let cancelled = false;
     let raf = 0;
     let lastDraw = -1;
+    let inView = true;
+    let pageVisible = document.visibilityState === "visible";
 
     const fail = () => {
-      if (!cancelled) setVideoOk(false);
+      if (!cancelled) setFrameOk(false);
     };
-    const ok = () => {
-      if (!cancelled) setVideoOk(true);
-    };
+
     const tryPlay = () => {
+      if (!inView || !pageVisible || cancelled) return;
       const p = video.play();
       if (p !== undefined) {
-        p.then(ok).catch(() => {
-          /* keep PNG until playing */
+        p.catch(() => {
+          /* keep PNG until a frame paints */
         });
+      }
+    };
+
+    const stopLoop = () => {
+      if (raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
       }
     };
 
     const paint = () => {
       if (cancelled) return;
+      raf = 0;
+      if (!inView || !pageVisible) return;
+
       if (
         video.readyState >= 2 &&
         video.videoWidth > 0 &&
         !video.paused &&
         video.currentTime !== lastDraw
       ) {
-        lastDraw = video.currentTime;
-        if (
-          canvas.width !== video.videoWidth ||
-          canvas.height !== video.videoHeight
-        ) {
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
+        try {
+          lastDraw = video.currentTime;
+          if (
+            canvas.width !== video.videoWidth ||
+            canvas.height !== video.videoHeight
+          ) {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+          }
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(video, 0, 0);
+          // Knock out only when the active source is opaque black-matte.
+          const usingAlpha =
+            hasAlpha && video.currentSrc.includes("bottle-alpha");
+          if (!usingAlpha) {
+            const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            knockOutMatteByContour(
+              frame.data,
+              canvas.width,
+              canvas.height,
+              MATTE_THRESHOLD,
+              MATTE_CLOSE_RADIUS,
+            );
+            ctx.putImageData(frame, 0, 0);
+          }
+          if (!cancelled) setFrameOk(true);
+        } catch {
+          fail();
+          video.pause();
+          return;
         }
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(video, 0, 0);
-        // Only knock out when the active source is opaque black-matte.
-        const usingAlpha =
-          hasAlpha && video.currentSrc.includes("bottle-alpha");
-        if (!usingAlpha) {
-          const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          knockOutMatteByContour(
-            frame.data,
-            canvas.width,
-            canvas.height,
-            MATTE_THRESHOLD,
-            MATTE_CLOSE_RADIUS,
-          );
-          ctx.putImageData(frame, 0, 0);
-        }
-        ok();
       }
+
       raf = requestAnimationFrame(paint);
     };
 
-    video.addEventListener("playing", ok);
+    const startLoop = () => {
+      if (cancelled || raf || !inView || !pageVisible) return;
+      raf = requestAnimationFrame(paint);
+    };
+
+    const syncActive = () => {
+      if (cancelled) return;
+      if (inView && pageVisible) {
+        tryPlay();
+        startLoop();
+      } else {
+        stopLoop();
+        video.pause();
+      }
+    };
+
+    const onVisibility = () => {
+      pageVisible = document.visibilityState === "visible";
+      syncActive();
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        inView = entries.some((e) => e.isIntersecting);
+        syncActive();
+      },
+      { root: null, threshold: 0.05 },
+    );
+    io.observe(root);
+
     video.addEventListener("loadeddata", tryPlay);
     video.addEventListener("canplay", tryPlay);
     video.addEventListener("error", fail);
+    document.addEventListener("visibilitychange", onVisibility);
     video.load();
-    tryPlay();
-    raf = requestAnimationFrame(paint);
+    syncActive();
 
     return () => {
       cancelled = true;
-      cancelAnimationFrame(raf);
-      video.removeEventListener("playing", ok);
+      stopLoop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
       video.removeEventListener("loadeddata", tryPlay);
       video.removeEventListener("canplay", tryPlay);
       video.removeEventListener("error", fail);
+      video.pause();
     };
   }, [sources, preload, hasAlpha]);
 
   return (
-    <>
+    <div ref={rootRef} className="absolute inset-0">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={FALLBACK_BOTTLE}
         alt=""
         className={`absolute inset-0 m-auto h-full w-full object-contain transition-opacity duration-300 ${
-          videoOk ? "opacity-0" : "opacity-100"
+          frameOk ? "opacity-0" : "opacity-100"
         }`}
         draggable={false}
       />
@@ -453,10 +505,10 @@ function BottleVideo({
       <canvas
         ref={canvasRef}
         className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 motion-reduce:hidden ${
-          videoOk ? "opacity-100" : "opacity-0"
+          frameOk ? "opacity-100" : "opacity-0"
         }`}
       />
-    </>
+    </div>
   );
 }
 

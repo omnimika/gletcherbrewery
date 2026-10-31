@@ -73,8 +73,8 @@ EN first ZBs: `762189788` / `762189818` (hero family); feed `762053151` (897).
 - Hero bottle video: autoplay muted loop playsinline; reduced-motion → static fallback (Proposed: pause / hide video).
 - Hero artboard link → `/beer` (RU ZB shape).
 - Age-gate / menu — existing SiteShell.
-- Newsletter POST — **Open** (no Next handler in v1; UI only + note).
-- Blog cards → production `blog-all/tpost/...` until feed migrated.
+- Newsletter POST — **Open** (no Next handler; client validity + pending note only).
+- Blog cards → Confirmed production `blog-all/tpost/...` (RU 01.11.2026 from published home + feed sitemap).
 
 ## Acceptance criteria (home v1)
 
@@ -95,3 +95,38 @@ EN first ZBs: `762189788` / `762189818` (hero family); feed `762053151` (897).
 | Newsletter backend | Open |
 | Blog CMS | Deferred (static fixture from live) |
 | Cynic / product pages | Out of scope (accepted; Cynic owner) |
+
+## Повторная проверка 01.11.2026
+
+Codex baseline: чистый `2c1a9d0` — [ревью](../reviews/2026-11-01-home-and-sprints.md).
+Cursor sprint 1 (после `2c1a9d0`, dirty tree + Codex docs): закрыты H01–H04 в коде;
+home предъявлен владельцу на приёмку.
+
+### RU teaser destinations (Confirmed с published home 01.11.2026)
+
+| id | URL |
+|---|---|
+| homebrew-day | `/blog-all/tpost/homebrewing-craft-beer-history` |
+| beer-pizza | `/blog-all/tpost/913cadd4f1-9-oktyabrya-den-piva-i-pitstsi-idealnie` |
+| barrel-aged | `/blog-all/tpost/barrel-aged-beer-day-2026` |
+| afisha | `/blog-all/tpost/cf46mag0n1-afisha-gletcher-brewery-winepark-polyana` |
+
+Источник: live `https://www.gletcherbrewery.com/` href + feed sitemap `921152316206`.
+MCP Tilda в этой сессии был недоступен (`namespaceStatus: error`); public browser + sitemap.
+
+### Sprint 1 checks (Cursor)
+
+| Check | Result |
+|---|---|
+| `npm run lint` / `tsc --noEmit` / `npm run build` | PASS |
+| RU/EN one H1 | PASS (`gletcher` / `Brewery`) |
+| H01 teaser destinations | PASS — 4 distinct RU tpost URLs |
+| H02 PNG until first canvas frame; error → PNG | PASS (code + live canvas opacity 1 after paint) |
+| H03 IntersectionObserver + visibility pause; reduced-motion/Save-Data plan | PASS (code; CPU/LCP not instrumented → not claimed) |
+| H04 invalid email alert; valid → pending note, no fake success | PASS (browser) |
+| Viewports sampled | 390×844 and 1440×900 screenshots captured in session |
+| CDN CORS for `NEXT_PUBLIC_HERO_BOTTLE_BASE` | Open / separate gate |
+| EN section parity vs leaner published EN | Open / Proposed editorial |
+| Hydration warning overlay on HomeHero in dev | Observed; not treated as acceptance blocker without stable repro on build |
+
+Приёмка владельцем: `/` и `/en`. Каталог/product не переоткрывать; Cynic — owner follow-up.

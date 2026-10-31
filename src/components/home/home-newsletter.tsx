@@ -15,7 +15,15 @@ type HomeNewsletterProps = {
   privacy: string;
   privacyLinkLabel: string;
   pendingNote: string;
+  invalidNote: string;
 };
+
+/** Minimal client check — not a backend guarantee (H04). */
+function looksLikeEmail(value: string) {
+  const trimmed = value.trim();
+  if (trimmed.length < 5 || trimmed.length > 254) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+}
 
 /**
  * Production ZB `751210003` (footer/library peer; EN `762056776`):
@@ -30,12 +38,25 @@ export function HomeNewsletter({
   privacy,
   privacyLinkLabel,
   pendingNote,
+  invalidNote,
 }: HomeNewsletterProps) {
   const [note, setNote] = useState<string | null>(null);
+  const [invalid, setInvalid] = useState(false);
   const policyHref = productionHref("policy", locale);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
+    const email = new FormData(form).get("email");
+    const value = typeof email === "string" ? email : "";
+
+    if (!looksLikeEmail(value)) {
+      setInvalid(true);
+      setNote(null);
+      return;
+    }
+
+    setInvalid(false);
     setNote(pendingNote);
   }
 
@@ -82,8 +103,22 @@ export function HomeNewsletter({
                 required
                 autoComplete="email"
                 placeholder={placeholder}
+                aria-invalid={invalid || undefined}
+                aria-describedby={invalid ? "home-newsletter-error" : undefined}
+                onChange={() => {
+                  if (invalid) setInvalid(false);
+                }}
                 className="h-[50px] w-full border border-gletcher-navy bg-transparent px-4 text-base text-gletcher-navy outline-none placeholder:text-gletcher-navy/45 focus-visible:ring-2 focus-visible:ring-gletcher-navy/30 @[480px]:h-10 @[480px]:text-sm @[960px]:h-[50px] @[960px]:text-base"
               />
+              {invalid ? (
+                <p
+                  id="home-newsletter-error"
+                  className="text-xs text-gletcher-red"
+                  role="alert"
+                >
+                  {invalidNote}
+                </p>
+              ) : null}
               <button
                 type="submit"
                 className="font-display h-[50px] w-full bg-gletcher-navy text-xs font-extrabold tracking-wide text-white uppercase transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.99] @[480px]:h-8 @[960px]:h-[50px]"
