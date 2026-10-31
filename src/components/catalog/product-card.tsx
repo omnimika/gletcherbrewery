@@ -40,13 +40,17 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           ))}
         </div>
       ) : null}
-      <div className="relative h-full w-full">
+      {/*
+        Height-fill the slot; crop artboard sides (OK up to ~30% width) so the
+        bottle reaches the category tabs instead of letterboxing empty PNG pad.
+      */}
+      <div className="relative h-full w-full overflow-hidden">
         <Image
           src={product.image}
           alt=""
           fill
           sizes="(min-width:1400px) 20vw, (min-width:960px) 25vw, (min-width:640px) 33vw, (min-width:480px) 50vw, 100vw"
-          className="object-contain object-bottom transition-transform duration-300 group-hover:-translate-y-1"
+          className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.04] group-hover:origin-top"
           priority={priority}
         />
       </div>

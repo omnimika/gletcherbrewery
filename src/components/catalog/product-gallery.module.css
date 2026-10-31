@@ -1,13 +1,14 @@
 /**
- * Catalog carousel fills the remaining first-screen height (parent flex).
- * Bottles scale via object-contain inside that height; width = 100% / cols.
+ * Catalog carousel — Tilda ZB 802918687 heights (docs/discovery/TILDA_BEER_CATALOG.md).
+ * Bottles fill stage height; side crop of artboard PNG up to ~30% (object-cover).
  */
 
 .stage {
   --catalog-cols: 1;
+  --stage-vh: 70;
   position: relative;
   width: 100%;
-  flex: 1 1 auto;
+  height: calc(var(--stage-vh) * 1svh);
   min-height: 16rem;
   overflow: hidden;
 }
@@ -22,6 +23,10 @@
   justify-content: safe center;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  /* Tight under category tabs; tiny bottom so bases can kiss the fold */
+  padding-top: 0.25rem;
+  padding-bottom: 0.5rem;
+  box-sizing: border-box;
 }
 
 .track::-webkit-scrollbar {
@@ -36,6 +41,7 @@
   position: relative;
   flex-shrink: 0;
   height: 100%;
+  /* Slightly overlap slots so zoomed bottles read denser, like Tilda strip */
   width: calc(100% / var(--catalog-cols));
 }
 
@@ -44,6 +50,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 .arrow {
@@ -70,12 +77,14 @@
 @media (min-width: 480px) {
   .stage {
     --catalog-cols: 2;
+    --stage-vh: 50;
   }
 }
 
 @media (min-width: 640px) {
   .stage {
     --catalog-cols: 3;
+    --stage-vh: 50;
   }
 
   .arrow {
@@ -97,6 +106,13 @@
 @media (min-width: 960px) {
   .stage {
     --catalog-cols: 4;
+    --stage-vh: 100;
+  }
+}
+
+@media (min-width: 1200px) {
+  .stage {
+    --stage-vh: 80;
   }
 }
 

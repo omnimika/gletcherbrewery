@@ -63,12 +63,12 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
   };
 
   return (
-    <section className="relative flex min-h-0 w-full flex-1 flex-col">
-      <div className="relative z-20 shrink-0 -mb-2 px-4 sm:px-8">
+    <section className="relative w-full">
+      <div className="relative z-20 -mb-3 px-4 sm:px-8">
         <ProductFilterChips active={filter} onChange={setFilter} />
       </div>
 
-      <div className={`${styles.stage} -mt-2`}>
+      <div className={`${styles.stage} -mt-3`}>
         {overflows ? (
           <>
             <button

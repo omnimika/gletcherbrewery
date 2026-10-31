@@ -50,25 +50,23 @@ export default async function BeerCatalogPage({ params }: BeerPageProps) {
 
   return (
     <SiteShell>
-      {/* First screen: header (shell) + this block = 100svh; lead form stays below the fold. */}
-      <div className="flex min-h-[calc(100svh-5.5rem)] flex-col">
-        <section className="mx-auto w-full max-w-[960px] shrink-0 px-6 pt-6 pb-3 text-center sm:pt-8 sm:pb-4">
-          <p className="animate-hero-rise text-xs font-semibold tracking-[0.22em] text-gletcher-navy/70 uppercase sm:text-sm">
-            {t("eyebrow")}
-          </p>
-          <h1 className="font-display animate-hero-rise mt-3 text-[clamp(2rem,6.5vw,4.25rem)] text-gletcher-navy">
-            {t("title")}
-          </h1>
-          <p
-            className="animate-hero-rise mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-gletcher-navy/80 uppercase sm:text-base"
-            style={{ animationDelay: "80ms" }}
-          >
-            {t("subtitle")}
-          </p>
-        </section>
+      {/* Hero ≈ Tilda ZB 735254792; gallery ≈ ZB 802918687 (80svh) → form below fold. */}
+      <section className="mx-auto w-full max-w-[960px] px-6 pt-6 pb-3 text-center sm:pt-8 sm:pb-4">
+        <p className="animate-hero-rise text-xs font-semibold tracking-[0.22em] text-gletcher-navy/70 uppercase sm:text-sm">
+          {t("eyebrow")}
+        </p>
+        <h1 className="font-display animate-hero-rise mt-3 text-[clamp(2rem,6.5vw,4.25rem)] text-gletcher-navy">
+          {t("title")}
+        </h1>
+        <p
+          className="animate-hero-rise mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-gletcher-navy/80 uppercase sm:text-base"
+          style={{ animationDelay: "80ms" }}
+        >
+          {t("subtitle")}
+        </p>
+      </section>
 
-        <ProductGallery cards={cards} />
-      </div>
+      <ProductGallery cards={cards} />
       <LeadForm />
     </SiteShell>
   );
