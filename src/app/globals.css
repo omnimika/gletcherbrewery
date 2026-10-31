@@ -74,7 +74,8 @@
     --page-bg: var(--color-gletcher-ice);
     --page-fg: var(--color-gletcher-navy);
     --accent: var(--color-gletcher-red);
-    --header-h: 5.5rem;
+    /* Matches Tilda fixed header chrome (~76–84px) */
+    --header-h: 5.25rem;
   }
 
   *,

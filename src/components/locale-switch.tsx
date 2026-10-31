@@ -15,15 +15,47 @@ type LocaleSwitchProps = {
    */
   localeHrefs?: Partial<Record<PublishedLocale, string>>;
   className?: string;
+  /** `header` matches Tilda outline pill (ZB 711698335). */
+  variant?: "default" | "header";
 };
 
 export function LocaleSwitch({
   localeHrefs,
   className = "",
+  variant = "default",
 }: LocaleSwitchProps) {
   const locale = useLocale() as PublishedLocale;
   const pathname = usePathname();
   const t = useTranslations("a11y");
+
+  if (variant === "header") {
+    return (
+      <div
+        className={`inline-flex h-8 items-center rounded-full border border-gletcher-navy px-1.5 text-[14px] font-extrabold tracking-wide sm:h-10 sm:px-2 lg:h-8 lg:text-[17px] ${className}`}
+        role="group"
+        aria-label={t("locale")}
+      >
+        {PUBLISHED_LOCALES.map((code) => {
+          const active = locale === code;
+          const customHref = localeHrefs?.[code];
+          if (customHref === null) return null;
+          return (
+            <Link
+              key={code}
+              href={customHref ?? pathname}
+              locale={code}
+              className={`px-1.5 py-0.5 uppercase transition-opacity ${
+                active ? "opacity-100" : "opacity-20 hover:opacity-60"
+              }`}
+              aria-current={active ? "page" : undefined}
+            >
+              {LOCALE_LABEL[code]}
+            </Link>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -34,7 +66,6 @@ export function LocaleSwitch({
       {PUBLISHED_LOCALES.map((code) => {
         const active = locale === code;
         const customHref = localeHrefs?.[code];
-        // Only link published locales; planned locales are omitted from the switcher.
         if (customHref === null) return null;
         return (
           <Link
