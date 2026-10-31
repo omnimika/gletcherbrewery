@@ -59,13 +59,14 @@ Ausweis row keeps owner wording (incl. historical `брожжение` typo and 
 
 See ADR 0001. Practical rules for this dataset:
 
-1. Keep numeric/ingredient **specs** once; only human prose and fermentation label go under `copy.{field}.{locale}`.
-2. Add columns or JSON keys `tasteSr`, … **or** nested `i18n.sr.*` — prefer nested locale map in code/DB.
+1. Keep shared **specs** once; localized prose and labels belong to translations. Preserve raw strings; normalize numeric values with confirmed units before locale-specific formatting.
+2. Treat locale-keyed content as a logical API contract. JSON or `products` + `product_translations` are possible future persistence models; choose with the CMS/database ADR, not by adding parallel columns for every language now.
 3. UI chrome (filters «ВСЕ», age gate, footer) is a separate message catalog, not product CSV columns.
 4. Do not invent Serbian/Armenian/Georgian/German product text; mark status `Open` until translation brief + owner sign-off.
 
 ## 5. Next code steps (not done here)
 
-- Wire `/beer/[slug]` (and `/en/beer/[slug]`) to `getProductProps` + `pickLocalized`.
-- Introduce `[locale]` routing middleware per ADR.
+- Before wiring detail pages, unify list/detail records around a stable product ID and test a `(locale, slug)` resolver. Current `getProductProps` searches only ID/RU/EN; it does not yet resolve future locale slugs.
+- Add page publication status: `productPath` currently builds planned-locale URLs from fallback slugs, which is not proof that those pages exist. Only published peers may appear in SEO/navigation.
+- After reference-page acceptance, implement one RU/EN slice using `[locale]`, a locale-aware root layout and `src/proxy.ts` for Next.js 16, per ADR 0001.
 - Owner review of CSV for editorial fixes before CMS import.

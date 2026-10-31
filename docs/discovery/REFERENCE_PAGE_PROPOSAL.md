@@ -2,7 +2,7 @@
 
 > Дата: **31 октября 2026**  
 > **Решение владельца: эталон утверждён — `/beer` (кандидат A).**  
-> Верстка по-прежнему не начата до явного старта этапов 2–3.  
+> Этапы 2–3 реализованы в коде; визуальная приёмка остаётся открытой.
 > Дополнено: шрифты/ассеты из `tmp/` перенесены в `assets/`; ЛК исследован (см. `MEMBERS_LK_INVENTORY.md`).
 
 ## 0. Статус решения
@@ -11,7 +11,7 @@
 |---|---|
 | Утверждённая эталонная страница | **`/beer`** |
 | Дата утверждения | 31.10.2026 |
-| Следующий шаг | визуальная приёмка `/beer` владельцем; затем этап 4 |
+| Следующий шаг | исправить замечания ревью, провести проверки и визуальную приёмку `/beer`; затем согласованный этап 4 |
 | Вне scope эталона | Mapbox, YCLIENTS, Tilda Members/ЛК, shop cart, payments |
 | Реализация | **Started 31.10.2026** — Design Foundation + `/beer` в коде |
 
@@ -47,7 +47,7 @@
 | Длина страницы / число секций | Средняя | Очень высокая | Средняя |
 | Зависимость от контентной модели | Список продуктов + категории | Много копирайта и кампаний | Одна сущность Product |
 | Мобильный паттерн | Filters + slider — ценный | Много уникальных блоков | Specs stack |
-| Блокеры | Классификация CLASSIC/CRAFT/LIMITED (Open) | motion; media video | полный набор полей |
+| Блокеры | Категории Confirmed в CSV | motion; media video | полный набор полей |
 
 ## 3. Рекомендация → утверждено
 
@@ -96,7 +96,9 @@
 - [ ] Карточки: порядок/кадрирование бутылок приемлемы (допуск на font metric).
 - [ ] Footer: контакты, 18+, policy link.
 - [ ] Нет горизонтального скролла на 390.
-- [ ] `npm run build && lint && typecheck` зелёные.
+- [ ] `npm run build && npm run lint && npm run typecheck` зелёные для принимаемого состояния.
+- [ ] Меню кликабельно и управляется с клавиатуры; модальный DOM вне inert-фона, фокус возвращается после разблокировки.
+- [ ] Смена категории после прокрутки карусели показывает её начало; viewport-height контракт проверен на 960×900 и мобильном экране.
 - [ ] Lighthouse a11y: нет пустых link names у карточек (улучшение относительно Tilda — допустимо и желательно).
 
 ## 7. Материалы — статус
@@ -108,15 +110,15 @@
 | Логотипы | **В репо:** `assets/brand/logos/` + PDF в `docs/brand/` |
 | Бутылки CATALOGUE | **В репо:** `assets/catalog/bottles/` |
 | Обложки / сортовые лого | **В репо:** `assets/catalog/covers`, `assets/catalog/logos` |
-| Таблица CLASSIC/CRAFT/LIMITED | **Open** — нужно от владельца |
+| Категории CLASSIC/CRAFT/LIMITED/AGED, порядок и badges | **Confirmed** — owner CSV отражён в `src/content/products.ts`; AGED показывается в ALL |
+| PNG Cynic и MoA non-alcoholic | **Есть** — пути `CATALOGUE__0018_CYNIC---bottle.png` и `CATALOGUE__0017_Milk-of-Amnesia-non-alcoholic---bottle.png` существуют в `public/catalog/bottles/` |
 | Tilda full export | **Open** |
 | EN на эталоне | **Open** (по умолчанию RU only) |
 | Лицензии Trial-шрифтов | **Open** — не публиковать Trial в прод без покупки |
 
 ## 8. Неизвестные параметры (не блокируют старт этапа 2)
 
-- Точный алгоритм фильтрации категорий в Zero Block.
-- Полный список «NEW!» бейджей.
+- Визуальное поведение карусели и фильтров на целевых viewport; категории и badges уже отражены в фикстурах по owner CSV.
 - Поведение формы «Есть идеи?» (получатель, Make.com).
 - Какой width ABC Gravity фактически на `/beer` (Condensed / ExtraCondensed / …).
 
@@ -128,9 +130,9 @@
 
 - Tokens / fonts / `SiteShell` (AgeGate, Header, Menu, Footer)
 - Route `http://localhost:3000/beer` — hero, filters, gallery, lead form stub
-- `npm run lint && typecheck && build` — green
+- Предыдущая реализация сообщала о green lint/typecheck/build. В ревью `a6a13a9` повторно прошли ESLint и TypeScript без incremental-кеша; build и браузерные проверки не запускались, поэтому текущая визуальная готовность не подтверждена.
 - ADR: `docs/adr/0000-site-migration-strategy.md`
 
-**Open перед приёмкой:** таблица CLASSIC/CRAFT/LIMITED; PNG Cynic; лицензия ABC Gravity (Trial только локально); визуальный sign-off владельца.
+**Open перед приёмкой:** подтверждение прав на публичные шрифты; визуальный sign-off владельца для `/beer` и RU↔EN (меню/portal, locale switch на карточке с разными slug). Категории/badges, PNG Cynic и P1 меню (`inert`/portal) закрыты в коде.
 
 Коммит/push — только по запросу.

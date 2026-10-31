@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { persistAgeGatePassed, readAgeGatePassed } from "@/lib/age-gate";
 import { Button } from "@/components/ui/button";
 import { useFocusTrap } from "@/lib/use-focus-trap";
 
 export function AgeGate() {
-  // null = not hydrated yet (render nothing to avoid SSR/client flash mismatch)
   const [open, setOpen] = useState<boolean | null>(null);
   const titleId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("ageGate");
 
   useFocusTrap(dialogRef, open === true);
 
@@ -47,10 +48,10 @@ export function AgeGate() {
           id={titleId}
           className="font-display text-2xl text-gletcher-navy sm:text-3xl"
         >
-          Сайт доступен только для совершеннолетних
+          {t("title")}
         </p>
         <p className="mt-4 text-sm leading-relaxed text-gletcher-navy/80">
-          Подтвердите, что вам есть 18 лет, чтобы продолжить.
+          {t("body")}
         </p>
         <Button
           variant="outline"
@@ -60,7 +61,7 @@ export function AgeGate() {
             setOpen(false);
           }}
         >
-          Да. Перейти на сайт.
+          {t("confirm")}
         </Button>
       </div>
     </div>

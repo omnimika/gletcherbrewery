@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   PRODUCT_FILTERS,
   type ProductFilterId,
@@ -14,14 +15,17 @@ export function ProductFilterChips({
   active,
   onChange,
 }: ProductFilterChipsProps) {
+  const t = useTranslations("beer.filters");
+  const tA11y = useTranslations("a11y");
+
   return (
     <div
       className="flex flex-wrap items-center justify-center gap-2 sm:gap-3"
       role="group"
-      aria-label="Фильтр каталога"
+      aria-label={tA11y("catalogFilter")}
     >
       {PRODUCT_FILTERS.map((filter) => {
-        const isActive = filter.id === active;
+        const isActive = active === filter.id;
         return (
           <button
             key={filter.id}
@@ -34,7 +38,7 @@ export function ProductFilterChips({
                 : "border-gletcher-navy/40 bg-gletcher-ice text-gletcher-navy hover:border-gletcher-navy"
             }`}
           >
-            {filter.label}
+            {t(filter.id)}
           </button>
         );
       })}

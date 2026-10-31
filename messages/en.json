@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "siteName": "Gletcher Brewery",
+    "homeDescription": "Gletcher Brewery — modern brewing since 2011.",
+    "beerTitle": "Catalogue | Gletcher Brewery",
+    "beerDescription": "Gletcher Brewery product catalogue: classic, craft and limited editions."
+  },
+  "nav": {
+    "products": "Products",
+    "partners": "Partners",
+    "tours": "Tours",
+    "map": "Sales map",
+    "blog": "Blog",
+    "agent": "Agent",
+    "agentShort": "A",
+    "menu": "Menu",
+    "close": "Close",
+    "login": "Sign in to your account",
+    "signup": "No account? Sign up",
+    "homeAria": "Gletcher Brewery — home"
+  },
+  "a11y": {
+    "mainMenu": "Main menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "locale": "Language",
+    "catalogFilter": "Catalogue filter",
+    "prevBeers": "Previous beers",
+    "nextBeers": "Next beers",
+    "agent": "Agent Gletcher"
+  },
+  "home": {
+    "eyebrow": "Since 2011",
+    "title": "Gletcher",
+    "lead": "The renewed site is in progress. The reference catalogue is already available.",
+    "ctaCatalog": "View catalogue",
+    "ctaAgent": "Agent Gletcher"
+  },
+  "beer": {
+    "eyebrow": "Our beer line presents",
+    "title": "The full spectrum of modern brewing",
+    "subtitle": "From interpretations of classic styles to unique recipes",
+    "emptyCategory": "No beers in this category yet.",
+    "filters": {
+      "all": "ALL",
+      "classic": "CLASSIC",
+      "craft": "CRAFT",
+      "limited": "LIMITED"
+    }
+  },
+  "ageGate": {
+    "title": "This website is for adults only",
+    "body": "Please confirm that you are of legal drinking age to continue.",
+    "confirm": "I am 18+"
+  },
+  "footer": {
+    "tagline": "Brewery since 2011. Classic, craft and limited editions.",
+    "drinkResponsibly": "18+ Drink responsibly!",
+    "contacts": "Contacts",
+    "docs": "Documents",
+    "policy": "Privacy policy",
+    "shopRules": "Shop rules"
+  },
+  "leadForm": {
+    "title": "Leave a request",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "submit": "Send",
+    "note": "We do not sell alcohol online."
+  }
+}

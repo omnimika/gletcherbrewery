@@ -1,47 +1,84 @@
 # ADR 0001 — i18n routing and content model
 
-> Status: **Proposed** (31.10.2026)  
-> Stage: Design Foundation / content fixtures (before product detail routes)
+> Status: **Accepted** (31.10.2026)  
+> Stage: Design Foundation → start of Public Migration (RU/EN slice)  
+> Supersedes conflicting ROADMAP backlog label «0001 Database» (Database ADR renumbered to **0002** in ROADMAP).
 
 ## Context
 
-Production site already publishes **RU** (default, `/…`) and **EN** (`/en/…`) with a header locale switcher. Owner expects future locales: **Serbian (sr), Armenian (hy), Georgian (ka), German (de)** — exact market priority and go-live dates are **Open**.
-
-Catalog product pages hold locale-sensitive copy (taste, about, food pairing, fermentation labels) and locale-invariant specs (ABV, OG, IBU, style, malts, hops, volumes). RU↔EN slug pairs are **not** always identical (Observed).
+Production already ships **RU** (unprefixed) and **EN** (`/en/…`). Owner plans **sr**, **hy**, **ka**, **de**. Catalog holds locale-invariant specs and localized copy; RU↔EN slugs sometimes differ. UI strings were hard-coded in components. Menu overlays incorrectly shared `inert` with their own controls.
 
 ## Decision
 
-1. **Routing** — Next.js App Router with a locale segment strategy compatible with current URLs:
-   - `ru` (default): unprefixed paths (`/beer`, `/beer/[slug]`) to preserve production SEO.
-   - other locales: `/{locale}/…` (`/en/beer/...`, later `/de/beer/...`).
-   - **Proposed** implementation: `src/app/[locale]/...` with middleware rewrite so `ru` is omitted from the public URL; alternatives (next-intl / custom) remain open until stage 4.
-2. **Locale codes** — BCP 47 language tags: `ru`, `en`, `sr`, `hy`, `ka`, `de`. Region variants (`sr-Latn` vs `sr-Cyrl`) are **Open** until owner confirms script.
-3. **Content shape** — separate **specs** (shared) from **copy** (`LocalizedText` per field). Do **not** duplicate ABV/IBU per language. UI chrome strings (nav, filters, legal) live in message catalogs; product body copy lives with product records (`src/content/product-props.ts` → later CMS/PostgreSQL).
-4. **Slug map** — each product stores `slugs: { ru, en, … }`. Resolvers accept any known slug and redirect to the canonical slug for the active locale (301) when mismatched.
-5. **Fallbacks** — missing translation: fall back `requested → en → ru` for copy; never invent copy. Empty planned locales are valid until filled.
-6. **SEO** — emit `hreflang` + `x-default` for every public page with locale peers; fix Observed empty hreflang on Tilda. Keep absolute canonicals on `www`.
-7. **CMS later** — NocoDB/admin may edit localized fields as columns or JSON; schema must remain locale-keyed (`taste.ru`, `taste.en`, …), not parallel product rows per language.
+### 1. Locale registry (`src/i18n/locales.ts`)
 
-## Confirmed from scrape (31.10.2026)
-
-| RU slug | EN slug | Notes |
+| Set | Locales | Role |
 |---|---|---|
-| `milk-of-amnesia-v-tropic` | `milk-of-amnesia` | Different path |
-| `brainstorm` | `brainstorm-apa-alcohol-free` | Different path |
-| `ausweis` | `ausweis` | EN page exists (HTTP 200) though historically Disallow / sitemap gaps |
-| others | same as RU | Incl. `milk-of-amnesia-non-alco`, `cynic`, … |
+| `ALL_LOCALES` | `ru`, `en`, `sr`, `hy`, `ka`, `de` | Type + content keys |
+| `PUBLISHED_LOCALES` | `ru`, `en` | Routed URLs, switcher, sitemap, hreflang |
+| `PLANNED_LOCALES` | `sr`, `hy`, `ka`, `de` | Reserved; **no routes** until translation + fonts |
 
-Full props: `tmp/Gletcher beer categories and props.csv`, `docs/discovery/_raw/product_props.json`.
+- **Default locale:** `ru` (no URL prefix).
+- **Serbian script:** **Open** — `sr-Latn` / `sr-Cyrl` / both. Until decided, `sr` stays planned only; Latn/Cyrl are **scripts**, not regions.
+- Language is independent of country, currency, assortment, and commercial terms (those are separate config later).
+
+### 2. Routing (next-intl + Next.js 16 `src/proxy.ts`)
+
+- Library: **next-intl** (dependency justified: App Router locale segment, `localePrefix: 'as-needed'`, typed navigation).
+- `localePrefix: 'as-needed'` → `/beer`, `/en/beer`, later `/de/beer` when published.
+- `localeDetection: false` → language **only from URL** (no Accept-Language / cookie redirects).
+- `alternateLinks: false` → hreflang via Metadata API (only published peers).
+- App tree: `src/app/[locale]/…`; `<html lang>` set in locale layout from `LOCALE_HTML_LANG`.
+
+### 3. Content vs UI messages
+
+- **UI chrome** (nav, age gate, filters, footer, a11y): `messages/{locale}.json` via next-intl.
+- **Product body**: `src/content/catalog.ts` over fixtures in `product-props.ts` — stable **`id`**, shared **specs/image/badges/category**, per-locale **translations** with `status: published | draft | missing`.
+- Listing: `getCatalogCards(locale)` — server prepares cards for one locale; client gallery does not receive all translations.
+- Resolver: `resolveProduct(locale, slug)` — match `(locale, slug)` or aliases; cross-locale slug finds entity for redirect to canonical slug of the **active** locale.
+- Locale switch keeps the **same product id** via `localeHrefs` (e.g. RU `milk-of-amnesia-v-tropic` ↔ EN `milk-of-amnesia`).
+
+### 4. Fallback vs publication (separated)
+
+| Concern | Rule |
+|---|---|
+| Missing **string** | Fallback chain `active → en → ru`; never invent copy |
+| Missing / draft **translation** | **No public URL**, no switcher link, no hreflang, `notFound()` on that locale path |
+| Planned locale | Not in `routing.locales`; `productPublicPath('de', …)` must not be linked |
+
+Legal/consent strings require full published translation before enabling a locale (**Open** checklist per locale).
+
+### 5. Numbers
+
+- Store scraped display strings (`"5,2"`) for audit.
+- UI formatting of normalized numbers: `Intl.NumberFormat(locale)` (follow-up when detail UI is polished).
+
+### 6. Overlays / a11y
+
+- `#site-root` = page chrome; `#portal-root` = age gate + main nav (portal).
+- `inert` applies only to `#site-root` while overlays are open so menu/locale controls stay usable.
+
+### 7. Typography / design-system (requirements)
+
+- Current WOFF stacks lack verified Armenian/Georgian coverage; Serbian specials may fall back to system fonts — **blocker** before publishing `hy`/`ka`/`sr`.
+- Per-script font stacks + tests for long German compounds, diacritics, `hy`, `ka`.
+- Re-check global `uppercase`, weight 900, tight `line-height` per script.
+- Prefer compact language picker when >2 published locales.
+
+### 8. Future DB
+
+Compatible with `products` + `product_translations` (one entity, many locales). JSON fixtures are temporary.
 
 ## Consequences
 
-- Product detail work must use `product-props` + locale helpers, not hard-coded Russian strings in components.
-- Adding `sr`/`hy`/`ka`/`de` is additive (messages + optional slug overrides + translations), not a redesign.
-- Until middleware/`[locale]` lands, `/beer` fixture may stay RU-only; the **data model** is locale-ready now.
-- Owner must confirm: default fallback language, Cyrillic/Latin for Serbian, and whether EN remains the bridge language for incomplete locales.
+- Stage 4 starts with RU/EN slice under this contract; adding a language is registry + messages + translations + fonts, not per-component rewrites.
+- ROADMAP ADR backlog: Database becomes **0002**, subsequent numbers shift (+1).
+- Owner still confirms: Serbian script, fallback bridge language, legal copy completeness gates.
 
-## Open
+## Confirmed slug pairs (scrape)
 
-- Library choice (`next-intl`, `next-i18n-router`, custom).
-- Whether members/LK and checkout emails need the same locale set on day one.
-- Legal age-gate copy per jurisdiction (18+ RF vs other markets).
+| id / RU slug | EN slug |
+|---|---|
+| `milk-of-amnesia-v-tropic` | `milk-of-amnesia` |
+| `brainstorm` | `brainstorm-apa-alcohol-free` |
+| others | same as RU |

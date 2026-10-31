@@ -1,23 +1,19 @@
 import Image from "next/image";
-import type { CatalogProduct } from "@/content/products";
-
-/** Production catalog until Next product routes exist (Codex P2). */
-const PRODUCTION_ORIGIN = "https://www.gletcherbrewery.com";
+import { Link } from "@/i18n/navigation";
+import type { CatalogCard } from "@/content/catalog";
 
 type ProductCardProps = {
-  product: CatalogProduct;
+  product: CatalogCard;
 };
 
 export function ProductCard({ product }: ProductCardProps) {
-  const href = `${PRODUCTION_ORIGIN}/beer/${product.slug}`;
   const badges = product.badges ?? [];
 
   return (
-    <a
-      href={href}
+    <Link
+      href={product.href}
       className="group relative block h-full w-full"
       aria-label={product.title}
-      rel="noopener noreferrer"
     >
       {badges.includes("new") ? (
         <span className="pointer-events-none absolute top-[4%] right-[10%] z-10 rotate-[-12deg] rounded-sm bg-gletcher-new px-2 py-0.5 text-[10px] font-black tracking-wide text-gletcher-navy uppercase shadow-sm">
@@ -35,6 +31,6 @@ export function ProductCard({ product }: ProductCardProps) {
         />
       </div>
       <span className="sr-only">{product.title}</span>
-    </a>
+    </Link>
   );
 }

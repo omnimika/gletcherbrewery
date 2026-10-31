@@ -2,10 +2,11 @@
  * Catalog fixtures for `/beer` listing (cards/filters).
  * Categories/order/badges: **Confirmed** from owner CSV
  * `tmp/Gletcher beer groups.csv` (copied to docs/discovery/_raw/).
- * Detail copy/specs (RU/EN, i18n-ready): `src/content/product-props.ts`
- * + `tmp/Gletcher beer categories and props.csv`.
+ * Unified listing+detail: `src/content/catalog.ts` (stable id + translations).
+ * Raw props fixture: `product-props.ts` / `tmp/Gletcher beer categories and props.csv`.
  * UI filters on Tilda remain ALL / CLASSIC / CRAFT / LIMITED —
  * AGED (Cynic) appears in ALL only (no AGED chip on production).
+ * Categories CLASSIC/CRAFT/LIMITED/AGED — **Confirmed** from owner groups CSV.
  */
 
 export type ProductCategory = "classic" | "craft" | "limited" | "aged";

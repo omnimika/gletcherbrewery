@@ -1,23 +1,20 @@
 /**
- * Product specs + localized copy for catalog detail pages.
- * Source: production RU/EN product pages scraped 31.10.2026
- * (`tmp/product-scrape/`, filled into `tmp/Gletcher beer categories and props.csv`).
- *
- * Architecture: locale-invariant `specs` + per-locale `copy` / `slugs`.
- * Planned locales beyond ru/en: sr, hy, ka, de (see ADR 0001).
- * `malts` / `hops` / `style` stored in CapitalCase (Title Case; IPA/APA/EBC/R.I.S. kept;
- * camelCase brands like MelaBeech preserved).
+ * Product specs + localized copy fixtures (scraped 31.10.2026).
+ * Prefer `@/content/catalog` for listing/detail resolution (stable `id` + publication).
+ * Locale registry: `@/i18n/locales` (ADR 0001).
  */
 
-export type AppLocale = "ru" | "en" | "sr" | "hy" | "ka" | "de";
+import type { AppLocale } from "@/i18n/locales";
+export type { AppLocale } from "@/i18n/locales";
+export {
+  PUBLISHED_LOCALES as ACTIVE_LOCALES,
+  PLANNED_LOCALES,
+} from "@/i18n/locales";
 
-/** Locales currently published on production. */
-export const ACTIVE_LOCALES = ["ru", "en"] as const satisfies readonly AppLocale[];
-
-/** Locales planned; content may be empty until translation. */
-export const PLANNED_LOCALES = ["sr", "hy", "ka", "de"] as const satisfies readonly AppLocale[];
-
-export type LocalizedText = Partial<Record<AppLocale, string>> & { ru?: string; en?: string };
+export type LocalizedText = Partial<Record<AppLocale, string>> & {
+  ru?: string;
+  en?: string;
+};
 
 export type ProductBadgeFlag = "new" | "alcofree" | "discontinued";
 
@@ -471,16 +468,12 @@ export const PRODUCT_PROPS: ProductProps[] = [
   },
 ];
 
+/** @deprecated Prefer `resolveProduct` / `getProductById` from `@/content/catalog`. */
 export function getProductProps(idOrSlug: string): ProductProps | undefined {
   return PRODUCT_PROPS.find(
-    (p) => p.id === idOrSlug || p.slugs.ru === idOrSlug || p.slugs.en === idOrSlug,
+    (p) =>
+      p.id === idOrSlug || p.slugs.ru === idOrSlug || p.slugs.en === idOrSlug,
   );
-}
-
-export function productPath(product: ProductProps, locale: AppLocale = "ru"): string {
-  const slug = product.slugs[locale] ?? product.slugs.en ?? product.slugs.ru;
-  if (locale === "ru") return `/beer/${slug}`;
-  return `/${locale}/beer/${slug}`;
 }
 
 export function pickLocalized(

@@ -1,40 +1,57 @@
-import Link from "next/link";
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
+import {
+  LOCALE_LABEL,
+  PUBLISHED_LOCALES,
+  type PublishedLocale,
+} from "@/i18n/locales";
 
 type LocaleSwitchProps = {
-  locale?: "ru" | "en";
+  /**
+   * Optional per-locale hrefs for the same entity (e.g. product with different slugs).
+   * When omitted, keeps the current pathname under each published locale.
+   */
+  localeHrefs?: Partial<Record<PublishedLocale, string>>;
   className?: string;
 };
 
-export function LocaleSwitch({ locale = "ru", className = "" }: LocaleSwitchProps) {
-  const ruActive = locale === "ru";
+export function LocaleSwitch({
+  localeHrefs,
+  className = "",
+}: LocaleSwitchProps) {
+  const locale = useLocale() as PublishedLocale;
+  const pathname = usePathname();
+  const t = useTranslations("a11y");
+
   return (
     <div
       className={`inline-flex items-center rounded-full border border-gletcher-navy/25 bg-gletcher-white/70 p-0.5 text-xs font-semibold tracking-wide ${className}`}
       role="group"
-      aria-label="Язык"
+      aria-label={t("locale")}
     >
-      <Link
-        href="/"
-        className={`rounded-full px-2.5 py-1 transition-colors ${
-          ruActive
-            ? "bg-gletcher-navy text-gletcher-white"
-            : "text-gletcher-navy/70 hover:text-gletcher-navy"
-        }`}
-        aria-current={ruActive ? "page" : undefined}
-      >
-        RU
-      </Link>
-      <Link
-        href="/en"
-        className={`rounded-full px-2.5 py-1 transition-colors ${
-          !ruActive
-            ? "bg-gletcher-navy text-gletcher-white"
-            : "text-gletcher-navy/70 hover:text-gletcher-navy"
-        }`}
-        aria-current={!ruActive ? "page" : undefined}
-      >
-        EN
-      </Link>
+      {PUBLISHED_LOCALES.map((code) => {
+        const active = locale === code;
+        const customHref = localeHrefs?.[code];
+        // Only link published locales; planned locales are omitted from the switcher.
+        if (customHref === null) return null;
+        return (
+          <Link
+            key={code}
+            href={customHref ?? pathname}
+            locale={code}
+            className={`rounded-full px-2.5 py-1 transition-colors ${
+              active
+                ? "bg-gletcher-navy text-gletcher-white"
+                : "text-gletcher-navy/70 hover:text-gletcher-navy"
+            }`}
+            aria-current={active ? "page" : undefined}
+          >
+            {LOCALE_LABEL[code]}
+          </Link>
+        );
+      })}
     </div>
   );
 }
