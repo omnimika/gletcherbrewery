@@ -1,0 +1,63 @@
+{
+  "id": "brainstorm-moto-fest-2023-report",
+  "locale": "ru",
+  "slug": "en25lxya61-fotootchyot-s-brainstorm-moto-fest",
+  "title": "ФОТООТЧЁТ С BRAINSTORM MOTO FEST",
+  "description": "Ревущие моторы мотоциклов, ретро авто, ремесленное пиво и рок-н-ролл!",
+  "publishedAt": "2023-08-22 10:00",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3930-3730-4235-b634-373436303834/_D7A3464.JPG",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "Благодарим всех участников и посетителей фестиваля!"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6330-3165-4530-a134-643564653665/_D7A3210.JPG",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3465-6630-4533-b562-356236633061/_D7A3428.JPG",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3534-3264-4330-b563-363432653131/_D7A2598.JPG",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "html": "<a href=\"/brainstorm-moto-fest-2023\">ПОЛНЫЙ ФОТООТЧЁТ СМОТРИТЕ НА СТРАНИЦЕ МЕРОПРИЯТИЯ</a>"
+    },
+    {
+      "type": "paragraph",
+      "html": "<a href=\"/brainstorm-moto-fest-2023\"><strong>https://www.gletcherbrewery.com/brainstorm-moto-fest-2023</strong></a>"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3065-3466-4264-b533-356531336564/_D7A3939.JPG",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

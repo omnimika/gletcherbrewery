@@ -27,6 +27,8 @@
     "closeMenu": "Close menu",
     "locale": "Language",
     "catalogFilter": "Catalogue filter",
+    "blogFilter": "Blog post filter",
+    "blogPagination": "Blog pages",
     "prevBeers": "Previous beers",
     "nextBeers": "Next beers",
     "agent": "Agent Gletcher"
@@ -104,10 +106,24 @@
   },
   "blog": {
     "title": "Blog",
-    "lead": "Brewery news, beer library pieces and events. The full archive still lives on the current site.",
-    "archiveCta": "All news",
-    "empty": "No published posts in this language yet.",
-    "backToBlog": "Back to blog"
+    "lead": "Brewery news, releases, glossary, recipes and events.",
+    "empty": "No published posts in this section yet.",
+    "backToBlog": "Back to blog",
+    "pagination": {
+      "prev": "Prev",
+      "next": "Next"
+    },
+    "filters": {
+      "all": "ALL",
+      "news": "NEWS",
+      "releases": "RELEASES",
+      "library": "GLOSSARY",
+      "recipes": "RECIPES",
+      "interview": "INTERVIEW",
+      "events": "EVENTS",
+      "photo": "PHOTO",
+      "vacancies": "VACANCIES"
+    }
   },
   "beer": {
     "eyebrow": "Our beer line presents",

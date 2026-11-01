@@ -1,0 +1,62 @@
+{
+  "id": "blanche-weizen",
+  "locale": "en",
+  "slug": "japn2sfx71-1000-km-difference-between-blanche-and-w",
+  "title": "1000 km difference between Blanche and Weizen. What else?",
+  "description": "Let's look at the features of the most popular wheat beers: Blanche and Weiss.",
+  "publishedAt": "2021-02-09 14:55",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild6164-3661-4337-b966-623661373035/DSC_3272a.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "Wheat is quite often used in brewing. This is a traditional ingredient, despite the fact that when it comes to the composition of beer, barley malt is always the first to be remembered. The concept of &quot;white beer&quot; (white beer) is already deeply rooted in history and refers to ale, which uses not only barley malt, but also a certain percentage of wheat. The definition of color gave the name to several types of European beer, such as Blanche and Weiss – Belgian and German styles, respectively."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "The use of wheat"
+    },
+    {
+      "type": "paragraph",
+      "html": "As mentioned earlier, both Blanche-aka Witbier in Flemish-and Weisbeer (also known as Weizen, meaning &quot;wheat&quot;) include a certain percentage of wheat added to barley malt. In Belgian Blanches, no more than 50% of wheat is usually used, on average, 30% -40%. However, in some German Weizen varieties, the wheat content can reach 70%.<br /><br />Another important difference is in the wheat used. In Weizen, only malted grain is always used. In Blanches, raw, that is, unsalted, is traditionally used. In addition, a small amount of other malt (oatmeal, rye, etc.) is sometimes allowed in Blanche, which is absolutely impossible in Weizen."
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3236-3835-4333-b834-373037633762/20200723_svam_0122_w.jpg",
+      "alt": "Ausweis – weizen beer from Gletcher Brewery",
+      "caption": "Ausweis – weizen beer from Gletcher Brewery",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "Also, the fundamental difference between Weizen and Blanche is the use of additional ingredients in the production of beer. In Germany, only 4 main ingredients are allowed in the composition of Weizen: malt, hops, water and yeast. In Belgium, two spices are traditionally added: coriander and bitter orange zest (usually Curacao varieties).<br />These differences have a huge impact on the organoleptics of beer. The fragrance of Blanche is unmistakable. It is dominated by notes of spices and citrus, drowning out all other flavors. Weizen is distinguished by the presence of tones that give yeast during fermentation: ripe banana, cloves and, in some cases, chewing gum."
+    },
+    {
+      "type": "paragraph",
+      "html": "At first glance, the appearance of these varieties is the same because of their turbidity. Historically, the transparent version of Weizen - Kristallweizen-prevailed in Germany, but then it almost disappeared, and the store shelves were filled with the murky and well-known Hefeweizen. In some cases, the Blanche may look less opaque.<br />Both styles are served with a rich, dense and very long-lasting foam cap. Also, both varieties have a golden color, but in Germany there is a dark wheat ale-Dunkelweizen, in the taste of which you can distinguish caramel notes."
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3236-3461-4263-a363-336666643738/20200723_svam_0163_w.jpg",
+      "alt": "Blanche de Fleur – blanche beer from Gletcher Brewery",
+      "caption": "Blanche de Fleur – blanche beer from Gletcher Brewery",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Other differences"
+    },
+    {
+      "type": "paragraph",
+      "html": "In Blanche, the thirst-quenching property is sometimes emphasized by a refreshing sour finish, thanks to the lactic acid produced by the yeast. This is never found in Weizen. Weizen's body is often more saturated. Finally, the last difference is related to the serving of beer: Belgian white beer is served in a thick-walled and lower glass, and German beer is served in the iconic high and thin Weizenbecker.<br /><br />In general, both varieties are considered summer beers, despite the fact that they are produced all year round. This beer is easy to drink and refreshing. The taste is rather sweet with a pleasant dry aftertaste at the end. What kind of beer do you like, Blanche de Fleur or Ausweis?"
+    }
+  ]
+}

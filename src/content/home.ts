@@ -91,14 +91,14 @@ const BLOG_RU: HomeBlogTeaser[] = [
     id: "barrel-aged",
     category: "БИБЛИОТЕКА",
     title: "Barrel-Aged Beer Day: День выдержанного в бочках пива",
-    href: "https://www.gletcherbrewery.com/blog-all/tpost/barrel-aged-beer-day-2026",
+    href: "/blog-all/tpost/barrel-aged-beer-day-2026",
     date: "02.10",
   },
   {
     id: "afisha",
     category: "МЕРОПРИЯТИЯ",
     title: "Афиша Gletcher Brewery: WINEPARK, Поляна Пикник и Chicano Day",
-    href: "https://www.gletcherbrewery.com/blog-all/tpost/cf46mag0n1-afisha-gletcher-brewery-winepark-polyana",
+    href: "/blog-all/tpost/cf46mag0n1-afisha-gletcher-brewery-winepark-polyana",
     date: "23.09",
   },
 ];
@@ -114,20 +114,20 @@ const BLOG_EN: HomeBlogTeaser[] = [
   {
     id: "moa-na",
     category: "LIBRARY",
-    title: "Milk of Amnesia non-alcoholic",
-    href: "https://www.gletcherbrewery.com/en/blog-all/tpost/za6t88elj1-milk-of-amnesia-non-alcoholic",
+    title: "Milk of Amnesia Non-Alcoholic",
+    href: "/en/blog-all/tpost/za6t88elj1-milk-of-amnesia-non-alcoholic",
   },
   {
     id: "aging",
     category: "LIBRARY",
-    title: "Gletcher Aging: aged to perfection",
-    href: "https://www.gletcherbrewery.com/en/blog-all/tpost/93l8iii9y1-gletcher-aging-aged-to-perfection",
+    title: "Gletcher Aging: Aged to Perfection",
+    href: "/en/blog-all/tpost/93l8iii9y1-gletcher-aging-aged-to-perfection",
   },
   {
     id: "tour",
     category: "NEWS",
-    title: "Tour de Grapefruit: citrus wheat ale",
-    href: "https://www.gletcherbrewery.com/en/blog-all/tpost/9i3ig0g2r1-tour-de-grapefruit-citrus-wheat-ale",
+    title: "Tour De Grapefruit: citrus wheat ale",
+    href: "/en/blog-all/tpost/9i3ig0g2r1-tour-de-grapefruit-citrus-wheat-ale",
   },
 ];
 

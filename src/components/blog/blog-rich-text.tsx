@@ -1,6 +1,7 @@
 /**
  * Renders fixture HTML that was already allowlisted at import time
- * (`strong` | `em` | `a` | `br` only). Not a general HTML sanitizer.
+ * (inline: `strong` | `em` | `a` | `br`; list blocks may wrap `ul`/`ol`/`li`).
+ * Not a general HTML sanitizer.
  */
 export function BlogRichText({
   html,

@@ -1,0 +1,52 @@
+{
+  "id": "kraftomania",
+  "locale": "ru",
+  "slug": "l1amaxj121-gletcher-brewery-na-kraftomanii",
+  "title": "Gletcher Brewery на КРАФТОМАНИИ!",
+  "description": "Зимний праздник крафтового пива в Москве с безлимитной дегустацией – отличный повод для встречи!",
+  "publishedAt": "2026-01-13 12:50",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3436-6635-4436-b234-343761626634/image.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "Друзья, мы рады анонсировать, что <strong>Gletcher Brewery</strong> участвует в одном из самых знаковых зимних событий Москвы для любителей пива — <strong><em><a href=\"https://craftmaniafest.tilda.ws/\" target=\"_blank\" rel=\"noopener noreferrer\">Крафтомании</a></em></strong>!<br /><br />📅 <strong>17 января 2025 г.</strong><br />📍 <em>Москва, Амбер Плаза (ул. Краснопролетарская, 36)</em><br />🕐 Начало в <strong>13:00</strong><br /><br />Наша команда будет ждать вас на <strong>стенде №32</strong> — приходите за знакомыми вкусами и новыми впечатлениями!"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6431-3336-4332-a566-303632353261/photo_2026-01-13_134.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "🎪 <em>Крафтомания — зимний фестиваль крафтовой культуры в Москве</em> — событие, объединяющее сотни сортов напитков от десятков производителей, фермерский гастромаркет, развлечения и музыкальную программу в уютной атмосфере <em>Амбер Плаза</em>. На фестивале представлены напитки более чем от 45 производителей, каждому гостю доступна <strong>безлимитная дегустация</strong> и множество активностей: крафт-рынок, пивное казино, DJ-сеты, лотереи, шоу и призы."
+    },
+    {
+      "type": "paragraph",
+      "html": "Наши краны Gletcher ищите на СТЕНДЕ №32, мы будем разливать:<br /><br />🍻 <em><a href=\"/beer/heidegger-hell\">Heidegger Hell</a></em> — лёгкий хмелевой старт.<br /><br />🍒 <a href=\"/beer/ruby-road\">Ruby Road</a><a href=\"/beer/tour-de-grapefruit\"> </a>— вишневая крепость.<br /><br />🌾 <em><a href=\"/beer/blue-monkey\">Blue Monkey Wheat Ale</a></em> — пшеничная мягкость и аромат.<br /><br />🥭 <em><a href=\"/beer/milk-of-amnesia\">Milk of Amnesia Tropical Milkshake IPA</a></em> — тропический вайб и джус-эксплозия.<br /><br />🥜 <em><a href=\"/beer/nut-butter\">Nut Butter Nut Brown Ale</a></em> — ореховая глубина."
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6534-3937-4639-a632-303430613639/image.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "Крафтовой культурой Москва живёт и зимой. <em>КРАФТОМАНИЯ</em> — именно тот повод, чтобы собраться, попробовать любимые сорта и открыть что-то новое. Мы на месте, вы с бокалом — гармония найдена! Настрой на крафт, улыбки и тёплые общения здесь и сейчас. Увидимся у крана! 🍻"
+    },
+    {
+      "type": "paragraph",
+      "html": "<strong>Купить билет:</strong> <a href=\"https://craftmaniafest.tilda.ws\" target=\"_blank\" rel=\"noopener noreferrer\">craftmaniafest.tilda.ws</a> | <a href=\"https://t.me/craftmaniafest\" target=\"_blank\" rel=\"noopener noreferrer\">@craftmaniafest</a>"
+    }
+  ]
+}

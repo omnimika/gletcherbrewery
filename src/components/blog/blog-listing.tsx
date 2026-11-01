@@ -1,29 +1,207 @@
+"use client";
+
+import Image from "next/image";
+import { useMemo, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { BlogListCard } from "@/content/blog";
-import { formatBlogDate } from "@/content/blog";
-import type { PublishedLocale } from "@/i18n/locales";
+import {
+  BlogCategoryChips,
+  type BlogFilterId,
+} from "@/components/blog/blog-category-chips";
+
+export const BLOG_PAGE_SIZE = 10;
 
 type BlogListingProps = {
-  locale: PublishedLocale;
   title: string;
   lead: string;
-  archiveLabel: string;
-  archiveHref: string;
   empty: string;
   items: BlogListCard[];
 };
 
+function BlogCardBody({
+  item,
+  priority = false,
+}: {
+  item: BlogListCard;
+  priority?: boolean;
+}) {
+  return (
+    <>
+      {item.cover ? (
+        <div className="relative aspect-[9/5] w-full overflow-hidden rounded-md bg-gletcher-navy/5">
+          <Image
+            src={item.cover.src}
+            alt={item.cover.alt || ""}
+            fill
+            sizes="(min-width: 640px) 50vw, 100vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+            priority={priority}
+          />
+          <span className="absolute top-3 left-3 rounded-sm bg-gletcher-ice/95 px-2 py-1 text-[0.6rem] font-semibold tracking-[0.14em] text-gletcher-navy uppercase shadow-sm">
+            {item.categoryLabel}
+          </span>
+        </div>
+      ) : (
+        <div className="relative flex aspect-[9/5] w-full items-end overflow-hidden rounded-md bg-gletcher-navy/8 px-3 py-3">
+          <span className="rounded-sm bg-gletcher-ice/95 px-2 py-1 text-[0.6rem] font-semibold tracking-[0.14em] text-gletcher-navy uppercase shadow-sm">
+            {item.categoryLabel}
+          </span>
+        </div>
+      )}
+
+      <div className="flex flex-1 flex-col gap-2 pt-3">
+        <p className="font-display text-[1.05rem] leading-snug font-extrabold tracking-wide text-gletcher-navy uppercase transition-colors group-hover:text-gletcher-red sm:text-[1.2rem]">
+          {item.title}
+        </p>
+        {item.description ? (
+          <p className="line-clamp-3 text-sm leading-relaxed text-gletcher-navy/70">
+            {item.description}
+          </p>
+        ) : null}
+        {item.dateLabel ? (
+          <p className="mt-auto pt-1 text-[0.65rem] font-semibold tracking-[0.16em] text-gletcher-navy/45 uppercase">
+            {item.dateLabel}
+          </p>
+        ) : null}
+      </div>
+    </>
+  );
+}
+
+/** Compact page list: always first/last, window around current. */
+function pageNumbers(current: number, total: number): (number | "ellipsis")[] {
+  if (total <= 7) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+  const pages = new Set<number>([1, total, current]);
+  for (let d = 1; d <= 1; d++) {
+    if (current - d >= 1) pages.add(current - d);
+    if (current + d <= total) pages.add(current + d);
+  }
+  if (current <= 3) {
+    pages.add(2);
+    pages.add(3);
+    pages.add(4);
+  }
+  if (current >= total - 2) {
+    pages.add(total - 1);
+    pages.add(total - 2);
+    pages.add(total - 3);
+  }
+  const sorted = [...pages].sort((a, b) => a - b);
+  const out: (number | "ellipsis")[] = [];
+  for (let i = 0; i < sorted.length; i++) {
+    const n = sorted[i]!;
+    if (i > 0 && n - sorted[i - 1]! > 1) out.push("ellipsis");
+    out.push(n);
+  }
+  return out;
+}
+
+function BlogPagination({
+  page,
+  totalPages,
+  onChange,
+}: {
+  page: number;
+  totalPages: number;
+  onChange: (page: number) => void;
+}) {
+  const t = useTranslations("blog.pagination");
+  const tA11y = useTranslations("a11y");
+  if (totalPages <= 1) return null;
+
+  const nums = pageNumbers(page, totalPages);
+
+  return (
+    <nav
+      className="mt-12 flex flex-wrap items-center justify-center gap-2"
+      aria-label={tA11y("blogPagination")}
+    >
+      <button
+        type="button"
+        disabled={page <= 1}
+        onClick={() => onChange(page - 1)}
+        className="min-h-10 min-w-10 rounded-full border border-gletcher-navy/40 px-3 text-xs font-semibold tracking-wider text-gletcher-navy uppercase transition-colors enabled:hover:border-gletcher-navy disabled:cursor-not-allowed disabled:opacity-35"
+      >
+        {t("prev")}
+      </button>
+      {nums.map((n, i) =>
+        n === "ellipsis" ? (
+          <span
+            key={`e-${i}`}
+            className="px-1 text-sm text-gletcher-navy/40"
+            aria-hidden
+          >
+            …
+          </span>
+        ) : (
+          <button
+            key={n}
+            type="button"
+            aria-current={n === page ? "page" : undefined}
+            onClick={() => onChange(n)}
+            className={`min-h-10 min-w-10 rounded-full border px-3 text-xs font-semibold tracking-wider transition-colors ${
+              n === page
+                ? "border-gletcher-navy bg-gletcher-navy text-gletcher-white"
+                : "border-gletcher-navy/40 text-gletcher-navy hover:border-gletcher-navy"
+            }`}
+          >
+            {n}
+          </button>
+        ),
+      )}
+      <button
+        type="button"
+        disabled={page >= totalPages}
+        onClick={() => onChange(page + 1)}
+        className="min-h-10 min-w-10 rounded-full border border-gletcher-navy/40 px-3 text-xs font-semibold tracking-wider text-gletcher-navy uppercase transition-colors enabled:hover:border-gletcher-navy disabled:cursor-not-allowed disabled:opacity-35"
+      >
+        {t("next")}
+      </button>
+    </nav>
+  );
+}
+
 export function BlogListing({
-  locale,
   title,
   lead,
-  archiveLabel,
-  archiveHref,
   empty,
   items,
 }: BlogListingProps) {
+  const [filter, setFilter] = useState<BlogFilterId>("all");
+  const [page, setPage] = useState(1);
+  const listRef = useRef<HTMLDivElement>(null);
+
+  const filtered = useMemo(
+    () =>
+      filter === "all"
+        ? items
+        : items.filter((item) => item.categoryId === filter),
+    [filter, items],
+  );
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / BLOG_PAGE_SIZE));
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+
+  const visible = useMemo(() => {
+    const start = (currentPage - 1) * BLOG_PAGE_SIZE;
+    return filtered.slice(start, start + BLOG_PAGE_SIZE);
+  }, [filtered, currentPage]);
+
+  function handleFilterChange(id: BlogFilterId) {
+    setFilter(id);
+    setPage(1);
+  }
+
+  function handlePageChange(next: number) {
+    setPage(Math.min(Math.max(1, next), totalPages));
+    listRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   return (
-    <section className="mx-auto w-full max-w-[960px] px-5 pt-8 pb-16 sm:px-8 sm:pt-10 sm:pb-20">
+    <section className="mx-auto w-full max-w-[1120px] px-5 pt-8 pb-16 sm:px-8 sm:pt-10 sm:pb-20">
       <header className="text-center">
         <h1 className="font-display text-[clamp(2.25rem,6vw,4rem)] leading-[0.9] font-extrabold tracking-wide text-gletcher-navy uppercase">
           {title}
@@ -33,56 +211,43 @@ export function BlogListing({
         </p>
       </header>
 
-      {items.length === 0 ? (
+      <div ref={listRef} className="mt-8 scroll-mt-24 sm:mt-10">
+        <BlogCategoryChips active={filter} onChange={handleFilterChange} />
+      </div>
+
+      {filtered.length === 0 ? (
         <p className="mt-12 text-center text-sm text-gletcher-navy/60">{empty}</p>
       ) : (
-        <ul className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => {
-            const dateLabel = formatBlogDate(item.publishedAt, locale);
-            const label = (
-              <>
-                <p className="text-[0.65rem] font-semibold tracking-[0.2em] text-gletcher-navy/55 uppercase">
-                  {item.categoryLabel}
-                  {dateLabel ? (
-                    <span className="ml-2 text-gletcher-navy/40">{dateLabel}</span>
-                  ) : null}
-                </p>
-                <p className="font-display text-[1.15rem] leading-snug font-extrabold tracking-wide text-gletcher-navy uppercase transition-colors group-hover:text-gletcher-red sm:text-[1.25rem]">
-                  {item.title}
-                </p>
-              </>
-            );
-            return (
-              <li key={item.id}>
-                {item.local ? (
-                  <Link
-                    href={item.href}
-                    className="group flex h-full flex-col gap-3 border-t border-gletcher-navy/15 pt-4 transition-colors"
-                  >
-                    {label}
-                  </Link>
-                ) : (
-                  <a
-                    href={item.href}
-                    className="group flex h-full flex-col gap-3 border-t border-gletcher-navy/15 pt-4 transition-colors"
-                  >
-                    {label}
-                  </a>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+        <>
+          <ul className="mt-10 grid grid-cols-1 gap-x-8 gap-y-10 sm:mt-12 sm:grid-cols-2">
+            {visible.map((item, index) => {
+              const className =
+                "group flex h-full flex-col text-left transition-opacity";
+              const body = (
+                <BlogCardBody item={item} priority={index < 4} />
+              );
+              return (
+                <li key={item.id}>
+                  {item.local ? (
+                    <Link href={item.href} className={className}>
+                      {body}
+                    </Link>
+                  ) : (
+                    <a href={item.href} className={className}>
+                      {body}
+                    </a>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+          <BlogPagination
+            page={currentPage}
+            totalPages={totalPages}
+            onChange={handlePageChange}
+          />
+        </>
       )}
-
-      <p className="mt-14 text-center">
-        <a
-          href={archiveHref}
-          className="font-display inline-flex min-h-11 items-center justify-center border border-gletcher-navy px-5 text-xs font-extrabold tracking-wide text-gletcher-navy uppercase transition-colors hover:border-gletcher-red hover:bg-gletcher-red hover:text-gletcher-ice"
-        >
-          {archiveLabel}
-        </a>
-      </p>
     </section>
   );
 }

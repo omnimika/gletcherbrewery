@@ -4,7 +4,7 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BlogListing } from "@/components/blog/blog-listing";
 import { SiteShell } from "@/components/site-shell";
-import { blogArchiveHref, getBlogListCards } from "@/content/blog";
+import { getBlogListCards } from "@/content/blog";
 import {
   DEFAULT_LOCALE,
   type PublishedLocale,
@@ -51,11 +51,8 @@ export default async function BlogListingPage({ params }: BlogPageProps) {
   return (
     <SiteShell>
       <BlogListing
-        locale={published}
         title={t("title")}
         lead={t("lead")}
-        archiveLabel={t("archiveCta")}
-        archiveHref={blogArchiveHref(published)}
         empty={t("empty")}
         items={items}
       />

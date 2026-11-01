@@ -1,0 +1,22 @@
+{
+  "id": "pumking-ale",
+  "locale": "en",
+  "slug": "a8p7c969z1-pumking-ale-new-taste-of-autumn",
+  "title": "Pumking Ale: new taste of autumn",
+  "description": "Try our pumpkin ale with cinnamon and caramel",
+  "publishedAt": "2021-10-19 16:57",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild6138-3838-4731-a338-663561333736/20211017_gletcher_02.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "quote",
+      "html": "— &quot;Pumpkins are smashed in a trough and crushed like apples. The released juice is boiled in copper for a long time and carefully removed what floats to the surface so that there is no fibrous part of the pulp left. After this is done, let the liquor be hopped, cooled, fermented, etc. like malt beer.&quot;"
+    },
+    {
+      "type": "paragraph",
+      "html": "This is the sound of the first printed recipe for pumpkin ale, which we were inspired by when creating our seasonal beer. It turned out to be soft and sweet, it will perfectly warm you in a dank autumn, like a warm sweater. And for sweet lovers, we made a version of pumpkin ale with baked apples and cinnamon.<br /><br />ABV 5,8%<br />Available in 20 l kegs and 0.5 L bottles - <a href=\"/en/beer/pumpkin-ale-candy-apple#!/tab/286836315-3\"><strong>Order.</strong></a>"
+    }
+  ]
+}

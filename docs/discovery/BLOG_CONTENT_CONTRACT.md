@@ -8,21 +8,22 @@
 
 | Pattern | Role | Notes |
 |---|---|---|
-| `/blog`, `/en/blog` | Curated listing / entry | Production title «Блог \| Gletcher Brewery»; CTA «Все новости» → `/blog-all` |
-| `/blog-all`, `/en/blog-all` | Full feed archive | Title «Блог: Все записи…»; Tilda `js-feed` |
+| `/blog`, `/en/blog` | Listing entry (local = full feed UX) | Production still has curated `/blog` + archive `/blog-all`; local `/blog` mirrors archive card grid + rubric tabs |
+| `/blog-all`, `/en/blog-all` | Production full feed archive | Title «Блог: Все записи…»; Tilda `js-feed`. Locally not a listing route |
 | `/blog-all/tpost/{id}-{slug}` | Article (modern) | Do not invent short slugs; keep 301 if path changes |
 | `/blog/{slug}`, campaign roots | Legacy / special | Inventory separately; not assumed peers |
 | `/en/blog-all/tpost/...` | EN article | Same feed model; IDs differ from RU |
 
-**Local Next:** `/blog` listing; articles with bodies at `/blog-all/tpost/{localSlug}`
-(same path family as production). Unmigrated cards still link to production.
+**Local Next:** `/blog` = full listing (covers, excerpts, category tabs); articles at
+`/blog-all/tpost/{localSlug}`. Unmigrated cards still link to production.
 
 ## 2. Entity model (Proposed → code fixtures)
 
 ```text
 BlogPost
   id                 stable string (not Tilda page id alone)
-  categoryId         library | news | events   (locale-invariant)
+  categoryId         news | releases | library | recipes | interview |
+                     events | photo | vacancies   (locale-invariant)
   translations[locale]
     status           published | draft | missing
     title
@@ -32,8 +33,11 @@ BlogPost
     localSlug        production postdefaulturl segment when body is local
 
 BlogArticleBody (per locale)
-  slug, title, description, cover{src,alt}
+  slug, title, description, publishedAt (`YYYY-MM-DD HH:mm`)
+  cover{src,alt}
   blocks[]           typed — see §4 / ADR 0005
+
+Fixture filename: `YYYY-MM-DD-{id}-{locale}.json`
 ```
 
 Rules (aligned with ADR 0001):
@@ -44,14 +48,30 @@ Rules (aligned with ADR 0001):
 - Category **id** ≠ localized label.
 - `publishedAt` is data; UI formats via `Intl`.
 
+### 2.1 Feed rubrics (Confirmed, Tilda `feeds_get_parts` 01.11.2026)
+
+| categoryId | RU part title | EN part title | Notes |
+|---|---|---|---|
+| `news` | НОВОСТИ | NEWS | |
+| `releases` | РЕЛИЗЫ | RELEASES | Product stories / novelties |
+| `library` | БИБЛИОТЕКА | **GLOSSARY** | EN feed title ≠ LIBRARY |
+| `recipes` | ФУДПЕЙРИНГ / РЕЦЕПТЫ | RECIPES | |
+| `interview` | ИНТЕРВЬЮ | INTERVIEW | |
+| `events` | МЕРОПРИЯТИЯ | EVENTS | |
+| `photo` | ФОТО / ВИДЕО | PHOTO | |
+| `vacancies` | ВАКАНСИИ | — | Out of migration scope |
+
+Primary chip = first id in post `parts` (Tilda order). Code: `src/content/blog-categories.ts`.
+
 ## 3. Confirmed sample peers (01.11.2026)
 
 | id | RU | EN | Local body |
 |---|---|---|---|
 | `beer-pizza` | `…/913cadd4f1-9-oktyabrya-…` | `…/5od5iaktd1-october-9-…` | **RU+EN** sprint 3 |
 | `homebrew-day` | `…/homebrewing-craft-beer-history` | — | **RU-only** (missing EN peer) |
-| `barrel-aged` / `afisha-winepark` | production | — | listing only |
-| EN-only teasers | — | moa-na / aging / tour-de-grapefruit | listing → production |
+| `beer-acidity` / `craft-depot-interview` / `pomor-craft-fest-2022` / `cheers-beers` | Confirmed RU↔EN UIDs | see Batch 10–11 | local bodies |
+| Product stories (Friday…MOA) | Confirmed releases peers | RELEASES / РЕЛИЗЫ | Batches 5–7 |
+| EN-only | — | `aging` | local EN body |
 
 ## 4. Rich body (typed blocks → future Puck)
 
@@ -76,15 +96,15 @@ Tilda feed `text` field = entity-encoded JSON array of `{ ty, te|url, … }`.
 
 ## 5. Listing + article DoD
 
-- Local `/blog` + `/en/blog`; migrated cards → local tpost path; others → production.
-- Archive CTA → production `/blog-all`.
-- Article: pizza RU/EN pair + homebrew RU-only; switcher peer rules as §2.
+- Local `/blog` + `/en/blog` = full listing UX (covers, excerpts, rubric tabs), matching production `/blog-all` card grid.
+- Migrated cards → local `/blog-all/tpost/{slug}`; others → production absolute URL.
+- No CTA from local listing to production archive.
 - Nav/menu → local `/blog`.
 - No Puck/CMS/ORM/Auth install in this stage.
 
 ## 6. Open
 
 - Full peer map for all feed posts.
-- Whether `/blog` stays curated vs full archive locally.
 - Legacy `/blog/{slug}` 301 table.
+- Local `/blog-all` listing alias (articles already use that path prefix).
 - Puck install + CRM routes when stage 5/CMS gate opens.

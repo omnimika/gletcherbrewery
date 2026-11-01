@@ -1,0 +1,18 @@
+{
+  "id": "smoked-malt",
+  "locale": "en",
+  "slug": "d3vg4bzat1-smoked-malt-smoke-and-beer",
+  "title": "Smoked malt: smoke and beer",
+  "description": "We tell you about the production of smoked malt.",
+  "publishedAt": "2021-08-05 16:52",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3232-3532-4434-a363-643165326536/20210613_gletcher_03.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "Smoked malt is used as a base for smoked lagers and ales. But of course the main use of this malt is the production of whiskey, especially Scotch. Many traditional Scottish distilleries rely on their malt houses, where the grain is dried on peat. But malt for whiskey turns out to be quite sharp, and it is rarely used in brewing. And if they are used, then in very small doses to give fullness to the taste.<br /><br />Smoked malt for beer is usually made from two-row spring barley, which is smoked over hardwoods. Soft rocks, such as pine, are too resinous, which does not reflect for the better on the taste. The main raw material is beech, which adds bacon notes to malt when smoked. In order to use a beech tree, logs are dried in the open air for several years, which allows them to reduce the moisture content, but not completely remove it. If the wood is too wet, it will not burn, if it is too dry – it will not give smoke. Only if it is properly prepared, the tree will be juicy and pleasant to smoke. The smoking process lasts from 36 to 48 hours. Smoked malt can be used in any proportion for the production of beer. Beer brewed using smoked malt will be similar in color to pilsner or pale ale, so caramel or fried malt varieties are added to get darker shades."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "milk-of-amnesia",
+  "locale": "en",
+  "slug": "zxbflinfn1-milk-of-amnesia-a-new-look-at-your-favor",
+  "title": "Milk of Amnesia: A new look at your favorite taste",
+  "description": "We have come up with a fresh image for everyone's favorite recipe – meet the milk of amnesia in a new bottle!",
+  "publishedAt": "2024-05-29 10:24",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3135-6662-4631-b565-643939643734/image.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "Dear fans of the Gletcher brewery, we are pleased to present you a new look of beer and a new corporate identity.<br /><br />After more than 10 years of our journey together, we have always listened to your comments, so we have left the taste unchanged. And the appearance now embodies the path that we have traveled together.<br /><br />After the phenomenal success of our &quot;tropical amnesia&quot; in 2018, we decided to include Milk of Amnesia v. Tropic in the permanent lineup. There is still a spirit of rebellion from our friends from Anarchy Brew Co. (UK), with whom we came up with this variety, when we boldly mixed pineapple, mango and passion fruit juices, flavoring it with another portion of lactose. Due to the rich fruit base, the taste turned out to be moderately sweet, rounded and full-bodied.<br /><br />Nugget, Columbus, Centennial and Mosaic hops are responsible for the aroma and long-lasting bitterness in the final.<br /><br />The variety does not give up its position and breaks the records of the top charts! Feel free to continue enjoying a new portion of &quot;milk amnesia&quot;!"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/ffb6456b-781b-40e8-9517-ffb5225e8bcd/imgfish.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

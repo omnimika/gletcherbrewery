@@ -1,0 +1,51 @@
+{
+  "id": "pomor-craft-fest-2022",
+  "locale": "en",
+  "slug": "dtxtl8kd91-nord-fest-pomeranian-foodampdrink-festiv",
+  "title": "Nord-Fest: Pomeranian Food&Drink Festival",
+  "description": "On August 13, in Arkhangelsk, Gletcher Brewery will take part in the Pomeranian food and drink festival \"Craft Fest\"",
+  "publishedAt": "2022-07-31 13:15",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3938-3736-4132-b765-653835643535/image.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "On August 13, the Pomeranian food and beverage festival &quot;<strong>Craft Fest&quot;</strong> — a celebration of brewing, delicious food, music and entertainment – will unfold at Nord-Expo."
+    },
+    {
+      "type": "quote",
+      "html": "&quot;Friends, this <strong>Saturday, August 13</strong>, the Gletcher Brewery participates in the first craft festival in the city of <strong>Arkhangelsk</strong>. I will be glad to meet all true beer connoisseurs and tell both our brewery and its products!"
+    },
+    {
+      "type": "quote",
+      "html": "Come to <strong>Nord Expo</strong>, at the address: <a href=\"https://yandex.ru/maps/-/CCURF6WA2C\" target=\"_blank\" rel=\"noopener noreferrer\">Arkhangelsk, Papanina str., 25</a>"
+    },
+    {
+      "type": "quote",
+      "html": "The festival starts at <strong>15:00</strong>, you can find us at <strong>booth 2-3</strong>&quot;"
+    },
+    {
+      "type": "quote",
+      "html": "<em>— Brand Manager of Gletcher Brewery Alexey Kotelnikov</em>"
+    },
+    {
+      "type": "paragraph",
+      "html": "In one place, everyone will be able to taste an unlimited number of different beers with a good snack in a pleasant atmosphere and friendly company. Domestic and foreign beer brands are waiting for you, a gastronomic zone with the best restaurants and beer bars of the city, entertainment venues with thematic contests, sports and intellectual competitions, as well as driving music from the coolest cover bands of the city"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6161-6439-4031-b431-623935373234/image.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "IT'S LIKE OKTOBERFEST, BUT COOLER!<br /><br />ENTERTAINMENT — The most interesting and unusual entertainment - from sports to intellectual games<br />MUSIC — Driving music groups and performers<br />STAND-UP — Hilarious stand-up artists and just companies or aspiring stars who want to make themselves known"
+    }
+  ]
+}

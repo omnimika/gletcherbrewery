@@ -89,7 +89,7 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
       <BlogArticle
         article={body}
         categoryLabel={translation.categoryLabel}
-        publishedAt={translation.publishedAt}
+        publishedAt={body.publishedAt || translation.publishedAt}
         backHref="/blog"
         backLabel={t("backToBlog")}
       />

@@ -1,0 +1,49 @@
+{
+  "id": "ale-or-lager",
+  "locale": "en",
+  "slug": "snfk1giyd1-ale-or-lager-a-story-about-yeast",
+  "title": "Ale or lager: a story about yeast",
+  "description": "Despite the fact that there are many existing beers and they are very different, they can all be divided into two large families: top-fermented beer and bottom-fermented beer.",
+  "publishedAt": "2021-03-20 16:24",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild6339-3232-4333-a332-346332623166/20210318_gletcher_01.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "Usually, people who first plunge into beer culture are not aware of the wide variety of beer. There are thousands of different varieties in the world, and their emergence has been influenced by social, economic and cultural factors."
+    },
+    {
+      "type": "preface",
+      "html": "Despite the fact that there are many existing beers and they are very different, they can all be divided into two large families: top-fermented beer and bottom-fermented beer. The difference is based on the type of yeast used in the brewing process, but each family also has some organoleptic features."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Top fermentation"
+    },
+    {
+      "type": "paragraph",
+      "html": "Top-fermented beer - or ale-is made from the yeast Saccharomyces cerevisiae. These microorganisms work best at a temperature of 12 to 23 °C and after the end of fermentation tend to rise to the top of the fermenter (hence the name). They can have a strong influence on the taste and aroma of beer, as they produce esters, phenols and other substances that enrich the aromatic range of beer, among other things, notes of ripe fruits, spices and flowers. Many top-fermented beers undergo secondary fermentation in a bottle (or barrel): During bottling, the master brewer adds wort, yeast, or sugar to activate the further fermentation process inside the container. This ensures a longer shelf life and improves the taste.<br /><br />Great Britain and Belgium are two countries where top-fermented beer is traditionally brewed. The United States joined them much later. Traditionally, Anglo-American brewers use yeast, which does not significantly affect the flavor of the beer, while Belgian beer yeast gives the main character. Most beer styles in the world belong to the family of top-fermented beers."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Grassroots fermentation"
+    },
+    {
+      "type": "paragraph",
+      "html": "The yeast Saccharomyces pastorianus has been derived from the yeast Saccharomyces carlsbergensis since it was first isolated in the laboratories of the Carlsberg Brewery. These microorganisms, which are considered a hybrid between Saccharomyces cerevisiae and Saccharomyces bayanus, work best at temperatures between 6 and 13 °C. When fermentation stops, they sink to the bottom of the fermenter. Their metabolism is slower than that of horse-fermented yeast, and their contribution to the aromatic profile is much more limited. In general, beer production takes longer. For example, this is due to the long period of lager maturation in the cold, called &quot;lagerization&quot;.<br /><br />Almost all commercial beers available on the market belong to the low-fermentation beer family. Germany is the country with the greatest traditions in brewing camp beer. Here, bottom-fermented beer has historically replaced ales. Bottom-fermented yeast became commercially available only in the late 19th century."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Spontaneously fermented beer"
+    },
+    {
+      "type": "paragraph",
+      "html": "To conclude the discussion about existing beers, it is also important to mention a very small family of spontaneously fermented beers. It involves not cultivated yeast bred in the laboratory, but wild microorganisms (yeast and bacteria). The region that is the symbol of this ancient mode of production is considered to be Payottenland to the southwest of Brussels, between the rivers Senne and Dendre. The style of beer of this fermentation is called lambic.<br /><br />It is surprising to realize that many different styles can be traced only in two large families, with the exception of the niche of spontaneous fermentation. These differences help us to accurately determine the type of beer in our glass through tasting. The fact that this distinction is based on the yeast used highlights the importance of this ingredient, which plays a much more significant role than is commonly assumed."
+    }
+  ]
+}

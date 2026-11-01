@@ -1,0 +1,58 @@
+{
+  "id": "beer-acidity",
+  "locale": "en",
+  "slug": "lj8oemius1-acid-in-beer-how-the-brewing-industry-ha",
+  "title": "Acid in beer: how the brewing industry has changed chemistry",
+  "description": "The world is grateful to beer for a deeper understanding of acids, their behavior and ways of measuring them, and this knowledge continues to bring great benefits to brewers today",
+  "publishedAt": "2022-11-18 17:44",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3231-3336-4538-a338-623530363863/image.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "World science should be grateful to beer for a deeper understanding of acids, their behavior and ways of measuring them, and this knowledge continues to bring great benefits to brewers today."
+    },
+    {
+      "type": "paragraph",
+      "html": "In 1909, the chief researcher of the Carlsberg Research Laboratory, Søren Peter Lauritz Sørensen, introduced the pH scale as a simple way to conceptualize the acidity of aqueous solutions.His research, privately funded by the Carlsberg Brewery, was part of a broader effort to understand the biochemical processes of brewing and fermentation.However, in the next two decades, the logarithmic scale of acidity proved its indispensability in almost all aspects of chemistry, biology and agriculture."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "html": "<strong>What is acid?</strong>"
+    },
+    {
+      "type": "paragraph",
+      "html": "In chemistry, there are three main definitions of &quot;acid&quot;, depending on the approach to; the question.In this article, we will stick to the oldest and simplest definition, known as Arrhenius acid: an acid is a substance that increases the concentration of hydrogen ions in an aqueous solution when added to it.Thus, acidity is a measure of how many free hydrogen ions there are in a solution to react with oppositely charged ions.These hydrogen ions are single protons without an electron associated with them, so they have a slightly positive charge."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "html": "Why does acidity matter?"
+    },
+    {
+      "type": "paragraph",
+      "html": "These protons really don't want to be alone!Although they can swim merrily in the water, they will form ionic bonds with any available negative ions they find, and this can have detrimental effects on all kinds of compounds.Acids can penetrate complex protein structures, denaturing them and depriving them of functionality.Some metals form salts with acids, releasing hydrogen gas and dissolving into powder.So it is not surprising that measuring the acidity of the solution and, consequently, the number of available protons is very important for biochemists.<br /><br />"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "html": "Brewing chemistry"
+    },
+    {
+      "type": "paragraph",
+      "html": "Carlsberg has created its research laboratory to introduce scientific methods into traditional brewing practice.The brewery's founder, J.C. Jacobson, wanted to industrialize brewing and believed that a deeper understanding of the scientific processes underlying it would facilitate this transition.The first pure isolated brewer's yeast was obtained from this laboratory, as well as the pH scale that we use to this day.<br /><br />Investigating fermentation reactions, Sorensen developed standard methods for determining the concentration of hydrogen ions by electrometric and colorimetric methods. They were offered standard buffer solutions for calibration of pH meters and chemical pH indicators, the influence of the pH of the medium on the activity of enzymes was investigated. Sorensen was one of the first to use electrochemical electrodes to measure acidity. He used two electrodes: one — platinum, placed in a hydrogen jet, the other — calomel. This method gave accurate results, but the complexity of the equipment prevented its implementation in practice.<br /><br />The pH scale introduced by S. P. L. Sorensen and the pH meters created on its basis are used today to measure acidity in a wide variety of fields: in nuclear power, agronomy, meat and dairy, bakery industry, in scientific research. To diagnose diseases of the gastrointestinal tract, the acidity is measured directly in the esophagus, stomach and (or) duodenum. To do this, a special pH probe is inserted into the organ, the procedure itself is called intragastric pH-metry, and devices for such studies are acidogastrometers.<br /><br />"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "html": "Why do we measure the acidity of beer?"
+    },
+    {
+      "type": "paragraph",
+      "html": "The brewer must remember about acidity in all aspects of brewing, from choosing the right metals for brewing equipment to choosing the taste of seasonal fruit beer.One of the first stages of the brewing process, grain mashing, depends on the activity of the enzymes alpha-amylase and beta-amylase.These two catalysts work in tandem, converting long-chain carbohydrates into fermentable sugars, but they work best at different pH levels. Alpha-amylase works well in neutral solutions (about pH 7), and beta-amylase is suitable for slightly acidic environments (about pH 5).As a rule, the pH of beer wort remains around pH 5.4, which is a reasonable compromise between the two amylases.However, several factors can raise or lower the pH, thereby suppressing the activity of some enzymes.<br /><br />Monitoring the rate of pH decrease during fermentation allows brewers to monitor the health of their yeast.After application, yeast quickly acidifies the environment by producing organic acids, which make the wort more hostile to competing microorganisms.Problems with yeast metabolism or infection of the product can lead to a drop in pH below the level maintained by yeast, which can lead to a stop of fermentation.Yeast uses an ionic gradient (including free hydrogen ions) across its cell membrane, to facilitate the transfer of nutrients into and out of the cell.Therefore, an unexpected drop in pH can reduce their ability to digest sugars.<br /><br />For these reasons, we are always attentive to the control of the pH level at all stages of the production of our beverages. To learn more about all the subtleties of our production – sign up for an excursion to our brewery to be able to show off your deep knowledge in front of friends! And to taste the most delicious beer, of course!"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "beer-foam",
+  "locale": "en",
+  "slug": "ymfo0i2t71-what-can-beer-foam-say",
+  "title": "What can beer foam say?",
+  "description": "The beer cap doesn't just look good. It actually changes the drinking experience. Let's understand the subject.",
+  "publishedAt": "2021-04-23 15:43",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3439-3330-4765-b964-366535376330/IMG_3106.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "Visiting bars and pubs, you may have met someone who asks for less foam, and someone, on the contrary, is offended when there is no foam. We begin to feel the taste with our eyes, and what we see affects us positively or negatively."
+    },
+    {
+      "type": "paragraph",
+      "html": "Our brain plays a crucial role, connecting memories and sensations with each new piece of information that it receives. A beer cap is an indicator of a good beer, even if it may result in a small amount of white &quot;mustache&quot; on the upper lip and possibly a small white island on the tip of the nose. Why? It looks good and delicious, as well as the&quot; lace &quot; of foam that forms inside the glass during drinking. The so-called &quot;Brussels lace&quot;, typical of Belgian beer, is a good indicator of the durability of the foam, and therefore the good work of the brewer, the purity of the glass and many other small details that are often overlooked.<br /><br />The beer cap doesn't just look good. It actually changes the drinking experience. The first sip has an almost unearthly texture, slowly reveals the taste and caresses the palate before disappearing. Most importantly, the foam helps to drink slowly, as it protects the beer from the influence of air and rapid oxidation.<br /><br />Most beers are bottled with slightly excessive carbonation, to ensure the safety and stability of the product, as well as to ensure that the right amount of gas gets into the glass. The beer is poured on the edge of the glass so that the CO2 molecules can separate from the beer and dissolve outside the glass. Those who serve beer carefully measure the distance between the glass and the bottle (or tap, in the case of draft beer) to make sure that the excess carbon dioxide does not adversely affect the filling time and first sips, but at the same time, so that the foam is not too flat. This process is paid less attention to than the resulting cap, but it is no less important."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Beer Cap"
+    },
+    {
+      "type": "paragraph",
+      "html": "Each ingredient contributes to the creation of beer foam: the type of yeast, malted and unsalted grain, hops and their resins, as well as water with its salts and minerals. Any spices, herbs and fruits also require special attention to themselves. It is necessary to make sure that everything goes well during the fermentation process and that there are no oils or other substances left that prevent the appearance of a good foam. Also during the filling stage, each step is crucial to ensure proper carbonation. Worse than a pint without a cap (if necessary) - excess foam, possibly leaking out of the bottle while it's still on the table.<br /><br />Anyone who serves beer should do everything possible to ensure that consumers can drink it in the best possible condition and with the right amount of foam. The main steps are proper storage, proper serving temperature, proper selection and cleanliness of the glass: it should be perfectly washed and rinsed with water so that there is no beer or soap residue left, and when pouring it should be slightly moist. After serving, guests can analyze the foam cap based on their personal experience and the style of a particular beer, and evaluate the work of the brewer and bartender. Most importantly, they can enjoy the beauty of their beer and happily start drinking it."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Beer cap: anytime, anywhere?"
+    },
+    {
+      "type": "paragraph",
+      "html": "There are some styles that do not give a foam cap at all, or it is insignificant and fleeting. These include all types of beer of spontaneous fermentation.<br /><br />If you ever get a gez with a thick foam like a German Weizen, send it back! This very peculiar beer, nicknamed &quot;Brussels champagne&quot;, should be served with a pleasant game of bubbles and a large foam that quickly disappears.<br /><br />In Britain, too, it is not always necessary to have a copious foam in the glass: in pubs in England, they serve ale with hand pumps - a system that mechanically pumps beer out of the keg. This leads to the dispersion of the already small amount of CO2 contained in traditional beer, so that only a few bubbles remain in the glass. Ales, barliwines and old ales, especially in bottles, contain very little foam, partly due to the high alcohol content, and partly due to the peculiarities of production.<br /><br />Beer may or may not have a cap. But when it is there, it is difficult to ignore it, it makes beer pleasant, beautiful and tempting."
+    }
+  ]
+}

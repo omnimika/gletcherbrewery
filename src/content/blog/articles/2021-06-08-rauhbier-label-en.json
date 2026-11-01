@@ -1,0 +1,102 @@
+{
+  "id": "rauhbier-label",
+  "locale": "en",
+  "slug": "exvllok0p1-rauhbier-beer-label-from-idea-to-impleme",
+  "title": "Rauhbier: beer label from idea to implementation",
+  "description": "A beer label is like clothing for beer. Using the example of the Rauchbier label, we wanted to show what stages of design a label goes through: from idea to implementation.",
+  "publishedAt": "2021-06-08 19:23",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3936-3162-4034-a261-623330643966/image.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "A beer label is a &quot;clothing&quot; for beer. It makes the first impression on the consumer and distinguishes beer from others. A label can tell a story and become a collectible."
+    },
+    {
+      "type": "paragraph",
+      "html": "Using the example of the Rauchbier label, we wanted to show what stages of design a label goes through: from idea to implementation.<br /><br />In the beginning there was a word, and it was &quot;recipe&quot;.<br />Rauhbir is a collaboration between Anora Mishchenko, Oleg Korotkiy (podcast &quot;Two beers, pzhlst!&quot;) and Martin Heuser (Avangard malt house, Germany). The three of them developed a recipe and decided to share it not only in the form of beer, but also in the form of a real beer recipe. We decided to put the recipe on the bottle label."
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3936-3162-4034-a261-623330643966/image.png",
+      "alt": "",
+      "caption": "The reference was as follows",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6264-6331-4465-b030-653237646233/image.png",
+      "alt": "",
+      "caption": "Then there was the first visualization",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "The desire for a recipe on the label was followed by the idea that this is a collaborative cooking. Therefore, the idea of the label was disassembled into &quot;bricks&quot; of what we want to see, and then re-connected. The hands of the three cooking participants add the ingredients to one pot. And, in fact, the beer recipe."
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3939-3739-4963-a234-306137373935/image.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3536-3938-4539-b736-666434663930/image.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3566-6135-4634-b032-353134326137/image.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Happy end"
+    },
+    {
+      "type": "paragraph",
+      "html": "A few more edits later, we got what we needed. The label fully reflected the idea of three people working together and contained a beer recipe that the brewers wanted to share. And, of course, it reflected the contents of the package-rauhbir with Guinea pepper."
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6137-3564-4633-b235-656236353335/image.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "That's how one simple idea could be transformed beyond recognition. Did you like it?"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6162-3034-4464-b538-356535326563/image.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

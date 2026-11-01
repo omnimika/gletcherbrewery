@@ -1,0 +1,27 @@
+{
+  "id": "cheers-beers",
+  "locale": "en",
+  "slug": "poxg2fuvl1-tasting-cheers-amp-beers",
+  "title": "Tasting Cheers & Beers 🍺",
+  "description": "Watch our video about how we conducted a tasting at the Extra Lounge in Serpukhov, and how it all ended",
+  "publishedAt": "2022-06-01 18:10",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3261-6638-4639-b139-373737393564/2022-06-01_17-33-49.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "Hello friends!<br /><br />We would like to share with you pleasant moments from the recent presentation of our current varieties, which was held by our brand manager Alexey Kotelnikov at the <strong>Extra Lounge</strong> restaurant (Serpukhov).<br /><br />The whole range of flavors was highly appreciated by the jury, and <strong>chef Dmitry Gladkov</strong> selected the perfect dishes for each of them:<br /><br /><a href=\"/beer/blue-monkey\"><strong>BLUE MONKEY</strong></a> + <em>Langoustine corn Dog with Wasabi sauce</em><br /><a href=\"/beer/nut-butter\"><strong>NUT BUTTER</strong></a> + <em>Burger with torn pork and onion jam</em><br /><a href=\"/beer/underground-ale\"><strong>UNDERGROUND PALE</strong></a> + <em>Fish &amp; Chips with French fries and Tartar sauce</em><br /><a href=\"/beer/heidegger-hell\"><strong>HEIDEGGER HELL</strong></a> + <em>Iceberg with smoked cabbage</em><br /><a href=\"/beer/ketchup\"><strong>KETCHUP</strong></a> + <em>Glazed pork ribs in &quot;Privan&quot; sauce</em><br /><a href=\"/beer/milk-of-amnesia-v-tropic\"><strong>MILK OF AMNESIA V. TROPIC</strong></a> + <em>Lazy cheesecake with cherries in bourbon</em>"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3261-6638-4639-b139-373737393564/2022-06-01_17-33-49.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

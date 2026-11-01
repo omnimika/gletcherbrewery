@@ -1,0 +1,35 @@
+{
+  "id": "rouge-de-fleur",
+  "locale": "en",
+  "slug": "k3spgxeyx1-rouge-de-fleur-cherry-symphony",
+  "title": "Rouge de Fleur: Cherry Symphony",
+  "description": "Enjoy the fruity charm of the Belgian scream in our Rouge de Fleur, a beer with a vibrant aroma and refreshing taste.",
+  "publishedAt": "2024-08-20 16:28",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild6533-3535-4139-a562-633637323137/rouge1_2.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "A brilliantly balanced, sparkling, and refreshing beer, Rouge de Fleur captures the fruity charm of Belgium—the country that introduced the world to &quot;kriek,&quot; the Flemish word for &quot;cherry.&quot; After studying the intricacies and secrets of crafting kriek, we created our own cherry beer, rivaling its Belgian counterpart in both flavor and quality.<br /><br />The flavor of Rouge de Fleur begins with a fresh sweetness that transitions into a delicate tartness. Its fruity bouquet lingers like an invisible mist at the rim of the glass. One inhale, and you’re swept away by the aroma of wild cherries and cherry pits.<br /><br />This beer is perfect for those who seek new flavor experiences and love to experiment. Rouge de Fleur pairs wonderfully with a variety of dishes, from light appetizers to decadent desserts. Order a glass and savor the way beer and cherries perform a Belgian tap dance along the walls of your glass."
+    },
+    {
+      "type": "quote",
+      "html": "<em>Kriek is a traditional Belgian fruit beer crafted from lambic and fermented with cherries. Its origins trace back to the Pajottenland region of Belgium, where lambic is brewed and aged in oak barrels. By adding cherries, the beer develops a vibrant fruity character and a rich red hue. Lambic, the base for kriek, is one of the oldest beer styles, renowned for its method of spontaneous fermentation. Unlike most modern beers, which rely on cultivated yeast strains, lambic is exposed to wild yeast and bacteria naturally present in the region's air. This process imparts a signature tartness and complex aroma.</em><br /><br /><em>The creation of kriek begins with brewing lambic. Once the lambic is brewed, it is aged in oak barrels, where spontaneous fermentation occurs. When the lambic reaches the desired maturity, cherries—often with their pits—are added to the barrels. The fruit interacts with the beer, introducing natural sugars that trigger secondary fermentation. This process can take anywhere from several months to a few years, depending on the desired flavor and aroma profile.</em><br /><br /><em>The result is a beer with a deep red color and a vibrant, fruity taste. Kriek strikes a perfect balance of sweetness and tartness, with distinctive notes of cherry and almond derived from the fruit's pits.</em>"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6530-3663-4163-b163-353636643034/bottle-bg-name-ALL-2.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "You can always buy this and other varieties from Gletcher Brewery in our branded stores.:<br />— <strong>Gletcher store</strong>: Moscow region, Klin, Tereshkova str., 1 p.4I (<em><a href=\"https://yandex.ru/maps/-/CCQxZTqdsC\" target=\"_blank\" rel=\"noopener noreferrer\">set route</a></em>)<br />— <strong>SVAM Group store</strong>: Moscow, Novomeshchersky passage, 9/1 (<em><a href=\"https://yandex.ru/maps/?from=api-maps&amp;ll=37.051486%2C56.041765&amp;mode=routes&amp;origin=jsapi_2_1_77&amp;pt=36.694416%2C56.348616&amp;rtext=~55.657121%2C37.370751&amp;rtt=auto&amp;ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D133465474893&amp;z=9.82\" target=\"_blank\" rel=\"noopener noreferrer\">set route</a></em>)<br /><br />In addition, you can find the nearest store of one of the largest retail chains on our <strong><a href=\"/en/map\">sales map</a></strong>. Check the availability of the varieties you are interested in.<br /><br />Try it out and share your impressions on our <a href=\"https://t.me/gletcherbrewery\" target=\"_blank\" rel=\"noopener noreferrer\">Telegram @gletcherbrewery</a>!"
+    }
+  ]
+}

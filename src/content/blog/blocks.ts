@@ -39,7 +39,7 @@ export type BlogQuoteBlock = {
 export type BlogListBlock = {
   type: "list";
   style: "ul" | "ol";
-  /** Sanitized item HTML joined later; reserved until list import lands. */
+  /** Allowlisted `<ul|ol><li>…</li></ul|ol>`; item interiors are inline-only. */
   html: BlogInlineHtml;
 };
 
@@ -62,6 +62,11 @@ export type BlogArticleBody = {
   slug: string;
   title: string;
   description: string;
+  /**
+   * Editorial post datetime from Tilda `date` (Europe/Moscow).
+   * Format: `YYYY-MM-DD HH:mm`. Filename prefix uses the calendar date.
+   */
+  publishedAt: string;
   cover: BlogArticleCover;
   blocks: BlogBlock[];
 };

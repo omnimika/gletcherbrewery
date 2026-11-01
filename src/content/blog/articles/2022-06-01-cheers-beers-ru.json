@@ -1,0 +1,32 @@
+{
+  "id": "cheers-beers",
+  "locale": "ru",
+  "slug": "tfatlkslk1-degustatsiya-cheers-amp-beers",
+  "title": "Дегустация Cheers & Beers 🍺",
+  "description": "Посмотрите наш видеоролик о том, как мы проводили дегустацию в Extra Lounge в Серпухове, и чем это всё закончилось",
+  "publishedAt": "2022-06-01 17:08",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3230-6662-4837-b839-333436356339/image.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "Привет друзья!<br /><br />Хотим поделиться с вами приятными моментами с недавней презентации наших актуальных сортов, которую провёл наш бренд-менеджер Алексей Котельников в ресторане <strong>Extra Lounge</strong> (Серпухов).<br /><br />Вся линейка вкусов удостоилась высокой оценки жюри, а <strong>шеф-повар Дмитрий Гладков</strong> подобрал идеальные блюда к каждому из них:"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "html": "<ul><li><a href=\"/beer/blue-monkey\"><strong>BLUE MONKEY</strong></a> + <em>Корн-Дог из лангустинов с соусом &quot;Васаби&quot;</em></li><li><a href=\"/beer/nut-butter\"><strong>NUT BUTTER</strong></a> + <em>Бургер с рваной свининой и луковым джемом</em></li><li><a href=\"/beer/underground-ale\"><strong>UNDERGROUND ALE</strong></a> + <em>Fish &amp; Chips c картофелем фри и соусом &quot;Тар-тар&quot;</em></li><li><a href=\"/beer/heidegger-hell\"><strong>HEIDEGGER HELL</strong></a> + Айсбан с копчёной капусой</li><li><a href=\"/beer/ketchup\"><strong>KETCHUP</strong></a> + <em>Свиные рёбра глазированные в соусе &quot;Приван&quot;</em></li><li><a href=\"/beer/milk-of-amnesia-v-tropic\"><strong>MILK OF AMNESIA V. TROPIC</strong></a> + <em>Ленивый чизкейк с вишней в бурбоне</em></li></ul>"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6630-3237-4161-b935-366336386161/2022-06-01_17-33-49.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

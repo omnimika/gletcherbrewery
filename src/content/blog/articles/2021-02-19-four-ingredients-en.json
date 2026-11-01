@@ -1,0 +1,52 @@
+{
+  "id": "four-ingredients",
+  "locale": "en",
+  "slug": "okjzxv2gf1-four-ingredients-and-a-sea-of-possibilit",
+  "title": "Four ingredients and a sea of possibilities: what beer is made of?",
+  "description": "We tell you what beer consists of, and what role each ingredient plays.",
+  "publishedAt": "2021-02-19 18:58",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3363-3134-4635-b861-633834363866/fridaybeer.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "Beer is a fantastic drink. Of course, there are basic rules that the brewer must adhere to, but in beer there is always a place for experiment, the main thing is to have 4 main ingredients, and then you can add what you want."
+    },
+    {
+      "type": "paragraph",
+      "html": "Consider what beer consists of:"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Barley malt"
+    },
+    {
+      "type": "paragraph",
+      "html": "Malt is produced by the malting process, that is, the grain is first sprouted, and then dried. Thus, in malt, 60% -65% of the decomposed starch is obtained, and all the rest-enzymes, proteins, vitamins and minerals. Enzymes provide the decomposition of starch into sugars, which are a nutrient for yeast. Depending on the drying temperature, the malt gets a different color and organoleptic qualities: light, caramel, burnt, and so on. Basically, the color of the malt determines the final color of the resulting beer. In recipes, only one type of malt is rarely used, more often a mixture is used."
+    },
+    {
+      "type": "paragraph",
+      "html": "Common hops are a climbing plant in the family Cannabaceae, and have been used to make beer since time immemorial. For brewing, the cones of the female plant species are taken, often compressed into pellets. They are added during the cooking process or at later stages. There are dozens of variations of hops in the world, they can be divided into bitter and aromatic subspecies. The former are mainly responsible for the bitterness in the beer, while the latter saturate the aromatic profile with citrus, tarry, herbal, spicy or fruity notes, depending on the selected variety. Hops are also a natural preservative, so they work as an antioxidant and antiseptic. As with malt, there are usually several types of hops used in recipes."
+    },
+    {
+      "type": "paragraph",
+      "html": "Yeast comes into play in the most important part of brewing – fermentation. They break down the sugars in the wort, turning them into alcohol and carbon dioxide. Based on the yeast used, beer can be divided into two large classes:<br />– top-fermented (also known as ales), produced using Saccharomyces cerevisiae;<br />- bottom fermentation (also known as lagers) produced using Saccharomyces pastorianus.<br />There is a neutral yeast, which practically does not add flavor to beer. Others, on the contrary, help to create specific fruity and spicy notes thanks to esters, phenols and other components."
+    },
+    {
+      "type": "paragraph",
+      "html": "Usually, water is not given much attention, although it plays a fundamental role in the production of beer and makes up most of the mixture (from 80% to 90%). Its composition directly affects whether we get a successful or unpleasant beer. The chemical composition of the water not only changes the taste of the beer, but also affects the reactions between the other ingredients. Therefore, breweries change the chemical profile of water to suit their needs, using reverse osmosis equipment. The history of brewing includes cities and regions known for their water (and the resulting styles of beer there), such as Pilsen in the Czech Republic or Burton-upon-Trent in England."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Other ingredients"
+    },
+    {
+      "type": "paragraph",
+      "html": "As mentioned earlier, the head brewer can supplement the beer recipe with other ingredients. Often, other grains, such as wheat, rye, or rice, as well as locally grown cereals, are added to the barley malt. The use of spices is a time-tested tradition. The use of coriander, cocoa beans, cinnamon, pepper, coffee, vanilla and many others is widely known. Adding fruit has also been used for a long time: often it is citrus fruits (the zest of a bitter orange in Belgian Blanche), berries, and many others, including exotic fruits. Some types of beer are characterized by the presence of a specific ingredient. For example, milk stouts (lactose), goze (salt and coriander), Italian grape ales (grape must), oyster stout (oysters).<br /><br />By definition, beer is dichotomous: on the one hand, there are four mandatory elements for its creation, on the other hand, there is a large field for experiments."
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "oatmeal-stout",
+  "locale": "en",
+  "slug": "775ra77481-oatmeal-stout-a-new-look-at-the-classic",
+  "title": "Oatmeal Stout: a new look at the classic stout",
+  "description": "CLASSIC IRISH STOUT WITH THICK VELVETY FOAM, collaboration with BEER INSIDERS",
+  "publishedAt": "2021-05-19 16:53",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3831-3735-4465-b139-363063613165/20210506_gletcher_06.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "Like the classic Irish stout, Oatmeal Stout has a velvety texture with a rich coffee-colored foam. The body is dense, but soft. In it, you can catch the creamy notes of toffee, sponge cake and coffee. In the aroma, you can feel cocoa and caramel. Despite the noticeable dryness in the aftertaste, you can distinguish soft creamy tones. This beer will not leave anyone indifferent.<br /><br />It goes well with soft goat's milk cheeses, oysters and various types of meat."
+    },
+    {
+      "type": "quote",
+      "html": "<em>On May 26, 2021, the presentation of Oatmeal Stout will take place at </em><a href=\"http://69pints.ru/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong><em>69pints</em></strong></a><em> on Pokrovka.</em>"
+    },
+    {
+      "type": "quote",
+      "html": "<em>It starts at 19: 00.</em>"
+    },
+    {
+      "type": "paragraph",
+      "html": "ABV 6,2%<br />Available in 20 l kegs and 0.5 l bottles — <a href=\"/beer/oatmeal-stout\"><strong>Order</strong>.</a>"
+    }
+  ]
+}

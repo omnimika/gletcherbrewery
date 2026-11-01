@@ -1,0 +1,57 @@
+{
+  "id": "bavaria-brewing",
+  "locale": "en",
+  "slug": "pu9xfazps1-bavaria-the-cradle-of-brewing",
+  "title": "Bavaria: the cradle of brewing",
+  "description": "From home-brewed beer to the first regulatory laws. A brief history of the origin of brewing in Bavaria and the appearance of the first laws regulating the quality of beer.",
+  "publishedAt": "2021-06-08 18:53",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild6465-3533-4433-b736-343630386261/image.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "We often say that our Ausweis is brewed in the German style. So today we decided to tell you about one of the cradles of European brewing – Bavaria, one of the 16 regions of Germany, and how brewing originated there."
+    },
+    {
+      "type": "paragraph",
+      "html": "Brewing was mostly women's work in central Europe until the end of the Romanesque period. While the men worked in the fields, growing barley, oats, and wheat, the women prepared both food and drink. This beer, known as gruit, was brewed with the addition of herbs. Often the composition included: waxwort, juniper, wormwood, sweet ash and yarrow.<br /><br />But the diversification of household chores began to change when Christianity came to Bavaria in the sixth century. The monks established their missionary outposts and small monasteries along the old Roman roads. And over time, these buildings became not only religious centers,but also the study of brewing. Monasteries grew and their breweries grew. Over time, written references to brewing began to appear, and later literature with the techniques used. Thus, the quality of beer grew. The nuns were also engaged in brewing, and over time this process evolved from a normal domestic work into a profession. In the process, the monks discovered the bitter taste of hops and its preservative properties. The very first mention of this is found in a document from 768 in the Benedictine abbey of Weinstephan, which is located near Munich. A few centuries later, hops will replace fragrant herbs as a flavoring additive in almost all of Europe. The British Isles will remain an exception."
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6465-3533-4433-b736-343630386261/image.png",
+      "alt": "Вайнштефан: самая старая пивоварня в мире",
+      "caption": "In 1852, the Central Agricultural School moved from Schleisheim to Weienstephan, and with it the Bavarian beer students.",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "However, not everything was so smooth. If beer brewed in winter turned out to be normal, then the origin of defects in summer beer remained a mystery to the ignorant medieval Bavarians. Usually fermentation took place in open wooden and naturally unsanitary containers. Without a doubt, in addition to the noble brewer's yeast, bacteria lived in these vessels. In order to hide the defects of their summer beer, brewers added soot, bovine bile, chicken blood, salt, spinal cord, chalk, beans, reeds, tree bark, and even poisonous mushrooms. In the cold Bavarian winters, the bacteria could not multiply, so the beer was much more drinkable."
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6164-3930-4430-a162-373732303662/Bild2_Karte08-min-1.jpg",
+      "alt": "Вайнштефан: самая старая пивоварня в мире",
+      "caption": "The first historical mention of hops in Weienstephan dates back to 768. At that time, there was a hop garden near the Weienstephan monastery, the owner of which was obliged to pay 10 percent of the tithe to the monastery.",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "The only way out of this situation was regulation. In 1156, a decree was issued in Augsburg saying that all bad beer should be destroyed or distributed among the poor. In 1363, 12 members of the city council took on the role of beer inspectors. In 1420, they ordered that beer should stand for 8 days before being released. And in 1447, a decree was issued that brewers can only use barley, hops and water to make beer. And finally, on April 23, 1516, the Bavarian head Duke Wilhelm IV issued the now-famous Reinheitsgebot (law on the purity of beer), which already extended to the entire region."
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3833-3630-4430-b664-623833616332/image.png",
+      "alt": "",
+      "caption": "Prince of purity: Wilhelm IV of Bavaria and the Reinheitsgebot. (Bridgeman Images)",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

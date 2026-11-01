@@ -1,0 +1,18 @@
+{
+  "id": "dry-hopping",
+  "locale": "en",
+  "slug": "txpbxbiek1-dry-hopping-in-pursuit-of-a-bright-taste",
+  "title": "Dry hopping: in pursuit of a bright taste",
+  "description": "Hops added during cooking do not always give the desired flavor profile. We tell you about the technique of dry hopping.",
+  "publishedAt": "2021-07-30 15:01",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3537-3836-4165-a361-313133613064/20210618_gletcher_04.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "Dry hopping is the addition of hops during fermentation, maturation or directly when pouring beer into a glass.<br /><br />For most styles of beer, hops are added during the brewing process. Hops added at the beginning of cooking to the wort mainly gives bitterness, and the one that is added in the middle, in addition to bitterness, gives a certain amount of flavor. The hops added at the end of cooking gives the beer a rich aroma and taste. During heating, the extremely volatile components of the hop oil evaporate. The use of hopping at the end of cooking restores the amount of basic oils in the wort, but still part of the aromatics disappears or is chemically transformed during fermentation. The purpose of dry hopping is to saturate the beer with an additional fresh taste and aroma of hops. <br /><br />Dry hopping is a cold infusion that not only increases the intensity of the hop aromatics, but also adds notes that differ significantly from those obtained during late hopping during cooking.<br /><br />There is no doubt that the practice of cold hopping has been used in all beer cultures for centuries, but it is most closely associated with English pale ales. Since the middle of the XIX century, it has been a common practice to add a large handful of dried hops before bottling in a hard hat. While the beer was aged in a hard hat (from several days to weeks), the refreshing aroma of hops filled it. This inspired the founders of the craft brewing movement to use and improve this technique.<br /><br />It is not necessary to make a &quot;hop bomb&quot; out of beer. A light dry hopping can perfectly balance the aromatics in beer. Most often, this method is used to produce various categories of IPA: from simple IPA to Imperial IPA."
+    }
+  ]
+}

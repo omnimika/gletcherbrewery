@@ -1,0 +1,27 @@
+{
+  "id": "blue-monkey",
+  "locale": "en",
+  "slug": "mlz4jtzag1-blue-monkey-wheat-ale-in-all-its-splendo",
+  "title": "Blue Monkey: wheat ale in all its splendor",
+  "description": "We have brewed a new batch of our main wheat hit, bringing the recipe to absolute perfection. And we are in a hurry to share it with you!",
+  "publishedAt": "2024-06-15 16:12",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild6161-3761-4162-a362-386666613262/monkey_.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "<strong><a href=\"/en/beer/blue-monkey\">Blue Monkey Wheat Ale</a></strong> is a light, pure wheat ale, a wonderful example of style, which has everything you need:<br />The shade of the drink is light straw, shimmering.The aroma is expressive, harmonious, with notes of wheat, bread, fresh hay, citrus fruits, honey, vanilla.The taste is rich, with a pleasant sourness and a barely noticeable hop bitterness, wheat, fruity, slightly spicy, with clove and banana shades.The aftertaste is soft, delicate, and sweet.<br />The drink is based on three types of malt: Pilsner Malt — traditional, slightly sweet; Wheat Malt, which is made from selected spring wheat and refined oat Malt. Spicy coriander and citrus peel give the beer a refined, elegant, refreshing spring bouquet.<br /><br />Wheat ale is best combined with fish dishes, as well as seafood."
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6365-3838-4539-a438-636635303439/bottle-bg-name-ALL-b.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

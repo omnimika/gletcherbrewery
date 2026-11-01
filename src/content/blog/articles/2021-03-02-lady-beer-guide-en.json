@@ -1,0 +1,54 @@
+{
+  "id": "lady-beer-guide",
+  "locale": "en",
+  "slug": "dou93nl341-guide-how-to-choose-a-beer-for-a-lady",
+  "title": "Guide: How to choose a beer for a lady?",
+  "description": "It's no secret that girls love beer. Annually growing statistics confirm this. On the eve of March 8, we decided to write a guide on how to choose a beer for a girl.",
+  "publishedAt": "2021-03-02 18:44",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3264-3333-4334-b632-313664333932/photo_2021-03-02_183.jpeg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "It's no secret that girls love beer. Annually growing statistics confirm this. Young people often want to pamper the ladies with delicious beer, but often make one fundamental mistake – choose it to your taste. On the eve of March 8, we decided to write a guide on how to choose a beer for a girl."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "1. What do you like?"
+    },
+    {
+      "type": "paragraph",
+      "html": "Yes, the first and main advice is just to find out from the girl about her preferences. You will be surprised how knowledgeable some people can be in the choice of beer: and here is a brew from October is not very good, but that aged in a barrel of sauvignon is perfect for light snacks at brunch on the weekend."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "2. Beer with lactose"
+    },
+    {
+      "type": "paragraph",
+      "html": "The girl got a sweet tooth? It is worth paying attention to the varieties with lactose: milk stouts (Endorphin, Iron Woods Milk Stout), rich fruit Milkshake IPA (Milk of Amnesia) and, of course, the favorite brown ale Nut Butter. We recommend to supplement the beer with ice cream or desserts with soft cream cheese."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "3. &quot;Not-quite-a&quot; beer"
+    },
+    {
+      "type": "paragraph",
+      "html": "With the same category, it is good to start exploring the rich world of brewing. This includes beer with added fruit (Rouge de Fleur), sour ales, goz&amp;eacute;, lambiki, brut IPA. In addition, you can offer fruit desserts."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "4. Bitter beer"
+    },
+    {
+      "type": "paragraph",
+      "html": "Yes, a large percentage of ladies like complex bitter hop flavors. So an IPA and a Double IPA in 60+ IBU can also be a good gift. You can supplement it with fresh fruit, aged cheeses and olives.<br /><br />Do not be afraid of experiments, and remember, it is not the gift that is important, but the intention to do something pleasant!"
+    }
+  ]
+}

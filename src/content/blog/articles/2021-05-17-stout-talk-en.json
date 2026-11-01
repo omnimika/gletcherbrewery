@@ -1,0 +1,22 @@
+{
+  "id": "stout-talk",
+  "locale": "en",
+  "slug": "e40oxvnn01-lets-talk-about-stout",
+  "title": "Let's talk about Stout",
+  "description": "Stouts are a category of top-fermented ales that are characterized by a dark color, usually opaque dark brown or almost black.",
+  "publishedAt": "2021-05-17 17:45",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild6563-3833-4566-a636-626234393263/20210319_gletcher_03.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "Stouts are a category of top-fermented ales that are characterized by a dark color, usually opaque dark brown or almost black. Another difference is the burnt nature of the taste, which is often described as notes of dark chocolate or coffee. Both of these qualities are acquired from the use of burnt malt."
+    },
+    {
+      "type": "paragraph",
+      "html": "The stouts we now know evolved from the stout porter. At some point, the name was shortened to the single word &quot;stout&quot;. This beer was very popular in the early 19th century in London.<br /><br />The main difference between stout and porter is density. Until recently, stouts were brewed very dense, but with the advent of numerous micro-breweries, the density began to decrease.<br /><br />There are many variations of the stout. The most popular is the Irish dry stout. Despite the dark, almost black color, draught Irish stout is usually quite light, and rarely when the alcohol content exceeds 4%. Another well-known type is oatmeal stout, which has oatmeal malt added to it, giving a rich, rich, silky texture to the beer and a plentiful cap of foam. Sweet stout or milk stout is made with the addition of lactose. Imperial stout, first brewed in England for the royal court of Russia, has become very popular among craft brewers. It is usually stronger than 8% alcohol and is a very rich ale with a complex flavor profile of dried fruit, coffee, liquorice, molasses and dark chocolate.<br /><br />Often, a draft stout is served with the addition of a gas mixture of nitrogen and carbon dioxide, which makes the texture more velvety, filling the beer with small bubbles.<br /><br />Stout is perfect for a variety of foods. For example, chocolate, meat prepared in almost any way, and oysters."
+    }
+  ]
+}

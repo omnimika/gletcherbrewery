@@ -1,0 +1,76 @@
+{
+  "id": "afisha-winepark",
+  "locale": "ru",
+  "slug": "cf46mag0n1-afisha-gletcher-brewery-winepark-polyana",
+  "title": "Афиша Gletcher Brewery: WINEPARK, Поляна Пикник и Chicano Day",
+  "description": "Друзья, собрали для вас афишу ближайших событий, где можно попробовать свежий эль Gletcher Brewery и круто провести время.",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3062-6166-4231-a564-373332666163/1_.jpg",
+    "alt": "Осенний маршрут Gletcher Brewery"
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "Друзья, собрали для вас афишу ближайших событий, где можно попробовать свежий эль Gletcher Brewery и круто провести время."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "html": "26 сентября — Gletcher Brewery на фестивале WINEPARK"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3834-6433-4566-b735-616363633137/2_.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "Южный берег Крыма, Курорт Mriya. Гастрономия, музыка и люди под открытым небом. Мы займём своё место в пивной зоне и будем ждать вас со свежим элем от Gletcher Brewery.<br /><br />В программе:<br />— гастро-зоны на любой вкус;<br />— концерт HOLLYFLAME и Вадима Самойлова (Агата Кристи) — включён во все тарифы;<br />— море, горы и осенний Крым.<br /><br />Билеты на фестиваль: <a href=\"https://vk.ru/away.php?to=http%3A%2F%2Fvk.cc%2Fd0VClX&amp;utf=1\" target=\"_blank\" rel=\"noopener noreferrer\">ссылка</a><br />Билеты на трансфер: <a href=\"https://vk.ru/away.php?to=http%3A%2F%2Fvk.cc%2Fd1rHEx&amp;utf=1\" target=\"_blank\" rel=\"noopener noreferrer\">vk.cc/d1rHEx</a>"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "html": "2–4 октября — Поляна Пикник: Закрытие сезона 2026"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3564-3634-4662-b934-373634393061/3_.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "В Крыму пройдёт наш любимый фестиваль для кемперов — Поляна Пикник. Нам очень жаль, что не получится быть там лично: в эти дни мы должны быть в Москве на следующем мероприятии. Но от нашей команды на фестивале будет наш друг Типичный Южанин! Он с радостью расскажет всё о нашем вкусном пенном эле и поделится самыми интересными историями.<br /><br />Если вы любите отдыхать на природе, наслаждаться прекрасной атмосферой и общаться с классными людьми — обязательно приезжайте на Поляна Пикник. Это отличный способ красиво закрыть сезон и зарядиться яркими эмоциями. Подробности — в группе «<a href=\"https://vk.ru/polyanapicniccrimea\" target=\"_blank\" rel=\"noopener noreferrer\">Поляна пикник '26</a>»."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "html": "3 октября — Chicano Day в Москве"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6435-3236-4638-b535-376265396238/4_.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "Это уникальный авторский проект художника Артема El Mago Clica. Праздник посвящён популяризации чикано-культуры: вас ждут музыка, танцы, искусство и гастрономия — всё в одном пространстве. Мы очень ждём этого мероприятия: хочется не только поработать, но и встретиться с друзьями и творческими людьми.<br /><br />Билеты: <a href=\"https://chicanoday2026.ticketscloud.org/\" target=\"_blank\" rel=\"noopener noreferrer\">chicanoday2026.ticketscloud.org</a>"
+    },
+    {
+      "type": "preface",
+      "html": "До встречи на фестивалях — пусть эти события будут по-настоящему запоминающимися!"
+    }
+  ],
+  "publishedAt": "2026-09-23 13:00"
+}

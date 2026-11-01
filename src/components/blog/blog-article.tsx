@@ -86,7 +86,13 @@ function BlockView({ block }: { block: BlogBlock }) {
       );
     case "list":
       return (
-        <div className="font-brand text-base leading-relaxed text-gletcher-navy/90">
+        <div
+          className={
+            block.style === "ol"
+              ? "my-4 list-decimal pl-6 font-brand text-base leading-relaxed text-gletcher-navy/90 [&_ol]:list-decimal [&_li]:my-1"
+              : "my-4 list-disc pl-6 font-brand text-base leading-relaxed text-gletcher-navy/90 [&_ul]:list-disc [&_li]:my-1"
+          }
+        >
           <BlogRichText html={block.html} />
         </div>
       );
