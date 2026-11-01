@@ -176,9 +176,14 @@ export function HomeHero({
 
   return (
     <section
+      id="hero"
       ref={rootRef}
+      tabIndex={-1}
+      aria-label="Hero"
       className="relative isolate min-h-[100svh] overflow-x-clip overflow-y-visible bg-gletcher-ice"
-      style={{ marginTop: "calc(-1 * var(--hh, 84px))" }}
+      style={{
+        marginTop: "calc(-1 * var(--header-height, var(--hh, 84px)))",
+      }}
     >
       {/* Type under bottle — ZB 749387570 discrete sizes (not fluid vw) */}
       <div className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center pt-[var(--hh,84px)] pb-[clamp(5.5rem,14svh,8rem)]">

@@ -8,10 +8,18 @@ type HomeBlogProps = {
 
 export function HomeBlog({ title, items }: HomeBlogProps) {
   return (
-    <section className="border-t border-gletcher-navy/10 bg-gletcher-ice">
+    <section
+      id="blog"
+      tabIndex={-1}
+      aria-labelledby="home-blog-heading"
+      className="border-t border-gletcher-navy/10 bg-gletcher-ice"
+    >
       <HomeWindowStage>
         <div className="px-5 py-14 @[640px]:px-8 @[960px]:py-16 @[1200px]:px-10 @[1200px]:py-20">
-          <h2 className="font-display text-[28px] font-extrabold tracking-wide text-gletcher-navy uppercase @[960px]:text-[36px] @[1200px]:text-[44px]">
+          <h2
+            id="home-blog-heading"
+            className="font-display text-[28px] font-extrabold tracking-wide text-gletcher-navy uppercase @[960px]:text-[36px] @[1200px]:text-[44px]"
+          >
             {title}
           </h2>
           <ul className="mt-10 grid grid-cols-1 gap-8 @[640px]:grid-cols-2 @[960px]:grid-cols-4">

@@ -39,7 +39,12 @@ export function HomePromos({ locale, labels }: HomePromosProps) {
   const bullets = [labels.b2bBullet1, labels.b2bBullet2, labels.b2bBullet3];
 
   return (
-    <section aria-label={labels.promosAria} className="bg-gletcher-ice">
+    <section
+      id="promos"
+      tabIndex={-1}
+      aria-label={labels.promosAria}
+      className="bg-gletcher-ice"
+    >
       <HomeWindowStage>
         <div className="px-5 pb-8 @[480px]:px-[10px] @[640px]:px-3 @[960px]:px-5 @[960px]:pb-10">
           <div className="grid grid-cols-1 gap-4 @[640px]:grid-cols-2 @[640px]:gap-5">

@@ -63,6 +63,8 @@ export function HomeNewsletter({
 
   return (
     <section
+      id="newsletter"
+      tabIndex={-1}
       aria-label={title.replace(/\n/g, " ")}
       className="bg-gletcher-ice"
     >

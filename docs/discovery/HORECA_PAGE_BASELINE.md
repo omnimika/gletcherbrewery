@@ -45,24 +45,32 @@ Tools: MCP `get_page_settings` / `get_page_records` / `get_zero_block` +
 | `fadeinup` (video) | `.animate-horeca-fade-up` |
 | `animmobile: y` | play on mobile too |
 
-## Sections (local v1)
+## Sections (local v1 → DS-2 pilot)
+
+Stable hashes (new, intentional): `#hero` `#compare` `#audience`
+`#distribution` `#request` — см. `src/content/horeca-sections.ts`.
 
 1. Hero: `100svh` under header; wordmark ~90% ink width (cqi); bubbles absolute;
-   bottle `object-contain` fully visible; same rules all breakpoints.
-2. Six compare cards: default import face; mousehover/focus/tap → Gletcher face (art + catalogue bottle + «Искать» → `/beer/{slug}`).
-3. Audience list + Hop Dragon.
-4. Distribution text + map image.
-5. Form stub (Город/Компания/Имя/ИНН/Email/Телефон/Комментарий/policy).
+   bottle cover/contain by breakpoint; custom frame (не SectionFrame).
+2. Compare: six cards in `CardGrid`; default import face; hover/tap → Gletcher;
+   DS-B inert/tabIndex on hidden face; «Искать» → `/beer/{slug}`.
+3. Audience: `CompositionGrid` halves-x + Hop Dragon.
+4. Distribution: halves-x + map image.
+5. Request: form stub + `LinkButton` catalog/wholesale.
+
+DS-2 adds opt-in document proximity snap + Reveal on body sections.
+B2B measure stays `max-w-[1100px]` until DS-3 token pass.
 
 ## Open
 
 - Scroll parallax on bottle video.
 - Step-by-step rotate on slogan (SBS) — static rotate OK for now.
 - Source formname still Klin May Fest.
+- Owner visual acceptance of DS-2 layout (not claimed by Cursor alone).
 
 ## Acceptance
 
 - Hero shows bottle video + wordmark motion.
-- Compare cards show catalogue + import images.
-- Distribution map visible.
-- lint / typecheck / browser smoke.
+- Compare cards show catalogue + import images; hidden face not tabbable.
+- Distribution map visible; `#distribution` deep-link focuses section.
+- lint / typecheck / build / browser smoke.

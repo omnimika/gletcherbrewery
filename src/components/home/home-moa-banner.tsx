@@ -12,7 +12,12 @@ type HomeMoaBannerProps = {
  */
 export function HomeMoaBanner({ ariaLabel }: HomeMoaBannerProps) {
   return (
-    <section aria-label={ariaLabel} className="bg-gletcher-ice">
+    <section
+      id="moa"
+      tabIndex={-1}
+      aria-label={ariaLabel}
+      className="bg-gletcher-ice"
+    >
       <HomeWindowStage>
         <div className="px-5 py-[15px] @[480px]:px-[10px] @[960px]:px-5 @[960px]:py-[15px]">
           <Link

@@ -16,7 +16,12 @@ type HomeMenuGridProps = {
  */
 export function HomeMenuGrid({ locale, labels }: HomeMenuGridProps) {
   return (
-    <section aria-label={labels.menuAria} className="bg-gletcher-ice">
+    <section
+      id="menu"
+      tabIndex={-1}
+      aria-label={labels.menuAria}
+      className="bg-gletcher-ice"
+    >
       <HomeWindowStage>
         <div className="px-5 py-10 @[480px]:px-[10px] @[640px]:px-3 @[960px]:px-5 @[960px]:py-12">
           <ul className="grid grid-cols-1 gap-5 @[640px]:grid-cols-2 @[960px]:grid-cols-3 @[960px]:gap-[25px]">

@@ -30,7 +30,12 @@ export function HomeToursCta({ locale, labels }: HomeToursCtaProps) {
   const points = [labels.point1, labels.point2, labels.point3];
 
   return (
-    <section aria-label={labels.toursAria} className="bg-gletcher-ice">
+    <section
+      id="tours"
+      tabIndex={-1}
+      aria-label={labels.toursAria}
+      className="bg-gletcher-ice"
+    >
       <HomeWindowStage>
         <div className="flex flex-col items-center px-5 pb-10 pt-8 @[480px]:px-[10px] @[640px]:px-3 @[640px]:pb-12 @[960px]:px-5 @[960px]:pb-14 @[960px]:pt-10">
           <h2 className="font-display flex flex-col items-center text-center text-[38px] leading-[0.85] tracking-wide text-gletcher-navy uppercase @[480px]:flex-row @[480px]:flex-wrap @[480px]:justify-center @[480px]:gap-x-[0.35em] @[480px]:text-[45px] @[640px]:text-[63px] @[960px]:text-[68px] @[1200px]:text-[84px]">

@@ -1,43 +1,44 @@
 # Текущее задание Cursor Agent
 
-Дата: **01.11.2026**. Sprint 5 — публичные шаблоны по одному.
-[План](SPRINT_PLAN.md).
+Дата: **01.11.2026**. DS-1, DS-2 и DS-3 срезы **contacts / home anchors /
+partnership shell** выполнены.
+Следующее: **DS-3 продолжение** — home window-stage exit / catalog/product —
+**по одному**.
+[Дизайн-код](design/DESIGN_SYSTEM.md), [ADR 0010](adr/0010-design-system-and-section-layout.md),
+[серия](SPRINT_PLAN.md).
 
-## Принято владельцем
+## DS-3 срез (этот запуск) — partnership shell
 
-| Страница | Дата |
-|----------|------|
-| `/beer`, product template | ранее |
-| `/partnership` RU/EN v1 | **01.11.2026** |
+Shared `PartnershipPageView` покрывает `/partnership`, `/en/partnership`,
+`/russian-craft-beer`.
 
-## Sprint 5 — ждут приёмки
+- Manifest `partnership-sections.ts`: `#hero` `#pillars` `#materials` `#request`
+- Условные секции: pillars/materials только если есть в copy
+  (RU partnership — оба; russian-craft-beer — pillars; EN — materials + discount)
+- `DocumentProximitySnap`, `SectionFrame`, `CardGrid`, `CompositionGrid` halves-x,
+  `Reveal`, `LinkButton` для catalog CTA
+- Контент/CTA/downloads/форма сохранены; якоря новые (не было публичных hash)
+- Materials hover (ZB `751210595`): preview fade-in ~200ms + download CTA;
+  ассеты `/partnership-{pricetag,Bierdeckel,brandbook,logo,bottleglass}.png`
+  (каталог без превью — как на source)
 
-| Страница | Статус |
-|----------|--------|
-| `/russian-craft-beer` | v1, ждёт приёмки |
-| `/horeca` | v1 + MCP media/anim (hero video, compare imgs, map, fade/zoomin) |
-| `/contacts` | RU-only; baseline smoke |
-| `/policy` | RU-only verbatim; footer/forms → `/policy` |
+Проверки: lint / tsc / build **PASS**; browser `/partnership#request`,
+`/russian-craft-beer#request`, `/en/partnership#materials` + hover materials.
 
-### `/horeca` (после MCP enrich)
+## Ранее в DS-3
 
-Baseline: [HORECA_PAGE_BASELINE.md](discovery/HORECA_PAGE_BASELINE.md).
-Источник: page `103271966`, ZB `get_zero_block` + animation keys.
-Open: scroll parallax bottle; SBS rotate slogan; formname Klin May Fest.
+- `/contacts` — полный shell (`#hero` `#details` `#form`)
+- Home — только stable ids; snap / выход из HomeWindowStage отложены
 
-### `/contacts` / `/policy`
+## Следующий один template (выбрать)
 
-Baselines в `docs/discovery/`. Open на contacts: Mapbox iframe / retail logos.
+1. **Home mid-blocks** — постепенно убрать `HomeWindowStage`, ввести SectionFrame
+   без visual regression (самый рискованный).
+2. Или **catalog `/beer` / product** — осторожный pass принятых шаблонов.
 
-### Приёмка
+Не брать blog listing в том же запуске.
 
-- [x] local smoke + lint / typecheck (включая horeca enrich)
-- [ ] Владелец принимает
+## Backlog
 
-### Дальше после приёмки
-
-1. `/shopping-rules` (оставшийся legal).
-2. agent / tours / map / shop.
-3. Event campaign landings.
-
-Commit/push — только по запросу.
+Sprint 5 remainder после DS-3: `/shopping-rules`, agent/tours/map/shop.
+Commit/push только по запросу.

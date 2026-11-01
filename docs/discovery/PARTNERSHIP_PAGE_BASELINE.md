@@ -16,7 +16,7 @@ Tools: MCP `get_page_settings` / `get_page_records` / `get_zero_block`; public b
 | Order | Source | Content |
 |-------|--------|---------|
 | chrome | shared header/footer | SiteShell |
-| materials | ZB `751210595` (+ related) | 6 download tiles → `files.gletcherbrewery.com` |
+| materials | ZB `751210595` (+ related) | 6 download tiles → `files.gletcherbrewery.com`; hover SBS ~200ms reveals product preview (5 tiles; catalog has none). Local previews: `/partnership-{pricetag,Bierdeckel,brandbook,logo,bottleglass}.png` |
 | video | ZB `854239717` | VK `-57309563_456239063` — **Open** (no local player yet) |
 | hero + form + pillars | ZB `751227593` | H1, lead, partner-type form, 3 value props |
 | product strip | tpl `776` `751227826` | beer carousel → local `/beer` teaser OK |

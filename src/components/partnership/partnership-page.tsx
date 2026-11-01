@@ -1,121 +1,248 @@
-import { Link } from "@/i18n/navigation";
+import type { ReactNode } from "react";
+import { BottleCarousel3D } from "@/components/collections/bottle-carousel-3d";
+import {
+  CardGrid,
+  CardGridItem,
+  CompositionGrid,
+  CompositionPanel,
+  SectionFrame,
+} from "@/components/layout";
+import { DocumentProximitySnap } from "@/components/motion/document-proximity-snap";
+import { Reveal } from "@/components/motion/reveal";
 import { PartnershipForm } from "@/components/partnership/partnership-form";
+import { PartnershipMaterialCard } from "@/components/partnership/partnership-material-card";
+import { LinkButton } from "@/components/ui/link-button";
 import type { PartnershipCopy } from "@/content/partnership";
+import {
+  PARTNERSHIP_SECTIONS,
+  type PartnershipSectionId,
+} from "@/content/partnership-sections";
+import { CATALOG_PRODUCTS } from "@/content/products";
 
 type PartnershipPageViewProps = {
   copy: PartnershipCopy;
 };
 
+function B2bMeasure({ children }: { children: ReactNode }) {
+  return (
+    <div className="mx-auto w-full max-w-[1100px] px-[var(--page-gutter)]">
+      {children}
+    </div>
+  );
+}
+
+function sectionLabel(
+  id: PartnershipSectionId,
+  isEn: boolean,
+): string {
+  const def = PARTNERSHIP_SECTIONS.find((s) => s.id === id);
+  if (!def) return id;
+  return isEn ? def.labelEn : def.labelRu;
+}
+
 export function PartnershipPageView({ copy }: PartnershipPageViewProps) {
+  const isEn = copy.path.startsWith("/en");
+  const hasPillars = copy.pillars.length > 0;
+  const hasMaterials = copy.materials.length > 0;
+
+  const navIds: PartnershipSectionId[] = [
+    ...(hasPillars ? (["pillars"] as const) : []),
+    ...(hasMaterials ? (["materials"] as const) : []),
+    "request",
+  ];
+
+  const navAria = isEn ? "Page sections" : "Разделы страницы";
+  const carouselLabel = isEn
+    ? "Gletcher bottle carousel"
+    : "Карусель бутылок Gletcher";
+  const bottleItems = CATALOG_PRODUCTS.map((p) => ({
+    slug: p.slug,
+    name: p.name,
+    title: p.title,
+    image: p.image,
+  }));
+
   return (
     <div className="bg-gletcher-ice text-gletcher-navy">
-      <section className="mx-auto w-full max-w-[1100px] px-6 pt-10 pb-8 sm:px-10 sm:pt-14">
-        <h1 className="font-display animate-hero-rise text-[clamp(2rem,5.5vw,3.75rem)] leading-[0.95] font-extrabold tracking-wide uppercase">
-          {copy.heroTitle}
-        </h1>
-        <p
-          className="animate-hero-rise mt-5 max-w-3xl text-sm leading-relaxed text-gletcher-navy/80 sm:text-base"
-          style={{ animationDelay: "60ms" }}
-        >
-          {copy.lead}
-        </p>
-        {copy.leadAccent ? (
-          <p
-            className="animate-hero-rise mt-4 max-w-3xl text-sm leading-relaxed text-gletcher-navy/80 sm:text-base"
-            style={{ animationDelay: "100ms" }}
-          >
-            <span className="text-gletcher-red">{copy.leadAccent}</span>
-          </p>
-        ) : null}
-        {copy.discount ? (
-          <a
-            href={copy.discount.href}
-            className="animate-hero-rise mt-6 inline-flex items-center gap-3 border border-gletcher-red px-4 py-2 text-sm font-extrabold tracking-wide text-gletcher-red uppercase transition-colors hover:bg-gletcher-red hover:text-gletcher-white"
-            style={{ animationDelay: "140ms" }}
-          >
-            {copy.discount.label}
-          </a>
-        ) : null}
-      </section>
+      <DocumentProximitySnap />
 
-      {copy.pillars.length > 0 ? (
-        <section
-          aria-label="Benefits"
-          className="mx-auto grid w-full max-w-[1100px] gap-8 px-6 pb-12 sm:px-10 lg:grid-cols-3"
-        >
-          {copy.pillars.map((pillar) => (
-            <div key={pillar.title}>
-              <h2 className="font-display text-xl font-extrabold tracking-wide text-gletcher-red uppercase sm:text-2xl">
-                {pillar.title}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-gletcher-navy/80">
-                {pillar.body}
-              </p>
-            </div>
-          ))}
-        </section>
-      ) : null}
-
-      {copy.materials.length > 0 ? (
-        <section
-          aria-label={copy.materialsIntro}
-          className="border-y border-gletcher-navy/10 bg-gletcher-ice"
-        >
-          <div className="mx-auto w-full max-w-[1100px] px-6 py-10 sm:px-10 sm:py-12">
-            <p className="font-display max-w-3xl text-2xl leading-tight font-extrabold tracking-wide uppercase sm:text-3xl">
-              {copy.materialsIntro}
-            </p>
-            <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-              {copy.materials.map((item) => (
-                <li key={item.id}>
+      <SectionFrame
+        id="hero"
+        mode="content"
+        snap
+        aria-labelledby="partnership-hero-title"
+      >
+        <B2bMeasure>
+          <CompositionGrid
+            preset="halves-x"
+            className="min-h-[min(72svh,36rem)] items-stretch gap-8 lg:gap-10"
+          >
+            <CompositionPanel className="flex flex-col justify-center">
+              <Reveal>
+                <h1
+                  id="partnership-hero-title"
+                  className="font-display text-[clamp(2rem,5.5vw,3.75rem)] leading-[0.95] font-extrabold tracking-wide uppercase"
+                >
+                  {copy.heroTitle}
+                </h1>
+                <p className="type-body mt-5 max-w-3xl text-gletcher-navy/80">
+                  {copy.lead}
+                </p>
+                {copy.leadAccent ? (
+                  <p className="type-body mt-4 max-w-3xl text-gletcher-navy/80">
+                    <span className="text-gletcher-red">{copy.leadAccent}</span>
+                  </p>
+                ) : null}
+                {copy.discount ? (
                   <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex h-full min-h-[140px] flex-col justify-between border border-gletcher-navy bg-gletcher-ice p-5 transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-gletcher-red"
+                    href={copy.discount.href}
+                    className="mt-6 inline-flex items-center gap-3 border border-gletcher-red px-4 py-2 text-sm font-extrabold tracking-wide text-gletcher-red uppercase transition-colors hover:bg-gletcher-red hover:text-gletcher-white"
                   >
-                    <div>
-                      <h2 className="font-display text-[clamp(1.75rem,4vw,2.75rem)] leading-none font-light tracking-wide uppercase">
-                        {item.title}
-                      </h2>
-                      <p className="mt-3 text-sm text-gletcher-navy/75">
-                        {item.description}
-                      </p>
-                    </div>
-                    <span
-                      className="font-display mt-5 inline-flex h-10 w-fit items-center justify-center px-4 text-xs font-extrabold tracking-wide text-white uppercase"
-                      style={{
-                        background:
-                          "radial-gradient(circle at center, rgba(246,112,116,1) 0%, rgba(254,36,42,1) 48%, rgba(223,30,35,1) 100%)",
-                      }}
-                    >
-                      {copy.downloadLabel}
-                    </span>
+                    {copy.discount.label}
                   </a>
-                </li>
+                ) : null}
+              </Reveal>
+            </CompositionPanel>
+            <CompositionPanel className="flex min-h-[min(72svh,34rem)] min-w-0 @[40rem]:min-h-0">
+              <BottleCarousel3D
+                items={bottleItems}
+                label={carouselLabel}
+                className="h-full min-h-0 w-full"
+              />
+            </CompositionPanel>
+          </CompositionGrid>
+        </B2bMeasure>
+      </SectionFrame>
+
+      {hasPillars ? (
+        <SectionFrame
+          id="pillars"
+          mode="content"
+          snap
+          aria-label={sectionLabel("pillars", isEn)}
+        >
+          <B2bMeasure>
+            <nav aria-label={navAria} className="mb-8 flex flex-wrap gap-2">
+              {navIds.map((id) => (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  className="type-caption rounded-[var(--radius-pill)] border border-gletcher-navy/25 px-3 py-1.5 hover:border-gletcher-navy"
+                >
+                  {sectionLabel(id, isEn)}
+                </a>
               ))}
-            </ul>
-          </div>
-        </section>
+            </nav>
+            <CardGrid columns={3} minCardWidth="16rem">
+              {copy.pillars.map((pillar) => (
+                <CardGridItem key={pillar.title}>
+                  <Reveal>
+                    <h2 className="font-display text-xl font-extrabold tracking-wide text-gletcher-red uppercase sm:text-2xl">
+                      {pillar.title}
+                    </h2>
+                    <p className="type-body-small mt-3 text-gletcher-navy/80">
+                      {pillar.body}
+                    </p>
+                  </Reveal>
+                </CardGridItem>
+              ))}
+            </CardGrid>
+          </B2bMeasure>
+        </SectionFrame>
       ) : null}
 
-      <section className="mx-auto grid w-full max-w-[1100px] gap-10 px-6 py-12 sm:px-10 lg:grid-cols-2 lg:items-start">
-        <div>
-          <h2 className="font-display text-3xl font-extrabold tracking-wide uppercase sm:text-4xl">
-            {copy.formTitle}
-          </h2>
-          <p className="mt-4 text-sm leading-relaxed text-gletcher-navy/75">
-            {copy.leadAccent ?? copy.lead}
-          </p>
-          <Link
-            href={copy.catalogHref}
-            className="mt-8 inline-flex border border-gletcher-navy px-5 py-3 text-sm font-extrabold tracking-wide uppercase transition-colors hover:border-gletcher-red hover:bg-gletcher-red hover:text-gletcher-white"
-          >
-            {copy.catalogCta}
-          </Link>
-        </div>
-        <PartnershipForm copy={copy} />
-      </section>
+      {hasMaterials ? (
+        <SectionFrame
+          id="materials"
+          mode="content"
+          snap
+          tone="ice"
+          className="border-y border-gletcher-navy/10"
+          aria-labelledby="partnership-materials-heading"
+        >
+          <B2bMeasure>
+            {!hasPillars ? (
+              <nav aria-label={navAria} className="mb-8 flex flex-wrap gap-2">
+                {navIds.map((id) => (
+                  <a
+                    key={id}
+                    href={`#${id}`}
+                    className="type-caption rounded-[var(--radius-pill)] border border-gletcher-navy/25 px-3 py-1.5 hover:border-gletcher-navy"
+                  >
+                    {sectionLabel(id, isEn)}
+                  </a>
+                ))}
+              </nav>
+            ) : null}
+            <Reveal>
+              <p
+                id="partnership-materials-heading"
+                className="font-display max-w-3xl text-2xl leading-tight font-extrabold tracking-wide uppercase sm:text-3xl"
+              >
+                {copy.materialsIntro}
+              </p>
+            </Reveal>
+            <CardGrid columns={3} className="mt-8" minCardWidth="16rem">
+              {copy.materials.map((item) => (
+                <CardGridItem key={item.id}>
+                  <PartnershipMaterialCard
+                    item={item}
+                    downloadLabel={copy.downloadLabel}
+                  />
+                </CardGridItem>
+              ))}
+            </CardGrid>
+          </B2bMeasure>
+        </SectionFrame>
+      ) : null}
+
+      <SectionFrame
+        id="request"
+        mode="content"
+        aria-labelledby="partnership-request-heading"
+      >
+        <B2bMeasure>
+          {!hasPillars && !hasMaterials ? (
+            <nav aria-label={navAria} className="mb-8 flex flex-wrap gap-2">
+              {navIds.map((id) => (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  className="type-caption rounded-[var(--radius-pill)] border border-gletcher-navy/25 px-3 py-1.5 hover:border-gletcher-navy"
+                >
+                  {sectionLabel(id, isEn)}
+                </a>
+              ))}
+            </nav>
+          ) : null}
+          <CompositionGrid preset="halves-x" className="items-start">
+            <CompositionPanel>
+              <Reveal>
+                <h2
+                  id="partnership-request-heading"
+                  className="type-display-section text-gletcher-navy"
+                >
+                  {copy.formTitle}
+                </h2>
+                <p className="type-body mt-4 text-gletcher-navy/75">
+                  {copy.leadAccent ?? copy.lead}
+                </p>
+                <LinkButton
+                  href={copy.catalogHref}
+                  variant="outline"
+                  size="lg"
+                  className="mt-8"
+                >
+                  {copy.catalogCta}
+                </LinkButton>
+              </Reveal>
+            </CompositionPanel>
+            <CompositionPanel>
+              <PartnershipForm copy={copy} />
+            </CompositionPanel>
+          </CompositionGrid>
+        </B2bMeasure>
+      </SectionFrame>
     </div>
   );
 }

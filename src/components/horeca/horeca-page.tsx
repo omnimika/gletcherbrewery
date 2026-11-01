@@ -1,34 +1,54 @@
 import Image from "next/image";
-import { Link } from "@/i18n/navigation";
+import type { ReactNode } from "react";
 import { HorecaCompareCardView } from "@/components/horeca/horeca-compare-card";
 import { HorecaForm } from "@/components/horeca/horeca-form";
 import { HorecaSloganSeal } from "@/components/horeca/horeca-slogan-seal";
+import {
+  CardGrid,
+  CardGridItem,
+  CompositionGrid,
+  CompositionPanel,
+  SectionFrame,
+} from "@/components/layout";
+import { LinkButton } from "@/components/ui/link-button";
+import { DocumentProximitySnap } from "@/components/motion/document-proximity-snap";
+import { Reveal } from "@/components/motion/reveal";
 import { HORECA_PAGE } from "@/content/horeca";
+import { HORECA_SECTIONS } from "@/content/horeca-sections";
+
+/** B2B pilot measure — denser than page content-max until DS-3 tunes tokens. */
+function B2bMeasure({ children }: { children: ReactNode }) {
+  return (
+    <div className="mx-auto w-full max-w-[1100px] px-[var(--page-gutter)]">
+      {children}
+    </div>
+  );
+}
 
 export function HorecaPageView() {
   const p = HORECA_PAGE;
+  const nav = HORECA_SECTIONS;
 
   return (
     <div className="bg-gletcher-ice text-gletcher-navy">
-      {/* Full viewport under fixed header; same composition all breakpoints. */}
+      <DocumentProximitySnap />
+
+      {/* Hero keeps custom full-bleed frame; stable id + soft snap only. */}
       <section
-        className="relative isolate flex min-h-[100svh] flex-col border-b border-gletcher-navy/10 bg-gletcher-ice"
-        style={{ marginTop: "calc(-1 * var(--hh, 84px))" }}
+        id="hero"
+        tabIndex={-1}
+        aria-label={HORECA_SECTIONS[0].labelRu}
+        className="ds-snap-start relative isolate flex min-h-[100svh] flex-col border-b border-gletcher-navy/10 bg-gletcher-ice"
+        style={{ marginTop: "calc(-1 * var(--header-height, var(--hh, 84px)))" }}
       >
-        {/* Frame width matches header chrome: pad-x … (RU/EN left → МЕНЮ right). */}
         <div
-          className="flex min-h-[100svh] w-full flex-1 flex-col pb-3 pt-[calc(var(--hh,84px)+0.65rem)] sm:pb-5 sm:pt-[calc(var(--hh,84px)+0.85rem)] lg:pb-4 lg:pt-[calc(var(--hh,84px)+0.5rem)]"
+          className="flex min-h-[100svh] w-full flex-1 flex-col pb-3 pt-[calc(var(--header-height,var(--hh,84px))+0.65rem)] sm:pb-5 sm:pt-[calc(var(--header-height,var(--hh,84px))+0.85rem)] lg:pb-4 lg:pt-[calc(var(--header-height,var(--hh,84px))+0.5rem)]"
           style={{ paddingInline: "var(--pad-x, 20px)" }}
         >
-          {/* Mobile: stacked. Desktop: ~equal columns inside header-aligned frame. */}
           <div className="grid min-h-0 min-w-0 flex-1 grid-cols-1 grid-rows-[auto_minmax(0,1fr)] overflow-hidden rounded-lg border border-gletcher-navy bg-gletcher-ice lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:grid-rows-[minmax(0,1fr)]">
             <div className="relative z-[1] flex min-h-0 min-w-0 flex-col gap-6 overflow-visible px-2 pt-8 pb-1 sm:gap-7 sm:px-6 sm:pt-9 sm:pb-2 lg:justify-center lg:gap-8 lg:px-8 lg:py-10 xl:px-10">
-              {/* Wordmark ~96% width. Badges sit mostly outside letterforms on mobile
-                  (above GLETCHER / below HORECA); pt/pb reserve that space. */}
               <div className="relative mx-auto w-[94%] max-w-full [container-type:inline-size] select-none lg:mx-0 lg:w-full">
-                {/* pt/pb reserve space for absolute badges (tight leading overflows glyph box). */}
                 <div className="relative pt-8 lg:pt-3">
-                  {/* Mobile: in pt band above GLETCHER. Desktop: half-overlap on top edge. */}
                   <span className="animate-horeca-fade-left pointer-events-none absolute top-1 left-0 z-[3] lg:top-3">
                     <span className="inline-flex rounded-full border border-gletcher-navy bg-gletcher-ice px-2 py-0.5 text-[clamp(0.4rem,2.4cqi,0.875rem)] leading-none font-extrabold tracking-wide whitespace-nowrap uppercase sm:px-4 sm:py-2 lg:px-5 lg:py-2.5 lg:text-[clamp(0.7rem,2.1cqi,1.05rem)] lg:-translate-y-1/2">
                       {p.badgeQuality}
@@ -40,7 +60,6 @@ export function HorecaPageView() {
                   >
                     {p.brandWord}
                   </p>
-                  {/* slogan-red — top-right of R, semicircle frame + rotate appear */}
                   <HorecaSloganSeal
                     brandWord={p.brandWord}
                     src={p.sloganImage.src}
@@ -58,7 +77,6 @@ export function HorecaPageView() {
                   >
                     {p.heroWord}
                   </p>
-                  {/* Mobile: in pb band below HORECA. Desktop: slight bottom overlap. */}
                   <span
                     className="animate-horeca-fade-right pointer-events-none absolute right-0 bottom-1 z-[3] lg:bottom-5"
                     style={{ animationDelay: "120ms" }}
@@ -85,7 +103,6 @@ export function HorecaPageView() {
               </div>
             </div>
 
-            {/* Mobile: object-cover in its row. Desktop: large contain, no divider line. */}
             <div className="animate-horeca-fade-up relative flex min-h-0 min-w-0 items-center justify-center overflow-hidden px-0 py-0 lg:overflow-visible lg:px-2 lg:py-4 xl:px-4">
               <video
                 className="h-full max-h-full w-full min-h-0 min-w-0 object-cover object-[center_55%] lg:object-contain lg:object-center"
@@ -104,102 +121,174 @@ export function HorecaPageView() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1100px] px-6 py-12 sm:px-10">
-        <h2 className="font-display text-2xl font-extrabold tracking-wide uppercase sm:text-3xl">
-          {p.compareTitle}
-        </h2>
-        <p className="mt-3 max-w-2xl text-sm text-gletcher-navy/75 sm:text-base">
-          {p.compareLead}
-        </p>
-        <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {p.compare.map((card) => (
-            <HorecaCompareCardView
-              key={card.slug}
-              card={card}
-              switchCta={p.switchCta}
-              findCta={p.findCta}
-            />
-          ))}
-        </ul>
-      </section>
-
-      <section className="border-y border-gletcher-red/30 bg-gletcher-ice">
-        <div className="mx-auto grid max-w-[1100px] gap-8 px-6 py-12 sm:px-10 lg:grid-cols-2 lg:items-center">
-          <div>
-            <h2 className="font-display text-3xl font-extrabold tracking-wide uppercase sm:text-4xl">
-              {p.audienceTitle}
+      <SectionFrame
+        id="compare"
+        mode="content"
+        snap
+        aria-labelledby="compare-heading"
+      >
+        <B2bMeasure>
+          <nav
+            aria-label="Разделы страницы HoReCa"
+            className="mb-8 flex flex-wrap gap-2"
+          >
+            {nav.map((s) => (
+              <a
+                key={s.id}
+                href={`#${s.id}`}
+                className="type-caption rounded-[var(--radius-pill)] border border-gletcher-navy/25 px-3 py-1.5 hover:border-gletcher-navy"
+              >
+                {s.labelRu}
+              </a>
+            ))}
+          </nav>
+          <Reveal>
+            <h2
+              id="compare-heading"
+              className="type-display-section text-gletcher-navy"
+            >
+              {p.compareTitle}
             </h2>
-            <ul className="mt-6 space-y-3 text-sm leading-relaxed text-gletcher-navy/85">
-              {p.audience.map((item) => (
-                <li key={item} className="flex gap-3">
-                  <span
-                    aria-hidden
-                    className="mt-2 size-1.5 shrink-0 rounded-full bg-gletcher-navy"
+            <p className="type-body mt-3 max-w-2xl text-gletcher-navy/75">
+              {p.compareLead}
+            </p>
+          </Reveal>
+          <CardGrid columns={3} className="mt-8" minCardWidth="16rem">
+            {p.compare.map((card) => (
+              <CardGridItem key={card.slug}>
+                <HorecaCompareCardView
+                  card={card}
+                  switchCta={p.switchCta}
+                  findCta={p.findCta}
+                />
+              </CardGridItem>
+            ))}
+          </CardGrid>
+        </B2bMeasure>
+      </SectionFrame>
+
+      <SectionFrame
+        id="audience"
+        mode="content"
+        tone="ice"
+        snap
+        className="border-y border-gletcher-red/30"
+        aria-labelledby="audience-heading"
+      >
+        <B2bMeasure>
+          <CompositionGrid preset="halves-x" className="items-center">
+            <CompositionPanel>
+              <Reveal>
+                <h2
+                  id="audience-heading"
+                  className="type-display-section text-gletcher-navy"
+                >
+                  {p.audienceTitle}
+                </h2>
+                <ul className="mt-6 space-y-3 type-body-small text-gletcher-navy/85">
+                  {p.audience.map((item) => (
+                    <li key={item} className="flex gap-3">
+                      <span
+                        aria-hidden
+                        className="mt-2 size-1.5 shrink-0 rounded-full bg-gletcher-navy"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </CompositionPanel>
+            <CompositionPanel>
+              <Reveal>
+                <div className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-[var(--radius-card)] border border-gletcher-navy">
+                  <Image
+                    src={p.audienceImage.src}
+                    alt={p.audienceImage.alt}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 420px"
                   />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="relative mx-auto aspect-square w-full max-w-md overflow-hidden rounded-lg border border-gletcher-navy">
-            <Image
-              src={p.audienceImage.src}
-              alt={p.audienceImage.alt}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 420px"
-            />
-          </div>
-        </div>
-      </section>
+                </div>
+              </Reveal>
+            </CompositionPanel>
+          </CompositionGrid>
+        </B2bMeasure>
+      </SectionFrame>
 
-      <section className="mx-auto max-w-[1100px] px-6 py-12 sm:px-10">
-        <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
-          <div>
-            <h2 className="font-display text-2xl font-extrabold tracking-wide text-gletcher-red uppercase sm:text-3xl">
-              {p.distributionTitle}
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-gletcher-navy/80 sm:text-base">
-              {p.distributionBody}
-            </p>
-            <p className="mt-4 text-sm leading-relaxed text-gletcher-navy/80 sm:text-base">
-              {p.distributionExtra}
-            </p>
-          </div>
-          <div className="relative mx-auto aspect-[5/3] w-full overflow-hidden rounded-lg border border-gletcher-navy bg-[#fff705]">
-            <Image
-              src={p.distributionMap.src}
-              alt={p.distributionMap.alt}
-              fill
-              className="object-contain p-2"
-              sizes="(max-width: 768px) 100vw, 520px"
-            />
-          </div>
-        </div>
-      </section>
+      <SectionFrame
+        id="distribution"
+        mode="content"
+        snap
+        aria-labelledby="distribution-heading"
+      >
+        <B2bMeasure>
+          <CompositionGrid preset="halves-x" className="items-center">
+            <CompositionPanel>
+              <Reveal>
+                <h2
+                  id="distribution-heading"
+                  className="type-display-section text-gletcher-red"
+                >
+                  {p.distributionTitle}
+                </h2>
+                <p className="type-body mt-4 text-gletcher-navy/80">
+                  {p.distributionBody}
+                </p>
+                <p className="type-body mt-4 text-gletcher-navy/80">
+                  {p.distributionExtra}
+                </p>
+              </Reveal>
+            </CompositionPanel>
+            <CompositionPanel>
+              <Reveal>
+                <div className="relative mx-auto aspect-[5/3] w-full overflow-hidden rounded-[var(--radius-card)] border border-gletcher-navy bg-[#fff705]">
+                  <Image
+                    src={p.distributionMap.src}
+                    alt={p.distributionMap.alt}
+                    fill
+                    className="object-contain p-2"
+                    sizes="(max-width: 768px) 100vw, 520px"
+                  />
+                </div>
+              </Reveal>
+            </CompositionPanel>
+          </CompositionGrid>
+        </B2bMeasure>
+      </SectionFrame>
 
-      <section className="mx-auto max-w-[1100px] px-6 py-12 sm:px-10">
-        <p className="max-w-3xl text-lg font-semibold leading-snug sm:text-xl">
-          {p.formLead}
-        </p>
-        <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:items-start">
-          <HorecaForm />
-          <div className="flex flex-col gap-4">
-            <Link
-              href={p.catalogHref}
-              className="inline-flex border border-gletcher-navy px-5 py-3 text-sm font-extrabold tracking-wide uppercase transition-colors hover:border-gletcher-red hover:bg-gletcher-red hover:text-gletcher-white"
-            >
-              {p.catalogCta}
-            </Link>
-            <a
-              href={p.wholesaleHref}
-              className="inline-flex border border-gletcher-red px-5 py-3 text-sm font-extrabold tracking-wide text-gletcher-red uppercase transition-colors hover:bg-gletcher-red hover:text-gletcher-white"
-            >
-              {p.wholesaleCta}
-            </a>
-          </div>
-        </div>
-      </section>
+      <SectionFrame
+        id="request"
+        mode="content"
+        aria-labelledby="request-heading"
+      >
+        <B2bMeasure>
+          <Reveal>
+            <p id="request-heading" className="type-heading-prose max-w-3xl">
+              {p.formLead}
+            </p>
+          </Reveal>
+          <CompositionGrid preset="halves-x" className="mt-8 items-start">
+            <CompositionPanel>
+              <HorecaForm />
+            </CompositionPanel>
+            <CompositionPanel>
+              <div className="flex flex-col gap-4">
+                <LinkButton href={p.catalogHref} variant="outline" size="lg">
+                  {p.catalogCta}
+                </LinkButton>
+                <LinkButton
+                  href={p.wholesaleHref}
+                  variant="outline"
+                  size="lg"
+                  className="border-gletcher-red text-gletcher-red hover:border-gletcher-red hover:bg-gletcher-red hover:text-gletcher-white"
+                >
+                  {p.wholesaleCta}
+                </LinkButton>
+              </div>
+            </CompositionPanel>
+          </CompositionGrid>
+        </B2bMeasure>
+      </SectionFrame>
     </div>
   );
 }

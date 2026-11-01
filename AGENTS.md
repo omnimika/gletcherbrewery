@@ -1,6 +1,6 @@
 # Gletcher Brewery — AGENTS.md
 
-> Версия: 0.10 (1 ноября 2026 г.)
+> Версия: 0.11 (1 ноября 2026 г.)
 > Назначение: единые постоянные инструкции для Cursor Agent и OpenAI Codex.  
 > Подробный план реализации: `docs/ROADMAP.md` (при размещении файла из поставки в проекте).  
 > **Не считать этот документ подтверждением неизвестных деталей исходной системы.**
@@ -14,6 +14,10 @@
 ### Зафиксировано владельцем проекта
 
 - Frontend/full-stack: Next.js, TypeScript, Tailwind CSS.
+- Дизайн-код: презентационные композиции с адаптацией к ширине **и высоте** окна,
+  якорями, мягким позиционированием, сетками 50/50 и 25/50/25 по обеим осям,
+  cards 3/4/6, banners/carousels. Сохранить характер палитры/шрифтов/границ;
+  общие компоненты, состояния и motion: `docs/design/DESIGN_SYSTEM.md`.
 - MCP Tilda подключён в Cursor; владелец подтвердил доступ к исходникам страниц. Для анализа использовать read-only workflow `docs/discovery/TILDA_MCP_WORKFLOW.md`, различая редакторскую и опубликованную версии.
 - Хостинг и инфраструктура: **Yandex Cloud**.
 - Замена Airtable: **NocoDB обязателен**; репозиторий: https://github.com/nocodb/nocodb.
@@ -73,6 +77,9 @@
 - Перенести страницы, компоненты, русскую/английскую локализацию (после инвентаризации), каталог сортов, блог, раздел партнёров, контакты, карту, экскурсии и «Агента Глетчер».
 - Максимально сохранить URL, метаданные SEO, alt, canonical, sitemap, structured data и редиректы 301 для изменённых адресов.
 - Сверять дизайн по исходному сайту, а не копировать неконтролируемо Tilda-HTML.
+- Новый дизайн-код — целевое развитие исходного бренда. Screen sections растут
+  по содержимому; статьи/legal/forms сохраняют reading flow. Native document
+  scroll, opt-in proximity и reduced-motion; без whole-UI scale/scroll hijack.
 - Поддерживать mobile-first, семантическую разметку, доступность, оптимизацию изображений и Core Web Vitals.
 - Сохранить возрастные ограничения и юридические предупреждения; проверять применимое законодательство РФ и **не реализовывать онлайн-продажу алкоголя без отдельного юридического согласования**.
 - i18n: сохранять RU URL без префикса и существующие EN URL; будущие `sr`/`hy`/`ka`/`de` остаются **Proposed** до согласования и публикации переводов. Язык, письменность и рынок — отдельные параметры; маршрут, переключатель и SEO используют только опубликованные версии. Контракт: `docs/adr/0001-i18n-routing-and-content.md`.
@@ -143,19 +150,23 @@
 
 **Строго соблюдать очередность `docs/ROADMAP.md`:** (0) Bootstrap Next.js → (1) Site Discovery → (2) базовая дизайн-система → (3) одна эталонная страница → (4) остальной публичный сайт → (5+) backend, NocoDB, Mapbox, бонусы и бронирования. Преждевременная разработка CRM/Mapbox не является текущей задачей.
 
-1. Bootstrap и Discovery готовы; эталон `/beer` **принят владельцем** (31.10.2026).
-2. Product template `/beer/{slug}` **принят** (`0df9706`). Cynic — owner follow-up.
-   Текущее: **home `/`** — baseline `docs/discovery/HOME_PAGE_BASELINE.md` + v1 UI;
-   см. `docs/CURSOR_NEXT_STEPS.md`. Ждёт приёмки владельцем.
-   Проверен чистый `2c1a9d0`: lint/typecheck PASS; ревью
-   `docs/reviews/2026-11-01-home-and-sprints.md`. Ближайший спринт — завершение home
-   (teaser URL, video fallback/ограниченная media работа, newsletter validity и RU/EN QA).
-3. ADR 0001 **Accepted**; next-intl RU/EN. `sr`/`hy`/`ka`/`de` — Open.
-4. После home — Proposed серия `docs/SPRINT_PLAN.md`: blog contract/listing →
-   article template → контент партиями → остальные публичные шаблоны по одному.
-   Очередь не разрешает массовую реализацию или установку CMS/БД заранее.
-5. Критерии закрытия — код + свежие проверки; не подменять browser/build старым отчётом.
-6. Принятые `/beer` и product template повторно на визуальную приёмку не открывать.
+1. Bootstrap/Discovery готовы; `/beer` и product template приняты (`0df9706`).
+   По текущим записям blog feed/tpost закрыт; `/partnership` RU/EN принят 01.11.
+   `/russian-craft-beer`, `/horeca`, `/contacts`, `/policy` — v1, не новый sign-off.
+2. **DS-1 выполнен** (tokens, layout/UI recipes, `/dev/design-system` showcase).
+   Актуальные задания — `docs/CURSOR_NEXT_STEPS.md` и `docs/SPRINT_PLAN.md`;
+   не повторять старые home/blog milestones и не переоткрывать DS-1.
+3. **DS-2 выполнен** (pilot `/horeca`: anchors, proximity snap, Reveal,
+   CompareCard DS-B). **DS-3 в работе:** contacts + home anchors + partnership
+   shell (`/partnership` RU/EN, `/russian-craft-beer`); далее home stage exit
+   или catalog — по одному. Старые приёмки — regression baseline; URL/контент
+   сохраняются.
+4. Owner direction **Confirmed**; DS-1 tokens/API — Implemented/reviewable
+   (ADR 0010). ADR 0001 **Accepted**; next-intl RU/EN, `sr`/`hy`/`ka`/`de` — Open.
+5. Ревью `docs/reviews/2026-11-01-design-system.md` дополнено Cursor follow-up
+   (lint/tsc/build + browser showcase). Commit/push только по запросу.
+6. Критерии закрытия — код + свежие проверки; не подменять browser/build старым
+   отчётом. Не устанавливать CMS/DB/scroll/UI frameworks ради design foundation.
 
 Подробная архитектура CRM, data model, миграции Airtable, выбор ORM/Auth/CMS и инфраструктурные ADR — отдельные будущие задачи по этапам, а не блокеры инвентаризации сайта.
 
@@ -167,8 +178,11 @@
 - `docs/discovery/PRODUCT_PROPS_INVENTORY.md` — props карточек пива RU/EN + контракт под будущие локали.
 - `docs/adr/0001-i18n-routing-and-content.md` — маршрутизация и модель контента для `ru`/`en`/`sr`/`hy`/`ka`/`de`.
 - `docs/CURSOR_NEXT_STEPS.md` — актуальное задание Cursor с критериями приёмки; обновлять после подтверждённых изменений.
-- `docs/reviews/2026-11-01-home-and-sprints.md` — актуальное ревью `2c1a9d0`, home и приоритеты следующего спринта.
-- `docs/SPRINT_PLAN.md` — Proposed серия спринтов этапа 4, зависимости и критерии.
+- `docs/design/DESIGN_SYSTEM.md` — дизайн-код, containers/grids, anchors/scroll, UI/state/motion и DoD.
+- `docs/adr/0010-design-system-and-section-layout.md` — архитектура дизайн-системы и границы rollout.
+- `docs/reviews/2026-11-01-design-system.md` — актуальное ревью `6b137e7`, пробелы и новый приоритет.
+- `docs/reviews/2026-11-01-home-and-sprints.md` — историческое ревью `2c1a9d0`.
+- `docs/SPRINT_PLAN.md` — серия DS-1/2/3 → public coverage; старый план сохранён как архив.
 - `docs/discovery/HOME_PAGE_BASELINE.md` — source baseline и приёмка текущей home.
 - `docs/reviews/2026-10-31-product-acceptance.md` — историческое ревью `6f84465`; A01–A03 исправлены в `0df9706`.
 - `docs/reviews/2026-10-31-product-template.md` — историческое ревью `9e0ee8e` + рабочего дерева.

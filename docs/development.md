@@ -1,7 +1,9 @@
 # Локальная разработка
 
-Статус на 01.11.2026: Bootstrap, `/beer` и product template приняты;
-home RU/EN v1 ожидает завершения QA и приёмки. RU без префикса, EN под `/en`.
+Статус на 01.11.2026: Bootstrap, `/beer`, product template и partnership приняты
+по текущим записям; blog feed/tpost scope закрыт. Текущая работа — DS-1:
+[дизайн-фундамент/showcase](design/DESIGN_SYSTEM.md), затем pilot/rollout.
+RU без префикса, EN под `/en`; новые языки ещё не публикуются.
 Текущие проверки и дефекты описаны
 в [текущем задании Cursor](CURSOR_NEXT_STEPS.md) и `ROADMAP.md`.
 Серверные бизнес-интеграции относятся к последующим этапам.
@@ -76,7 +78,7 @@ ABC Gravity Trial используются только для локально�
 
 `build` и `dev` создают `.next` и могут обновлять `next-env.d.ts`; эти команды
 не входят в режим строгого read-only ревью. Результаты текущего ревью:
-[2c1a9d0, 2026-11-01](reviews/2026-11-01-home-and-sprints.md).
+[6b137e7, 2026-11-01](reviews/2026-11-01-design-system.md).
 
 Cursor ранее сообщил рабочий production-start с `--hostname localhost` и loop
 с `127.0.0.1`. Для текущего QA использовать localhost; IP-проблему считать

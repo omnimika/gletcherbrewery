@@ -151,7 +151,11 @@ export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
     const root = document.documentElement;
     const hh = vars["--hh" as keyof CSSProperties];
     const padX = vars["--pad-x" as keyof CSSProperties];
-    if (typeof hh === "string") root.style.setProperty("--hh", hh);
+    if (typeof hh === "string") {
+      root.style.setProperty("--hh", hh);
+      root.style.setProperty("--header-height", hh);
+      root.style.setProperty("--header-h", hh);
+    }
     if (typeof padX === "string") root.style.setProperty("--pad-x", padX);
   }, [vars]);
 

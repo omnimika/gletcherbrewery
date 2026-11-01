@@ -1,13 +1,107 @@
-# Следующая серия спринтов — публичная миграция
+# Текущая серия — design foundation и продолжение публичной миграции
 
-Дата: **01.11.2026**. База анализа: чистый `2c1a9d0`.
-[Ревью](reviews/2026-11-01-home-and-sprints.md),
-[ROADMAP](ROADMAP.md), [текущее задание](CURSOR_NEXT_STEPS.md).
+Дата: **01.11.2026**, проверен чистый `6b137e7`.
+[Дизайн-код](design/DESIGN_SYSTEM.md), [ревью](reviews/2026-11-01-design-system.md),
+[ADR](adr/0010-design-system-and-section-layout.md), [задание](CURSOR_NEXT_STEPS.md).
 
-**Confirmed:** `/beer` и product template приняты, Cynic у владельца;
-активный gate — home `/` и `/en`. **Proposed:** очередь спринтов 2–5 ниже.
-Это порции результата с зависимостями, не календарные обещания. Каждый новый
-публичный шаблон проходит собственную приёмку до тиражирования.
+**Новое Confirmed направление владельца:** презентационные секции, адаптация
+композиции по ширине/высоте, якоря, мягкий scroll, строгие grids и общие UI recipes.
+Это меняет ближайший приоритет: **сначала DS-1**, затем pilot и rollout.
+Ниже дан конкретный план; старый home/blog план сохранён как архив после новой серии.
+
+## Текущий baseline
+
+- Catalog/product и `/partnership` RU/EN приняты по имеющимся записям.
+- Blog feed/tpost и small aliases закрыты по предыдущему Sprint 4b; не повторять
+  listing/article/batch миграцию с нуля.
+- `/russian-craft-beer`, `/horeca`, `/contacts`, `/policy` v1 в коде/ожидают приёмки.
+- `/shopping-rules`, публичные agent/tours/map/shop и campaigns остаются backlog.
+- Состояние старых sign-offs сохраняется; новый запрос разрешает целевые design
+  изменения общих компонентов и принятых страниц с сохранением URL/контента.
+
+| Новый спринт | Reviewable результат | Gate |
+|---|---|---|
+| DS-1 ✅ | Tokens, SectionFrame/Container/Grid, UI recipes и showcase | Cursor: lint/tsc/build PASS; browser showcase на localhost |
+| DS-2 ✅ | Anchors/scroll/Reveal и pilot `/horeca` | Cursor: lint/tsc/build PASS; hashes + CompareCard DS-B; owner sign-off Open |
+| DS-3 ← текущий | Последовательный rollout общих standards по templates | Каждый template без функциональных регрессий |
+| P-Next | Остальные публичные шаблоны Sprint 5 | Baseline/DoD/приёмка по одному |
+
+Это последовательность результатов, не обещание календарных сроков.
+DS-1/DS-2 закрыты Cursor 01.11.2026; DS-3 в работе: contacts + home anchors +
+partnership shell (`/partnership` RU/EN + `/russian-craft-beer`) — Cursor PASS.
+
+## DS-1 — foundation и каталог состояний
+
+**Цель:** создать проверяемую библиотеку, на которой можно собирать весь сайт.
+
+1. Перепроверить inventory reuse; выделить семантические color/type/space/
+   radius/border/focus/motion/z-index/layout tokens. Сохранить исходный бренд;
+   action colors и Tilda font-width adapter сделать явными.
+2. Реализовать server-friendly Container/ReadingContainer/SectionFrame/
+   CompositionGrid/CardGrid; режимы screen/content/banner, min-height и overflow
+   fallback. Прототип soft scroll/anchors показывать только на showcase.
+3. Обновить shared Button без поломки callers, добавить LinkButton/IconButton,
+   базовые Field/Feedback и Card surfaces; доменные data не переносить в primitives.
+4. Showcase в существующем Next.js (dev-only, без Storybook по умолчанию):
+   full, 50/50 x/y, 25/50/25 x/y, quad, 3/4/6 cards, banner/carousel recipe;
+   default/hover/focus/pressed/selected/disabled/loading/error/missing states.
+5. Показать RU/EN длинные строки, no-media/no-JS/font fallback и CompareCard
+   hidden-face focus case. Применить contrast/reduced-motion правила.
+
+**DoD:** библиотека и реальные showcase screenshots; TypeScript/lint/build;
+320/390/768/1440 + short viewport/zoom; нет clipping/focus loss/двумерного page
+overflow. Content остаётся читаемым до hydration. Обновлён design contract с
+выбранными/непроверенными tokens. Новые CMS/DB/scroll/animation dependencies не нужны.
+
+**Не входит:** массовое переписывание public pages, переработка контента,
+автоматическое разбиение статей на слайды, новый CMS/ORM/Auth/Mapbox backend.
+
+## DS-2 — навигация секций и один pilot
+
+**Рекомендуемый pilot:** `/horeca` (уже v1, ещё ожидает приёмки). Если конкретный
+контент не демонстрирует нужные layouts, часть комбинаций остаётся showcase;
+не выдумывать маркетинговый текст ради заполнения трёх колонок.
+
+- Составить section manifest: stable IDs, RU label/публикация, frame/layout,
+  существующие fragments. Сверить source content/CTA через read-only MCP.
+- Применить общие anchors/header offset и opt-in native proximity, Reveal,
+  approved button/card recipes. Controls/long forms доступны без snap/scale trap.
+- Full viewport + составная композиция + cards/banner должны показать подход
+  на живом контенте; 25/50/25 допустимо использовать только там, где есть смысл.
+- Исправить CompareCard focus по state contract, проверить touch/keyboard.
+
+**DoD:** pilot browser matrix из DESIGN_SYSTEM; прямые anchors/Back/Forward,
+mobile chrome/keyboard, reduced-motion, readable long copy, нет потери сценариев;
+source URLs/контент сохранены. Владелец принимает новый layout recipe.
+Один pilot не означает разрешение переписать все страницы одним действием.
+
+## DS-3 — rollout по одному template
+
+Очередь Proposed: home → остальные B2B/contacts оболочки → catalog/product →
+blog listing. Общие header/button/field recipes переносить осторожно вместе
+с regression callers. Статьи и legal используют ReadingContainer/content mode;
+их смысловые headings получают anchors, body не режется на full-screen slides.
+
+Для каждого template: before baseline → section map → целевое изменение →
+lint/typecheck/build/browser → отчёт и фиксация приёмки. Сохранить существующие
+SEO URL/hash/locale peers, фильтры, формы и keyboard. Не повторять импорт статей.
+Legacy HomeWindowStage выводить постепенно; одинаковые новые проблемы решать
+в общих primitives, не копировать page overrides.
+
+## P-Next — продолжение Sprint 5
+
+После проверенного foundation/pilot продолжить `/shopping-rules`, оставшиеся
+публичные agent/tours/map/shop и campaign templates по backlog/бизнес-приоритету.
+Они сразу используют design contract. Операции backend остаются на этапах 5+;
+страница экскурсии не означает готовую бронь/оплату. Puck/editor пока не устанавливать.
+
+## Архив первоначальной серии home/blog
+
+Ниже сохранены план и последующие отметки исполнения на старой базе `2c1a9d0`.
+Они объясняют уже пройденные шаги, **не являются текущим заданием**. Текущие
+gate и приоритет — разделы выше и CURSOR_NEXT_STEPS. Не выполнять старые
+home/listing/article milestones повторно и не делать вывод о новом sign-off
+по одному историческому пункту.
 
 | Спринт | Результат | Зависимость / gate |
 |---|---|---|
