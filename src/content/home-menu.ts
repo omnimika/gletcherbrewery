@@ -7,7 +7,7 @@ export type HomeMenuCard = {
   ctaKey: string;
   image: string;
   href:
-    | { kind: "local"; path: "/beer" | "/blog" }
+    | { kind: "local"; path: "/beer" | "/blog" | "/partnership" }
     | { kind: "external"; key: ExternalNavKey };
 };
 
@@ -38,7 +38,7 @@ export const HOME_MENU_CARDS: HomeMenuCard[] = [
     bodyKey: "menuPartnersBody",
     ctaKey: "menuPartnersCta",
     image: "/home/menu-partership_.png",
-    href: { kind: "external", key: "partners" },
+    href: { kind: "local", path: "/partnership" },
   },
   {
     id: "map",

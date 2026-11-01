@@ -96,6 +96,28 @@ function BlockView({ block }: { block: BlogBlock }) {
           <BlogRichText html={block.html} />
         </div>
       );
+    case "video": {
+      if (block.provider !== "youtube") return null;
+      // Allowlist: 11-char YouTube id only.
+      if (!/^[A-Za-z0-9_-]{11}$/.test(block.videoId)) return null;
+      const title = block.title?.trim() || "YouTube";
+      const src = `https://www.youtube-nocookie.com/embed/${block.videoId}`;
+      return (
+        <figure className="my-8">
+          <div className="relative aspect-video w-full overflow-hidden bg-gletcher-navy/10">
+            <iframe
+              src={src}
+              title={title}
+              className="absolute inset-0 h-full w-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+          </div>
+        </figure>
+      );
+    }
     default: {
       const _exhaustive: never = block;
       return _exhaustive;

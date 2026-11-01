@@ -42,6 +42,10 @@ export function HomeFeatures({ locale, labels }: HomeFeaturesProps) {
                     <Link href={feature.href.path} className={className}>
                       {inner}
                     </Link>
+                  ) : feature.href.kind === "absolute" ? (
+                    <a href={feature.href.path} className={className}>
+                      {inner}
+                    </a>
                   ) : (
                     <a
                       href={productionHref(feature.href.key, locale)}

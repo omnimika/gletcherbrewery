@@ -8,6 +8,9 @@ import {
 } from "@/content/blog/articles";
 import type { BlogArticleBody } from "@/content/blog/blocks";
 import type { BlogCategoryId } from "@/content/blog-categories";
+import { ALIAS_SHELLS_RU } from "@/content/blog/alias-shells";
+import { EXPANSION_PAGE } from "@/content/blog/expansion";
+import { VACANCIES_PAGE } from "@/content/blog/vacancies";
 
 export type { BlogCategoryId } from "@/content/blog-categories";
 
@@ -37,6 +40,11 @@ export type BlogPostTranslation = {
    * Matches production `postdefaulturl` segment.
    */
   localSlug?: string;
+  /**
+   * Alias/local page path when not a tpost article (e.g. `/blog/expansion`).
+   * Takes precedence over `localSlug` for listing hrefs.
+   */
+  localPath?: string;
 };
 
 export type BlogPost = {
@@ -1732,6 +1740,61 @@ export const BLOG_POSTS: BlogPost[] = [
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
   },
+  {
+    id: EXPANSION_PAGE.id,
+    // Feed shell `yvr9000yd1` → alias page (empty feed text).
+    categoryId: EXPANSION_PAGE.categoryId,
+    translations: {
+      ru: {
+        status: "published",
+        title: EXPANSION_PAGE.title,
+        categoryLabel: EXPANSION_PAGE.categoryLabel,
+        publishedAt: EXPANSION_PAGE.publishedAt,
+        productionPath: EXPANSION_PAGE.productionPath,
+        localPath: EXPANSION_PAGE.path,
+      },
+      en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
+    },
+  },
+  {
+    id: VACANCIES_PAGE.id,
+    // Feed shell `v36h61s2s1` → `/vacancies` (empty feed text).
+    categoryId: VACANCIES_PAGE.categoryId,
+    translations: {
+      ru: {
+        status: "published",
+        title: VACANCIES_PAGE.title,
+        categoryLabel: VACANCIES_PAGE.categoryLabel,
+        publishedAt: VACANCIES_PAGE.publishedAt,
+        productionPath: VACANCIES_PAGE.productionPath,
+        localPath: VACANCIES_PAGE.path,
+      },
+      en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
+    },
+  },
+  // Campaign landings (empty feed text) — listing → production until Sprint 5.
+  ...ALIAS_SHELLS_RU.map(
+    (shell): BlogPost => ({
+      id: shell.id,
+      categoryId: shell.categoryId,
+      translations: {
+        ru: {
+          status: "published",
+          title: shell.title,
+          categoryLabel: shell.categoryLabel,
+          publishedAt: shell.publishedAt,
+          productionPath: shell.productionPath,
+          localPath: shell.localPath,
+        },
+        en: {
+          status: "missing",
+          title: "",
+          categoryLabel: "",
+          productionPath: "",
+        },
+      },
+    }),
+  ),
 ];
 
 function isPublished(
@@ -1806,7 +1869,17 @@ export function getBlogListCards(locale: PublishedLocale): BlogListCard[] {
     const t = post.translations[locale];
     if (!isPublished(t)) continue;
     const localBody = t.localSlug ? getArticleBody(post.id, locale) : undefined;
-    const local = Boolean(localBody && t.localSlug);
+    const aliasLocal = Boolean(t.localPath);
+    const articleLocal = Boolean(localBody && t.localSlug);
+    const local = aliasLocal || articleLocal;
+    const aliasMeta =
+      post.id === EXPANSION_PAGE.id && locale === "ru"
+        ? EXPANSION_PAGE
+        : post.id === VACANCIES_PAGE.id && locale === "ru"
+          ? VACANCIES_PAGE
+          : locale === "ru"
+            ? ALIAS_SHELLS_RU.find((s) => s.id === post.id)
+            : undefined;
     cards.push({
       id: post.id,
       categoryId: post.categoryId,
@@ -1814,11 +1887,13 @@ export function getBlogListCards(locale: PublishedLocale): BlogListCard[] {
       title: t.title,
       publishedAt: t.publishedAt,
       dateLabel: formatBlogDate(t.publishedAt, locale),
-      description: localBody?.description || undefined,
-      cover: localBody?.cover,
-      href: local
-        ? blogArticleLocalHref(t.localSlug!)
-        : `${PRODUCTION_ORIGIN}${t.productionPath}`,
+      description: aliasMeta?.description ?? localBody?.description ?? undefined,
+      cover: aliasMeta?.cover ?? localBody?.cover,
+      href: aliasLocal
+        ? t.localPath!
+        : articleLocal
+          ? blogArticleLocalHref(t.localSlug!)
+          : `${PRODUCTION_ORIGIN}${t.productionPath}`,
       local,
     });
   }

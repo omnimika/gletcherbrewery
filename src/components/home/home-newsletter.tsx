@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
 import { HomeWindowStage } from "@/components/home/home-window-stage";
-import { productionHref } from "@/lib/site-links";
+import { POLICY_PATH } from "@/content/policy";
 import type { PublishedLocale } from "@/i18n/locales";
 
 type HomeNewsletterProps = {
@@ -30,7 +30,7 @@ function looksLikeEmail(value: string) {
  * crocodile + subscribe form. Submit UI-only until backend exists.
  */
 export function HomeNewsletter({
-  locale,
+  locale: _locale,
   title,
   lead,
   placeholder,
@@ -40,9 +40,10 @@ export function HomeNewsletter({
   pendingNote,
   invalidNote,
 }: HomeNewsletterProps) {
+  void _locale;
   const [note, setNote] = useState<string | null>(null);
   const [invalid, setInvalid] = useState(false);
-  const policyHref = productionHref("policy", locale);
+  const policyHref = POLICY_PATH;
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

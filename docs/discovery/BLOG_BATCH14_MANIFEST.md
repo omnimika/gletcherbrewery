@@ -34,18 +34,18 @@
 | Locale-bodies | 16 (8 RU + 8 EN) |
 | Confirmed EN peers (pairs) | 0 |
 | Fake peers | 0 |
-| Deferred YouTube embeds | 2 (`vasiliy-klin-interview`, `anora-podcast-interview`) |
+| Deferred YouTube embeds | 0 (wired 01.11.2026: `video` block) |
 
 ## Notes
 
 - Closes remaining **sitemap feed** locs (`921152316206` / `370831704951`) for tpost URLs discovered in discovery dumps.
 - EN 2021 product releases had no RU feed peers — kept EN-only; no fabricated pairs.
-- Anora podcast sits in Tilda **news** part (not interview).
+- Anora podcast: owner override → `interview` (Tilda parts were news).
 - Klin postpone: `parts` events,news → primary **events**.
 - Pumking: `parts` releases,news → primary **releases**.
-- YouTube iframes deferred until video renderer (ADR / sprint later).
-- Feed still reports more posts than sitemap (`totalPostInFeed` RU 141 / EN 44); non-sitemap / unpublished / alias pages out of this batch.
+- YouTube embeds for this batch + MOA + Klin 2023 results wired as `video` blocks (`youtube-nocookie`). VK / self-hosted mp4 remain Open.
+- Feed still reports more posts than sitemap (`totalPostInFeed` RU 141 / EN 44); non-sitemap / unpublished / alias pages → Sprint 4b inventory.
 
 ## Next
 
-Inventory non-sitemap feed posts + `/blog/*` alias pages (e.g. expansion) if owner wants full 141/44 coverage; otherwise Stage 4 public templates / CMS.
+**Confirmed owner 01.11.2026:** blog closure before Sprint 5 — newsletter on `/blog`, YouTube deferred embeds, then inventory non-sitemap feed + `/blog/*` alias pages (e.g. expansion). See `docs/CURSOR_NEXT_STEPS.md`.

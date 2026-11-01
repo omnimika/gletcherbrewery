@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { HomeWindowStage } from "@/components/home/home-window-stage";
+import { RUSSIAN_CRAFT_BEER_PATH } from "@/content/russian-craft-beer";
 import { productionHref } from "@/lib/site-links";
 import type { PublishedLocale } from "@/i18n/locales";
 
@@ -32,7 +33,8 @@ const ctaStyle = {
  * Window-upscaled artboard (same mode as Tilda).
  */
 export function HomePromos({ locale, labels }: HomePromosProps) {
-  const b2bHref = productionHref("b2b", locale);
+  // RU-only B2B landing; EN home also targets this path (production parity).
+  const b2bHref = RUSSIAN_CRAFT_BEER_PATH;
   const mapHref = productionHref("map", locale);
   const bullets = [labels.b2bBullet1, labels.b2bBullet2, labels.b2bBullet3];
 

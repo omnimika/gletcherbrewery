@@ -8,7 +8,8 @@ import {
   useSyncExternalStore,
 } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { productionHref } from "@/lib/site-links";
+import { Link } from "@/i18n/navigation";
+import { POLICY_PATH } from "@/content/policy";
 import type { PublishedLocale } from "@/i18n/locales";
 
 const YANDEX_RATING_HREF =
@@ -386,9 +387,10 @@ export function SiteFooter() {
             {t("copyright")}
           </p>
 
-          {/* Policy */}
-          <a
-            href={productionHref("policy", locale)}
+          {/* Policy — RU-only page; always route via ru locale. */}
+          <Link
+            href={POLICY_PATH}
+            locale="ru"
             className="absolute z-[6] text-gletcher-navy transition-opacity hover:opacity-70"
             style={{
               top: screen >= 1200 ? 158 : screen >= 960 ? 252 : screen >= 640 ? 254 : screen >= 480 ? 347 : 325,
@@ -400,7 +402,7 @@ export function SiteFooter() {
             }}
           >
             {t("policy")}
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

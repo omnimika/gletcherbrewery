@@ -1,44 +1,43 @@
 # Текущее задание Cursor Agent
 
-Дата: **01.11.2026**. Blog listing redesign + Batches 1–14.
-Puck в CRM — позже ([ADR 0005](adr/0005-cms.md)).
-[Контракт](discovery/BLOG_CONTENT_CONTRACT.md),
-[Batch 1](discovery/BLOG_BATCH1_MANIFEST.md)–[Batch 14](discovery/BLOG_BATCH14_MANIFEST.md),
-[категории](discovery/BLOG_CATEGORY_AUDIT.md),
-[план](SPRINT_PLAN.md).
+Дата: **01.11.2026**. Sprint 5 — публичные шаблоны по одному.
+[План](SPRINT_PLAN.md).
 
-## Статус gates
+## Принято владельцем
 
-| Gate | Статус |
-|------|--------|
-| `/beer` каталог | **Принят** 31.10.2026 |
-| `/beer/{slug}` product template | **Принят** 31.10.2026 |
-| Home `/`, `/en` | **Принят** |
-| Blog listing `/blog` | **Redesign ready for owner** (covers, 2-col grid, rubric tabs ≈ production `/blog-all`) |
-| Blog article template | **Принят** |
-| Blog Batch 1–2 | **Принят** |
-| Blog Batch 3–14 | **Ready for owner acceptance** |
+| Страница | Дата |
+|----------|------|
+| `/beer`, product template | ранее |
+| `/partnership` RU/EN v1 | **01.11.2026** |
 
-## Convention (Confirmed owner)
+## Sprint 5 — ждут приёмки
 
-- Fixture files: `YYYY-MM-DD-{id}-{locale}.json`
-- JSON field `publishedAt`: `YYYY-MM-DD HH:mm` (Tilda editorial, Europe/Moscow)
-- Continue batches without waiting for acceptance (owner 01.11.2026).
-- `categoryId` / chip from Tilda `parts` (primary = first id); see `src/content/blog-categories.ts`.
+| Страница | Статус |
+|----------|--------|
+| `/russian-craft-beer` | v1, ждёт приёмки |
+| `/horeca` | v1 + MCP media/anim (hero video, compare imgs, map, fade/zoomin) |
+| `/contacts` | RU-only; baseline smoke |
+| `/policy` | RU-only verbatim; footer/forms → `/policy` |
 
-## Listing redesign — сделано
+### `/horeca` (после MCP enrich)
 
-1. `/blog` cards: cover + category chip on image, title, description, date.
-2. Responsive grid: 1 col mobile / 2 col `sm+` (production `inrow2`).
-3. Rubric tabs: ВСЕ + 8 categories; client filter by `categoryId`.
-4. Cover/description from local article bodies only; production archive CTA removed.
+Baseline: [HORECA_PAGE_BASELINE.md](discovery/HORECA_PAGE_BASELINE.md).
+Источник: page `103271966`, ZB `get_zero_block` + animation keys.
+Open: scroll parallax bottle; SBS rotate slogan; formname Klin May Fest.
 
-## Дальше
+### `/contacts` / `/policy`
 
-Owner acceptance of listing redesign + Batches 3–14. Optional: non-sitemap feed remainder / alias pages (`/blog/expansion`…), newsletter on listing, then Stage 4 templates or CMS per ROADMAP.
+Baselines в `docs/discovery/`. Open на contacts: Mapbox iframe / retail logos.
+
+### Приёмка
+
+- [x] local smoke + lint / typecheck (включая horeca enrich)
+- [ ] Владелец принимает
+
+### Дальше после приёмки
+
+1. `/shopping-rules` (оставшийся legal).
+2. agent / tours / map / shop.
+3. Event campaign landings.
 
 Commit/push — только по запросу.
-
-## Не сейчас
-
-Puck install, video/table/html renderer, ORM/БД, DNS cutover.

@@ -122,14 +122,30 @@ lint/typecheck/build, browser desktop/mobile/zoom, владелец приним
 переводов, свежие проверки, выборочная browser сверка по типам содержимого.
 Количество реальных translated peers определяется данными, не равенством массивов.
 
+## Спринт 4b — blog closure (Confirmed owner 01.11.2026)
+
+**До Sprint 5** закрыть оставшийся blog-scope (раньше «optional»):
+
+1. ~~Newsletter UI на `/blog`~~ done.
+2. ~~YouTube `video` block + deferred embeds~~ done; VK/mp4 Open.
+3. ~~Inventory + `/blog/expansion` + `/vacancies`~~ done.
+4. Campaign landings (BMF/Klin/10-years): listing cards → production; **full pages = Sprint 5**.
+
+Оперативный checklist: [CURSOR_NEXT_STEPS.md](CURSOR_NEXT_STEPS.md).
+**Статус 01.11.2026:** blog feed/tpost + small aliases closed.
+
 ## Спринт 5 — оставшееся публичное покрытие и gate этапа 4
+
+**Вход:** Sprint 4b blog feed/tpost closed (campaign landings may still be production-linked).
 
 Это **серия мини-спринтов по одному шаблону**, а не массовый запуск:
 
-- B2B/partners: отдельно сверить `/partnership`, `/russian-craft-beer`, `/horeca`.
-  Не объединять разные URL и сценарии без source/SEO решения.
-- Contacts и legal: подтверждённые реквизиты/контакты и исходные предупреждения,
-  policy/shop-rules URL, реальные EN версии. Не генерировать правовые тексты.
+- B2B/partners: `/partnership` **принято** 01.11.2026;
+  `/russian-craft-beer`, `/horeca` v1 — ждут приёмки.
+- Contacts/legal: `/contacts` + `/policy` v1 local
+  ([CONTACTS_PAGE_BASELINE.md](discovery/CONTACTS_PAGE_BASELINE.md),
+  [POLICY_PAGE_BASELINE.md](discovery/POLICY_PAGE_BASELINE.md));
+  `/shopping-rules` ещё в очереди. Не генерировать правовые тексты.
 - Остальные страницы из inventory, включая публичные agent/tours/map/shop:
   сохранять UI и честные внешние переходы там, где операции ещё в legacy.
   Публичная страница не означает готовую бонусную систему, карту-CRM или бронь.

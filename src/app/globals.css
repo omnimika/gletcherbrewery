@@ -247,6 +247,67 @@
   animation: hero-rise 0.55s ease-out both;
 }
 
+/* Horeca hero — map Tilda ZB appear: zoomin / fadeinleft / fadeinright / fadeinup */
+@keyframes horeca-zoomin {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes horeca-fade-left {
+  from {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes horeca-fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes horeca-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-horeca-zoomin {
+  animation: horeca-zoomin 1s ease-out both;
+}
+
+.animate-horeca-fade-left {
+  animation: horeca-fade-left 1s ease-out both;
+}
+
+.animate-horeca-fade-right {
+  animation: horeca-fade-right 1s ease-out both;
+}
+
+.animate-horeca-fade-up {
+  animation: horeca-fade-up 1.2s ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   @layer base {
     html {
@@ -257,7 +318,11 @@
   .animate-gate-in,
   .animate-menu-fade,
   .animate-menu-rise,
-  .animate-hero-rise {
+  .animate-hero-rise,
+  .animate-horeca-zoomin,
+  .animate-horeca-fade-left,
+  .animate-horeca-fade-right,
+  .animate-horeca-fade-up {
     animation: none;
   }
 }

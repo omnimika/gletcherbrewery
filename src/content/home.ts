@@ -18,6 +18,8 @@ export type HomeFeature = {
   /** Local Next path or production nav key. */
   href:
     | { kind: "local"; path: "/beer" | "/blog" }
+    /** Unprefixed absolute path (RU-only pages reachable from EN chrome). */
+    | { kind: "absolute"; path: "/russian-craft-beer" }
     | { kind: "external"; key: ExternalNavKey };
 };
 
@@ -34,7 +36,7 @@ export const HOME_FEATURES: HomeFeature[] = [
     titleKey: "featureB2bTitle",
     bodyKey: "featureB2bBody",
     ctaKey: "featureB2bCta",
-    href: { kind: "external", key: "b2b" },
+    href: { kind: "absolute", path: "/russian-craft-beer" },
   },
   {
     id: "shop",

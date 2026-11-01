@@ -145,13 +145,14 @@ export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Expose chrome height to the document so product heroes can fill 100svh
-  // under the fixed header (cancel spacer via negative margin).
+  // Expose chrome metrics so page heroes can fill 100svh under the fixed
+  // header and align block frames with header pad (RU/EN … МЕНЮ).
   useEffect(() => {
+    const root = document.documentElement;
     const hh = vars["--hh" as keyof CSSProperties];
-    if (typeof hh === "string") {
-      document.documentElement.style.setProperty("--hh", hh);
-    }
+    const padX = vars["--pad-x" as keyof CSSProperties];
+    if (typeof hh === "string") root.style.setProperty("--hh", hh);
+    if (typeof padX === "string") root.style.setProperty("--pad-x", padX);
   }, [vars]);
 
   const closeMenu = () => setMenuOpen(false);

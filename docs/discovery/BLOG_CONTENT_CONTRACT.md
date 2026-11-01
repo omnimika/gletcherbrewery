@@ -87,7 +87,8 @@ Tilda feed `text` field = entity-encoded JSON array of `{ ty, te|url, … }`.
 | `text` | `paragraph` | Inline allowlist: `strong`, `em`, `a`, `br` |
 | `heading` + `le` | `heading` | `level` 2–4; DOM `h3.t-redactor__h3` etc. |
 | `image` | `image` | `src`/`alt`/`caption`/`width`/`height` |
-| quote / list / video | reserved | Map when seen in corpus |
+| quote / list | Confirmed | Inline-allowlisted HTML |
+| video | Confirmed YouTube only | `provider:"youtube"` + 11-char `videoId`; render via `youtube-nocookie`. VK / self-hosted mp4 remain Open |
 
 - **No** trusted raw production HTML document via `dangerouslySetInnerHTML`.
 - Fixture `html` strings are pre-allowlisted at import; renderer is not a sanitizer.

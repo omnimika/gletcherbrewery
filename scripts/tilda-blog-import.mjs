@@ -64,6 +64,17 @@ const BEER_HREF_FIXES = {
   "/beer/milk-of-amnesia-v-tropic": "/beer/milk-of-amnesia-v-tropic",
 };
 
+/** Extract 11-char YouTube id from embed/watch/youtu.be URL; else null. */
+export function youtubeIdFromSrc(src) {
+  const s = String(src || "").trim();
+  if (!s) return null;
+  const m =
+    s.match(
+      /(?:youtube\.com\/embed\/|youtube-nocookie\.com\/embed\/|youtu\.be\/|youtube\.com\/watch\?v=)([A-Za-z0-9_-]{11})/,
+    ) || s.match(/^([A-Za-z0-9_-]{11})$/);
+  return m ? m[1] : null;
+}
+
 function rewriteHref(href) {
   if (!href) return "";
   let h = decodeEntities(href).trim();
@@ -249,6 +260,26 @@ export function convertTildaBlocks(items, report) {
       }
       continue;
     }
+    if (ty === "video") {
+      const src = item.url || item.src || "";
+      const videoId = youtubeIdFromSrc(src);
+      if (videoId) {
+        blocks.push({
+          type: "video",
+          provider: "youtube",
+          videoId,
+          title: item.caption || item.title || "",
+        });
+      } else {
+        report.deferred.push({
+          reason: "unsupported-ty",
+          ty: "video",
+          src: src || undefined,
+          provider: item.p || undefined,
+        });
+      }
+      continue;
+    }
     if (ty === "image") {
       const src = item.url || "";
       if (!src) {
@@ -256,12 +287,17 @@ export function convertTildaBlocks(items, report) {
         continue;
       }
       // Published HTML sometimes wraps embeds as <figure><img src=…>.
-      // Treat as unsupported video, never as Next/Image.
-      if (
-        /video_ext\.php|vkvideo\.ru|\/\/vk\.com\/video|youtube\.com\/embed|youtu\.be\//i.test(
-          src,
-        )
-      ) {
+      const ytFromImage = youtubeIdFromSrc(src);
+      if (ytFromImage) {
+        blocks.push({
+          type: "video",
+          provider: "youtube",
+          videoId: ytFromImage,
+          title: item.caption || item.alt || "",
+        });
+        continue;
+      }
+      if (/video_ext\.php|vkvideo\.ru|\/\/vk\.com\/video/i.test(src)) {
         report.deferred.push({ reason: "unsupported-ty", ty: "video", src });
         continue;
       }

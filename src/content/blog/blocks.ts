@@ -43,13 +43,25 @@ export type BlogListBlock = {
   html: BlogInlineHtml;
 };
 
+/**
+ * YouTube embed only (allowlisted provider).
+ * `videoId` is the 11-char YouTube id — never a free-form iframe URL.
+ */
+export type BlogVideoBlock = {
+  type: "video";
+  provider: "youtube";
+  videoId: string;
+  title?: string;
+};
+
 export type BlogBlock =
   | BlogPrefaceBlock
   | BlogParagraphBlock
   | BlogHeadingBlock
   | BlogImageBlock
   | BlogQuoteBlock
-  | BlogListBlock;
+  | BlogListBlock
+  | BlogVideoBlock;
 
 export type BlogArticleCover = {
   src: string;
