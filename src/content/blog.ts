@@ -1909,13 +1909,13 @@ export function getBlogListCards(locale: PublishedLocale): BlogListCard[] {
 }
 
 /**
- * Latest N listing cards — home feed / product-page module slice.
+ * Latest N listing cards — home feed carousel slice.
  * Source order = `getBlogListCards` (publishedAt desc).
- * Dates include year (`DD.MM.YYYY`).
+ * Dates include year (`DD.MM.YYYY`). Default 12 (desktop); mobile UI shows 8.
  */
 export function getLatestBlogPosts(
   locale: PublishedLocale,
-  limit = 4,
+  limit = 12,
 ): BlogListCard[] {
   return getBlogListCards(locale)
     .slice(0, Math.max(0, limit))

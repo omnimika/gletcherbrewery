@@ -56,7 +56,7 @@ export default async function Home({ params }: HomePageProps) {
 
   const published = locale as PublishedLocale;
   const t = await getTranslations("home");
-  const blog = getLatestBlogPosts(published, 4);
+  const blog = getLatestBlogPosts(published, 12);
 
   const promoLabels = {
     promosAria: t("promosAria"),

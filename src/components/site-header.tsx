@@ -233,23 +233,25 @@ export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
               className="flex items-center justify-end"
               style={{ gap: "var(--gap)" }}
             >
+              {/*
+                Same control height, font-size and Condensed (700) for АГЕНТ +
+                МЕНЮ so glyph caps sit on one line (Extended 100 was taller).
+              */}
               <a
                 href={productionHref("agent", locale)}
-                className="font-display inline-flex items-center justify-center rounded-full tracking-normal text-gletcher-white uppercase"
+                className="font-display box-border inline-flex h-[var(--ctrl-h)] items-center justify-center rounded-full border border-transparent leading-none tracking-normal text-gletcher-white uppercase"
                 style={{
-                  height: "var(--ctrl-h)",
                   width: "var(--agent-w)",
                   fontSize: "calc(var(--font) * 1.12)",
-                  /* Prod ZB: weight 100 → Extended */
-                  fontWeight: 100,
+                  fontWeight: 700,
                   background:
                     "radial-gradient(circle at center, rgba(253,102,102,0.78) 0%, rgba(229,55,60,1) 64%)",
                 }}
                 aria-label={tA11y("agent")}
                 onClick={closeMenu}
               >
-                {/* Display face sits optically high — nudge down to button center */}
-                <span aria-hidden className="translate-y-[0.08em] leading-none">
+                {/* Condensed caps sit optically high vs burger — nudge down. */}
+                <span aria-hidden className="translate-y-[0.12em] leading-none">
                   {compact ? t("agentShort") : t("agent")}
                 </span>
               </a>
@@ -258,15 +260,13 @@ export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
                 ref={menuButtonRef}
                 type="button"
                 onClick={() => setMenuOpen((v) => !v)}
-                className={`font-display inline-flex items-center justify-center rounded-full border border-gletcher-navy tracking-normal text-gletcher-navy uppercase transition-[background-color,color,border-color] duration-300 ease-out ${
+                className={`font-display box-border inline-flex h-[var(--ctrl-h)] items-center justify-center rounded-full border border-gletcher-navy leading-none tracking-normal text-gletcher-navy uppercase transition-[background-color,color,border-color] duration-300 ease-out ${
                   solidChrome ? "" : "bg-gletcher-ice/85"
                 }`}
                 style={{
-                  height: "var(--ctrl-h)",
                   width: "var(--menu-w)",
                   fontSize: "calc(var(--font) * 1.12)",
                   gap: `calc(8px * var(--hs))`,
-                  /* Prod ZB: weight 700 → Condensed */
                   fontWeight: 700,
                 }}
                 aria-expanded={menuOpen}
@@ -275,7 +275,7 @@ export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
               >
                 {!compact ? (
                   <span
-                    className={`translate-y-[0.08em] leading-none overflow-hidden whitespace-nowrap transition-[max-width,opacity,margin] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+                    className={`translate-y-[0.12em] leading-none overflow-hidden whitespace-nowrap transition-[max-width,opacity,margin] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
                       menuOpen
                         ? "mr-0 max-w-0 opacity-0"
                         : "max-w-[5rem] opacity-100"

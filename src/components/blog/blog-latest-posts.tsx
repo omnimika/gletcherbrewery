@@ -4,9 +4,14 @@ import { Container, SectionFrame } from "@/components/layout";
 import { Reveal } from "@/components/motion/reveal";
 import type { BlogListCard } from "@/content/blog";
 
+/** Visible in the horizontal feed (no arrows). */
+export const BLOG_LATEST_MOBILE_COUNT = 8;
+export const BLOG_LATEST_DESKTOP_COUNT = 12;
+
 export type BlogLatestPostsProps = {
   /** Accessible section title (SVG mark is decorative). */
   title: string;
+  /** Up to 12 latest cards — mobile shows first 8 via CSS. */
   items: BlogListCard[];
   /** Section id — home uses `blog`. */
   id?: string;
@@ -17,11 +22,9 @@ export type BlogLatestPostsProps = {
 };
 
 /**
- * Latest blog cards — home / product-page module
- * `#rec277882204` (title SVG) + `#rec277844567` (FD301 feed, 4 cols).
- *
- * Home custom CSS (page__.html): image `border:1px #0d0f49` + `border-radius:5px`;
- * feed `z-index:100` over the ZB watermark. Feed typography from `#rec277844567`.
+ * Latest blog cards — horizontal carousel (no arrows).
+ * Mobile ≤959px: 8 cards; desktop: 12. Scroll-snap, hidden scrollbar.
+ * Design: `#rec277882204` + `#rec277844567` (home custom border on covers).
  */
 export function BlogLatestPosts({
   title,
@@ -30,7 +33,8 @@ export function BlogLatestPosts({
   snap = false,
   titleMarkSrc = "/home/blog-title.svg",
 }: BlogLatestPostsProps) {
-  if (items.length === 0) return null;
+  const cards = items.slice(0, BLOG_LATEST_DESKTOP_COUNT);
+  if (cards.length === 0) return null;
 
   return (
     <SectionFrame
@@ -42,10 +46,6 @@ export function BlogLatestPosts({
       className="!overflow-visible !pt-0 !pb-[45px]"
     >
       <div className="relative overflow-visible">
-        {/*
-          ZB 277882204: short artboard, overflow visible — «БЛОГ» spills
-          behind the feed (home `.t897 { z-index:100 }`).
-        */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 z-0 select-none"
@@ -62,25 +62,28 @@ export function BlogLatestPosts({
           </Container>
         </div>
 
-        <Container wide className="relative z-[100]">
+        {/* z-1 only above the watermark — must stay under header (z-100). */}
+        <Container wide className="relative z-[1]">
           <h2 id={`${id}-heading`} className="sr-only">
             {title}
           </h2>
 
-          {/*
-            FD301: 4× `t-col_3`, imageRatio 56, isHorizOnMob.
-            Top inset ≈ ZB carrier so letter tops of «БЛОГ» remain above cards
-            (artboard ~90px; SVG itself ~360px tall and overflows).
-          */}
           <Reveal>
+            {/*
+              Horizontal feed on all breakpoints — ~1.25 / ~2.5 / ~4 cards
+              in view; swipe/drag scroll, no arrow chrome.
+              Cards 9–12 hidden below 960px (8 on mobile).
+            */}
             <ul
-              className="m-0 flex list-none gap-5 overflow-x-auto p-0 pt-[72px] pb-0 [-ms-overflow-style:none] [scrollbar-width:none] max-[479px]:gap-2.5 max-[479px]:pt-[140px] sm:gap-5 sm:pt-[80px] md:grid md:grid-cols-4 md:gap-x-5 md:gap-y-0 md:overflow-visible md:pt-[72px] [&::-webkit-scrollbar]:hidden"
+              className="m-0 flex list-none gap-4 overflow-x-auto overscroll-x-contain p-0 pt-[72px] pb-2 [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory max-[479px]:gap-2.5 max-[479px]:pt-[140px] sm:gap-5 sm:pt-[80px] md:gap-5 md:pt-[7.5rem] lg:pt-36 [&::-webkit-scrollbar]:hidden"
               role="list"
             >
-              {items.map((item, index) => (
+              {cards.map((item, index) => (
                 <li
                   key={item.id}
-                  className="flex w-[80%] max-w-[18rem] shrink-0 flex-col sm:w-[38%] sm:max-w-none md:w-auto md:max-w-none md:min-w-0 md:shrink"
+                  className={`flex shrink-0 snap-start flex-col ${
+                    index >= BLOG_LATEST_MOBILE_COUNT ? "hidden md:flex" : ""
+                  } w-[80%] max-w-[18rem] sm:w-[42%] sm:max-w-[20rem] md:w-[calc((100%-3.75rem)/4)] md:max-w-none`}
                 >
                   <BlogLatestCard item={item} priority={index < 2} />
                 </li>
@@ -105,11 +108,6 @@ function BlogLatestCard({
 
   const body = (
     <>
-      {/*
-        imageRatio 56 → height = 56% of width.
-        Home override: border 1px navy + radius 5px on the cover.
-        No white card plate — text sits on section ice.
-      */}
       <div
         className="relative mb-5 w-full overflow-hidden rounded-[5px] border border-gletcher-navy bg-gletcher-navy/5"
         style={{ aspectRatio: "100 / 56" }}
@@ -124,14 +122,12 @@ function BlogLatestCard({
             priority={priority}
           />
         ) : null}
-        {/* partsPos: onimage */}
         <span className="absolute top-2.5 left-2.5 z-[1] text-[10px] leading-none font-normal tracking-[1px] text-gletcher-red uppercase max-[480px]:text-[8px]">
           {item.categoryLabel}
         </span>
       </div>
 
       <div className="flex flex-1 flex-col pt-[5px] pb-[27px]">
-        {/* 24px / weight 200 (XCompressed) / lh 1 / uppercase / #0d0f49 */}
         <p className="font-[family-name:var(--font-display)] text-[24px] leading-none font-[200] text-gletcher-navy uppercase transition-colors group-hover:text-gletcher-red max-[480px]:text-[20px] max-[480px]:leading-[1.2]">
           {item.title}
         </p>
@@ -140,7 +136,6 @@ function BlogLatestCard({
             {item.description}
           </p>
         ) : null}
-        {/* datePos: afterdescr — row margin-top 15px; year included */}
         {item.dateLabel ? (
           <p className="mt-[15px] text-[10px] leading-none font-normal tracking-[1px] text-gletcher-red uppercase max-[480px]:text-[8px]">
             {item.dateLabel}
