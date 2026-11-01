@@ -3,7 +3,9 @@
     "siteName": "Gletcher Brewery | Official Website",
     "homeDescription": "Gletcher Brewery — Russian craft brewery. Import-grade quality and flavour diversity at a domestic price. Kegs and bottles for bars, restaurants and pubs.",
     "beerTitle": "Catalogue | Gletcher Brewery",
-    "beerDescription": "Gletcher Brewery product catalogue: classic, craft and limited editions."
+    "beerDescription": "Gletcher Brewery product catalogue: classic, craft and limited editions.",
+    "blogTitle": "Blog | Gletcher Brewery",
+    "blogDescription": "Gletcher Brewery news, beer library and event highlights."
   },
   "nav": {
     "products": "Products",
@@ -99,6 +101,13 @@
     "newsletterPrivacyLink": "privacy policy",
     "newsletterPending": "Subscriptions will return on the new site soon. Meanwhile write to info@gletcherbrewery.com.",
     "newsletterInvalid": "Enter a valid e-mail."
+  },
+  "blog": {
+    "title": "Blog",
+    "lead": "Brewery news, beer library pieces and events. The full archive still lives on the current site.",
+    "archiveCta": "All news",
+    "empty": "No published posts in this language yet.",
+    "backToBlog": "Back to blog"
   },
   "beer": {
     "eyebrow": "Our beer line presents",

@@ -1,0 +1,122 @@
+{
+  "id": "beer-pizza",
+  "locale": "en",
+  "slug": "5od5iaktd1-october-9-international-beer-and-pizza-d",
+  "title": "October 9 — International Beer and Pizza Day: Perfect Pairings by Gletcher",
+  "description": "From classic Margherita to pepperoni, four cheese, and BBQ — discover which Gletcher beers pair best with your favorite pizza.",
+  "cover": {
+    "src": "https://static.tildacdn.com/tild3737-6165-4735-b664-366164323832/__.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "From classic Margherita to pepperoni, four cheese, and BBQ — discover which Gletcher beers pair best with your favorite pizza."
+    },
+    {
+      "type": "paragraph",
+      "html": "October 9 is the perfect excuse to treat yourself to a little gastronomic celebration. On this day, beer and pizza lovers around the world celebrate <strong>International Beer and Pizza Day</strong> — an unofficial holiday dedicated to one of the most popular and satisfying food pairings of all time."
+    },
+    {
+      "type": "paragraph",
+      "html": "The celebration has a surprisingly recent history. In 2016, American web developer and passionate beer and pizza enthusiast Nick Saulino decided that this iconic combination deserved a holiday of its own. He chose October 9 and launched Beer and Pizza Day. The idea was so simple and appealing that the celebration soon spread far beyond the United States."
+    },
+    {
+      "type": "paragraph",
+      "html": "But beer and pizza go together for more reasons than just tradition. The malty character of beer complements the toasted flavors of pizza crust, carbonation refreshes the palate after rich cheese and fatty toppings, while hop bitterness can balance spices, meat, and savory sauces."
+    },
+    {
+      "type": "paragraph",
+      "html": "So today, instead of simply ordering your favorite pizza, we invite you to discover the art of pairing it with the right Gletcher beer."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "html": "<strong>The Classics: Margherita and Vegetable Pizza</strong>"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild6536-3838-4136-b832-373461643364/_-__Hell.png",
+      "alt": "",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "type": "paragraph",
+      "html": "Tomatoes, mozzarella, fresh basil, vegetables, and a thin, crispy crust don&#x27;t need an overpowering beer. The key is to preserve the freshness of the ingredients without masking their delicate flavors."
+    },
+    {
+      "type": "paragraph",
+      "html": "<strong>Our choice — Heidegger Hell.</strong>"
+    },
+    {
+      "type": "paragraph",
+      "html": "This clean and refreshing pale lager, with its gentle malty sweetness and subtle hop bitterness, makes an excellent companion to Margherita, vegetable pizza, or a simple cheese-based creation."
+    },
+    {
+      "type": "paragraph",
+      "html": "It&#x27;s one of those pairings where the beer doesn&#x27;t compete with the food — instead, it quietly brings all the flavors together in perfect harmony."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "html": "<strong>Meat Lovers&#x27; Paradise: Pepperoni, Salami, and Mixed Meat Pizza</strong>"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3661-3238-4566-b233-616137613332/___.png",
+      "alt": "",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "type": "paragraph",
+      "html": "The more meat, spices, and heat your pizza brings to the table, the more expressive your beer can be.<br /><br />For pepperoni, salami, spicy sausages, and generously topped meat pizzas, we recommend exploring several different styles:"
+    },
+    {
+      "type": "paragraph",
+      "html": "<strong>Underground Ale</strong> — an English-style ale with caramel, resinous notes, and moderate hop bitterness. Its rich malt character pairs beautifully with roasted meats and hearty pizza crusts.<br /><br /><strong>Friday Avenue APA</strong> — a fresher, more aromatic option featuring Mosaic hops, with fruity and floral notes. A great match for juicy meat pizzas, especially when you&#x27;re looking for a lighter, more refreshing contrast.<br /><br /><strong>Bowler IPA</strong> — the choice for those who enjoy a bold contrast. Its pronounced hop bitterness, citrus, pine, and fruity notes cut through the richness of cheese and meat, creating an especially exciting pairing with spicy pepperoni.<br /><br />The spicier the pizza, the more interesting its conversation with hops becomes."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "html": "<strong>Cheese Heaven: Four Cheese Pizza</strong>"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3939-6662-4939-b730-343361343866/Blue_Monkey___.png",
+      "alt": "",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "type": "paragraph",
+      "html": "Mozzarella, Parmesan, Gorgonzola, blue cheese, and other intensely flavored varieties create a rich, creamy, and often distinctly salty pizza. This is where contrasting flavors become particularly exciting.<br /><br /><strong>Blue Monkey</strong> — a wheat ale with fruity, spicy, citrus, banana, and clove notes. Its smooth character and gentle acidity refresh the palate after every bite of rich, melted cheese.<br /><br />And if your pizza features blue cheese, try pairing it with <strong>Rouge de Fleur</strong>. Its vibrant cherry character, delicate sweetness, and refreshing tartness create a fascinating fruity counterpoint to salty, tangy cheeses.<br /><br />The result is more than just beer with pizza — it&#x27;s a genuine gastronomic pairing worth exploring."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "html": "<strong>Smoky Flavors: BBQ, Bacon, and Mushrooms</strong>"
+    },
+    {
+      "type": "image",
+      "src": "https://static.tildacdn.com/tild3937-3865-4061-a161-363238376362/____Nut_Butter.png",
+      "alt": "",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "type": "paragraph",
+      "html": "Smoked meats, bacon, grilled toppings, BBQ sauce, caramelized onions, and mushrooms call for beers with a deeper, more pronounced malt character.<br /><br />One excellent choice is <strong>Nut Butter</strong> — a nut brown ale featuring caramel, malt, and nutty notes. It shines alongside mushrooms, roasted meats, and sweet, smoky barbecue sauces.<br /><br />For an even more intense combination, try <strong>Iron Woods Dry Stout</strong>. Its roasted malt character, coffee notes, caramel undertones, and subtle spice beautifully complement BBQ flavors, crispy bacon, and the toasted edges of a well-baked pizza.<br /><br />If you prefer something smoother and more indulgent, <strong>Iron Woods Milk Stout</strong> offers a creamy texture with chocolate, coffee, and delicate caramel sweetness."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "<strong>What&#x27;s Your Perfect Pairing?</strong>"
+    },
+    {
+      "type": "paragraph",
+      "html": "The truth is, there&#x27;s no single right answer to the question: &quot;Which beer goes best with pizza?&quot;<br /><br />The very same pizza can reveal entirely different flavors when paired with a crisp lager, an aromatic APA, a hop-forward IPA, a refreshing wheat ale, or a rich, full-bodied stout.<br /><br />That&#x27;s exactly why International Beer and Pizza Day is such a wonderful opportunity to organize a little tasting session at home and experiment with different combinations.<br /><br />Pick a few different Gletcher beers, order your favorite pizzas, invite some friends, and discover your own perfect match.<br /><br /><strong>Happy International Beer and Pizza Day!</strong><br /><br />Drink responsibly, savor every flavor, and never stop experimenting."
+    }
+  ]
+}

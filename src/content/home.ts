@@ -16,7 +16,9 @@ export type HomeFeature = {
   bodyKey: string;
   ctaKey: string;
   /** Local Next path or production nav key. */
-  href: { kind: "local"; path: "/beer" } | { kind: "external"; key: ExternalNavKey };
+  href:
+    | { kind: "local"; path: "/beer" | "/blog" }
+    | { kind: "external"; key: ExternalNavKey };
 };
 
 export const HOME_FEATURES: HomeFeature[] = [
@@ -60,7 +62,7 @@ export const HOME_FEATURES: HomeFeature[] = [
     titleKey: "featureBlogTitle",
     bodyKey: "featureBlogBody",
     ctaKey: "featureBlogCta",
-    href: { kind: "external", key: "blog" },
+    href: { kind: "local", path: "/blog" },
   },
 ];
 
@@ -75,14 +77,14 @@ const BLOG_RU: HomeBlogTeaser[] = [
     category: "БИБЛИОТЕКА",
     title:
       "День легализации домашнего пивоварения: как homebrew изменил крафтовое пиво",
-    href: "https://www.gletcherbrewery.com/blog-all/tpost/homebrewing-craft-beer-history",
+    href: "/blog-all/tpost/homebrewing-craft-beer-history",
     date: "14.10",
   },
   {
     id: "beer-pizza",
     category: "НОВОСТИ",
     title: "9 октября — День пива и пиццы: идеальные сочетания от Gletcher",
-    href: "https://www.gletcherbrewery.com/blog-all/tpost/913cadd4f1-9-oktyabrya-den-piva-i-pitstsi-idealnie",
+    href: "/blog-all/tpost/913cadd4f1-9-oktyabrya-den-piva-i-pitstsi-idealnie",
     date: "09.10",
   },
   {
@@ -107,7 +109,7 @@ const BLOG_EN: HomeBlogTeaser[] = [
     category: "NEWS",
     title:
       "October 9 — International Beer and Pizza Day: perfect pairings by Gletcher",
-    href: "https://www.gletcherbrewery.com/en/blog-all/tpost/5od5iaktd1-october-9-international-beer-and-pizza-d",
+    href: "/en/blog-all/tpost/5od5iaktd1-october-9-international-beer-and-pizza-d",
   },
   {
     id: "moa-na",

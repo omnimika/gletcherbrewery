@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
   images: {
     // Local catalog PNGs + SVG placeholders under /public
     formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "static.tildacdn.com",
+      },
+    ],
   },
   turbopack: {
     rules: {

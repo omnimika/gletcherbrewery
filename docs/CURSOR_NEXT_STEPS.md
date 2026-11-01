@@ -1,35 +1,30 @@
 # Текущее задание Cursor Agent
 
-Дата: **01.11.2026**. База ревью Codex: `2c1a9d0`. После sprint 1 Cursor
-закрыл H01–H04 в рабочем дереве; **home ждёт приёмки владельцем**.
-[Ревью](reviews/2026-11-01-home-and-sprints.md), [план спринтов](SPRINT_PLAN.md),
-[baseline](discovery/HOME_PAGE_BASELINE.md), [промпт](CURSOR_REVIEW_PROMPT.md).
+Дата: **01.11.2026**. Sprint 2 listing готов; sprint 3 article template в работе
+с учётом будущего Puck в CRM ([ADR 0005](adr/0005-cms.md)).
+[Контракт](discovery/BLOG_CONTENT_CONTRACT.md), [план](SPRINT_PLAN.md).
 
 ## Статус gates
 
 | Gate | Статус |
 |------|--------|
 | `/beer` каталог | **Принят** 31.10.2026 |
-| `/beer/{slug}` product template | **Принят** 31.10.2026 (`0df9706`) |
-| Cynic visual polish | **Owner follow-up** |
-| Home `/`, `/en` | **Ready for owner acceptance** (H01–H04 done; lint/tsc/build PASS) |
+| `/beer/{slug}` product template | **Принят** 31.10.2026 |
+| Home `/`, `/en` | **Ready for owner acceptance** |
+| Blog listing `/blog` | **Ready for owner acceptance** |
+| Blog article `/blog-all/tpost/{slug}` | **Ready for owner acceptance** (pizza RU/EN + homebrew RU) |
 
-## Sprint 1 — сделано
+## Sprint 3 — сделано
 
-1. **H01:** RU teasers → Confirmed tpost URLs from published home (see baseline).
-2. **H02:** PNG stays until first successful canvas frame; draw/readback errors restore PNG.
-3. **H03:** pause RAF + video when offscreen or tab hidden; reduced-motion/Save-Data already disable video plan.
-4. **H04:** client email validity + `newsletterInvalid`; pending note only on valid submit (no backend).
-5. Checks: `npm run lint`, `npx tsc --noEmit --incremental false`, `npm run build`; local `/` `/en`;
-   browser teasers/newsletter; 390×844 and 1440×900 screenshots. MCP Tilda unavailable this session.
-6. CPU/Network/LCP **not** instrumented — do not treat as PASS.
-
-## После приёмки home
-
-Спринт 2 (Proposed): blog source/content/i18n contract + один listing —
-см. [SPRINT_PLAN](SPRINT_PLAN.md). Не начинать до согласия владельца.
-Commit/push — только по запросу.
+1. ADR 0005 Proposed: Puck in CRM; block taxonomy = Tilda feed (`preface` /
+   `paragraph` / `heading` / `image` + reserved).
+2. Fixtures: `src/content/blog/articles/*.json` from published Tilda bodies.
+3. Renderer: `BlogArticle` + allowlisted inline HTML; route mirrors production.
+4. Listing/home teasers: local href when body exists; else production tpost.
+5. Missing peer: homebrew RU local; EN switch → `/en/blog` (no fake EN article).
+6. Checks: lint / tsc / build PASS; browser pizza RU↔EN peers; homebrew EN → listing.
 
 ## Не сейчас
 
-map/agent/tours backend, NocoDB, новые локали, Cynic polish, CMS/БД.
+Установка `@measured/puck`, CMS UI, ORM/БД, партии всех постов, Cynic polish.
+Commit/push — только по запросу.
