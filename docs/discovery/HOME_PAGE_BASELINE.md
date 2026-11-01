@@ -34,6 +34,9 @@ Shared chrome: SiteShell header (RU/EN, logo, Agent, Menu) + footer — already 
 4. **Tours CTA** — ZB `749426691` RU / `762053148` EN: title + 3 points + crocodile (`public/home/crocodile.png`) + «Забронировать экскурсию» → `/tours`.
 5. **Menu flex grid** — ZB `749502712`: 3×2 cards (продукция / новости / партнёрам / география / экскурсии / магазин) with `menu-*.png` thumbs → local `/beer` or production peers.
 6. **Blog teasers** — 4 posts (Tilda Feed); categories БИБЛИОТЕКА / НОВОСТИ / МЕРОПРИЯТИЯ.
+   Next implementation: reusable `BlogLatestPosts` (01.11) mirrors product-page
+   module `17104885` `#rec277882204`+`#rec277844567` (SVG title + FD301 cards);
+   data via `getLatestBlogPosts`. Curated URL snapshot still in `getHomeBlogTeasers`.
 7. **Newsletter / subscribe** — ZB `751210003` (EN peer `762056776`): crocodile (`crodile-subscribe.png`) + form + privacy note → `/policy`. Submit backend Open.
 8. Footer (SiteShell).
 

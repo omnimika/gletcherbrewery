@@ -1,6 +1,6 @@
 /**
  * Stable section manifest for home DS-3 rollout.
- * Snap deferred while mid-blocks still use HomeWindowStage (transform scale).
+ * Snap only on bands that left HomeWindowStage (transform scale breaks proximity).
  */
 
 export type HomeSectionId =
@@ -31,7 +31,7 @@ export const HOME_SECTIONS: readonly HomeSectionDef[] = [
     id: "moa",
     labelRu: "MOA баннер",
     labelEn: "MOA banner",
-    snapReady: false,
+    snapReady: true,
   },
   {
     id: "promos",

@@ -1908,6 +1908,23 @@ export function getBlogListCards(locale: PublishedLocale): BlogListCard[] {
   return cards;
 }
 
+/**
+ * Latest N listing cards — home feed / product-page module slice.
+ * Source order = `getBlogListCards` (publishedAt desc).
+ * Dates include year (`DD.MM.YYYY`).
+ */
+export function getLatestBlogPosts(
+  locale: PublishedLocale,
+  limit = 4,
+): BlogListCard[] {
+  return getBlogListCards(locale)
+    .slice(0, Math.max(0, limit))
+    .map((card) => ({
+      ...card,
+      dateLabel: formatBlogDate(card.publishedAt, locale, { withYear: true }),
+    }));
+}
+
 export function getLocalBlogStaticParams() {
   return listLocalArticleParams();
 }
@@ -1915,6 +1932,7 @@ export function getLocalBlogStaticParams() {
 export function formatBlogDate(
   iso: string | undefined,
   locale: PublishedLocale,
+  opts?: { withYear?: boolean },
 ): string | undefined {
   if (!iso) return undefined;
   // Accept `YYYY-MM-DD`, `YYYY-MM-DD HH:mm`, or ISO datetime.
@@ -1922,6 +1940,14 @@ export function formatBlogDate(
   if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return undefined;
   const d = new Date(`${day}T12:00:00Z`);
   if (Number.isNaN(d.getTime())) return undefined;
+  const withYear = opts?.withYear ?? false;
+  // Home feed cards: DD.MM.YYYY; listing/articles keep DD.MM unless asked.
+  if (withYear) {
+    const dd = String(d.getUTCDate()).padStart(2, "0");
+    const mm = String(d.getUTCMonth() + 1).padStart(2, "0");
+    const yyyy = String(d.getUTCFullYear());
+    return `${dd}.${mm}.${yyyy}`;
+  }
   return new Intl.DateTimeFormat(locale === "en" ? "en-GB" : "ru-RU", {
     day: "2-digit",
     month: "2-digit",

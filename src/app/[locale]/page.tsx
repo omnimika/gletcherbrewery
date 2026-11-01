@@ -10,7 +10,8 @@ import { HomeToursCta } from "@/components/home/home-tours-cta";
 import { HomeMenuGrid } from "@/components/home/home-menu-grid";
 import { HomeBlog } from "@/components/home/home-blog";
 import { HomeNewsletter } from "@/components/home/home-newsletter";
-import { getHomeBlogTeasers } from "@/content/home";
+import { DocumentProximitySnap } from "@/components/motion/document-proximity-snap";
+import { getLatestBlogPosts } from "@/content/blog";
 import { HOME_MENU_CARDS } from "@/content/home-menu";
 import {
   DEFAULT_LOCALE,
@@ -55,7 +56,7 @@ export default async function Home({ params }: HomePageProps) {
 
   const published = locale as PublishedLocale;
   const t = await getTranslations("home");
-  const blog = getHomeBlogTeasers(published);
+  const blog = getLatestBlogPosts(published, 4);
 
   const promoLabels = {
     promosAria: t("promosAria"),
@@ -91,6 +92,8 @@ export default async function Home({ params }: HomePageProps) {
 
   return (
     <SiteShell>
+      {/* Opt-in snap for mid-blocks that left HomeWindowStage (e.g. #moa). */}
+      <DocumentProximitySnap />
       <HomeHero
         breweryLabel={t("brewery")}
         brandLabel={t("brand")}
