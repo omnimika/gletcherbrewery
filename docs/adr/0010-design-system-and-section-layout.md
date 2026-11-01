@@ -50,7 +50,9 @@ anchors, controls/card states и масштабирования по обеим 
 
 - Публичный frontend и будущий Puck editor смогут использовать одни block
   recipes; render primitives не зависят от редактора/БД.
-- HomeWindowStage остаётся legacy adapter до последовательной миграции.
+- HomeWindowStage остаётся legacy adapter. **Owner Confirmed (01.11):** home
+  mid-blocks — stretch `screen` slides + CompositionGrid fill, не artboard scale
+  и не content bands.
 - Источник контента/SEO и намеренное изменение геометрии проверяются отдельно:
   screenshot старой страницы не обязывает сохранять её случайные UI расхождения.
 - Сначала закрывается design foundation backlog; затем продолжение public

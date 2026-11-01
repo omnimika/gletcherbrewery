@@ -363,6 +363,53 @@ export default async function DesignSystemShowcasePage() {
           </Container>
         </SectionFrame>
 
+        <SectionFrame
+          id="screen-halves-x"
+          mode="screen"
+          tone="frost"
+          snap
+          aria-labelledby="screen-halves-x-h"
+        >
+          <Container fill wide>
+            <h2 id="screen-halves-x-h" className="type-label shrink-0">
+              Screen fill · halves-x
+            </h2>
+            <CompositionGrid preset="halves-x" fill className="mt-4">
+              <CompositionPanel>
+                <PanelBox title="Left 50%" note="stretch" />
+              </CompositionPanel>
+              <CompositionPanel>
+                <PanelBox title="Right 50%" note="stretch" />
+              </CompositionPanel>
+            </CompositionGrid>
+          </Container>
+        </SectionFrame>
+
+        <SectionFrame
+          id="screen-quarters-y"
+          mode="screen"
+          tone="ice"
+          snap
+          aria-labelledby="screen-quarters-y-h"
+        >
+          <Container fill wide>
+            <h2 id="screen-quarters-y-h" className="type-label shrink-0">
+              Screen fill · quarters-y
+            </h2>
+            <CompositionGrid preset="quarters-y" fill className="mt-4">
+              <CompositionPanel>
+                <PanelBox title="Top 1fr" />
+              </CompositionPanel>
+              <CompositionPanel>
+                <PanelBox title="Middle 2fr" note="accent" />
+              </CompositionPanel>
+              <CompositionPanel>
+                <PanelBox title="Bottom 1fr" />
+              </CompositionPanel>
+            </CompositionGrid>
+          </Container>
+        </SectionFrame>
+
         <SectionFrame id="cards" mode="content" snap aria-labelledby="cards-h">
           <Container>
             <h2 id="cards-h" className="type-display-section">

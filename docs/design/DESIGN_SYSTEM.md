@@ -146,8 +146,10 @@ container 40rem / 64rem / 90rem, проверяются на реальных к
    минимальный из width-fit и height-fit, с верхним/нижним пределом. Scale ниже
    читаемого минимума → reflow/смена композиции, не дальнейшее уменьшение UI.
 5. `transform:scale()` не является базовым способом масштабировать весь DOM
-   с текстом/controls. `HomeWindowStage` — legacy adapter; новые секции строить
-   на layout primitives, старые переносить по одному после сравнения.
+   с текстом/controls. `HomeWindowStage` — legacy adapter. **Owner Confirmed
+   для home:** stretch `SectionFrame mode=screen` + `CompositionGrid fill`
+   (fr ratios / halves / quarters / card grid); не возвращать artboard scale
+   на mid-blocks. Showcase: `#screen-halves-x`, `#screen-quarters-y`.
 6. `svh` — стабильная основа презентационных секций; `dvh` — только где нужен
    live viewport (например menu overlay). Не заставлять высоту и snap постоянно
    прыгать при скрытии browser toolbar. Карточки не обязаны иметь viewport height.

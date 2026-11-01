@@ -6,6 +6,8 @@ type ContainerProps = {
   className?: string;
   /** Wide composition uses full available width minus gutter. */
   wide?: boolean;
+  /** Stretch inside SectionFrame mode=screen (flex-1 height chain). */
+  fill?: boolean;
 };
 
 /**
@@ -16,12 +18,13 @@ export function Container({
   children,
   className = "",
   wide = false,
+  fill = false,
 }: ContainerProps) {
   return (
     <Tag
       className={`mx-auto w-full min-w-0 px-[var(--page-gutter)] ${
         wide ? "max-w-none" : "max-w-[var(--content-max)]"
-      } ${className}`}
+      } ${fill ? "flex min-h-0 flex-1 flex-col" : ""} ${className}`}
     >
       {children}
     </Tag>

@@ -158,9 +158,9 @@
    не повторять старые home/blog milestones и не переоткрывать DS-1.
 3. **DS-2 выполнен** (pilot `/horeca`: anchors, proximity snap, Reveal,
    CompareCard DS-B). **DS-3 в работе:** contacts + partnership shell + home
-   `#moa` / `#blog` (`BlogLatestPosts`) off `HomeWindowStage`; далее остальные
-   home mid-blocks или catalog — по одному. Старые приёмки — regression
-   baseline; URL/контент сохраняются.
+   home mid-blocks — **stretch screen slides** (`SectionFrame mode=screen` +
+   `CompositionGrid` fill), без `HomeWindowStage`; далее catalog/product —
+   по одному. Старые приёмки — regression baseline; URL/контент сохраняются.
 4. Owner direction **Confirmed**; DS-1 tokens/API — Implemented/reviewable
    (ADR 0010). ADR 0001 **Accepted**; next-intl RU/EN, `sr`/`hy`/`ka`/`de` — Open.
 5. Ревью `docs/reviews/2026-11-01-design-system.md` дополнено Cursor follow-up

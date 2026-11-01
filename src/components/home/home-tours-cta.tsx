@@ -1,5 +1,11 @@
 import Image from "next/image";
-import { HomeWindowStage } from "@/components/home/home-window-stage";
+import {
+  CompositionGrid,
+  CompositionPanel,
+  Container,
+  SectionFrame,
+} from "@/components/layout";
+import { Reveal } from "@/components/motion/reveal";
 import { productionHref } from "@/lib/site-links";
 import type { PublishedLocale } from "@/i18n/locales";
 
@@ -23,64 +29,77 @@ const ctaStyle = {
 
 /**
  * Production ZB `749426691` (RU) / `762053148` (EN):
- * brewery tours CTA with crocodile art + three points + book button.
+ * brewery tours CTA — stretch screen slide, quarters-y
+ * (title+points / art / CTA).
  */
 export function HomeToursCta({ locale, labels }: HomeToursCtaProps) {
   const toursHref = productionHref("tours", locale);
   const points = [labels.point1, labels.point2, labels.point3];
 
   return (
-    <section
+    <SectionFrame
       id="tours"
-      tabIndex={-1}
+      mode="screen"
+      tone="ice"
+      snap
       aria-label={labels.toursAria}
-      className="bg-gletcher-ice"
     >
-      <HomeWindowStage>
-        <div className="flex flex-col items-center px-5 pb-10 pt-8 @[480px]:px-[10px] @[640px]:px-3 @[640px]:pb-12 @[960px]:px-5 @[960px]:pb-14 @[960px]:pt-10">
-          <h2 className="font-display flex flex-col items-center text-center text-[38px] leading-[0.85] tracking-wide text-gletcher-navy uppercase @[480px]:flex-row @[480px]:flex-wrap @[480px]:justify-center @[480px]:gap-x-[0.35em] @[480px]:text-[45px] @[640px]:text-[63px] @[960px]:text-[68px] @[1200px]:text-[84px]">
-            <span className="font-black">{labels.titleStrong}</span>
-            <span className="font-extralight">{labels.titleRest}</span>
-          </h2>
+      <Container fill>
+        <CompositionGrid preset="quarters-y" fill>
+          <CompositionPanel className="justify-end gap-6 sm:gap-8">
+            <Reveal>
+              <h2 className="font-display flex flex-col items-center text-center text-[clamp(2rem,7vw,5.25rem)] leading-[0.85] tracking-wide text-gletcher-navy uppercase sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-[0.35em]">
+                <span className="font-black">{labels.titleStrong}</span>
+                <span className="font-extralight">{labels.titleRest}</span>
+              </h2>
+            </Reveal>
+            <Reveal>
+              <ul className="grid w-full grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-4 md:gap-6 lg:gap-8">
+                {points.map((text) => (
+                  <li
+                    key={text}
+                    className="flex min-w-0 items-start gap-3 sm:gap-4"
+                  >
+                    <span
+                      aria-hidden
+                      className="mt-1 h-8 w-px shrink-0 bg-gletcher-navy sm:mt-2 sm:h-10"
+                    />
+                    <p className="font-display text-[clamp(1rem,2.2vw,1.5rem)] leading-[0.95] font-extrabold tracking-wide text-gletcher-navy uppercase">
+                      {text}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </CompositionPanel>
 
-          <ul className="mt-8 grid w-full max-w-[1100px] grid-cols-1 gap-5 @[480px]:mt-10 @[480px]:grid-cols-3 @[480px]:gap-4 @[640px]:gap-6 @[960px]:mt-12 @[960px]:gap-8">
-            {points.map((text) => (
-              <li
-                key={text}
-                className="flex items-start gap-3 @[480px]:gap-4"
+          <CompositionPanel className="items-center justify-center">
+            <Reveal className="flex h-full max-h-full w-full max-w-[760px] items-center justify-center lg:max-w-[960px] xl:max-w-[760px]">
+              <Image
+                src="/home/crocodile.png"
+                alt=""
+                width={1200}
+                height={640}
+                className="h-auto max-h-full w-full object-contain"
+                sizes="(max-width: 960px) 100vw, 760px"
+                priority={false}
+              />
+            </Reveal>
+          </CompositionPanel>
+
+          <CompositionPanel className="justify-start pt-2 sm:pt-4">
+            <Reveal className="flex w-full justify-center">
+              <a
+                href={toursHref}
+                className="font-display inline-flex h-12 w-full max-w-[400px] items-center justify-center px-4 text-sm font-extrabold tracking-wide text-white uppercase transition-[filter,transform] duration-200 hover:brightness-105 active:scale-[0.98] sm:max-w-[340px] sm:text-base lg:max-w-[400px]"
+                style={ctaStyle}
               >
-                <span
-                  aria-hidden
-                  className="mt-1 h-8 w-px shrink-0 bg-gletcher-navy @[480px]:mt-2 @[480px]:h-10"
-                />
-                <p className="font-display text-[18px] leading-[0.9] font-extrabold tracking-wide text-gletcher-navy uppercase @[640px]:text-[18px] @[960px]:text-[22px] @[1200px]:text-[24px]">
-                  {text}
-                </p>
-              </li>
-            ))}
-          </ul>
-
-          <div className="relative mt-6 w-full max-w-[760px] @[480px]:mt-4 @[640px]:mt-2 @[960px]:mt-4 @[960px]:max-w-[960px] @[1200px]:max-w-[760px]">
-            <Image
-              src="/home/crocodile.png"
-              alt=""
-              width={1200}
-              height={640}
-              className="h-auto w-full"
-              sizes="(max-width: 960px) 100vw, 760px"
-              priority={false}
-            />
-          </div>
-
-          <a
-            href={toursHref}
-            className="font-display mt-6 inline-flex h-12 w-full max-w-[400px] items-center justify-center px-4 text-sm font-extrabold tracking-wide text-white uppercase transition-[filter,transform] duration-200 hover:brightness-105 active:scale-[0.98] @[320px]:max-w-[280px] @[480px]:mt-8 @[480px]:max-w-[340px] @[480px]:text-base @[960px]:h-12 @[1200px]:max-w-[400px]"
-            style={ctaStyle}
-          >
-            {labels.cta}
-          </a>
-        </div>
-      </HomeWindowStage>
-    </section>
+                {labels.cta}
+              </a>
+            </Reveal>
+          </CompositionPanel>
+        </CompositionGrid>
+      </Container>
+    </SectionFrame>
   );
 }

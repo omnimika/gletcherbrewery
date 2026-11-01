@@ -1,6 +1,11 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { Container, SectionFrame } from "@/components/layout";
+import {
+  CompositionGrid,
+  CompositionPanel,
+  Container,
+  SectionFrame,
+} from "@/components/layout";
 import { Reveal } from "@/components/motion/reveal";
 import type { BlogListCard } from "@/content/blog";
 
@@ -15,14 +20,14 @@ export type BlogLatestPostsProps = {
   items: BlogListCard[];
   /** Section id — home uses `blog`. */
   id?: string;
-  /** Soft proximity snap when section left window-stage. */
+  /** Soft proximity snap for screen slides. */
   snap?: boolean;
   /** Decorative SVG title mark — Tilda ZB `#rec277882204`. */
   titleMarkSrc?: string;
 };
 
 /**
- * Latest blog cards — horizontal carousel (no arrows).
+ * Latest blog cards — stretch screen slide + horizontal carousel (no arrows).
  * Mobile ≤959px: 8 cards; desktop: 12. Scroll-snap, hidden scrollbar.
  * Design: `#rec277882204` + `#rec277844567` (home custom border on covers).
  */
@@ -39,59 +44,60 @@ export function BlogLatestPosts({
   return (
     <SectionFrame
       id={id}
-      mode="content"
+      mode="screen"
       tone="ice"
       snap={snap}
       aria-labelledby={`${id}-heading`}
-      className="!overflow-visible !pt-0 !pb-[45px]"
+      className="!overflow-visible"
     >
-      <div className="relative overflow-visible">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 z-0 select-none"
-        >
-          <Container wide>
-            <Image
-              src={titleMarkSrc}
-              alt=""
-              width={671}
-              height={336}
-              className="ml-2.5 h-auto w-[92%] max-w-none sm:ml-5 sm:w-[68%]"
-              priority={false}
-            />
-          </Container>
-        </div>
-
-        {/* z-1 only above the watermark — must stay under header (z-100). */}
-        <Container wide className="relative z-[1]">
-          <h2 id={`${id}-heading`} className="sr-only">
-            {title}
-          </h2>
-
-          <Reveal>
-            {/*
-              Horizontal feed on all breakpoints — ~1.25 / ~2.5 / ~4 cards
-              in view; swipe/drag scroll, no arrow chrome.
-              Cards 9–12 hidden below 960px (8 on mobile).
-            */}
-            <ul
-              className="m-0 flex list-none gap-4 overflow-x-auto overscroll-x-contain p-0 pt-[72px] pb-2 [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory max-[479px]:gap-2.5 max-[479px]:pt-[140px] sm:gap-5 sm:pt-[80px] md:gap-5 md:pt-[7.5rem] lg:pt-36 [&::-webkit-scrollbar]:hidden"
-              role="list"
+      <Container fill wide className="relative overflow-visible">
+        <CompositionGrid preset="full" fill>
+          <CompositionPanel className="relative justify-center overflow-visible">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 z-0 select-none"
             >
-              {cards.map((item, index) => (
-                <li
-                  key={item.id}
-                  className={`flex shrink-0 snap-start flex-col ${
-                    index >= BLOG_LATEST_MOBILE_COUNT ? "hidden md:flex" : ""
-                  } w-[80%] max-w-[18rem] sm:w-[42%] sm:max-w-[20rem] md:w-[calc((100%-3.75rem)/4)] md:max-w-none`}
+              <Image
+                src={titleMarkSrc}
+                alt=""
+                width={671}
+                height={336}
+                className="ml-2.5 h-auto w-[92%] max-w-none sm:ml-5 sm:w-[68%] lg:w-[55%]"
+                priority={false}
+              />
+            </div>
+
+            <div className="relative z-[1] flex min-h-0 w-full flex-col justify-center">
+              <h2 id={`${id}-heading`} className="sr-only">
+                {title}
+              </h2>
+
+              <Reveal>
+                {/*
+                  Horizontal feed — ~1.25 / ~2.5 / ~4 cards in view;
+                  swipe/drag scroll, no arrow chrome.
+                  Cards 9–12 hidden below 960px (8 on mobile).
+                */}
+                <ul
+                  className="m-0 flex list-none gap-4 overflow-x-auto overscroll-x-contain p-0 pt-[min(22svh,9rem)] pb-2 [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory max-[479px]:gap-2.5 sm:gap-5 md:gap-5 [&::-webkit-scrollbar]:hidden"
+                  role="list"
                 >
-                  <BlogLatestCard item={item} priority={index < 2} />
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </Container>
-      </div>
+                  {cards.map((item, index) => (
+                    <li
+                      key={item.id}
+                      className={`flex shrink-0 snap-start flex-col ${
+                        index >= BLOG_LATEST_MOBILE_COUNT ? "hidden md:flex" : ""
+                      } w-[80%] max-w-[18rem] sm:w-[42%] sm:max-w-[20rem] md:w-[calc((100%-3.75rem)/4)] md:max-w-none`}
+                    >
+                      <BlogLatestCard item={item} priority={index < 2} />
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
+          </CompositionPanel>
+        </CompositionGrid>
+      </Container>
     </SectionFrame>
   );
 }

@@ -92,7 +92,7 @@ export default async function Home({ params }: HomePageProps) {
 
   return (
     <SiteShell>
-      {/* Opt-in snap for mid-blocks that left HomeWindowStage (e.g. #moa). */}
+      {/* Opt-in proximity snap for stretch screen mid-blocks. */}
       <DocumentProximitySnap />
       <HomeHero
         breweryLabel={t("brewery")}

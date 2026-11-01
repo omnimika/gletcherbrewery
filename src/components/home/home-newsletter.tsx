@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
-import { HomeWindowStage } from "@/components/home/home-window-stage";
+import {
+  CompositionGrid,
+  CompositionPanel,
+  Container,
+  SectionFrame,
+} from "@/components/layout";
+import { Reveal } from "@/components/motion/reveal";
 import { POLICY_PATH } from "@/content/policy";
 import type { PublishedLocale } from "@/i18n/locales";
 
@@ -27,7 +33,8 @@ function looksLikeEmail(value: string) {
 
 /**
  * Production ZB `751210003` (footer/library peer; EN `762056776`):
- * crocodile + subscribe form. Submit UI-only until backend exists.
+ * crocodile + subscribe form on one stretch screen slide (halves-x).
+ * Submit UI-only until backend exists.
  */
 export function HomeNewsletter({
   locale: _locale,
@@ -62,96 +69,99 @@ export function HomeNewsletter({
   }
 
   return (
-    <section
+    <SectionFrame
       id="newsletter"
-      tabIndex={-1}
+      mode="screen"
+      tone="ice"
+      snap
       aria-label={title.replace(/\n/g, " ")}
-      className="bg-gletcher-ice"
     >
-      <HomeWindowStage>
-        <div className="grid min-w-0 grid-cols-1 items-center gap-6 px-5 py-8 @[480px]:grid-cols-[minmax(0,0.45fr)_minmax(0,0.55fr)] @[480px]:gap-4 @[480px]:px-[10px] @[480px]:py-4 @[640px]:gap-6 @[640px]:px-3 @[960px]:gap-8 @[960px]:px-5 @[960px]:py-0 @[1200px]:grid-cols-[550px_minmax(0,1fr)] @[1200px]:gap-10">
-          <div className="relative mx-auto w-full min-w-0 max-w-[280px] @[480px]:mx-0 @[480px]:max-w-none">
-            <Image
-              src="/home/crodile-subscribe.png"
-              alt=""
-              width={1472}
-              height={1481}
-              className="h-auto w-full object-contain"
-              sizes="(max-width: 480px) 70vw, 45vw"
-              loading="lazy"
-              fetchPriority="low"
-            />
-          </div>
-
-          {/*
-            Artboard 320 gets the base size — must fit «ПОДПИШИТЕСЬ» inside
-            padded width; former 51px + tracking-wide overflowed HomeWindowStage.
-          */}
-          <div className="flex w-full min-w-0 max-w-full flex-col @[480px]:max-w-[300px] @[640px]:max-w-[300px] @[960px]:max-w-[460px] @[1200px]:pl-2">
-            <h2 className="font-display text-[28px] leading-[0.9] font-extrabold tracking-normal break-words whitespace-pre-line text-gletcher-navy uppercase @[480px]:text-[30px] @[640px]:text-[40px] @[960px]:text-[56px] @[960px]:leading-[0.85] @[1200px]:text-[64px]">
-              {title}
-            </h2>
-            <p className="mt-4 text-[15px] leading-[1.25] break-words whitespace-pre-line text-gletcher-navy @[480px]:mt-3 @[480px]:text-[12px] @[640px]:text-[14px] @[960px]:mt-6 @[960px]:text-[18px] @[1200px]:text-[20px]">
-              {lead}
-            </p>
-
-            <form
-              onSubmit={onSubmit}
-              className="mt-6 flex w-full max-w-[300px] flex-col gap-4 @[480px]:mt-5 @[480px]:gap-5 @[960px]:mt-8"
-              noValidate
-            >
-              <label className="sr-only" htmlFor="home-newsletter-email">
-                {placeholder}
-              </label>
-              <input
-                id="home-newsletter-email"
-                name="email"
-                type="email"
-                required
-                autoComplete="email"
-                placeholder={placeholder}
-                aria-invalid={invalid || undefined}
-                aria-describedby={invalid ? "home-newsletter-error" : undefined}
-                onChange={() => {
-                  if (invalid) setInvalid(false);
-                }}
-                className="h-[50px] w-full min-w-0 border border-gletcher-navy bg-transparent px-4 text-base text-gletcher-navy outline-none placeholder:text-gletcher-navy/45 focus-visible:ring-2 focus-visible:ring-gletcher-navy/30 @[480px]:h-10 @[480px]:text-sm @[960px]:h-[50px] @[960px]:text-base"
+      <Container fill>
+        <CompositionGrid preset="halves-x" fill>
+          <CompositionPanel className="items-center justify-center">
+            <Reveal className="flex w-full max-w-[min(100%,28rem)] items-center justify-center sm:max-w-none">
+              <Image
+                src="/home/crodile-subscribe.png"
+                alt=""
+                width={1472}
+                height={1481}
+                className="h-auto max-h-[min(55svh,28rem)] w-full object-contain lg:max-h-[min(70svh,36rem)]"
+                sizes="(max-width: 640px) 70vw, 45vw"
+                loading="lazy"
+                fetchPriority="low"
               />
-              {invalid ? (
-                <p
-                  id="home-newsletter-error"
-                  className="text-xs text-gletcher-red"
-                  role="alert"
+            </Reveal>
+          </CompositionPanel>
+
+          <CompositionPanel className="justify-center">
+            <Reveal className="flex w-full min-w-0 max-w-[min(100%,28rem)] flex-col lg:max-w-[460px]">
+              <h2 className="font-display text-[clamp(1.75rem,5vw,4rem)] leading-[0.9] font-extrabold tracking-normal break-words whitespace-pre-line text-gletcher-navy uppercase">
+                {title}
+              </h2>
+              <p className="mt-4 text-[clamp(0.875rem,1.6vw,1.25rem)] leading-[1.25] break-words whitespace-pre-line text-gletcher-navy sm:mt-3 lg:mt-6">
+                {lead}
+              </p>
+
+              <form
+                onSubmit={onSubmit}
+                className="mt-6 flex w-full max-w-[300px] flex-col gap-4 sm:mt-5 sm:gap-5 lg:mt-8"
+                noValidate
+              >
+                <label className="sr-only" htmlFor="home-newsletter-email">
+                  {placeholder}
+                </label>
+                <input
+                  id="home-newsletter-email"
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  placeholder={placeholder}
+                  aria-invalid={invalid || undefined}
+                  aria-describedby={
+                    invalid ? "home-newsletter-error" : undefined
+                  }
+                  onChange={() => {
+                    if (invalid) setInvalid(false);
+                  }}
+                  className="h-12 w-full min-w-0 border border-gletcher-navy bg-transparent px-4 text-base text-gletcher-navy outline-none placeholder:text-gletcher-navy/45 focus-visible:ring-2 focus-visible:ring-gletcher-navy/30 sm:h-10 sm:text-sm lg:h-[50px] lg:text-base"
+                />
+                {invalid ? (
+                  <p
+                    id="home-newsletter-error"
+                    className="text-xs text-gletcher-red"
+                    role="alert"
+                  >
+                    {invalidNote}
+                  </p>
+                ) : null}
+                <button
+                  type="submit"
+                  className="font-display h-12 w-full bg-gletcher-navy text-xs font-extrabold tracking-wide text-white uppercase transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.99] sm:h-8 lg:h-[50px]"
                 >
-                  {invalidNote}
+                  {submit}
+                </button>
+              </form>
+
+              <p className="mt-5 max-w-full text-[clamp(0.5rem,1vw,0.625rem)] leading-[1.3] break-words text-gletcher-navy sm:mt-3 lg:mt-5 lg:max-w-[362px]">
+                {privacy}{" "}
+                <a
+                  href={policyHref}
+                  className="underline underline-offset-2 transition-opacity hover:opacity-70"
+                >
+                  {privacyLinkLabel}
+                </a>
+              </p>
+
+              {note ? (
+                <p className="mt-3 text-xs text-gletcher-navy/60" role="status">
+                  {note}
                 </p>
               ) : null}
-              <button
-                type="submit"
-                className="font-display h-[50px] w-full bg-gletcher-navy text-xs font-extrabold tracking-wide text-white uppercase transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.99] @[480px]:h-8 @[960px]:h-[50px]"
-              >
-                {submit}
-              </button>
-            </form>
-
-            <p className="mt-5 max-w-full text-[10px] leading-[1.3] break-words text-gletcher-navy @[480px]:mt-3 @[480px]:text-[8px] @[960px]:mt-5 @[960px]:max-w-[362px] @[960px]:text-[10px]">
-              {privacy}{" "}
-              <a
-                href={policyHref}
-                className="underline underline-offset-2 transition-opacity hover:opacity-70"
-              >
-                {privacyLinkLabel}
-              </a>
-            </p>
-
-            {note ? (
-              <p className="mt-3 text-xs text-gletcher-navy/60" role="status">
-                {note}
-              </p>
-            ) : null}
-          </div>
-        </div>
-      </HomeWindowStage>
-    </section>
+            </Reveal>
+          </CompositionPanel>
+        </CompositionGrid>
+      </Container>
+    </SectionFrame>
   );
 }

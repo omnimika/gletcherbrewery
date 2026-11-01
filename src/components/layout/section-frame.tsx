@@ -24,14 +24,18 @@ const tones: Record<SectionTone, string> = {
 };
 
 const modes: Record<SectionMode, string> = {
+  // Stretch slide: min available viewport; flex column so children can fill.
+  // Grows past min when content overflows (no max-height clip).
   screen:
-    "flex min-h-[var(--section-available-min)] flex-col justify-center py-[var(--section-inset-y)]",
+    "flex min-h-[var(--section-available-min)] flex-col py-[var(--section-inset-y)]",
   content: "py-[var(--spacing-ds-6)] sm:py-[var(--spacing-ds-7)]",
   banner: "py-[var(--spacing-ds-5)] sm:py-[var(--spacing-ds-6)]",
 };
 
 /**
  * Semantic page section — stable id, height mode, tone. Grows with content.
+ * Screen mode is a stretch slide: put a flex-1 / h-full child (Container +
+ * CompositionGrid fill) to proportionally divide the available height.
  */
 export function SectionFrame({
   id,

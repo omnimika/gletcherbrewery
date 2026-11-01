@@ -1,6 +1,6 @@
 /**
- * Stable section manifest for home DS-3 rollout.
- * Snap only on bands that left HomeWindowStage (transform scale breaks proximity).
+ * Stable section manifest for home stretch slides.
+ * Mid-blocks: SectionFrame mode=screen + CompositionGrid; snap ready.
  */
 
 export type HomeSectionId =
@@ -12,11 +12,14 @@ export type HomeSectionId =
   | "blog"
   | "newsletter";
 
+export type HomeSectionMode = "hero" | "screen";
+
 export type HomeSectionDef = {
   id: HomeSectionId;
   labelRu: string;
   labelEn: string;
-  /** Soft snap not enabled on home until window-stage exit. */
+  mode: HomeSectionMode;
+  /** Soft proximity snap for screen slides. */
   snapReady: boolean;
 };
 
@@ -25,42 +28,49 @@ export const HOME_SECTIONS: readonly HomeSectionDef[] = [
     id: "hero",
     labelRu: "Hero",
     labelEn: "Hero",
+    mode: "hero",
     snapReady: false,
   },
   {
     id: "moa",
     labelRu: "MOA баннер",
     labelEn: "MOA banner",
+    mode: "screen",
     snapReady: true,
   },
   {
     id: "promos",
     labelRu: "B2B и карта",
     labelEn: "B2B and map",
-    snapReady: false,
+    mode: "screen",
+    snapReady: true,
   },
   {
     id: "tours",
     labelRu: "Экскурсии",
     labelEn: "Tours",
-    snapReady: false,
+    mode: "screen",
+    snapReady: true,
   },
   {
     id: "menu",
     labelRu: "Меню разделов",
     labelEn: "Section menu",
-    snapReady: false,
+    mode: "screen",
+    snapReady: true,
   },
   {
     id: "blog",
     labelRu: "Блог",
     labelEn: "Blog",
-    snapReady: false,
+    mode: "screen",
+    snapReady: true,
   },
   {
     id: "newsletter",
     labelRu: "Подписка",
     labelEn: "Newsletter",
-    snapReady: false,
+    mode: "screen",
+    snapReady: true,
   },
 ] as const;

@@ -44,7 +44,13 @@ EN live is leaner: hero BREWERY (H1) / GLETCHER (H2) — **heading tags inverted
 
 ### Window upscale (Confirmed Tilda + Next)
 
-Mid-blocks (MOA, B2B/map, features, blog, newsletter) use `HomeWindowStage`: matched artboard screen 320…1400, `scale = windowWidth / screen` — same as header `ab_upscale: window`. Hero stays viewport-fluid (`vw` / `svh`).
+Owner Confirmed (01.11): home mid-blocks are **stretch screen slides** —
+`SectionFrame mode=screen` + `CompositionGrid` (halves/quarters/card grid) +
+opt-in proximity snap. No `HomeWindowStage` / artboard `transform: scale` on
+`#moa` `#promos` `#tours` `#menu` `#blog` `#newsletter`. One semantic group =
+one available-viewport slide; multiple blocks on a slide only via guide grid.
+Hero stays viewport-fluid (`vw` / `svh`). Legacy stage file remains for unused
+callers (e.g. `home-features`).
 
 ## Media
 
