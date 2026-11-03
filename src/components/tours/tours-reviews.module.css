@@ -1,0 +1,175 @@
+/**
+ * Tours reviews — ZB 750881518 artboard (~848px @1200).
+ */
+
+.screen {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: min(100svh, 53rem);
+  width: 100%;
+  overflow: hidden;
+  background: #e6eefc;
+  color: #0d0f49;
+  border-top: 1px solid color-mix(in srgb, #0d0f49 10%, transparent);
+}
+
+.stage {
+  position: relative;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1200px;
+  flex: 1;
+  min-height: 0;
+  padding: 2.5rem var(--page-gutter, 1.25rem) 3.5rem;
+}
+
+.sticker {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.stickerWow {
+  z-index: 6;
+  top: 38%;
+  left: 0.5%;
+  width: clamp(5rem, 18vw, 14.5rem);
+}
+
+.stickerPeace {
+  z-index: 7;
+  top: 18%;
+  right: 1%;
+  width: clamp(5.5rem, 16vw, 13.75rem);
+}
+
+.stickerEyes {
+  z-index: 5;
+  top: 58%;
+  right: 2%;
+  width: clamp(4rem, 12vw, 10rem);
+}
+
+.copy {
+  position: relative;
+  z-index: 10;
+  margin-inline: auto;
+  max-width: 47rem;
+  text-align: center;
+}
+
+.lead {
+  margin: 0 auto;
+  max-width: 47rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1rem, 3.2vw, 3rem);
+  font-weight: 300;
+  line-height: 0.85;
+  text-transform: uppercase;
+}
+
+.rule {
+  margin: 0 auto 1.25rem;
+  width: clamp(4rem, 12vw, 6.25rem);
+  height: 5px;
+  background: #e5373c;
+}
+
+.hairline {
+  margin: 1.5rem auto 1.25rem;
+  width: clamp(5rem, 16vw, 11.625rem);
+  height: 1px;
+  background: #0d0f49;
+}
+
+.line1 {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.5rem, 5.5vw, 4.3rem);
+  font-weight: 900;
+  line-height: 0.85;
+  text-transform: uppercase;
+}
+
+.line2 {
+  margin: -0.02em 0 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.5rem, 14vw, 11.25rem);
+  font-weight: 200;
+  line-height: 0.85;
+  text-transform: uppercase;
+}
+
+.line3 {
+  margin: 0.15em 0 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.4rem, 5.8vw, 4.7rem);
+  font-weight: 700;
+  line-height: 0.85;
+  text-transform: uppercase;
+}
+
+.line4 {
+  margin: 0.08em 0 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.5rem, 6.5vw, 5.3rem);
+  font-weight: 200;
+  line-height: 0.85;
+  text-transform: uppercase;
+}
+
+.note {
+  margin: 1.5rem auto 0;
+  max-width: 28rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(0.7rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+  min-height: clamp(2.5rem, 5vw, 4rem);
+  min-width: min(100%, 20.5rem);
+  padding: 0 1.25rem;
+  border: 1px solid #0d0f49;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(0.75rem, 1.6vw, 1.3rem);
+  font-weight: 100;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  transition: filter 0.2s ease;
+}
+
+.cta:hover {
+  filter: brightness(1.05);
+}
+
+@media (max-width: 639px) {
+  .stickerWow {
+    top: 8%;
+    left: -2%;
+  }
+
+  .stickerPeace {
+    top: 6%;
+    right: -2%;
+  }
+
+  .stickerEyes {
+    top: auto;
+    bottom: 8%;
+    right: 4%;
+  }
+
+  .copy {
+    padding-block: 4.5rem 1rem;
+  }
+}

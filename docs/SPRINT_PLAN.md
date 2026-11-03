@@ -15,7 +15,7 @@
 - Blog feed/tpost и small aliases закрыты по предыдущему Sprint 4b; не повторять
   listing/article/batch миграцию с нуля.
 - `/russian-craft-beer`, `/horeca`, `/contacts`, `/policy` v1 в коде/ожидают приёмки.
-- `/shopping-rules` legal v1; `/agent` landing v1 в коде; tours/map/shop и campaigns остаются backlog.
+- `/shopping-rules` legal v1; `/agent` landing v1; `/tours` RU/EN v1 в коде; map/shop и campaigns остаются backlog.
 - Состояние старых sign-offs сохраняется; новый запрос разрешает целевые design
   изменения общих компонентов и принятых страниц с сохранением URL/контента.
 

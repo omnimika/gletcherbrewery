@@ -29,9 +29,10 @@ Draft ZB `718523054` is an old long dump — **not** the published path.
 ## Motion / fonts / z-index
 
 - Font: `Gratimo-ABCGravity` → local `font-display` (same family stack).
-- Appear: `zoomin` (title scale 0.8 / brand 0.7), `fadeinup/left/right`, SBS seal 30°→−120°, bounce on coins.
+- Motion via `zb-motion`: viewport appear (`animstyle` + duration/delay/distance/scale) and SBS (`sbsopts` + `blockintoview`), plus scroll/mouse parallax where ZB sets `animprx`.
+- Hero: zoomin 0.5/0.8 + 1/0.7; pills fadein*; CTA/video fadeinup; seal SBS → −120°; video `animprxs=120`.
+- Purchases/coins/partner/status: SBS scale-in titles + coin `bounceFin`; receipt mouse parallax.
 - Hero z-order Confirmed: title 3 → brand 4 → pills 8–10 → CTA 14 → bottle video 15 → seal 16.
-- Pills desktop: left alone, then `2025` + right cluster (not evenly spaced).
 - Page `nofooter=on` → SiteShell `hideFooter`.
 - Signup/login remain production `/members/*` until auth migrates.
 

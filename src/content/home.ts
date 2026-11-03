@@ -17,7 +17,7 @@ export type HomeFeature = {
   ctaKey: string;
   /** Local Next path or production nav key. */
   href:
-    | { kind: "local"; path: "/beer" | "/blog" }
+    | { kind: "local"; path: "/beer" | "/blog" | "/tours" }
     /** Unprefixed absolute path (RU-only pages reachable from EN chrome). */
     | { kind: "absolute"; path: "/russian-craft-beer" }
     | { kind: "external"; key: ExternalNavKey };
@@ -50,7 +50,7 @@ export const HOME_FEATURES: HomeFeature[] = [
     titleKey: "featureToursTitle",
     bodyKey: "featureToursBody",
     ctaKey: "featureToursCta",
-    href: { kind: "external", key: "tours" },
+    href: { kind: "local", path: "/tours" },
   },
   {
     id: "catalog",

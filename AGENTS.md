@@ -158,8 +158,8 @@
    не повторять старые home/blog milestones и не переоткрывать DS-1.
 3. **DS-2 выполнен** (pilot `/horeca`: anchors, proximity snap, Reveal,
    CompareCard DS-B). **DS-3 / Sprint 5:** public shells + `/shopping-rules` +
-   blog listing; `/agent` landing v1 (ZB motion/media) — в этом срезе.
-   Далее visual QA agent или tours/map/shop. Старые приёмки — regression baseline.
+   blog listing; `/agent` landing v1; `/tours` RU/EN v1 (YCLIENTS temporary) —
+   в этом срезе. Далее visual QA tours или map/shop. Старые приёмки — regression.
 4. Owner direction **Confirmed**; DS-1 tokens/API — Implemented/reviewable
    (ADR 0010). ADR 0001 **Accepted**; next-intl RU/EN, `sr`/`hy`/`ka`/`de` — Open.
 5. Ревью `docs/reviews/2026-11-01-design-system.md` дополнено Cursor follow-up

@@ -6,7 +6,7 @@ import {
   SectionFrame,
 } from "@/components/layout";
 import { Reveal } from "@/components/motion/reveal";
-import { productionHref } from "@/lib/site-links";
+import { Link } from "@/i18n/navigation";
 import type { PublishedLocale } from "@/i18n/locales";
 
 type HomeToursCtaProps = {
@@ -33,7 +33,6 @@ const ctaStyle = {
  * (title+points / art / CTA).
  */
 export function HomeToursCta({ locale, labels }: HomeToursCtaProps) {
-  const toursHref = productionHref("tours", locale);
   const points = [labels.point1, labels.point2, labels.point3];
 
   return (
@@ -89,13 +88,14 @@ export function HomeToursCta({ locale, labels }: HomeToursCtaProps) {
 
           <CompositionPanel className="justify-start pt-2 sm:pt-4">
             <Reveal className="flex w-full justify-center">
-              <a
-                href={toursHref}
+              <Link
+                href="/tours"
+                locale={locale}
                 className="font-display inline-flex h-12 w-full max-w-[400px] items-center justify-center px-4 text-sm font-extrabold tracking-wide text-white uppercase transition-[filter,transform] duration-200 hover:brightness-105 active:scale-[0.98] sm:max-w-[340px] sm:text-base lg:max-w-[400px]"
                 style={ctaStyle}
               >
                 {labels.cta}
-              </a>
+              </Link>
             </Reveal>
           </CompositionPanel>
         </CompositionGrid>
