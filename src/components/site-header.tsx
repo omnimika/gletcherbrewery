@@ -13,7 +13,7 @@ import { LocaleSwitch } from "@/components/locale-switch";
 import { MainNavPanel } from "@/components/main-nav-overlay";
 import { MenuToggleIcon } from "@/components/menu-toggle-icon";
 import { useFocusTrap } from "@/lib/use-focus-trap";
-import { productionHref } from "@/lib/site-links";
+import { AGENT_PATH } from "@/content/agent";
 import { getHeaderDesign } from "@/lib/tilda-artboard-scale";
 import type { PublishedLocale } from "@/i18n/locales";
 
@@ -237,8 +237,9 @@ export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
                 Same control height, font-size and Condensed (700) for АГЕНТ +
                 МЕНЮ so glyph caps sit on one line (Extended 100 was taller).
               */}
+              {/* Absolute RU path — page is RU-only; avoid /en/agent 404 + hydration fork. */}
               <a
-                href={productionHref("agent", locale)}
+                href={AGENT_PATH}
                 className="font-display box-border inline-flex h-[var(--ctrl-h)] items-center justify-center rounded-full border border-transparent leading-none tracking-normal text-gletcher-white uppercase"
                 style={{
                   width: "var(--agent-w)",
@@ -250,7 +251,6 @@ export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
                 aria-label={tA11y("agent")}
                 onClick={closeMenu}
               >
-                {/* Condensed caps sit optically high vs burger — nudge down. */}
                 <span aria-hidden className="translate-y-[0.12em] leading-none">
                   {compact ? t("agentShort") : t("agent")}
                 </span>

@@ -1,0 +1,420 @@
+/**
+ * Agent landing — Tilda ZB 711680591…720952281.
+ * Layer order, type sizes and motion from source artboards.
+ */
+
+.screen {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 100svh;
+  width: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  background: #e6eefc;
+  color: #0d0f49;
+}
+
+.stage {
+  position: relative;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1200px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ——— Hero artboard (ZB 711680591) ——— */
+
+.heroStage {
+  width: min(100%, 75rem);
+  max-width: none;
+}
+
+.heroTitle {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  padding-top: clamp(3.5rem, 12svh, 7rem);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.75rem, 21.25vw, 15.9375rem);
+  font-weight: 300;
+  line-height: 0.82;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
+  color: #0d0f49;
+  animation: agent-zoomin-title 0.5s ease-out both;
+}
+
+.heroBrand {
+  position: relative;
+  z-index: 4;
+  margin: -0.06em 0 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.75rem, 15vw, 11.25rem);
+  font-weight: 100;
+  line-height: 0.82;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
+  color: #0d0f49;
+  animation: agent-zoomin-brand 1s ease-out both;
+}
+
+.heroMobileLines {
+  display: none;
+  margin-top: 0.35rem;
+  text-align: center;
+}
+
+.heroMobileLines p {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.75rem, 11vw, 2.75rem);
+  font-weight: 300;
+  line-height: 0.82;
+  text-transform: uppercase;
+  color: #0d0f49;
+}
+
+@media (max-width: 479px) {
+  .heroTitle,
+  .heroBrand {
+    /* On phone Tilda swaps main lines for mobile slogans */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .heroMobileLines {
+    display: block;
+    position: relative;
+    z-index: 5;
+    padding-top: clamp(4.5rem, 18svh, 7rem);
+  }
+}
+
+.heroPills {
+  position: absolute;
+  z-index: 10;
+  top: 44%;
+  left: 1.5%;
+  right: 1.5%;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.pillRightCluster {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+@media (min-width: 640px) {
+  .heroPills {
+    display: flex;
+  }
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(1.85rem, 3.2vw, 3rem);
+  padding: 0 clamp(0.7rem, 1.2vw, 1.25rem);
+  border: 1px solid #0d0f49;
+  border-radius: 999px;
+  background: #e6eefb;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(0.7rem, 1.45vw, 1.3125rem);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #0d0f49;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.pillLeft {
+  animation: agent-fade-right 1s ease-out both;
+}
+
+.pillYear,
+.pillRight {
+  animation: agent-fade-left 1s ease-out both;
+}
+
+.heroCta {
+  position: absolute;
+  z-index: 14;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  animation: agent-fade-up 1s ease-out both;
+}
+
+.heroVideo {
+  position: absolute;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  width: min(37%, 28rem);
+  height: min(74%, 66svh);
+  translate: -50% -46%;
+  overflow: hidden;
+  pointer-events: none;
+  animation: agent-fade-up 1.2s ease-out both;
+}
+
+.heroSeal {
+  position: absolute;
+  z-index: 16;
+  top: 52%;
+  left: calc(50% - clamp(5.5rem, 12vw, 9rem));
+  width: clamp(5rem, 10vw, 7.5rem);
+  height: clamp(5rem, 10vw, 7.5rem);
+  pointer-events: none;
+  animation: agent-sbs-spin 1.5s ease-out both;
+}
+
+/* ——— Shared type / CTA ——— */
+
+.display {
+  font-family: var(--font-display), sans-serif;
+  line-height: 0.82;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: #0d0f49;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  min-width: min(100%, 320px);
+  padding: 0 1.25rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1rem;
+  font-weight: 100;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  background: radial-gradient(
+    circle at center,
+    rgba(246, 112, 116, 1) 0%,
+    rgba(254, 36, 42, 1) 48%,
+    rgba(223, 30, 35, 1) 100%
+  );
+  border: 1px solid #0d0f49;
+  transition: filter 0.2s ease;
+}
+
+.cta:hover {
+  filter: brightness(1.06);
+}
+
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  min-width: min(100%, 320px);
+  padding: 0 1.25rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.55;
+  color: #0d0f49;
+  background: transparent;
+  border: 1px solid #0d0f49;
+  transition: filter 0.2s ease;
+}
+
+.videoFill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ——— Motion ——— */
+
+.zoomin {
+  animation: agent-zoomin 1s ease-out both;
+}
+
+.zoominSlow {
+  animation: agent-zoomin 1s ease-out 0.1s both;
+}
+
+.zoominLater {
+  animation: agent-zoomin 1s ease-out 0.2s both;
+}
+
+.fadeUp {
+  animation: agent-fade-up 1s ease-out both;
+}
+
+.fadeUpDelay {
+  animation: agent-fade-up 1s ease-out 0.2s both;
+}
+
+.fadeUpDelay2 {
+  animation: agent-fade-up 1s ease-out 0.3s both;
+}
+
+.fadeUpDelay3 {
+  animation: agent-fade-up 1s ease-out 0.4s both;
+}
+
+.fadeLeft {
+  animation: agent-fade-left 1s ease-out both;
+}
+
+.fadeRight {
+  animation: agent-fade-right 1s ease-out both;
+}
+
+.bounceIn {
+  animation: agent-bounce-in 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.bounceIn2 {
+  animation: agent-bounce-in 0.9s 0.1s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.bounceIn3 {
+  animation: agent-bounce-in 0.9s 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes agent-zoomin-title {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes agent-zoomin-brand {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes agent-zoomin {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes agent-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes agent-fade-left {
+  from {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes agent-fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Seal: source rotate 30° → SBS −120° */
+@keyframes agent-sbs-spin {
+  0% {
+    opacity: 0;
+    transform: rotate(30deg);
+  }
+  1% {
+    opacity: 0;
+    transform: rotate(30deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-120deg);
+  }
+}
+
+@keyframes agent-bounce-in {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9) rotate(-20deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroTitle,
+  .heroBrand,
+  .pillLeft,
+  .pillYear,
+  .pillRight,
+  .heroCta,
+  .heroVideo,
+  .heroSeal,
+  .zoomin,
+  .zoominSlow,
+  .zoominLater,
+  .fadeUp,
+  .fadeUpDelay,
+  .fadeUpDelay2,
+  .fadeUpDelay3,
+  .fadeLeft,
+  .fadeRight,
+  .bounceIn,
+  .bounceIn2,
+  .bounceIn3 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .heroSeal {
+    transform: rotate(-120deg) !important;
+  }
+}

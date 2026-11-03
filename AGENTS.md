@@ -157,10 +157,9 @@
    Актуальные задания — `docs/CURSOR_NEXT_STEPS.md` и `docs/SPRINT_PLAN.md`;
    не повторять старые home/blog milestones и не переоткрывать DS-1.
 3. **DS-2 выполнен** (pilot `/horeca`: anchors, proximity snap, Reveal,
-   CompareCard DS-B). **DS-3 в работе:** contacts + partnership + home
-   stretch slides + catalog/product shell; `/shopping-rules` legal v1
-   (verbatim + ReadingContainer) — в этом срезе. Далее blog listing
-   или visual QA. Старые приёмки — regression baseline.
+   CompareCard DS-B). **DS-3 / Sprint 5:** public shells + `/shopping-rules` +
+   blog listing; `/agent` landing v1 (ZB motion/media) — в этом срезе.
+   Далее visual QA agent или tours/map/shop. Старые приёмки — regression baseline.
 4. Owner direction **Confirmed**; DS-1 tokens/API — Implemented/reviewable
    (ADR 0010). ADR 0001 **Accepted**; next-intl RU/EN, `sr`/`hy`/`ka`/`de` — Open.
 5. Ревью `docs/reviews/2026-11-01-design-system.md` дополнено Cursor follow-up

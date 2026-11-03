@@ -4,6 +4,7 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BlogListing } from "@/components/blog/blog-listing";
 import { HomeNewsletter } from "@/components/home/home-newsletter";
+import { DocumentProximitySnap } from "@/components/motion/document-proximity-snap";
 import { SiteShell } from "@/components/site-shell";
 import { getBlogListCards } from "@/content/blog";
 import {
@@ -52,6 +53,7 @@ export default async function BlogListingPage({ params }: BlogPageProps) {
 
   return (
     <SiteShell>
+      <DocumentProximitySnap />
       <BlogListing
         title={t("title")}
         lead={t("lead")}

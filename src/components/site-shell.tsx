@@ -12,10 +12,13 @@ import type { PublishedLocale } from "@/i18n/locales";
 export function SiteShell({
   children,
   localeHrefs,
+  hideFooter = false,
 }: {
   children: ReactNode;
   /** Peer pathnames for LocaleSwitch (e.g. product RU/EN slug pairs). */
   localeHrefs?: Partial<Record<PublishedLocale, string>>;
+  /** Match Tilda `nofooter=on` pages (e.g. `/agent`). */
+  hideFooter?: boolean;
 }) {
   return (
     <div className="flex min-h-svh flex-col bg-gletcher-ice text-gletcher-navy">
@@ -23,7 +26,7 @@ export function SiteShell({
         <SiteHeader localeHrefs={localeHrefs} />
         <div id="site-content" className="flex min-h-0 flex-1 flex-col">
           <main className="flex-1">{children}</main>
-          <SiteFooter />
+          {hideFooter ? null : <SiteFooter />}
         </div>
       </div>
       <div id="portal-root">

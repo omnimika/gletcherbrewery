@@ -3,12 +3,19 @@
 import Image from "next/image";
 import { useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
-import type { BlogListCard } from "@/content/blog";
 import {
   BlogCategoryChips,
   type BlogFilterId,
 } from "@/components/blog/blog-category-chips";
+import {
+  CardGrid,
+  CardGridItem,
+  Container,
+  SectionFrame,
+} from "@/components/layout";
+import { Reveal } from "@/components/motion/reveal";
+import type { BlogListCard } from "@/content/blog";
+import { Link } from "@/i18n/navigation";
 
 export const BLOG_PAGE_SIZE = 10;
 
@@ -164,6 +171,10 @@ function BlogPagination({
   );
 }
 
+/**
+ * Blog feed — DS-3: intro banner + content CardGrid (not screen slides).
+ * Filter + pagination behaviour preserved.
+ */
 export function BlogListing({
   title,
   lead,
@@ -201,53 +212,80 @@ export function BlogListing({
   }
 
   return (
-    <section className="mx-auto w-full max-w-[1120px] px-5 pt-8 pb-16 sm:px-8 sm:pt-10 sm:pb-20">
-      <header className="text-center">
-        <h1 className="font-display text-[clamp(2.25rem,6vw,4rem)] leading-[0.9] font-extrabold tracking-wide text-gletcher-navy uppercase">
-          {title}
-        </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-gletcher-navy/75 sm:text-base">
-          {lead}
-        </p>
-      </header>
+    <>
+      <SectionFrame
+        id="blog-intro"
+        mode="banner"
+        tone="ice"
+        snap
+        aria-labelledby="blog-title"
+      >
+        <Container className="text-center">
+          <Reveal>
+            <h1
+              id="blog-title"
+              className="font-display text-[clamp(2.25rem,6vw,4rem)] leading-[0.9] font-extrabold tracking-wide text-gletcher-navy uppercase"
+            >
+              {title}
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-gletcher-navy/75 sm:text-base">
+              {lead}
+            </p>
+          </Reveal>
+        </Container>
+      </SectionFrame>
 
-      <div ref={listRef} className="mt-8 scroll-mt-24 sm:mt-10">
-        <BlogCategoryChips active={filter} onChange={handleFilterChange} />
-      </div>
+      <SectionFrame
+        id="blog"
+        mode="content"
+        tone="ice"
+        snap
+        aria-label={title}
+        className="!pt-0"
+      >
+        <Container className="max-w-[1120px]">
+          <div ref={listRef} className="scroll-mt-24">
+            <BlogCategoryChips active={filter} onChange={handleFilterChange} />
+          </div>
 
-      {filtered.length === 0 ? (
-        <p className="mt-12 text-center text-sm text-gletcher-navy/60">{empty}</p>
-      ) : (
-        <>
-          <ul className="mt-10 grid grid-cols-1 gap-x-8 gap-y-10 sm:mt-12 sm:grid-cols-2">
-            {visible.map((item, index) => {
-              const className =
-                "group flex h-full flex-col text-left transition-opacity";
-              const body = (
-                <BlogCardBody item={item} priority={index < 4} />
-              );
-              return (
-                <li key={item.id}>
-                  {item.local ? (
-                    <Link href={item.href} className={className}>
-                      {body}
-                    </Link>
-                  ) : (
-                    <a href={item.href} className={className}>
-                      {body}
-                    </a>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-          <BlogPagination
-            page={currentPage}
-            totalPages={totalPages}
-            onChange={handlePageChange}
-          />
-        </>
-      )}
-    </section>
+          {filtered.length === 0 ? (
+            <p className="mt-12 text-center text-sm text-gletcher-navy/60">
+              {empty}
+            </p>
+          ) : (
+            <>
+              {/* Accepted feed is 2-up; min width keeps auto-fit from going 3-col. */}
+              <CardGrid columns={3} minCardWidth="28rem" className="mt-10 sm:mt-12">
+                {visible.map((item, index) => {
+                  const className =
+                    "group flex h-full flex-col text-left transition-opacity";
+                  const body = (
+                    <BlogCardBody item={item} priority={index < 4} />
+                  );
+                  return (
+                    <CardGridItem key={item.id}>
+                      {item.local ? (
+                        <Link href={item.href} className={className}>
+                          {body}
+                        </Link>
+                      ) : (
+                        <a href={item.href} className={className}>
+                          {body}
+                        </a>
+                      )}
+                    </CardGridItem>
+                  );
+                })}
+              </CardGrid>
+              <BlogPagination
+                page={currentPage}
+                totalPages={totalPages}
+                onChange={handlePageChange}
+              />
+            </>
+          )}
+        </Container>
+      </SectionFrame>
+    </>
   );
 }

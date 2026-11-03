@@ -15,7 +15,7 @@
 - Blog feed/tpost и small aliases закрыты по предыдущему Sprint 4b; не повторять
   listing/article/batch миграцию с нуля.
 - `/russian-craft-beer`, `/horeca`, `/contacts`, `/policy` v1 в коде/ожидают приёмки.
-- `/shopping-rules` legal v1 в коде; публичные agent/tours/map/shop и campaigns остаются backlog.
+- `/shopping-rules` legal v1; `/agent` landing v1 в коде; tours/map/shop и campaigns остаются backlog.
 - Состояние старых sign-offs сохраняется; новый запрос разрешает целевые design
   изменения общих компонентов и принятых страниц с сохранением URL/контента.
 
@@ -28,7 +28,7 @@
 
 Это последовательность результатов, не обещание календарных сроков.
 DS-1/DS-2 закрыты Cursor 01.11.2026; DS-3 в работе: contacts + partnership +
-home stretch slides + catalog/product + `/shopping-rules` legal v1 —
+home stretch slides + catalog/product + `/shopping-rules` + blog listing —
 Cursor PASS (visual QA по viewports ещё желателен).
 
 ## DS-1 — foundation и каталог состояний
@@ -79,7 +79,7 @@ source URLs/контент сохранены. Владелец принимае
 ## DS-3 — rollout по одному template
 
 Очередь: home ✓ → B2B/contacts/partnership ✓ → catalog/product ✓ →
-`/shopping-rules` ✓ → blog listing. Общие header/button/field recipes
+`/shopping-rules` ✓ → blog listing ✓. Общие header/button/field recipes
 переносить осторожно вместе с regression callers. Статьи и legal используют
 ReadingContainer/content mode; их смысловые headings получают anchors, body
 не режется на full-screen slides.

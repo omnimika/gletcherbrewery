@@ -1,28 +1,26 @@
 # Текущее задание Cursor Agent
 
-Дата: **01.11.2026**. DS-3 в работе.
-Owner Confirmed: home mid-blocks = **stretch screen slides**
-(`SectionFrame mode=screen` + `CompositionGrid` fill), без `HomeWindowStage`.
+Дата: **03.11.2026**. DS-3 / Sprint 5.
 [Дизайн-код](design/DESIGN_SYSTEM.md), [ADR 0010](adr/0010-design-system-and-section-layout.md),
 [серия](SPRINT_PLAN.md).
 
-## DS-3 срез — `/shopping-rules` legal v1
+## Срез — `/agent` landing v1
 
-- Verbatim copy from Tilda `13866555` / record `229536606`
-- `SectionFrame mode=content` + `ReadingContainer`; RU-only; EN → `/`
-- Baseline: [SHOPPING_RULES_PAGE_BASELINE.md](discovery/SHOPPING_RULES_PAGE_BASELINE.md)
-- Login/signup ZB CTAs deferred with shop/auth
+- Tilda `44414247`: 6 screen slides (hero → purchases → bircoins → partner → status → join)
+- Fonts/z-index/appear animations mapped from ZB; assets in `public/agent/`
+- Videos from `files.gletcherbrewery.com`; signup/login → production `/members/*`
+- Baseline: [AGENT_PAGE_BASELINE.md](discovery/AGENT_PAGE_BASELINE.md)
+- Header АГЕНТ → local `/agent` (RU)
 
-## Ранее в DS-3
+## Ранее
 
-- Catalog `/beer` + product shell
-- Home stretch slides; contacts; partnership
+- Blog listing DS-3 shell; `/shopping-rules`; catalog/product; home slides
 - DS-1/DS-2 closed
 
 ## Следующий один template
 
-1. Blog listing DS-3 shell, или visual QA catalog/product.
-2. Sprint 5 remainder: agent/tours/map/shop.
+1. Residual `/agent` polish (mobile 320 lines, parallax) или tours/map/shop.
+2. Visual QA remaining public pages.
 
 ## Backlog
 
