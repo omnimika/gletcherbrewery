@@ -184,7 +184,7 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
   };
 
   return (
-    <section className="relative w-full">
+    <div className="relative w-full">
       <div className="relative z-20 -mb-3 px-4 sm:px-8">
         <ProductFilterChips active={filter} onChange={setFilter} />
       </div>
@@ -243,6 +243,6 @@ export function ProductGallery({ cards }: ProductGalleryProps) {
           {t("emptyCategory")}
         </p>
       ) : null}
-    </section>
+    </div>
   );
 }

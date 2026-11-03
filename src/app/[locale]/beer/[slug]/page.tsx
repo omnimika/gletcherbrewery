@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { DocumentProximitySnap } from "@/components/motion/document-proximity-snap";
 import { SiteShell } from "@/components/site-shell";
 import { ProductHero } from "@/components/product/product-hero";
 import { ProductDetail } from "@/components/product/product-detail";
 import { ProductRelated } from "@/components/product/product-related";
+import { SectionFrame } from "@/components/layout";
 import {
   getCatalogCards,
   isTranslationPublished,
@@ -116,6 +118,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <SiteShell localeHrefs={localeHrefs}>
+      <DocumentProximitySnap />
       <article>
         <ProductHero
           title={title}
@@ -160,9 +163,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
         <ProductRelated title={tProduct("related")} items={related} />
 
-        <p className="bg-gletcher-ice px-4 pb-12 text-center text-xs font-semibold tracking-wide text-gletcher-navy/55 uppercase">
-          {tFooter("drinkResponsibly")}
-        </p>
+        <SectionFrame mode="banner" tone="ice" className="!pt-0 !pb-12">
+          <p className="px-4 text-center text-xs font-semibold tracking-wide text-gletcher-navy/55 uppercase">
+            {tFooter("drinkResponsibly")}
+          </p>
+        </SectionFrame>
       </article>
     </SiteShell>
   );

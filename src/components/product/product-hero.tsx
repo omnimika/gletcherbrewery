@@ -13,6 +13,7 @@ type ProductHeroProps = {
  * Full-viewport cover (100svh × 100vw), pulled under the fixed header
  * like Tilda product heroes. Cover/logo click scrolls to `#about`.
  * Always exposes a single H1 (sr-only when a visual wordmark is present).
+ * DS-3: stable `#hero` + soft snap (custom full-bleed frame, not SectionFrame).
  */
 export function ProductHero({
   title,
@@ -26,7 +27,10 @@ export function ProductHero({
 
   return (
     <section
-      className="relative isolate h-svh w-full overflow-hidden bg-gletcher-ice"
+      id="hero"
+      tabIndex={-1}
+      aria-label={title}
+      className="ds-snap-start relative isolate h-svh w-full overflow-hidden bg-gletcher-ice"
       /* Cancel SiteHeader spacer so cover fills the viewport under fixed chrome. */
       style={{ marginTop: "calc(-1 * var(--hh, 84px))" }}
     >
