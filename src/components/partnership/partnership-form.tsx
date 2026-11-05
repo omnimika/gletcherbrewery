@@ -9,7 +9,17 @@ type PartnershipFormProps = {
   copy: PartnershipCopy;
 };
 
-type Status = "idle" | "ok" | "error";
+type Status = "idle" | "unavailable" | "error";
+
+const CONTACT_EMAIL = {
+  address: "info@gletcherbrewery.com",
+  href: "mailto:info@gletcherbrewery.com",
+} as const;
+
+const CONTACT_PHONE = {
+  label: "+7 (495) 989-24-14",
+  href: "tel:+74959892414",
+} as const;
 
 export function PartnershipForm({ copy }: PartnershipFormProps) {
   const [status, setStatus] = useState<Status>("idle");
@@ -23,8 +33,8 @@ export function PartnershipForm({ copy }: PartnershipFormProps) {
       return;
     }
     event.preventDefault();
-    setStatus("ok");
-    form.reset();
+    // No delivery yet — keep values, do not pretend success.
+    setStatus("unavailable");
   };
 
   return (
@@ -112,9 +122,16 @@ export function PartnershipForm({ copy }: PartnershipFormProps) {
         {copy.submit}
       </Button>
       <p className="text-xs text-gletcher-navy/60">{copy.note}</p>
-      {status === "ok" ? (
+      {status === "unavailable" ? (
         <p className="text-sm text-gletcher-navy" role="status">
-          {copy.success}
+          {copy.unavailable}{" "}
+          <a href={CONTACT_PHONE.href} className="underline underline-offset-2">
+            {CONTACT_PHONE.label}
+          </a>
+          {" · "}
+          <a href={CONTACT_EMAIL.href} className="underline underline-offset-2">
+            {CONTACT_EMAIL.address}
+          </a>
         </p>
       ) : null}
       {status === "error" ? (

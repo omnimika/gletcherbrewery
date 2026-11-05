@@ -9,9 +9,10 @@ import type { PublishedLocale } from "@/i18n/locales";
 export const MAP_PATH = "/map" as const;
 export const MAP_PATH_EN = "/en/map" as const;
 
+/** Pathnames for LocaleSwitch (no locale prefix — next-intl Link adds it). */
 export const MAP_LOCALE_HREFS = {
   ru: MAP_PATH,
-  en: MAP_PATH_EN,
+  en: MAP_PATH,
 } as const;
 
 /** Confirmed Mapbox style + camera from production HTML. */
@@ -102,6 +103,8 @@ export type MapCopy = {
   geolocateLabel: string;
   assortmentLabel: string;
   missingToken: string;
+  loadError: string;
+  retryLabel: string;
   productionFallbackHref: string;
   productionFallbackLabel: string;
   beers: readonly MapBeer[];
@@ -122,7 +125,10 @@ const RU: MapCopy = {
   geolocateLabel: "Моё местоположение",
   assortmentLabel: "Ассортимент:",
   missingToken:
-    "Карта не загружена: задайте NEXT_PUBLIC_MAPBOX_TOKEN в локальном .env (публичный pk., не коммитить).",
+    "Карта временно недоступна на этом сайте. Вы можете открыть рабочую карту на основном домене.",
+  loadError:
+    "Не удалось загрузить карту. Попробуйте ещё раз или откройте карту на основном сайте.",
+  retryLabel: "Повторить",
   productionFallbackHref: "https://www.gletcherbrewery.com/map",
   productionFallbackLabel: "Открыть карту на gletcherbrewery.com",
   beers: MAP_BEERS_RU,
@@ -146,7 +152,10 @@ const EN: MapCopy = {
   geolocateLabel: "My location",
   assortmentLabel: "Assortment:",
   missingToken:
-    "Map is offline: set NEXT_PUBLIC_MAPBOX_TOKEN in local .env (public pk., never commit).",
+    "The map is temporarily unavailable on this site. You can open the live map on the main domain.",
+  loadError:
+    "Could not load the map. Try again or open the map on the main site.",
+  retryLabel: "Retry",
   productionFallbackHref: "https://www.gletcherbrewery.com/en/map",
   productionFallbackLabel: "Open map on gletcherbrewery.com",
   beers: MAP_BEERS_EN,

@@ -13,6 +13,7 @@ import {
 } from "@/content/blog";
 import {
   DEFAULT_LOCALE,
+  type LocaleHrefs,
   type PublishedLocale,
   isPublishedLocale,
 } from "@/i18n/locales";
@@ -78,10 +79,10 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
   const t = await getTranslations("blog");
 
   const peers = blogArticleLocaleHrefs(post);
-  // Missing peer → listing for that locale (do not invent article URL).
-  const localeHrefs: Partial<Record<PublishedLocale, string>> = {
-    ru: peers.ru ?? blogListingHref(),
-    en: peers.en ?? blogListingHref(),
+  // Missing peer → listing fallback (no invented article URL; no foreign hash).
+  const localeHrefs: LocaleHrefs = {
+    ru: peers.ru ?? { fallback: blogListingHref() },
+    en: peers.en ?? { fallback: blogListingHref() },
   };
 
   return (

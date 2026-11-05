@@ -46,7 +46,7 @@ export default async function VacanciesPage({ params }: VacanciesPageProps) {
     <SiteShell
       localeHrefs={{
         ru: VACANCIES_PAGE.path,
-        en: blogListingHref(),
+        en: { fallback: blogListingHref() },
       }}
     >
       <BlogVacancies backLabel={t("backToBlog")} />

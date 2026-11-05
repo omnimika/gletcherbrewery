@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { AgeGate } from "@/components/age-gate";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import type { PublishedLocale } from "@/i18n/locales";
+import type { LocaleHrefs } from "@/i18n/locales";
 
 /**
  * Header stays interactive while the main nav is open (same chrome, burger→X).
@@ -15,8 +15,8 @@ export function SiteShell({
   hideFooter = false,
 }: {
   children: ReactNode;
-  /** Peer pathnames for LocaleSwitch (e.g. product RU/EN slug pairs). */
-  localeHrefs?: Partial<Record<PublishedLocale, string>>;
+  /** Peer / fallback / unavailable destinations for LocaleSwitch (ADR 0001). */
+  localeHrefs?: LocaleHrefs;
   /** Match Tilda `nofooter=on` pages (e.g. `/agent`). */
   hideFooter?: boolean;
 }) {

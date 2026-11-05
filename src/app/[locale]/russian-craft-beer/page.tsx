@@ -48,8 +48,8 @@ export default async function RussianCraftBeerPage({ params }: PageProps) {
     <SiteShell
       localeHrefs={{
         ru: RUSSIAN_CRAFT_BEER_PATH,
-        // No EN page — switcher stays on RU destination.
-        en: RUSSIAN_CRAFT_BEER_PATH,
+        // No EN peer — published home fallback (never invent /en/russian-craft-beer).
+        en: { fallback: "/" },
       }}
     >
       <PartnershipPageView copy={RUSSIAN_CRAFT_BEER} />

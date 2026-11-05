@@ -21,38 +21,68 @@ function writeCookie(name: string, days: number) {
   document.cookie = `${name}=1; expires=${expires}; path=/`;
 }
 
+/** Path + search without hash — preserves query on close. */
+function locationWithoutHash() {
+  return `${window.location.pathname}${window.location.search}`;
+}
+
 /**
  * Production T390 popup `#popup:shopping-rules` + T354 auto-open on scroll.
  * Backdrop rgba(33,53,97,0.90). Cookie mirrors source (~3 days).
+ * Escape / button / backdrop share one close contract that clears the hash.
  */
 export function ShopRulesPopup() {
   const p = SHOP_PAGE.rules;
   const titleId = useId();
   const dialogRef = useRef<HTMLDialogElement | null>(null);
+  const triggerRef = useRef<Element | null>(null);
   const [open, setOpen] = useState(false);
 
-  const close = useCallback(() => {
-    dialogRef.current?.close();
+  const settleClosed = useCallback(() => {
     setOpen(false);
     writeCookie(COOKIE, 3);
     if (window.location.hash === HASH) {
-      history.replaceState(null, "", window.location.pathname);
+      history.replaceState(null, "", locationWithoutHash());
     }
+    const trigger = triggerRef.current;
+    if (trigger instanceof HTMLElement) {
+      trigger.focus();
+    }
+    triggerRef.current = null;
   }, []);
 
+  const close = useCallback(() => {
+    const node = dialogRef.current;
+    if (node?.open) {
+      node.close();
+      return;
+    }
+    settleClosed();
+  }, [settleClosed]);
+
   const openPopup = useCallback(() => {
+    if (document.activeElement instanceof Element) {
+      triggerRef.current = document.activeElement;
+    }
     setOpen(true);
     const node = dialogRef.current;
     if (node && !node.open) node.showModal();
   }, []);
 
   useEffect(() => {
-    const onHash = () => {
-      if (window.location.hash === HASH) openPopup();
+    const syncFromLocation = () => {
+      if (window.location.hash === HASH) {
+        openPopup();
+        return;
+      }
+      // Back/Forward away from the hash — close via the shared onClose path.
+      const node = dialogRef.current;
+      if (node?.open) node.close();
     };
 
-    const boot = window.setTimeout(onHash, 0);
-    window.addEventListener("hashchange", onHash);
+    const boot = window.setTimeout(syncFromLocation, 0);
+    window.addEventListener("hashchange", syncFromLocation);
+    window.addEventListener("popstate", syncFromLocation);
 
     let onScroll: (() => void) | undefined;
     if (!readCookie(COOKIE) && window.location.hash !== HASH) {
@@ -67,7 +97,8 @@ export function ShopRulesPopup() {
 
     return () => {
       window.clearTimeout(boot);
-      window.removeEventListener("hashchange", onHash);
+      window.removeEventListener("hashchange", syncFromLocation);
+      window.removeEventListener("popstate", syncFromLocation);
       if (onScroll) window.removeEventListener("scroll", onScroll);
     };
   }, [openPopup]);
@@ -77,10 +108,7 @@ export function ShopRulesPopup() {
       ref={dialogRef}
       aria-labelledby={titleId}
       className="fixed inset-0 z-[80] m-0 h-full max-h-none w-full max-w-none border-0 bg-[rgba(33,53,97,0.9)] p-4 open:flex open:items-center open:justify-center sm:p-8"
-      onClose={() => {
-        setOpen(false);
-        writeCookie(COOKIE, 3);
-      }}
+      onClose={settleClosed}
       onClick={(e) => {
         if (e.target === dialogRef.current) close();
       }}

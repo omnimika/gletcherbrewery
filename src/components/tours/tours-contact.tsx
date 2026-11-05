@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ZbAppear } from "@/components/agent/zb-motion";
+import { ManagedVideo } from "@/components/media/managed-video";
 import { ToursRequestForm } from "@/components/tours/tours-request-form";
 import type { ToursCopy } from "@/content/tours";
 import styles from "./tours-contact.module.css";
@@ -30,17 +31,10 @@ export function ToursContactSection({ copy }: { copy: ToursCopy }) {
           mobile
         >
           <div className={styles.videoFrame}>
-            <video
-              className={styles.video}
-              autoPlay
-              loop
-              muted
-              playsInline
-              aria-hidden
-            >
+            <ManagedVideo className={styles.video} aria-hidden>
               <source src={VIDEO.webm} type="video/webm" />
               <source src={VIDEO.mp4} type="video/mp4" />
-            </video>
+            </ManagedVideo>
           </div>
         </ZbAppear>
 
@@ -61,7 +55,11 @@ export function ToursContactSection({ copy }: { copy: ToursCopy }) {
             delay={0.3}
             mobile
           >
-            <ToursRequestForm fields={copy.requestFields} variant="contact" />
+            <ToursRequestForm
+              fields={copy.requestFields}
+              phone={copy.phone}
+              variant="contact"
+            />
           </ZbAppear>
 
           <article className={styles.guideCard}>

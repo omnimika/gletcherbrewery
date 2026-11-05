@@ -51,7 +51,7 @@ export default async function BlogExpansionPage({
     <SiteShell
       localeHrefs={{
         ru: EXPANSION_PAGE.path,
-        en: blogListingHref(),
+        en: { fallback: blogListingHref() },
       }}
     >
       <BlogExpansion backLabel={t("backToBlog")} />

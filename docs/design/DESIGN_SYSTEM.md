@@ -7,8 +7,9 @@
 
 **Confirmed:** направление, существующий бренд, композиции/сетки и повторное
 использование UI. **DS-1 реализован** — showcase `/dev/design-system` (dev-only).
-**Proposed → Implemented (reviewable):** численные токены и API ниже; пилот
-страниц — DS-2. Не считать pixel-perfect утверждённым владельцем без приёмки.
+**Proposed → Implemented (reviewable):** численные токены и API ниже; DS-2
+pilot реализован, DS-3 широко перенесён. Не считать pixel-perfect утверждённым
+владельцем без приёмки. Текущие gaps — в проверке реализации 05.11 ниже.
 
 ### DS-1 implementation map
 
@@ -21,7 +22,7 @@
 | Carousel | `src/components/collections/carousel.tsx` |
 | Showcase | `src/app/[locale]/dev/design-system/page.tsx` |
 
-Accepted starting values in code: action `#c82731`, brand `#e5373c`,
+Implemented starting values (reviewable): action `#c82731`, brand `#e5373c`,
 gutter `clamp(1rem, 3vw, 3rem)`, gap `clamp(1rem, 2vw, 2rem)`, reading `68ch`,
 content max `90rem`, radius control/card/pill `0.375/0.75/999`, focus `2px/2px`,
 motion feedback/reveal/overlay `160/280/220ms`. CompositionGrid: outer
@@ -328,7 +329,24 @@ template с regression checks. Новый запрос владельца раз
 Сохранять URL/контент/локализацию/рабочие сценарии; новая геометрия проверяется
 как целевое изменение. Статьи/legal сохраняют reading mode.
 
-## Первичные источники
+## Проверка реализации — 05.11.2026
+
+DS-1 foundation и DS-2 pilot существуют, DS-3 широко перенесён. Ранний
+implementation map выше не является текущим списком невыполненных спринтов.
+Q2 (05.11) закрыл CardGrid max columns и 3D carousel scroll/autoplay gaps на
+коде поверх d6011d2. Исторически на d6011d2 отмечались: CardGrid max columns, 3D carousel
+vertical scroll/autoplay/offscreen policy, direct video reduced-motion fallback
+и map text contrast. Их не считать выполненными по одному showcase smoke.
+Файлы/строки R03/R04/R09/R10 — в [текущем ревью](../reviews/2026-11-05-public-integrity.md).
+
+Q2 проверяет contract на реальных templates: long text/short windows/zoom,
+native scroll, hidden focus и media failures. Примеры grid должны иметь больше
+элементов, чем желаемое число колонок; no-JS/reduced-motion относится ко всем
+вложенным video/client islands, а не только к внешнему Reveal/Zb wrapper.
+Map attribution controls сохраняются видимыми. Новые runtime recipes не
+обходят общие a11y/motion/layout правила; source-паритет допускает их исправление.
+
+## Первичные источники и обоснования
 
 - [CSS scroll snap](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scroll-snap-type)
   — нативное positioning, proximity/mandatory различаются.

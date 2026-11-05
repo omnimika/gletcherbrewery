@@ -57,7 +57,7 @@ export type PartnershipCopy = {
   policyAfter?: string;
   submit: string;
   note: string;
-  success: string;
+  unavailable: string;
   error: string;
   catalogCta: string;
   catalogHref: "/beer";
@@ -176,7 +176,8 @@ const RU: PartnershipCopy = {
   policyAfter: " и принимаю условия обработки моих персональных данных.",
   submit: "Отправить заявку",
   note: "Форма пока не отправляет данные — серверный обработчик подключится отдельно. Онлайн-продажу алкоголя мы не осуществляем.",
-  success: "Спасибо! Заявка принята локально (заглушка — сервер ещё не подключён).",
+  unavailable:
+    "Онлайн-отправка пока недоступна. Ваши данные сохранены в форме — свяжитесь напрямую:",
   error: "Проверьте обязательные поля и согласие на обработку данных.",
   catalogCta: "Смотреть каталог",
   catalogHref: "/beer",
@@ -250,7 +251,8 @@ const EN: PartnershipCopy = {
   policyLink: "Privacy policy",
   submit: "Send request",
   note: "This form does not submit yet — server handler comes later. We do not sell alcohol online.",
-  success: "Thanks! Request recorded locally (stub — server not connected).",
+  unavailable:
+    "Online submission is unavailable for now. Your details stay in the form — contact us directly:",
   error: "Please check the required fields.",
   catalogCta: "View catalogue",
   catalogHref: "/beer",
@@ -264,7 +266,8 @@ export function getPartnershipCopy(locale: PublishedLocale): PartnershipCopy {
   return locale === "en" ? EN : RU;
 }
 
+/** Pathnames for LocaleSwitch (no locale prefix — next-intl Link adds it). */
 export const PARTNERSHIP_LOCALE_HREFS = {
   ru: "/partnership",
-  en: "/en/partnership",
+  en: "/partnership",
 } as const;

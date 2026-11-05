@@ -15,7 +15,7 @@ import { MenuToggleIcon } from "@/components/menu-toggle-icon";
 import { useFocusTrap } from "@/lib/use-focus-trap";
 import { AGENT_PATH } from "@/content/agent";
 import { getHeaderDesign } from "@/lib/tilda-artboard-scale";
-import type { PublishedLocale } from "@/i18n/locales";
+import type { LocaleHrefs } from "@/i18n/locales";
 
 /**
  * Chrome bar mirrors Tilda header-new Zero Block `711698335`
@@ -85,8 +85,8 @@ function headerChromeServer(): HeaderChrome {
 }
 
 type SiteHeaderProps = {
-  /** Peer pathnames for LocaleSwitch (product pages with different RU/EN slugs). */
-  localeHrefs?: Partial<Record<PublishedLocale, string>>;
+  /** Peer / fallback / unavailable destinations for LocaleSwitch (ADR 0001). */
+  localeHrefs?: LocaleHrefs;
 };
 
 export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {

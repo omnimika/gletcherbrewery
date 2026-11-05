@@ -45,7 +45,7 @@ export default async function AgentPage({ params }: PageProps) {
       hideFooter
       localeHrefs={{
         ru: AGENT_PATH,
-        en: "/",
+        en: { fallback: "/" },
       }}
     >
       <AgentPageView />

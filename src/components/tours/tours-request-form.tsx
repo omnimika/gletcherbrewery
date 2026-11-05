@@ -2,18 +2,21 @@
 
 import { useState, type FormEvent } from "react";
 import type { ToursCopy } from "@/content/tours";
+import { TOURS_YCLIENTS } from "@/content/tours";
 
-type Status = "idle" | "ok" | "error";
+type Status = "idle" | "unavailable" | "error";
 
 /**
- * Tours request form — stub submit until booking backend (Stage 8).
- * `contact` variant mirrors ZB `750698486` field chrome.
+ * Tours request form — online submit unavailable until booking backend (Stage 8).
+ * Keeps input; shows phone + YCLIENTS paths. `contact` mirrors ZB `750698486`.
  */
 export function ToursRequestForm({
   fields,
+  phone,
   variant = "default",
 }: {
   fields: ToursCopy["requestFields"];
+  phone: ToursCopy["phone"];
   variant?: "default" | "contact";
 }) {
   const [status, setStatus] = useState<Status>("idle");
@@ -26,8 +29,8 @@ export function ToursRequestForm({
       return;
     }
     event.preventDefault();
-    setStatus("ok");
-    form.reset();
+    // No delivery yet — keep values, do not pretend success.
+    setStatus("unavailable");
   };
 
   const contact = variant === "contact";
@@ -120,12 +123,24 @@ export function ToursRequestForm({
           {fields.submit}
         </button>
       </div>
-      {status === "ok" ? (
+      {status === "unavailable" ? (
         <p
           className={`text-sm sm:col-span-2 ${contact ? "font-semibold text-[#a7e663]" : "text-gletcher-navy/80"}`}
           role="status"
         >
-          {fields.ok}
+          {fields.unavailable}{" "}
+          <a href={phone.href} className="underline underline-offset-2">
+            {phone.label}
+          </a>
+          {" · "}
+          <a
+            href={TOURS_YCLIENTS.group}
+            className="underline underline-offset-2"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {fields.bookingLinkLabel}
+          </a>
         </p>
       ) : null}
       {status === "error" ? (

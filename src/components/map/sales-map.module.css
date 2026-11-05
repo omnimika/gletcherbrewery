@@ -63,8 +63,8 @@
 }
 
 .heroAccent {
-  /* Production: inline span after lead sentence; wraps naturally */
-  color: #aac3ff;
+  /* Production used #aac3ff (~1.5:1 on ice). Darker navy-blue for AA text. */
+  color: #3d5a9e;
 }
 
 .frameWrap {

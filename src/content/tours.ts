@@ -11,9 +11,10 @@ import type { PublishedLocale } from "@/i18n/locales";
 export const TOURS_PATH = "/tours" as const;
 export const TOURS_PATH_EN = "/en/tours" as const;
 
+/** Pathnames for LocaleSwitch (no locale prefix — next-intl Link adds it). */
 export const TOURS_LOCALE_HREFS = {
   ru: TOURS_PATH,
-  en: TOURS_PATH_EN,
+  en: TOURS_PATH,
 } as const;
 
 /** Temporary YCLIENTS embeds — replace when booking migrates (Stage 8). */
@@ -68,7 +69,9 @@ export type ToursCopy = {
     email: string;
     wishes: string;
     submit: string;
-    ok: string;
+    /** Honest state when online submit is not wired. */
+    unavailable: string;
+    bookingLinkLabel: string;
   };
   phone: { label: string; href: string };
   /** ZB 750881518 — «Поделитесь впечатлениями» */
@@ -196,7 +199,9 @@ const RU: ToursCopy = {
     email: "Email",
     wishes: "Опишите ваши пожелания",
     submit: "ОТПРАВИТЬ",
-    ok: "Спасибо! В случае одобрения заявки, с вами свяжется наш менеджер.",
+    unavailable:
+      "Онлайн-заявка пока не отправляется. Ваши данные сохранены в форме — позвоните или забронируйте слот:",
+    bookingLinkLabel: "онлайн-запись",
   },
   phone: { label: "+7 (926) 549-97-24", href: "tel:+79265499724" },
   reviews: {
@@ -282,7 +287,9 @@ const EN: ToursCopy = {
     email: "Email",
     wishes: "Your wishes",
     submit: "SEND",
-    ok: "Thank you! If the request is approved, our manager will contact you.",
+    unavailable:
+      "Online requests are not sent yet. Your details stay in the form — call or book a slot:",
+    bookingLinkLabel: "online booking",
   },
   phone: { label: "+7 (926) 549-97-24", href: "tel:+79265499724" },
   reviews: {

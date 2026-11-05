@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { CONTACTS_PAGE } from "@/content/contacts";
 import { POLICY_PATH } from "@/content/policy";
 
-type Status = "idle" | "ok" | "error";
+type Status = "idle" | "unavailable" | "error";
 
 export function ContactsForm() {
   const [status, setStatus] = useState<Status>("idle");
   const f = CONTACTS_PAGE.fields;
+  const office = CONTACTS_PAGE.phones[0];
+  const email = CONTACTS_PAGE.emails[0];
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
@@ -19,8 +21,8 @@ export function ContactsForm() {
       return;
     }
     event.preventDefault();
-    setStatus("ok");
-    form.reset();
+    // No delivery yet — keep values, do not pretend success.
+    setStatus("unavailable");
   };
 
   return (
@@ -75,9 +77,16 @@ export function ContactsForm() {
         {CONTACTS_PAGE.submit}
       </Button>
       <p className="text-xs text-gletcher-navy/60">{CONTACTS_PAGE.note}</p>
-      {status === "ok" ? (
+      {status === "unavailable" ? (
         <p className="text-sm text-gletcher-navy" role="status">
-          {CONTACTS_PAGE.success}
+          {CONTACTS_PAGE.unavailable}{" "}
+          <a href={office.href} className="underline underline-offset-2">
+            {office.phone}
+          </a>
+          {" · "}
+          <a href={email.href} className="underline underline-offset-2">
+            {email.address}
+          </a>
         </p>
       ) : null}
       {status === "error" ? (

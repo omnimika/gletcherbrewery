@@ -434,6 +434,21 @@ export default async function DesignSystemShowcasePage() {
                 </CardGrid>
               </div>
             ))}
+            <div className="mt-8">
+              <p className="type-label mb-3">
+                columns=3 with 8 cards (max columns must hold)
+              </p>
+              <CardGrid columns={3} minCardWidth="12rem">
+                {Array.from({ length: 8 }, (_, i) => (
+                  <CardGridItem key={i}>
+                    <SampleCard
+                      title={`Overflow ${i + 1}`}
+                      body="Wide container + 8 items must not exceed 3 columns."
+                    />
+                  </CardGridItem>
+                ))}
+              </CardGrid>
+            </div>
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               <CardShell selected>
                 <CardHeading>Selected / emphasis</CardHeading>

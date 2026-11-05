@@ -1,7 +1,8 @@
 # ADR 0010 — Design system и секционные композиции
 
-Дата: **01.11.2026**. **Confirmed:** новое направление владельца.
-**Proposed:** технические API/численные tokens, подлежащие проверке showcase/пилота.
+Дата: **01.11.2026**, проверка реализации **05.11.2026**.
+**Confirmed:** направление владельца. DS-1/DS-2 implemented, rollout reviewable;
+численные tokens не означают автоматически owner sign-off всех recipes.
 Резерв `0002`–`0009` сохранён; `0005` уже занят CMS.
 
 ## Контекст
@@ -39,11 +40,15 @@ anchors, controls/card states и масштабирования по обеим 
 **DS-1 foundation + showcase — реализован Cursor 01.11.2026** (см.
 [DESIGN_SYSTEM](../design/DESIGN_SYSTEM.md) implementation map и
 [ревью follow-up](../reviews/2026-11-01-design-system.md)). Численные tokens
-остаются reviewable Proposed до приёмки владельцем. DS-2 pilot / DS-3 rollout
-ещё не выполнены.
+остаются reviewable до приёмки владельцем. На d6011d2 DS-2 pilot уже реализован,
+DS-3 широко перенесён на публичные templates. Не начинать их заново.
+Актуальные R03/R04/R09/R10 и reflow проверки — Q2 в
+[ревью 05.11](../reviews/2026-11-05-public-integrity.md).
 
 Массовый rollout и production-публикация этим ADR не разрешаются.
-Нет новых CMS/DB/Puck/Auth/Mapbox интеграций. Дизайн новых языков учитывается,
+CMS/DB/Puck/Auth не выбраны/установлены этим ADR. Mapbox frontend уже реализован
+как отдельный public template, CRM/backend остаются будущим этапом.
+Дизайн новых языков учитывается,
 но `sr`/`hy`/`ka`/`de` не публикуются этим решением.
 
 ## Последствия
@@ -55,8 +60,9 @@ anchors, controls/card states и масштабирования по обеим 
   и не content bands.
 - Источник контента/SEO и намеренное изменение геометрии проверяются отдельно:
   screenshot старой страницы не обязывает сохранять её случайные UI расхождения.
-- Сначала закрывается design foundation backlog; затем продолжение public
-  Sprint 5 по [новому плану](../SPRINT_PLAN.md).
+- Foundation и pilot уже реализованы; текущая серия Q1/Q2/Q3 исправляет
+  функциональность, проверяет design contract и закрывает public coverage.
+  Campaigns и backend discovery — следующие scope в [плане](../SPRINT_PLAN.md).
 
 ## Проверка
 

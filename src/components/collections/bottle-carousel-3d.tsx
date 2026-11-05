@@ -24,7 +24,11 @@ type BottleCarousel3DProps = {
   /** Accessible name for the gallery. */
   label: string;
   className?: string;
-  /** Bottles advancing per second while idle. */
+  /**
+   * Bottles advancing per second while idle.
+   * Default `0` — autoplay off (document scroll / motion contract).
+   * Pass a positive value for an opt-in autoplay recipe; Pause/Play appears.
+   */
   autoplaySpeed?: number;
 };
 
@@ -38,20 +42,25 @@ export function BottleCarousel3D({
   items,
   label,
   className = "",
-  autoplaySpeed = 0.35,
+  autoplaySpeed = 0,
 }: BottleCarousel3DProps) {
   const n = items.length;
   const labelId = useId();
   const reduceRef = useRef(false);
   const pausedRef = useRef(false);
+  const userPausedRef = useRef(false);
+  const inViewRef = useRef(true);
   const progressRef = useRef(0);
   const [progress, setProgress] = useState(0);
+  const [userPaused, setUserPaused] = useState(false);
   const dragRef = useRef<{
     active: boolean;
     startX: number;
     startProgress: number;
+    moved: boolean;
   } | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const autoplayOn = autoplaySpeed > 0;
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -64,7 +73,20 @@ export function BottleCarousel3D({
   }, []);
 
   useEffect(() => {
-    if (n < 2) return;
+    const el = stageRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        inViewRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [n]);
+
+  useEffect(() => {
+    if (n < 2 || !autoplayOn) return;
     let raf = 0;
     let last = performance.now();
 
@@ -74,6 +96,9 @@ export function BottleCarousel3D({
       if (
         !reduceRef.current &&
         !pausedRef.current &&
+        !userPausedRef.current &&
+        inViewRef.current &&
+        !document.hidden &&
         !dragRef.current?.active
       ) {
         progressRef.current += dt * autoplaySpeed;
@@ -84,7 +109,7 @@ export function BottleCarousel3D({
 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [n, autoplaySpeed]);
+  }, [n, autoplaySpeed, autoplayOn]);
 
   const step = useCallback(
     (dir: -1 | 1) => {
@@ -100,8 +125,11 @@ export function BottleCarousel3D({
     if (!el || n < 2) return;
     const onWheelNative = (e: WheelEvent) => {
       if (reduceRef.current) return;
-      const delta =
-        Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      // Never hijack vertical document scroll. Scrub only on horizontal
+      // gesture or Shift+wheel (treat as horizontal).
+      const horizontalDominant = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+      if (!horizontalDominant && !e.shiftKey) return;
+      const delta = horizontalDominant ? e.deltaX : e.deltaY;
       if (Math.abs(delta) < 1) return;
       e.preventDefault();
       progressRef.current += delta * 0.004;
@@ -114,11 +142,16 @@ export function BottleCarousel3D({
   const onPointerDown = useCallback(
     (e: ReactPointerEvent<HTMLDivElement>) => {
       if (n < 2) return;
+      // Ignore primary button presses that start on interactive links/buttons
+      // so taps still navigate; drag still works from empty stage chrome.
+      const target = e.target as HTMLElement | null;
+      if (target?.closest("a, button")) return;
       pausedRef.current = true;
       dragRef.current = {
         active: true,
         startX: e.clientX,
         startProgress: progressRef.current,
+        moved: false,
       };
       e.currentTarget.setPointerCapture(e.pointerId);
     },
@@ -130,6 +163,7 @@ export function BottleCarousel3D({
       const drag = dragRef.current;
       if (!drag?.active || n < 2) return;
       const dx = e.clientX - drag.startX;
+      if (Math.abs(dx) > 4) drag.moved = true;
       progressRef.current = drag.startProgress - dx / 110;
       setProgress(progressRef.current);
     },
@@ -145,7 +179,14 @@ export function BottleCarousel3D({
         /* already released */
       }
     }
-    pausedRef.current = false;
+    if (!userPausedRef.current) pausedRef.current = false;
+  }, []);
+
+  const toggleAutoplayPause = useCallback(() => {
+    const next = !userPausedRef.current;
+    userPausedRef.current = next;
+    setUserPaused(next);
+    pausedRef.current = next;
   }, []);
 
   if (n === 0) return null;
@@ -158,14 +199,16 @@ export function BottleCarousel3D({
         pausedRef.current = true;
       }}
       onMouseLeave={() => {
-        if (!dragRef.current?.active) pausedRef.current = false;
+        if (!dragRef.current?.active && !userPausedRef.current) {
+          pausedRef.current = false;
+        }
       }}
       onFocusCapture={() => {
         pausedRef.current = true;
       }}
       onBlurCapture={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
-          pausedRef.current = false;
+          if (!userPausedRef.current) pausedRef.current = false;
         }
       }}
     >
@@ -191,8 +234,6 @@ export function BottleCarousel3D({
 
             const abs = Math.abs(d);
             const visible = abs < 3.2;
-            // Plateau near center at ~full stage height; slight overscale
-            // eats transparent PNG padding so the silhouette fills the block.
             const scale =
               abs < 0.4
                 ? 1.08
@@ -250,6 +291,18 @@ export function BottleCarousel3D({
           >
             <span aria-hidden>←</span>
           </IconButton>
+          {autoplayOn ? (
+            <IconButton
+              label={userPaused ? "Play" : "Pause"}
+              variant="outline"
+              size="sm"
+              className="pointer-events-auto bg-gletcher-ice/80 backdrop-blur-[2px]"
+              onClick={toggleAutoplayPause}
+              aria-pressed={userPaused}
+            >
+              <span aria-hidden>{userPaused ? "▶" : "❚❚"}</span>
+            </IconButton>
+          ) : null}
           <IconButton
             label="Next"
             variant="outline"

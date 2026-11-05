@@ -44,7 +44,7 @@ export default async function ShopPage({ params }: PageProps) {
     <SiteShell
       localeHrefs={{
         ru: SHOP_PATH,
-        en: "/",
+        en: { fallback: "/" },
       }}
     >
       <ShopPageView />

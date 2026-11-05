@@ -43,7 +43,7 @@ export default async function PolicyPage({ params }: PageProps) {
     <SiteShell
       localeHrefs={{
         ru: POLICY_PATH,
-        en: "/",
+        en: { fallback: "/" },
       }}
     >
       <PolicyPageView />

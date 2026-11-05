@@ -163,7 +163,7 @@
     "phone": "Phone",
     "submit": "Send",
     "note": "We do not sell alcohol online.",
-    "success": "Thank you! (stub — server submit is not connected yet)",
+    "unavailable": "Online submission is unavailable for now. Your details stay in the form — write to us:",
     "error": "Check your name and a valid email."
   },
   "product": {

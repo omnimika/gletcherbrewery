@@ -5,7 +5,17 @@ import { Button } from "@/components/ui/button";
 import { HORECA_PAGE } from "@/content/horeca";
 import { POLICY_PATH } from "@/content/policy";
 
-type Status = "idle" | "ok" | "error";
+type Status = "idle" | "unavailable" | "error";
+
+const CONTACT_EMAIL = {
+  address: "info@gletcherbrewery.com",
+  href: "mailto:info@gletcherbrewery.com",
+} as const;
+
+const CONTACT_PHONE = {
+  label: "+7 (495) 989-24-14",
+  href: "tel:+74959892414",
+} as const;
 
 export function HorecaForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -20,8 +30,8 @@ export function HorecaForm() {
       return;
     }
     event.preventDefault();
-    setStatus("ok");
-    form.reset();
+    // No delivery yet — keep values, do not pretend success.
+    setStatus("unavailable");
   };
 
   return (
@@ -87,9 +97,16 @@ export function HorecaForm() {
         {HORECA_PAGE.submit}
       </Button>
       <p className="text-xs text-gletcher-navy/60">{HORECA_PAGE.note}</p>
-      {status === "ok" ? (
+      {status === "unavailable" ? (
         <p className="text-sm text-gletcher-navy" role="status">
-          {HORECA_PAGE.success}
+          {HORECA_PAGE.unavailable}{" "}
+          <a href={CONTACT_PHONE.href} className="underline underline-offset-2">
+            {CONTACT_PHONE.label}
+          </a>
+          {" · "}
+          <a href={CONTACT_EMAIL.href} className="underline underline-offset-2">
+            {CONTACT_EMAIL.address}
+          </a>
         </p>
       ) : null}
       {status === "error" ? (

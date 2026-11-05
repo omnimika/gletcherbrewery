@@ -20,6 +20,7 @@ import {
   ZbScrollParallax,
 } from "@/components/agent/zb-motion";
 import { DocumentProximitySnap } from "@/components/motion/document-proximity-snap";
+import { ManagedVideo } from "@/components/media/managed-video";
 import { AGENT_PAGE } from "@/content/agent";
 import { PRODUCTION_ORIGIN } from "@/lib/site-links";
 import styles from "./agent-page.module.css";
@@ -49,18 +50,10 @@ function BottleVideo() {
   const v = AGENT_PAGE.videos.bottle;
   return (
     <div className="absolute inset-0 overflow-hidden">
-      <video
-        className={styles.videoFill}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        aria-hidden
-      >
+      <ManagedVideo className={styles.videoFill} aria-hidden>
         <source src={v.hevc} type='video/mp4; codecs="hvc1"' />
         <source src={v.webm} type="video/webm" />
-      </video>
+      </ManagedVideo>
     </div>
   );
 }
@@ -574,18 +567,10 @@ function FinaleSection() {
           duration={1}
           scale={0.9}
         >
-          <video
-            className={styles.videoFill}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-hidden
-          >
+          <ManagedVideo className={styles.videoFill} aria-hidden>
             <source src={coin.hevc} type='video/mp4; codecs="hvc1"' />
             <source src={coin.webm} type="video/webm" />
-          </video>
+          </ManagedVideo>
         </ZbAppear>
 
         <ZbAppear
@@ -595,18 +580,13 @@ function FinaleSection() {
           scale={0.9}
           mobile
         >
-          <video
+          <ManagedVideo
             className={styles.videoFill}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
             aria-label="Регистрация"
           >
             <source src={reg.webm} type="video/webm" />
             <source src={reg.mp4} type="video/mp4" />
-          </video>
+          </ManagedVideo>
         </ZbAppear>
 
         <ZbAppear

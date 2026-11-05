@@ -20,6 +20,7 @@ import {
 import { getProductMedia } from "@/content/product-media";
 import {
   DEFAULT_LOCALE,
+  type LocaleHrefs,
   type PublishedLocale,
   isPublishedLocale,
 } from "@/i18n/locales";
@@ -110,10 +111,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
     .filter((c) => c.id !== product.id)
     .slice(0, 12);
 
-  const localeHrefs: Partial<Record<PublishedLocale, string>> = {};
+  const localeHrefs: LocaleHrefs = {};
   for (const code of ["ru", "en"] as const) {
     const path = productPathname(product, code);
     if (path) localeHrefs[code] = path;
+    else localeHrefs[code] = null;
   }
 
   return (

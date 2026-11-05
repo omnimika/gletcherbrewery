@@ -44,7 +44,7 @@ export default async function ContactsPage({ params }: PageProps) {
     <SiteShell
       localeHrefs={{
         ru: CONTACTS_PATH,
-        en: "/",
+        en: { fallback: "/" },
       }}
     >
       <ContactsPageView />

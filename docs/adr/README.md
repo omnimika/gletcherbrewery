@@ -2,7 +2,8 @@
 
 Статус `Proposed` описывает предложение, не принятое окончательное решение.
 Допуск к конкретной реализации определяется текущим заданием/инструкцией
-владельца: в DS-1 разрешено подготовить reviewable showcase с Proposed values.
+владельца: reviewable реализация допускает проверку Proposed values; DS-1/DS-2
+уже реализованы, текущее задание — Q1 по ревью 05.11.2026.
 `Confirmed` применяется только к явно утверждённой части решения.
 
 | Файл | Область | Статус |
@@ -11,7 +12,7 @@
 | [0000-site-migration-strategy.md](0000-site-migration-strategy.md) | Общие шаблоны и порядок переноса | Proposed |
 | [0001-i18n-routing-and-content.md](0001-i18n-routing-and-content.md) | URL, переводы, публикация и SEO | **Accepted** |
 | [0005-cms.md](0005-cms.md) | Rich-content / Puck / Tilda block map | **Proposed** (editor preference Confirmed) |
-| [0010-design-system-and-section-layout.md](0010-design-system-and-section-layout.md) | Design tokens, секции/сетка/anchors/UI/state/motion | **Direction Confirmed**, technical values/API Proposed |
+| [0010-design-system-and-section-layout.md](0010-design-system-and-section-layout.md) | Design tokens, секции/сетка/anchors/UI/state/motion | **Direction Confirmed**; DS-1/DS-2 implemented, rollout reviewable |
 
 Два исторических файла с префиксом `0000` сохранены по существующим путям.
 В ссылках использовать полное имя файла. Резерв `0002`–`0004`, `0006`–`0009` — в

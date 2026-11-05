@@ -1,6 +1,6 @@
 # Gletcher Brewery — AGENTS.md
 
-> Версия: 0.11 (1 ноября 2026 г.)
+> Версия: 0.13 (5 ноября 2026 г.)
 > Назначение: единые постоянные инструкции для Cursor Agent и OpenAI Codex.  
 > Подробный план реализации: `docs/ROADMAP.md` (при размещении файла из поставки в проекте).  
 > **Не считать этот документ подтверждением неизвестных деталей исходной системы.**
@@ -14,6 +14,9 @@
 ### Зафиксировано владельцем проекта
 
 - Frontend/full-stack: Next.js, TypeScript, Tailwind CSS.
+- /about обязателен вместе с анимацией и логикой source landing: Tilda page
+  71867465, project 1212341. Задание/приёмка: `docs/discovery/ABOUT_PAGE_BASELINE.md`.
+  Статичная упрощённая страница без исходного поведения не закрывает этот scope.
 - Дизайн-код: презентационные композиции с адаптацией к ширине **и высоте** окна,
   якорями, мягким позиционированием, сетками 50/50 и 25/50/25 по обеим осям,
   cards 3/4/6, banners/carousels. Сохранить характер палитры/шрифтов/границ;
@@ -150,22 +153,25 @@
 
 **Строго соблюдать очередность `docs/ROADMAP.md`:** (0) Bootstrap Next.js → (1) Site Discovery → (2) базовая дизайн-система → (3) одна эталонная страница → (4) остальной публичный сайт → (5+) backend, NocoDB, Mapbox, бонусы и бронирования. Преждевременная разработка CRM/Mapbox не является текущей задачей.
 
-1. Bootstrap/Discovery готовы; `/beer` и product template приняты (`0df9706`).
-   По текущим записям blog feed/tpost закрыт; `/partnership` RU/EN принят 01.11.
-   `/russian-craft-beer`, `/horeca`, `/contacts`, `/policy` — v1, не новый sign-off.
-2. **DS-1 выполнен** (tokens, layout/UI recipes, `/dev/design-system` showcase).
-   Актуальные задания — `docs/CURSOR_NEXT_STEPS.md` и `docs/SPRINT_PLAN.md`;
-   не повторять старые home/blog milestones и не переоткрывать DS-1.
-3. **DS-2 выполнен** (pilot `/horeca`: anchors, proximity snap, Reveal,
-   CompareCard DS-B). **DS-3 / Sprint 5:** public shells + `/shopping-rules` +
-   blog listing; `/agent` landing v1; `/tours` RU/EN v1 (YCLIENTS temporary) —
-   в этом срезе. Далее visual QA tours или map/shop. Старые приёмки — regression.
-4. Owner direction **Confirmed**; DS-1 tokens/API — Implemented/reviewable
-   (ADR 0010). ADR 0001 **Accepted**; next-intl RU/EN, `sr`/`hy`/`ka`/`de` — Open.
-5. Ревью `docs/reviews/2026-11-01-design-system.md` дополнено Cursor follow-up
-   (lint/tsc/build + browser showcase). Commit/push только по запросу.
-6. Критерии закрытия — код + свежие проверки; не подменять browser/build старым
-   отчётом. Не устанавливать CMS/DB/scroll/UI frameworks ради design foundation.
+1. Bootstrap/Discovery, каталог/product, home/blog и основные public templates
+   реализованы. По записям Cursor map/shop приняты 04.11; /agent 320 polish уже
+   в d6011d2, отдельный visual QA Open. Не искать несуществующий dirty-tree gate.
+2. **DS-1/DS-2 реализованы**, DS-3 широко перенесён. Не начинать их заново;
+   конкретные grid/motion/reflow дефекты исправляются адресно. Прежние visual
+   sign-offs — regression baseline, не закрытие новых функциональных замечаний.
+3. **Q1/Q2 Done (05.11):** Q1 R01/R02/R07/R08 (R05/R06 out of scope); Q2
+ R03/R04/R09/R10. Outcomes: `docs/reviews/2026-11-05-public-integrity.md`.
+ Сейчас **Q3 — URL/publication/SEO**. Задание: `docs/CURSOR_NEXT_STEPS.md`.
+4. Далее **A1 /about** (обязательный source landing с анимацией/логикой) →
+ подтверждённые campaigns → stage-4 exit → D5-0 discovery/ADR. Подробности в
+ `docs/SPRINT_PLAN.md`, coverage — `docs/discovery/PUBLIC_ROUTE_MATRIX.md`.
+ Stage 4 ещё не Done.
+5. Mapbox frontend уже есть, CRM/публикация геоданных ещё нет; YCLIENTS и
+   production members временно сохраняются. /shop RU-only без cart/checkout.
+   Klin campaign в snapshot unpublished/password: MCP access не разрешает публикацию.
+6. ADR 0001 Accepted; RU/EN, `sr`/`hy`/`ka`/`de` planned до translation/script/font
+   gates. ADR 0010 direction Confirmed, implementation reviewable. Свежие проверки
+   обязательны; новые CMS/DB/платежи, commit/push/production — отдельные задания.
 
 Подробная архитектура CRM, data model, миграции Airtable, выбор ORM/Auth/CMS и инфраструктурные ADR — отдельные будущие задачи по этапам, а не блокеры инвентаризации сайта.
 
@@ -179,9 +185,12 @@
 - `docs/CURSOR_NEXT_STEPS.md` — актуальное задание Cursor с критериями приёмки; обновлять после подтверждённых изменений.
 - `docs/design/DESIGN_SYSTEM.md` — дизайн-код, containers/grids, anchors/scroll, UI/state/motion и DoD.
 - `docs/adr/0010-design-system-and-section-layout.md` — архитектура дизайн-системы и границы rollout.
-- `docs/reviews/2026-11-01-design-system.md` — актуальное ревью `6b137e7`, пробелы и новый приоритет.
+- `docs/reviews/2026-11-05-public-integrity.md` — актуальное ревью `d6011d2`, R01–R10 и quality gates.
+- `docs/discovery/PUBLIC_ROUTE_MATRIX.md` — code/publication coverage и legacy/campaign решения до cutover.
+- `docs/discovery/ABOUT_PAGE_BASELINE.md` — обязательный /about: Tilda 71867465, animation/interaction parity и DoD A1.
+- `docs/reviews/2026-11-01-design-system.md` — историческое ревью `6b137e7` и follow-up DS-1/DS-2.
 - `docs/reviews/2026-11-01-home-and-sprints.md` — историческое ревью `2c1a9d0`.
-- `docs/SPRINT_PLAN.md` — серия DS-1/2/3 → public coverage; старый план сохранён как архив.
+- `docs/SPRINT_PLAN.md` — Q1/Q2/Q3 → обязательный A1 /about → campaigns/public gate → D5-0; прежняя серия в docs/archive.
 - `docs/discovery/HOME_PAGE_BASELINE.md` — source baseline и приёмка текущей home.
 - `docs/reviews/2026-10-31-product-acceptance.md` — историческое ревью `6f84465`; A01–A03 исправлены в `0df9706`.
 - `docs/reviews/2026-10-31-product-template.md` — историческое ревью `9e0ee8e` + рабочего дерева.

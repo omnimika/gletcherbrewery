@@ -1,64 +1,68 @@
-# Готовый промпт Cursor Agent
+# Готовый промпт Cursor Agent — Q1
 
-Ссылки: [AGENTS](../AGENTS.md), [ROADMAP](ROADMAP.md),
-[задание](CURSOR_NEXT_STEPS.md), [серия спринтов](SPRINT_PLAN.md),
-[дизайн-код](design/DESIGN_SYSTEM.md),
-[ADR 0010](adr/0010-design-system-and-section-layout.md),
-[ревью](reviews/2026-11-01-design-system.md),
-[MCP workflow](discovery/TILDA_MCP_WORKFLOW.md),
-[i18n ADR](adr/0001-i18n-routing-and-content.md).
+Дата: **05.11.2026**. [Задание](CURSOR_NEXT_STEPS.md),
+[ревью](reviews/2026-11-05-public-integrity.md), [план](SPRINT_PLAN.md),
+[route matrix](discovery/PUBLIC_ROUTE_MATRIX.md), [AGENTS](../AGENTS.md).
 
 Скопировать в Cursor:
 
-```text
-Продолжи gletcherbrewery: выполни DS-1 — дизайн-фундамент и showcase.
-Сначала прочитай:
+~~~text
+Продолжи gletcherbrewery. Выполни только Q1 — функциональную надёжность
+публичного сайта. Сначала прочитай:
 @AGENTS.md
 @docs/ROADMAP.md
 @docs/CURSOR_NEXT_STEPS.md
 @docs/SPRINT_PLAN.md
+@docs/reviews/2026-11-05-public-integrity.md
+@docs/discovery/PUBLIC_ROUTE_MATRIX.md
 @docs/design/DESIGN_SYSTEM.md
-@docs/adr/0010-design-system-and-section-layout.md
-@docs/reviews/2026-11-01-design-system.md
 @docs/adr/0001-i18n-routing-and-content.md
+@docs/adr/0010-design-system-and-section-layout.md
 @docs/discovery/TILDA_MCP_WORKFLOW.md
+@docs/discovery/ABOUT_PAGE_BASELINE.md
 
-База ревью — чистый 6b137e7 до правок документации Codex. Проверь текущие
-Git status/diff/log и сохрани пользовательские изменения. Не начинай заново
-home/blog import: проект уже дошёл до публичного Sprint 5. Новый запрос
-владельца ставит дизайн-систему перед продолжением тиражирования UI.
+Baseline ревью d6011d2, дерево тогда чистое. Перепроверь текущие status/diff/log,
+сохрани чужие изменения. DS-1/DS-2 уже реализованы, DS-3 широко перенесён;
+не начинай их заново. Agent @320 polish уже в commit, отдельный visual QA Open.
 
-Сначала дай короткий план DS-1 и критерии. Реализуй semantic design tokens,
-Container/ReadingContainer/SectionFrame/CompositionGrid/CardGrid, shared
-Button/LinkButton/IconButton, Card surfaces и Field/Feedback recipes.
-Сохрани бренд: ice/navy/red, Gravity/Gratimo, границы и скругления. Раздели
-font width и реальный weight, brand red и доступный action color.
-Проверь существующие recipes до создания новых; не сломай Button callers.
+Дай короткий план/критерии, затем выполни Q1:
+1. R01: tours/contacts не обещают доставку без отправки. Проверь все пять lead
+   форм, сохрани ввод и покажи честное unavailable state с подтверждённым
+   контактным/legacy путём. Не создавай backend ради устранения false success.
+2. R02: published peer vs unavailable/fallback contract для LocaleSwitch.
+   EN на RU-only B2B не ведёт в 404; чужой hash не переносится на fallback,
+   а настоящий product/article peer и существующие anchors сохраняются.
+3. R05/R06: восстанови Mapbox logo/attribution и корректную mobile panel
+   border-box width. Сохрани Product singular и существующую фильтрацию.
+4. R07: единый shop dialog close/cancel/hash contract, Escape/reopen,
+   Back/Forward, query preservation и focus restoration.
+5. R08: graceful WebGL init/load failures, внешний map fallback/retry,
+   корректный geocoder teardown при repeated mount/locale transition.
+   Пользовательский fallback не показывает env setup инструкции.
 
-Композиции: full, 50/50 по обеим осям, 25/50/25 по обеим осям, 2×2,
-карточки 3/4/6, banner/carousel. Screen = min доступной высоты с ростом по
-content, body/controls reflow. Учти ширину И высоту, header, short windows,
-mobile keyboard/toolbar, zoom и длинные переводы. Whole-UI transform-scale,
-обрезка текста и обязательные 6 узких колонок не подходят.
+Соблюдай scopes и DoD из CURSOR_NEXT_STEPS. Свежие lint/typecheck/build,
+local start и targeted browser scenarios: forms valid/invalid/no loss,
+RU/EN/anchors, map token/no-token/errors/320/390/desktop, shop dialog history.
+Запиши реальные команды/outcomes/screenshots и ограничения; не выдавай
+неисполненные browser/production проверки за PASS. Обнови docs после кода.
+Проверь docs delivery: .gitignore исключает /docs/, новые review/matrix/baseline/archive
+пока ignored. Подготовь точечный список безопасных .md для будущего разрешённого
+коммита; не раскрывай массово raw/source packs и не делай staging сейчас.
 
-Создай dev-only showcase в текущем Next.js со всеми сетками/tokens/состояниями:
-hover/focus/pressed/selected/disabled/loading/error, hidden-face focus,
-media/font fallback, длинный RU/EN, reduced-motion, видимый no-JS/SSR.
-Проверь prototype anchors/header offset, native proximity и Reveal в showcase.
-Оставь document scroll, не перехватывай wheel/touch. Snap только opt-in;
-articles/legal/forms читаются свободно, smooth/JS уважают reduced-motion.
+Q2 design/motion/reflow, Q3 URL/SEO, A1 /about, campaigns и Stage5 — отдельные следующие
+спринты. Не подключай NocoDB/PostgreSQL/CMS/cart/payment, не публикуй новые
+языки. Mapbox frontend уже установлен — не удаляй его как «преждевременный».
+MCP Tilda только read-only; editor/published раздельно. Klin campaign в
+snapshot unpublished/password, доступ к исходникам не разрешает публикацию.
 
-Proposed численные tokens уточняй по showcase без отдельного вопроса на
-каждый padding/radius. Не устанавливай Storybook/UI/fullpage/motion/CMS/DB.
-Сверка Tilda при необходимости read-only, editor/published раздельно.
-Не публикуй sr/hy/ka/de: это будущие языки, а не готовые переводы.
+Обязательное дополнение владельца: A1 реализует /about по Tilda page71867465,
+project1212341, вместе с анимацией и логикой landing. В A1 изучи свежие records,
+SBS/timelines/triggers, breakpoint overrides и интерактивы через read-only MCP.
+Сохрани характер движения и сценарии; не подменяй landing статичной «О нас»
+или одним generic Reveal. Browser parity, mobile/reduced-motion/keyboard — DoD.
+Сейчас A1 не выполнять вместо Q1; /about обязателен до stage-4 exit.
 
-Выполни свежие lint/typecheck/build/local start и browser-матрицу из задания:
-320/390/768, короткие окна, 1440/1920, zoom, keyboard, reduced-motion/no-JS.
-Проверь регрессии существующих public templates. Запиши команды/screenshots,
-недоступные проверки и выбранные tokens, предъяви showcase для ревью.
-Сейчас не мигрируй весь сайт. Следом DS-2: один pilot /horeca; затем DS-3:
-rollout по шаблонам; потом оставшиеся страницы Sprint 5. Прежние visual
-sign-offs — baseline, новый запрос разрешает целевую системную адаптацию
-с сохранением content/URL/locale peers. Commit/push/production не выполнять.
-```
+Прежние visual acceptances — regression baseline, а не отмена конкретных
+подтверждённых дефектов. Не делай общий редизайн. Commit/push/production/DNS
+не выполнять без отдельного запроса.
+~~~

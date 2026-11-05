@@ -4,17 +4,20 @@ import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import {
+  isLocaleFallback,
   LOCALE_LABEL,
   PUBLISHED_LOCALES,
+  type LocaleHrefs,
+  type LocaleHrefTarget,
   type PublishedLocale,
 } from "@/i18n/locales";
 
 type LocaleSwitchProps = {
   /**
-   * Optional per-locale hrefs for the same entity (e.g. product with different slugs).
+   * Optional per-locale destinations for the same entity or an explicit fallback.
    * When omitted, keeps the current pathname under each published locale.
    */
-  localeHrefs?: Partial<Record<PublishedLocale, string>>;
+  localeHrefs?: LocaleHrefs;
   className?: string;
   /**
    * `header` — filled pills; with `scaled` height follows `--ctrl-h`
@@ -39,14 +42,20 @@ function useLocationHash(pathname: string) {
   return hash;
 }
 
-function localeHref(
+/**
+ * Resolve switcher href. Fragments transfer only onto published peers,
+ * never onto unrelated fallback destinations.
+ */
+export function resolveLocaleSwitchHref(
   pathname: string,
-  customHref: string | undefined,
+  target: LocaleHrefTarget | undefined,
   hash: string,
-) {
-  const base = customHref ?? pathname;
+): string | null {
+  if (target === null) return null;
+  if (isLocaleFallback(target)) return target.fallback;
+
+  const base = target ?? pathname;
   if (!hash) return base;
-  // Avoid doubling hash if a custom href already includes one.
   return base.includes("#") ? base : `${base}${hash}`;
 }
 
@@ -81,12 +90,16 @@ export function LocaleSwitch({
       >
         {PUBLISHED_LOCALES.map((code) => {
           const active = locale === code;
-          const customHref = localeHrefs?.[code];
-          if (customHref === null) return null;
+          const href = resolveLocaleSwitchHref(
+            pathname,
+            localeHrefs?.[code],
+            hash,
+          );
+          if (href === null) return null;
           return (
             <Link
               key={code}
-              href={localeHref(pathname, customHref, hash)}
+              href={href}
               locale={code}
               scroll={false}
               className={`inline-flex h-full items-center rounded-full uppercase transition-colors ${
@@ -117,12 +130,16 @@ export function LocaleSwitch({
     >
       {PUBLISHED_LOCALES.map((code) => {
         const active = locale === code;
-        const customHref = localeHrefs?.[code];
-        if (customHref === null) return null;
+        const href = resolveLocaleSwitchHref(
+          pathname,
+          localeHrefs?.[code],
+          hash,
+        );
+        if (href === null) return null;
         return (
           <Link
             key={code}
-            href={localeHref(pathname, customHref, hash)}
+            href={href}
             locale={code}
             scroll={false}
             className={`rounded-full px-2.5 py-1 transition-colors ${

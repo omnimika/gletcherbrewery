@@ -11,10 +11,11 @@ import {
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
 
-type Status = "idle" | "ok" | "error";
+type Status = "idle" | "unavailable" | "error";
 
 /**
- * Catalog lead form — DS-3 halves-x content section (stub submit until stage 4+).
+ * Catalog lead form — DS-3 halves-x content section.
+ * Online submit unavailable until backend; keeps input and shows email contact.
  */
 export function LeadForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -28,8 +29,8 @@ export function LeadForm() {
       return;
     }
     event.preventDefault();
-    setStatus("ok");
-    form.reset();
+    // No delivery yet — keep values, do not pretend success.
+    setStatus("unavailable");
   };
 
   return (
@@ -101,9 +102,15 @@ export function LeadForm() {
                   {t("submit")}
                 </Button>
                 <p className="text-xs text-gletcher-navy/60">{t("note")}</p>
-                {status === "ok" ? (
+                {status === "unavailable" ? (
                   <p className="text-sm text-gletcher-navy" role="status">
-                    {t("success")}
+                    {t("unavailable")}{" "}
+                    <a
+                      href="mailto:info@gletcherbrewery.com"
+                      className="underline underline-offset-2"
+                    >
+                      info@gletcherbrewery.com
+                    </a>
                   </p>
                 ) : null}
                 {status === "error" ? (

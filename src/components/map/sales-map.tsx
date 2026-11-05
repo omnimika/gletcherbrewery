@@ -48,9 +48,11 @@ export function SalesMap({
   const geocoderNode = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const geolocateRef = useRef<mapboxgl.GeolocateControl | null>(null);
+  const geocoderRef = useRef<MapboxGeocoder | null>(null);
   const [selected, setSelected] = useState<Set<string>>(() => new Set());
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [retryKey, setRetryKey] = useState(0);
 
   const seriesOrder = useMemo(
     () =>
@@ -76,16 +78,32 @@ export function SalesMap({
   useEffect(() => {
     if (!accessToken || !mapNode.current) return;
 
+    let cancelled = false;
+    const geocoderHost = geocoderNode.current;
     mapboxgl.accessToken = accessToken;
-    const map = new mapboxgl.Map({
-      container: mapNode.current,
-      style: MAP_STYLE.styleUrl,
-      center: MAP_STYLE.center,
-      zoom: MAP_STYLE.zoom,
-      projection: MAP_STYLE.projection,
-      antialias: true,
-      attributionControl: true,
-    });
+
+    let map: mapboxgl.Map;
+    try {
+      map = new mapboxgl.Map({
+        container: mapNode.current,
+        style: MAP_STYLE.styleUrl,
+        center: MAP_STYLE.center,
+        zoom: MAP_STYLE.zoom,
+        projection: MAP_STYLE.projection,
+        antialias: true,
+        attributionControl: true,
+      });
+    } catch {
+      // Defer so the effect body stays sync-clean for the linter; still covers
+      // synchronous WebGL init failures that never reach map.on("error").
+      queueMicrotask(() => {
+        if (!cancelled) setError(copy.loadError);
+      });
+      return () => {
+        cancelled = true;
+      };
+    }
+
     mapRef.current = map;
 
     const geolocate = new mapboxgl.GeolocateControl({
@@ -96,12 +114,16 @@ export function SalesMap({
     geolocateRef.current = geolocate;
     map.addControl(geolocate);
 
-    map.on("load", () => {
+    const onLoad = () => {
+      if (cancelled) return;
       setReady(true);
+      setError(null);
       applyFilters(selected);
       map.resize();
 
-      if (geocoderNode.current && geocoderNode.current.childElementCount === 0) {
+      if (geocoderHost) {
+        // Clear any leftover control DOM from a previous mount.
+        geocoderHost.replaceChildren();
         const geocoder = new MapboxGeocoder({
           accessToken,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- geocoder expects mapboxgl namespace
@@ -109,14 +131,19 @@ export function SalesMap({
           marker: false,
           placeholder: copy.geocoderPlaceholder,
         });
-        geocoderNode.current.appendChild(geocoder.onAdd(map));
+        geocoderRef.current = geocoder;
+        geocoderHost.appendChild(geocoder.onAdd(map));
       }
-    });
+    };
 
-    map.on("error", (e) => {
-      const msg = e.error?.message ?? "Mapbox error";
-      setError(msg);
-    });
+    const onError = (e: mapboxgl.ErrorEvent) => {
+      if (cancelled) return;
+      void e;
+      setError(copy.loadError);
+    };
+
+    map.on("load", onLoad);
+    map.on("error", onError);
 
     map.on("click", (e) => {
       const features = map.queryRenderedFeatures(e.point, {
@@ -153,6 +180,17 @@ export function SalesMap({
     });
 
     return () => {
+      cancelled = true;
+      const geocoder = geocoderRef.current;
+      if (geocoder) {
+        try {
+          geocoder.onRemove();
+        } catch {
+          // Control may already be detached with the map.
+        }
+        geocoderRef.current = null;
+      }
+      geocoderHost?.replaceChildren();
       map.remove();
       mapRef.current = null;
       geolocateRef.current = null;
@@ -160,7 +198,14 @@ export function SalesMap({
     };
     // selected intentionally omitted — filters applied via applyFilters effect
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, applyFilters, copy.assortmentLabel, copy.geocoderPlaceholder]);
+  }, [
+    accessToken,
+    applyFilters,
+    copy.assortmentLabel,
+    copy.geocoderPlaceholder,
+    copy.loadError,
+    retryKey,
+  ]);
 
   useEffect(() => {
     if (!ready) return;
@@ -189,6 +234,12 @@ export function SalesMap({
 
   const triggerGeolocate = () => {
     geolocateRef.current?.trigger();
+  };
+
+  const retryMap = () => {
+    setError(null);
+    setReady(false);
+    setRetryKey((k) => k + 1);
   };
 
   const seriesClass = {
@@ -230,6 +281,28 @@ export function SalesMap({
         <div ref={frameNode} className={styles.frame}>
           <div ref={mapNode} className={styles.map} />
 
+          {error && !ready ? (
+            <div className={styles.missing} style={{ position: "absolute", inset: 0, zIndex: 30 }}>
+              <p className={styles.missingBody}>{error}</p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+                <button
+                  type="button"
+                  className={styles.fallbackLink}
+                  onClick={retryMap}
+                >
+                  {copy.retryLabel}
+                </button>
+                <a
+                  href={copy.productionFallbackHref}
+                  className={styles.fallbackLink}
+                  rel="noopener noreferrer"
+                >
+                  {copy.productionFallbackLabel}
+                </a>
+              </div>
+            </div>
+          ) : null}
+
           {/* Production comments out the h3 title; keep aria-label on aside. */}
           <aside className={styles.panel} aria-label={copy.filterTitle}>
             <div className={styles.controls}>
@@ -256,7 +329,7 @@ export function SalesMap({
               <div ref={geocoderNode} className={styles.geocoder} />
             </div>
 
-            {error ? <p className={styles.error}>{error}</p> : null}
+            {error && ready ? <p className={styles.error}>{error}</p> : null}
 
             <div className={styles.seriesList}>
               {seriesOrder.map((series) => (

@@ -83,7 +83,7 @@ Compatible with `products` + `product_translations` (one entity, many locales). 
 | `brainstorm` | `brainstorm-apa-alcohol-free` |
 | others | same as RU |
 
-## Implementation verification (01.11.2026)
+## Historical implementation verification (01.11.2026)
 
 Accepted architecture is distinct from owner acceptance and verification.
 `/beer` and product template are owner-accepted (`0df9706`). Current `2c1a9d0`
@@ -124,3 +124,27 @@ notes do not enable `sr`, `hy`, `ka` or `de` or choose new business rules.
 
 The proposed [sprint series](../SPRINT_PLAN.md) applies this publication model to
 blog entities before article batches; it does not select/install a CMS or backend.
+
+## Implementation verification (05.11.2026, d6011d2)
+
+The earlier paragraph is historical: blog entities/listing/article batches and
+public templates are now implemented. Current gaps and route availability:
+[review](../reviews/2026-11-05-public-integrity.md),
+[route matrix](../discovery/PUBLIC_ROUTE_MATRIX.md). Do not repeat blog migration.
+
+Q1 R02 (05.11.2026) implemented the explicit contract in `src/i18n/locales.ts`:
+`LocaleHrefTarget = string | { fallback: string } | null`. LocaleSwitch transfers
+fragments only for peer `string` targets; `{fallback}` never keeps a foreign hash;
+`null` hides the locale option. RU-only pages (incl. russian-craft-beer) use
+`{ fallback: "/" }` or listing fallbacks. Peer pathnames for next-intl `Link`
+must omit the `/en` prefix (Link + `locale` adds it).
+
+RU-only shop is deliberate: source EN peer unpublished. Agent/Horeca/contacts/
+legal and other RU-only cases must stay absent from EN SEO unless a real peer
+is published. Q3 adds route/publication-driven sitemap, metadata and legacy
+URL checks. A fallback home destination is not a translation peer/hreflang.
+
+sr/hy/ka/de remain planned. Before enabling one, expand hardcoded RU/EN content
+builders and peer loops, load/validate messages, prove publication/draft cases,
+font/script/line-height and legal content. Registry inclusion alone remains
+insufficient. This follow-up does not change the Accepted routing decision.

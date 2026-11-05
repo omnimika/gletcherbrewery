@@ -1,8 +1,8 @@
 # Локальная разработка
 
-Статус на 01.11.2026: Bootstrap, `/beer`, product template и partnership приняты
-по текущим записям; blog feed/tpost scope закрыт. Текущая работа — DS-1:
-[дизайн-фундамент/showcase](design/DESIGN_SYSTEM.md), затем pilot/rollout.
+Статус на 05.11.2026, d6011d2: DS-1/DS-2 реализованы, DS-3 широко перенесён;
+map/shop и остальные основные public templates в коде. Текущая работа — Q1:
+[функциональная надёжность](CURSOR_NEXT_STEPS.md), затем Q2/Q3 и public gate.
 RU без префикса, EN под `/en`; новые языки ещё не публикуются.
 Текущие проверки и дефекты описаны
 в [текущем задании Cursor](CURSOR_NEXT_STEPS.md) и `ROADMAP.md`.
@@ -13,6 +13,10 @@ RU без префикса, EN под `/en`; новые языки ещё не �
 Нужны npm и Node.js, удовлетворяющий `engines.node` в `package.json`:
 `^20.19.0 || ^22.13.0 || >=24.0.0`. Используйте поддерживаемую LTS-версию.
 Нижняя граница учитывает ESLint и его зависимости.
+
+В shell текущего ревью default Node 20.15.1 не соответствует engines;
+проверки выполнены установленным Node 25.5.0. Перед npm-командами активировать
+совместимую установленную версию; это не повод обновлять зависимости проекта.
 
 ```sh
 npm ci
@@ -46,8 +50,8 @@ npm start
 src/
   app/          # App Router, layout, страницы и глобальные стили
   components/   # Общие компоненты интерфейса
-  content/      # Фикстуры каталога и RU/EN характеристики/тексты продуктов
-  lib/          # Age gate, focus trap и справочные helpers карусели
+  content/      # Catalog/blog/public templates, секции и публикация RU/EN
+  lib/          # Focus, scroll, formatting и навигационные helpers
   types/        # Будущие общие типы
 ```
 
@@ -78,7 +82,12 @@ ABC Gravity Trial используются только для локально�
 
 `build` и `dev` создают `.next` и могут обновлять `next-env.d.ts`; эти команды
 не входят в режим строгого read-only ревью. Результаты текущего ревью:
-[6b137e7, 2026-11-01](reviews/2026-11-01-design-system.md).
+[d6011d2, 2026-11-05](reviews/2026-11-05-public-integrity.md).
+
+Mapbox frontend использует публичный token из .env.example; его значение
+задаётся локально вне Git. Без token должна работать публичная fallback-ссылка.
+Q1 также проверяет invalid token, WebGL initialization и repeat mount.
+CRM/публикация tilesets не нужны для локального запуска public templates.
 
 Cursor ранее сообщил рабочий production-start с `--hostname localhost` и loop
 с `127.0.0.1`. Для текущего QA использовать localhost; IP-проблему считать

@@ -43,8 +43,8 @@ export default async function HorecaPage({ params }: PageProps) {
     <SiteShell
       localeHrefs={{
         ru: HORECA_PATH,
-        // No EN peer — switcher goes to EN home (same pattern as vacancies).
-        en: "/",
+        // No EN peer — published home fallback; do not transfer page hash.
+        en: { fallback: "/" },
       }}
     >
       <HorecaPageView />

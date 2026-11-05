@@ -47,7 +47,7 @@ export default async function ShoppingRulesPage({ params }: PageProps) {
     <SiteShell
       localeHrefs={{
         ru: SHOPPING_RULES_PATH,
-        en: "/",
+        en: { fallback: "/" },
       }}
     >
       <ShoppingRulesPageView />

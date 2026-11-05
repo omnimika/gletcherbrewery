@@ -54,3 +54,21 @@ export function isAppLocale(value: string): value is AppLocale {
 export function isPublishedLocale(value: string): value is PublishedLocale {
   return (PUBLISHED_LOCALES as readonly string[]).includes(value);
 }
+
+/**
+ * LocaleSwitch destination for one published locale (ADR 0001 / Q1 R02).
+ *
+ * - `string` — published peer of the same entity; fragment may transfer
+ * - `{ fallback }` — other published page (not a translation peer); fragment never transfers
+ * - `null` — unavailable; hide this locale option (do not invent a URL)
+ * - omitted key — keep current pathname under that locale (peer); fragment may transfer
+ */
+export type LocaleHrefTarget = string | { fallback: string } | null;
+
+export type LocaleHrefs = Partial<Record<PublishedLocale, LocaleHrefTarget>>;
+
+export function isLocaleFallback(
+  target: LocaleHrefTarget | undefined,
+): target is { fallback: string } {
+  return typeof target === "object" && target !== null && "fallback" in target;
+}

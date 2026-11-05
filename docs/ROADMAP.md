@@ -1,7 +1,7 @@
 # Gletcher Brewery — Roadmap и технический план миграции
 
-> Версия: 0.11 (1 ноября 2026 г.)
-> Статус: чистый `6b137e7` проверен; TypeScript/ESLint PASS, build/browser Codex не запускал. Public migration уже в Sprint 5, blog feed/tpost scope закрыт по текущим записям. Новый запрос владельца: сначала DS-1 дизайн-фундамент/showcase, затем pilot/rollout. Контракт: `docs/design/DESIGN_SYSTEM.md`, серия: `docs/SPRINT_PLAN.md`.
+> Версия: 0.13 (5 ноября 2026 г.)
+> Статус: чистый `d6011d2` проверен относительно `6b137e7`; TypeScript/ESLint PASS, build/browser Codex не запускал. DS-1/DS-2 реализованы, DS-3 широко перенесён; map/shop frontend уже в коде. Текущее — Q1 функциональной надёжности, затем Q2/Q3 и public gate. Ревью: `docs/reviews/2026-11-05-public-integrity.md`; серия: `docs/SPRINT_PLAN.md`.
 > Для репозитория: поместить в `docs/ROADMAP.md`.
 
 ## 1. Концепция
@@ -91,17 +91,17 @@ Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCB
 
 > **Правило порядка:** аналитика по отдельной подсистеме допустима заранее; её реализация — только в согласованной очереди. Публикация на действующий домен, изменения production-сервисов и миграция персональных данных запрещены без отдельного согласования.
 
-| Этап | Результат | Статус на 01.11.2026 |
+| Этап | Результат | Статус на 05.11.2026 |
 |---|---|---|
 | 0. Bootstrap | Работающий локально Next.js + TS + Tailwind и чистый Git | **Done** (проверено 31.10.2026) |
 | 1. Site Discovery | Реестр URL, UI-инвентаризация, SEO/контент и кандидат эталона | **Done** — эталон `/beer` утверждён |
-| 2. Design Foundation | Общие tokens, containers, grid, UI/state/motion | Исторический `/beer` baseline принят; **DS-1 текущий** по новому запросу |
-| 3. Reference Page | Одна принятая адаптивная эталонная страница | `/beer` принят 31.10; новые design recipes проверяются на одном pilot |
-| 4. Public Migration | Публичные страницы, каталог/блог, SEO, контент | **In progress**, Sprint 5; после DS-1 → pilot/rollout → остаток coverage |
+| 2. Design Foundation | Общие tokens, containers, grid, UI/state/motion | DS-1 реализован; конкретные дефекты grid/motion — Q2, не новый foundation |
+| 3. Reference Page | Одна принятая адаптивная эталонная страница | `/beer` принят 31.10; DS-2 Horeca pilot реализован, sign-offs отдельно |
+| 4. Public Migration | Публичные страницы, каталог/блог, SEO, контент | **In progress**, Q1 → Q2/Q3 → remaining coverage/public gate |
 | 5. Data & Infrastructure | PostgreSQL, NocoDB, серверные границы, staging | В очереди |
-| 6. Retail Map | CRM торговых точек и Mapbox | В очереди |
-| 7. Agent Gletcher | Миграция Airtable/Collabza и бонусная программа | В очереди |
-| 8. Tours & Certificates | Запись, оплата, PDF/email | В очереди |
+| 6. Retail Map | CRM торговых точек и публикация данных | Backend в очереди; legacy Mapbox frontend уже реализован |
+| 7. Agent Gletcher | Миграция Airtable/Collabza и бонусная программа | Backend в очереди; public landing уже реализован |
+| 8. Tours & Certificates | Запись, оплата, PDF/email | Backend в очереди; public tours с YCLIENTS и firm shop уже реализованы |
 | 9. Launch | Проверки, параллельный запуск, cutover и rollback | В очереди |
 
 ### Этап 0 — Инициализация и технический фундамент (первый обязательный gate)
@@ -140,14 +140,17 @@ Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCB
 
 **Работы:** по результатам аудита создать дизайн-токены (цвета, шрифты, размеры, сетки, spacing, адаптивные размеры), UI primitives, глобальные layout/header/footer, соглашения об assets и именовании, доступность и базовую навигацию. Не копировать Tilda DOM/стили без проверки. По необходимости предложить библиотеку компонентов, но не добавлять автоматически большой UI-фреймворк.
 
-**Дополнение владельца 01.11.2026 — текущий приоритет:** полноценный
+**Требование владельца 01.11.2026 — действующий дизайн-контракт:** полноценный
 [дизайн-код](design/DESIGN_SYSTEM.md) и [ADR 0010](adr/0010-design-system-and-section-layout.md):
 презентационные секции, autoscale-композиции по ширине/высоте, anchors/native
 soft snap, 50/50 и 25/50/25 по обеим осям, cards 3/4/6, banners/carousels.
 Это плановая доработка foundation в ходе этапа 4, не повтор Bootstrap/Discovery.
-Сначала DS-1 tokens/primitives/showcase, затем DS-2 один pilot и DS-3 rollout.
+DS-1 tokens/primitives/showcase и DS-2 pilot уже реализованы, DS-3 широко
+перенесён. Не выполнять их заново; проверенные R03/R04/R09/R10 и reflow
+candidates — ограниченный Q2. Новая серия/доказательства в текущем ревью.
 Прежние приёмки не запрещают явно запрошенную систематизацию; содержание,
-URL/локали/сценарии сохраняются. Численные values Proposed до проверки.
+URL/локали/сценарии сохраняются. Численные values реализованы/reviewable;
+это не подтверждает owner sign-off каждого layout/state.
 
 **Критерий готовности:** есть локальная showcase всех grids/states, читаемый
 контент при short viewport/zoom, focus/reduced-motion/no-JS fallback; реальные
@@ -162,8 +165,8 @@ mandatory full-page wrapper, не уменьшать весь UI transform-ом.
 **Критерий готовности:** владелец принимает визуал и UX, соблюдены SEO-атрибуты, мобильная адаптация, доступность, нет регрессий в build. Создана воспроизводимая схема переноса других страниц.
 
 **Статус gate:** `/beer` принят владельцем по актуальным инструкциям AGENTS §7.
-Старые lint/focus-origin/contrast/min-height/order исправлены по коду, ссылки
-header/menu/footer и home используют временный production mapping. Loop clone
+Исторические lint/focus-origin/contrast/min-height/order исправлены по коду;
+в срезе 0df9706 header/menu/footer использовали временный production mapping. Loop clone
 links исправлены. A01–A03 [исторического ревью](reviews/2026-10-31-product-acceptance.md)
 закрыты по коду в `0df9706`, product template принят. Не выполнять их повторно.
 
@@ -173,19 +176,33 @@ links исправлены. A01–A03 [исторического ревью](re
 
 **Работы:** переносить страницы **по шаблонам и общим компонентам**, а не случайным порядком URL: каталог и карточки, блог и статьи, разделы о пивоварне/партнёрах, юридические страницы, формы. Составить редакционную модель CMS и принять отдельный ADR для rich-content редактора; NocoDB не считать автоматически полноценной заменой CMS. Для интеграционно сложных страниц (карта, агент, экскурсии) сначала сохранить публичный UI, а реальные данные и операции подключить на профильных этапах.
 
-**Текущий срез `6b137e7`:** product принят в `0df9706`, home реализован;
-blog feed/tpost, batches и small aliases закрыты по текущим записям Sprint 4b.
-`/partnership` RU/EN принят 01.11; `/russian-craft-beer`, `/horeca`, `/contacts`,
-`/policy` v1 ещё не объявлены принятыми. Не повторять старый home/blog import.
-Новый запрос ставит [DS-1 → DS-2 → DS-3](SPRINT_PLAN.md) перед дальнейшим
-тиражированием: tokens/showcase → один pilot → rollout по templates.
-После этого `/shopping-rules`, публичные agent/tours/map/shop и campaigns.
+**Текущий срез `d6011d2`:** catalog/product, home/blog, B2B/contacts/legal,
+agent/tours/map/shop реализованы; конкретные локали и external boundaries —
+[PUBLIC_ROUTE_MATRIX](discovery/PUBLIC_ROUTE_MATRIX.md). По записям Cursor map/shop
+приняты 04.11; отдельный /agent 320 polish ждёт visual QA, код уже committed.
+Не повторять home/blog import и DS-1/DS-2. Карта использует существующий Mapbox
+style/layers, не новую CRM; members и YCLIENTS остаются production integrations.
+
+**Следующая очередь:** [Q1 → Q2 → Q3](SPRINT_PLAN.md): честные form outcomes,
+locale transitions и map/shop integrity → UI/motion/reflow → URL/publication/SEO.
+Затем **обязательный A1 /about с анимацией и логикой**, подтверждённые campaigns
+по одному и stage-4 exit. Владелец указал [Tilda page 71867465/project1212341](https://tilda.ru/page/?pageid=71867465&projectid=1212341);
+подробные source workflow/DoD: [ABOUT_PAGE_BASELINE](discovery/ABOUT_PAGE_BASELINE.md).
+Для /about решение «нужен ли» закрыто; publication/index/peers уточняются отдельно.
+/blog-all aliases, campaign/aging/restaurant и operation URLs ещё требуют scope-решения.
+Klin snapshot unpublished/password не публиковать автоматически из MCP.
 Публичный UI не требует установки CMS/БД; Puck preference подтверждён,
 архитектура [ADR 0005](adr/0005-cms.md) Proposed, сам editor отложен до CRM.
 `sr`/`hy`/`ka`/`de` требуют перевода/шрифтов и publication checks; fallback
 сам по себе не создаёт публичную версию.
 
-**Критерий готовности:** публичные маршруты сопоставлены с исходными, SEO-метаданные/canonical/sitemap/redirects спланированы, медиа оптимизированы, дизайн последователен; не делаем DNS cutover.
+**Критерий готовности:** /about реализован и принят вместе с animation/interaction
+logic; остальные пункты согласованного public scope закрыты или имеют явные
+legacy/archive/exclude решения; URL/статусы/peers, canonical/hreflang/sitemap/
+redirects и preview/production index policy реализованы и проверены. Нет
+ложных отправок/недоступных controls; media/reflow/keyboard/locale regression
+подтверждены свежими проверками. Новые sign-offs только по evidence. DNS cutover
+остаётся отдельным этапом; один build PASS не закрывает Stage 4.
 
 ### Этап 5 — База данных и инфраструктура приложений
 
@@ -256,14 +273,14 @@ tour_types ──1:N── tour_slots ──1:N── bookings ──1:N── p
 | Будущий `0007-background-jobs.md` | Email/webhooks, outbox/worker, retries |
 | Будущий `0008-hosting.md` | Yandex Cloud, сеть, стоимость, среды |
 | Будущий `0009-booking-payments.md` | Бронь, merchant, чеки/возвраты, идемпотентность |
-| `0010-design-system-and-section-layout.md` | Direction Confirmed; technical tokens/API Proposed, текущие DS-1/2/3 |
+| `0010-design-system-and-section-layout.md` | Direction Confirmed; DS-1/2 реализованы, rollout reviewable; текущие defects — Q2 |
 
 ## 6. Технические принципы
 
 - Сначала работающий Next.js, затем доказуемый UI-аудит, затем дизайн-система и эталонная страница. Запрещено подменять этот порядок техническим энтузиазмом по одной подсистеме.
-- В ходе этапа 4 новый запрос владельца приоритизирует DS-1/2/3. Design tokens,
-  layout/state/motion проверяются до дальнейшего размножения page overrides;
-  rollout сохраняет бизнес-сценарии, native scroll, чтение/zoom и locale contracts.
+- В этапе 4 DS-1/DS-2 уже реализованы, DS-3 широко перенесён. Текущий Q1/Q2
+  проверяет business outcomes и design contracts до новых templates;
+  исправления сохраняют native scroll, чтение/zoom и locale publication.
 - Одна SQL-схема, управляемая миграциями; NocoDB как рабочий табличный UI, по умолчанию без прав изменять схему.
 - Бонусы, деньги и бронирования — только атомарные операции backend с audit log.
 - У каждого импорта есть `source`, `source_id`, временная метка, checksum/версия, dry-run, статистика результатов и возможность отката.
@@ -291,11 +308,11 @@ tour_types ──1:N── tour_slots ──1:N── bookings ──1:N── p
 
 ## 8. Что потребуется от владельца проекта — в правильном порядке
 
-**Сейчас (design foundation в этапе 4):** направление уже дано владельцем;
-Cursor выполняет DS-1 и предъявляет конкретную showcase, далее один pilot.
-Не запрашивать повторное разрешение на подготовку tokens/сеток. Values
-проверяются на контенте; визуальная приёмка относится к готовому результату.
-Новых production-ключей для этого не нужно. Источники через read-only MCP.
+**Сейчас (quality gate этапа 4):** Cursor выполняет конкретный Q1, затем Q2/Q3.
+Не запрашивать повторное разрешение на изучение/подготовку исправлений. Владельцу
+предъявлять проверенные scenarios/diff и /agent @320 polish для visual QA.
+Далее согласовать remaining campaign/archive scope на свежем source snapshot;
+не выбирать вслепую «все campaigns» или «сразу backend» до public coverage gate.
 
 **Для завершения RU/EN среза этапа 4:** подтвердить UX и полноту обязательных локализованных полей; i18n ADR уже Accepted. Для будущего сербского выбрать письменность, для остальных локалей — приоритет перевода и шрифты. Юридические тексты и market-specific условия требуют отдельного подтверждения; язык сам не определяет рынок.
 
@@ -305,13 +322,15 @@ Cursor выполняет DS-1 и предъявляет конкретную sh
 
 1. Прочитать [задание](CURSOR_NEXT_STEPS.md), [дизайн-код](design/DESIGN_SYSTEM.md),
    [ADR 0010](adr/0010-design-system-and-section-layout.md),
-   [ревью](reviews/2026-11-01-design-system.md), [план](SPRINT_PLAN.md), Accepted i18n ADR.
-   Проверить актуальный Git state; baseline отчёта `6b137e7`.
-2. Выполнить **только DS-1**: tokens/layout/primitives/showcase всех композиций
-   и состояний, fresh lint/typecheck/build/local browser. Не переписывать все pages.
-3. Затем DS-2 один pilot `/horeca` (рекомендация) и DS-3 последовательный rollout;
-   старые home/blog milestones не повторять. Public backlog продолжить на готовой системе.
-4. Backend — этапы 5+, commit/push/production — отдельно.
+   [ревью](reviews/2026-11-05-public-integrity.md), [план](SPRINT_PLAN.md),
+   [route matrix](discovery/PUBLIC_ROUTE_MATRIX.md), Accepted i18n ADR.
+   Проверить актуальный Git state; baseline отчёта `d6011d2`.
+2. Выполнить **только Q1**: R01/R02/R05/R06/R07/R08, fresh lint/typecheck/build/
+   browser по заданию. DS-1/DS-2/agent commit повторно не делать.
+3. Затем Q2 UI/UX → Q3 URL/SEO → **A1 /about с source animation/logic** →
+   approved campaigns → public gate. /about не исключать как optional/archive.
+   Backend discovery допустим read-only; D5-0/реализация отдельными scope.
+4. Backend installation/migrations, commit/push/production — отдельные задания.
    [Готовый промпт](CURSOR_REVIEW_PROMPT.md).
 
 ## 10. Результаты аудита
