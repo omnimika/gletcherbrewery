@@ -9,9 +9,19 @@
   min-height: 100svh;
   width: 100%;
   flex-direction: column;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: hidden;
   background: #e6eefc;
   color: #0d0f49;
+}
+
+@media (max-width: 639px) {
+  /* Tall card stacks (partner/status) must not clip on phone */
+  .screen {
+    height: auto;
+    min-height: 100svh;
+    overflow-y: visible;
+  }
 }
 
 .stage {
@@ -61,36 +71,18 @@
 
 .heroMobileLines {
   display: none;
-  margin-top: 0.35rem;
+  margin-top: 0.2rem;
   text-align: center;
 }
 
 .heroMobileLines p {
   margin: 0;
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(1.75rem, 11vw, 2.75rem);
+  font-size: clamp(1.5rem, 10vw, 2.25rem);
   font-weight: 300;
-  line-height: 0.82;
+  line-height: 0.85;
   text-transform: uppercase;
   color: #0d0f49;
-}
-
-@media (max-width: 479px) {
-  .heroTitle,
-  .heroBrand {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-  }
-
-  .heroMobileLines {
-    display: block;
-    position: relative;
-    z-index: 5;
-    padding-top: clamp(4.5rem, 18svh, 7rem);
-  }
 }
 
 .heroPills {
@@ -152,18 +144,99 @@
   width: min(37%, 28rem);
   height: min(74%, 66svh);
   translate: -50% -46%;
-  overflow: hidden;
+  /* visible so seal can hang past the bottle frame */
+  overflow: visible;
   pointer-events: none;
 }
 
+/* Seal anchors to the bottle frame (heroVideo) on all breakpoints */
 .heroSeal {
   position: absolute;
   z-index: 16;
-  top: 52%;
-  left: calc(50% - clamp(5.5rem, 12vw, 9rem));
+  top: 55%;
+  left: -32%;
   width: clamp(5rem, 10vw, 7.5rem);
   height: clamp(5rem, 10vw, 7.5rem);
   pointer-events: none;
+}
+
+/**
+ * Phone artboard: production stacks title → brand → taglines → bottle → CTA.
+ * Absolute desktop composition breaks below ~480px.
+ */
+@media (max-width: 479px) {
+  .heroStage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    width: 100%;
+    padding: calc(var(--hh, 72px) + 0.75rem) 0.75rem 1.5rem;
+  }
+
+  .heroTitle {
+    padding-top: 0;
+    font-size: clamp(2rem, 13vw, 2.75rem);
+    font-weight: 800;
+    line-height: 0.9;
+  }
+
+  .heroBrand {
+    margin-top: 0.05em;
+    font-size: clamp(1.75rem, 12vw, 2.5rem);
+    font-weight: 300;
+  }
+
+  .heroMobileLines {
+    display: block;
+    position: relative;
+    z-index: 5;
+    margin-top: 0.35rem;
+  }
+
+  .heroPills {
+    display: none !important;
+  }
+
+  .heroVideo {
+    position: relative;
+    z-index: 8;
+    top: auto;
+    left: auto;
+    width: min(52vw, 10.5rem);
+    height: min(42svh, 18rem);
+    margin: 0.5rem auto 0;
+    translate: none;
+    overflow: visible;
+  }
+
+  /* Bottom-right of bottle; stays clear of CTA below */
+  .heroSeal {
+    top: auto;
+    left: auto;
+    right: -22%;
+    bottom: 4%;
+    width: 4.25rem;
+    height: 4.25rem;
+  }
+
+  .heroCta {
+    position: relative;
+    z-index: 14;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: 16rem;
+    margin-top: 0.85rem;
+    translate: none;
+  }
+
+  .heroCta :global(a),
+  .heroCta a {
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 /* ——— Shared ——— */

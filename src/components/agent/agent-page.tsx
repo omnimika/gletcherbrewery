@@ -125,12 +125,6 @@ function HeroSection() {
           </div>
         </div>
 
-        <div className={styles.heroCta}>
-          <ZbAppear anim="fadeinup" duration={1} distance={100} mobile>
-            <SignupCta label={h.cta} />
-          </ZbAppear>
-        </div>
-
         <div className={styles.heroVideo}>
           <ZbAppear
             className="absolute inset-0"
@@ -143,24 +137,30 @@ function HeroSection() {
               <BottleVideo />
             </ZbScrollParallax>
           </ZbAppear>
+
+          <ZbSbs
+            className={styles.heroSeal}
+            steps={HERO_SEAL_SBS}
+            trigger="block"
+            triggerLine={1}
+            mobile
+          >
+            <Image
+              src={a.slogan}
+              alt=""
+              fill
+              className="object-contain"
+              sizes="120px"
+              priority
+            />
+          </ZbSbs>
         </div>
 
-        <ZbSbs
-          className={styles.heroSeal}
-          steps={HERO_SEAL_SBS}
-          trigger="block"
-          triggerLine={1}
-          mobile
-        >
-          <Image
-            src={a.slogan}
-            alt=""
-            fill
-            className="object-contain"
-            sizes="120px"
-            priority
-          />
-        </ZbSbs>
+        <div className={styles.heroCta}>
+          <ZbAppear anim="fadeinup" duration={1} distance={100} mobile>
+            <SignupCta label={h.cta} />
+          </ZbAppear>
+        </div>
       </div>
     </section>
   );
@@ -193,7 +193,7 @@ function PurchasesSection() {
 
           <div className="relative mt-[-0.12em]">
             <ZbAppear
-              className="pointer-events-none absolute top-[-12%] left-[-4%] z-[3] w-[clamp(5.5rem,18vw,16.8rem)]"
+              className="pointer-events-none absolute top-[-6%] left-[6%] z-[3] w-[clamp(3.25rem,18vw,16.8rem)] max-sm:left-[8%] sm:top-[-12%] sm:left-[-4%] sm:w-[clamp(5.5rem,18vw,16.8rem)]"
               anim="fadeinright"
               duration={1}
               distance={100}
@@ -212,7 +212,7 @@ function PurchasesSection() {
             </ZbAppear>
 
             <ZbAppear
-              className="pointer-events-none absolute top-[-38%] right-[-4%] z-[4] w-[clamp(5rem,16vw,16rem)]"
+              className="pointer-events-none absolute top-[-14%] right-[6%] z-[4] w-[clamp(3rem,16vw,16rem)] max-sm:right-[8%] sm:top-[-38%] sm:right-[-4%] sm:w-[clamp(5rem,16vw,16rem)]"
               anim="fadeinleft"
               duration={1}
               distance={100}

@@ -1,27 +1,29 @@
 # Текущее задание Cursor Agent
 
-Дата: **03.11.2026**. DS-3 / Sprint 5.
+Дата: **05.11.2026**. DS-3 / Sprint 5.
 [Дизайн-код](design/DESIGN_SYSTEM.md), [ADR 0010](adr/0010-design-system-and-section-layout.md),
 [серия](SPRINT_PLAN.md).
 
-## Срез — `/tours` landing v1
+## Срез — `/agent` mobile 320 polish (код готов, ждёт приёмки)
 
-- Tilda RU `9644391` / EN `61456185`: hero → about/pricing → YCLIENTS booking → howto (RU) → request
-- Prices = published snapshot; YCLIENTS iframe temporary; form stub
-- Baseline: [TOURS_PAGE_BASELINE.md](discovery/TOURS_PAGE_BASELINE.md)
-- Nav + home menu/CTA → local `/tours`
+- Hero @≤479: flex stack (title → brand → lines → bottle+seal → CTA).
+- Purchases stickers inset; `overflow-x: clip` на секциях.
+- Правки в working tree (`agent-page.tsx` / `.module.css`) — **ещё не в commit**.
+- Baseline: [AGENT_PAGE_BASELINE.md](discovery/AGENT_PAGE_BASELINE.md)
 
-## Ранее
+## Ранее (принято)
 
-- `/agent` ZB motion; blog listing; `/shopping-rules`; catalog/product; home slides
-- DS-1/DS-2 closed
+- `/shop` firm store v1 — owner 04.11 (RU-only; cart deferred).
+- `/map` — owner 04.11 (style, panel, `Product` filter).
+- `/tours` RU/EN; `/agent` landing v1; blog listing; `/shopping-rules`; catalog/product.
 
-## Следующий один template
+## Дальше
 
-1. Visual QA `/tours` (viewports + YCLIENTS) или `/map` / `/shop`.
-2. Residual agent mobile 320 polish.
+1. Owner visual QA `/agent` @320 → commit среза.
+2. Campaign landings (BMF/Klin/10-years) **или** backend Stage 5+ — по приоритету владельца.
 
 ## Backlog
 
 `home-features.tsx` still legacy stage (not on page).
+Shop cart / ЮKassa / merch SKU — Stage 8.
 Commit/push только по запросу.
