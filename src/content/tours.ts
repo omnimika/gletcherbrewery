@@ -51,8 +51,15 @@ export type ToursCopy = {
     body: string;
     links: readonly { label: string; href: string }[];
   }[];
-  requestTitle: string;
-  requestLead: string;
+  /** ZB 750698486 — guide + form contact band */
+  contact: {
+    title: string;
+    /** RU Confirmed; EN published omits this line — optional. */
+    lead?: string;
+    callHelp: string;
+    guideName: string;
+    guideRole: string;
+  };
   requestFields: {
     name: string;
     phone: string;
@@ -174,9 +181,13 @@ const RU: ToursCopy = {
       links: [],
     },
   ],
-  requestTitle: "Оставить заявку",
-  requestLead:
-    "Опишите пожелания — менеджер свяжется с вами. Отправка на сервер пока stub (этап бронирований).",
+  contact: {
+    title: "ОСТаЛИСЬ ВОПРОСЫ?",
+    lead: "НЕ ПОЛУЧАЕТСЯ ОПРЕДЕЛИТЬСЯ С БРОНИРОВАНИЕМ? НАПИШИТЕ НАМ, И МЫ ПОМОЖЕМ ВАМ ПОДОБРАТЬ ЛУЧШИе УСЛОВИЯ ПОД ВАШИ ЗАПРОСЫ.",
+    callHelp: "ПОЗВОНИТЕ, и я помогу!",
+    guideName: "ИННА",
+    guideRole: "Экскурсовод Gletcher",
+  },
   requestFields: {
     name: "Ваше имя",
     phone: "Телефон",
@@ -185,7 +196,7 @@ const RU: ToursCopy = {
     email: "Email",
     wishes: "Опишите ваши пожелания",
     submit: "ОТПРАВИТЬ",
-    ok: "Заявка принята локально. Мы ещё не отправляем её на сервер.",
+    ok: "Спасибо! В случае одобрения заявки, с вами свяжется наш менеджер.",
   },
   phone: { label: "+7 (926) 549-97-24", href: "tel:+79265499724" },
   reviews: {
@@ -257,8 +268,12 @@ const EN: ToursCopy = {
   bookingTitle: "Online booking",
   bookingLead:
     "Pick a slot in the widget. YCLIENTS replacement is a later stage.",
-  requestTitle: "GOT QUESTIONS?",
-  requestLead: "CALL ME TO HELP YOU!",
+  contact: {
+    title: "GOT QUESTIONS?",
+    callHelp: "CALL ME TO HELP YOU!",
+    guideName: "INNESSA",
+    guideRole: "Gletcher Guide",
+  },
   requestFields: {
     name: "Your name",
     phone: "Phone",
@@ -267,7 +282,7 @@ const EN: ToursCopy = {
     email: "Email",
     wishes: "Your wishes",
     submit: "SEND",
-    ok: "Saved locally. Server submit is not wired yet.",
+    ok: "Thank you! If the request is approved, our manager will contact you.",
   },
   phone: { label: "+7 (926) 549-97-24", href: "tel:+79265499724" },
   reviews: {

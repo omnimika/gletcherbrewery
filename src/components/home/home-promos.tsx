@@ -6,12 +6,11 @@ import {
   SectionFrame,
 } from "@/components/layout";
 import { Reveal } from "@/components/motion/reveal";
+import { MAP_PATH } from "@/content/map";
 import { RUSSIAN_CRAFT_BEER_PATH } from "@/content/russian-craft-beer";
-import { productionHref } from "@/lib/site-links";
-import type { PublishedLocale } from "@/i18n/locales";
+import { Link } from "@/i18n/navigation";
 
 type HomePromosProps = {
-  locale: PublishedLocale;
   labels: {
     promosAria: string;
     b2bTitle: string;
@@ -41,10 +40,9 @@ const cardClassName =
  * Production ZB `749421571` (RU) / `762053147` (EN): B2B + sales-map.
  * Stretch screen slide — halves-x (two blocks, one slide).
  */
-export function HomePromos({ locale, labels }: HomePromosProps) {
+export function HomePromos({ labels }: HomePromosProps) {
   // RU-only B2B landing; EN home also targets this path (production parity).
   const b2bHref = RUSSIAN_CRAFT_BEER_PATH;
-  const mapHref = productionHref("map", locale);
   const bullets = [labels.b2bBullet1, labels.b2bBullet2, labels.b2bBullet3];
 
   return (
@@ -97,7 +95,7 @@ export function HomePromos({ locale, labels }: HomePromosProps) {
 
           <CompositionPanel>
             <Reveal className="flex h-full min-h-0 min-w-0 flex-col">
-              <a href={mapHref} className={cardClassName}>
+              <Link href={MAP_PATH} className={cardClassName}>
                 <div className="flex items-start justify-between gap-3">
                   <h2 className="font-display flex min-w-0 flex-col text-gletcher-navy uppercase">
                     <span className="text-[clamp(1.75rem,5vw,3.3rem)] leading-[0.85] font-thin tracking-wide">
@@ -123,7 +121,7 @@ export function HomePromos({ locale, labels }: HomePromosProps) {
                 <span className={ctaClassName} style={ctaStyle}>
                   {labels.mapCta}
                 </span>
-              </a>
+              </Link>
             </Reveal>
           </CompositionPanel>
         </CompositionGrid>

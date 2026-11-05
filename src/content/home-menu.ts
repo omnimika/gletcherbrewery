@@ -7,7 +7,11 @@ export type HomeMenuCard = {
   ctaKey: string;
   image: string;
   href:
-    | { kind: "local"; path: "/beer" | "/blog" | "/partnership" | "/tours" }
+    | {
+        kind: "local";
+        path: "/beer" | "/blog" | "/partnership" | "/tours" | "/map";
+      }
+    | { kind: "absolute"; path: string }
     | { kind: "external"; key: ExternalNavKey };
 };
 
@@ -46,7 +50,7 @@ export const HOME_MENU_CARDS: HomeMenuCard[] = [
     bodyKey: "menuMapBody",
     ctaKey: "menuMapCta",
     image: "/home/menu-map_.png",
-    href: { kind: "external", key: "map" },
+    href: { kind: "local", path: "/map" },
   },
   {
     id: "tours",
@@ -62,6 +66,7 @@ export const HOME_MENU_CARDS: HomeMenuCard[] = [
     bodyKey: "menuShopBody",
     ctaKey: "menuShopCta",
     image: "/home/menu-shop_.png",
-    href: { kind: "external", key: "shop" },
+    /** Absolute RU path — EN peer unpublished. */
+    href: { kind: "absolute", path: "/shop" },
   },
 ];

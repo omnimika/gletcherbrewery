@@ -101,7 +101,7 @@ export default async function Home({ params }: HomePageProps) {
         catalogAria={t("heroCatalogAria")}
       />
       <HomeMoaBanner ariaLabel={t("moaBannerAria")} />
-      <HomePromos locale={published} labels={promoLabels} />
+      <HomePromos labels={promoLabels} />
       <HomeToursCta locale={published} labels={toursLabels} />
       <HomeMenuGrid locale={published} labels={menuLabels} />
       <HomeBlog title={t("blogTitle")} items={blog} />

@@ -12,12 +12,12 @@ import type { PublishedLocale } from "@/i18n/locales";
 const NAV_ITEMS: {
   key: ExternalNavKey | "products";
   labelKey: "products" | "partners" | "tours" | "map" | "blog";
-  localHref?: "/beer" | "/blog" | "/partnership" | "/tours";
+  localHref?: "/beer" | "/blog" | "/partnership" | "/tours" | "/map";
 }[] = [
   { key: "products", labelKey: "products", localHref: "/beer" },
   { key: "partners", labelKey: "partners", localHref: "/partnership" },
   { key: "tours", labelKey: "tours", localHref: "/tours" },
-  { key: "map", labelKey: "map" },
+  { key: "map", labelKey: "map", localHref: "/map" },
   { key: "blog", labelKey: "blog", localHref: "/blog" },
 ];
 

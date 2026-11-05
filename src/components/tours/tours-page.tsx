@@ -2,18 +2,16 @@ import Image from "next/image";
 import {
   CardGrid,
   CardGridItem,
-  CompositionGrid,
-  CompositionPanel,
   Container,
   SectionFrame,
 } from "@/components/layout";
 import { DocumentProximitySnap } from "@/components/motion/document-proximity-snap";
 import { Reveal } from "@/components/motion/reveal";
+import { ToursContactSection } from "@/components/tours/tours-contact";
 import {
   ToursLegalNotice,
   ToursReviewsSection,
 } from "@/components/tours/tours-reviews";
-import { ToursRequestForm } from "@/components/tours/tours-request-form";
 import { YclientsEmbed } from "@/components/tours/yclients-embed";
 import {
   TOURS_HERO_IMAGE,
@@ -186,6 +184,9 @@ export function ToursPageView({ copy }: { copy: ToursCopy }) {
         </Container>
       </SectionFrame>
 
+      {/* ZB 750698486 — guide Inna + form + video (before howto in source) */}
+      <ToursContactSection copy={copy} />
+
       {/* How to get — RU Confirmed; EN optional */}
       {copy.howTitle && copy.how ? (
         <SectionFrame
@@ -247,45 +248,6 @@ export function ToursPageView({ copy }: { copy: ToursCopy }) {
       {copy.legalNotice ? (
         <ToursLegalNotice notice={copy.legalNotice} />
       ) : null}
-
-      {/* Request + contacts */}
-      <SectionFrame
-        id="request"
-        mode="content"
-        tone="ice"
-        snap
-        aria-labelledby="tours-request"
-        className="border-t border-gletcher-navy/10"
-      >
-        <Container wide className="max-w-[1100px] py-10 sm:py-14">
-          <CompositionGrid preset="halves-x">
-            <CompositionPanel>
-              <Reveal>
-                <h2
-                  id="tours-request"
-                  className="font-display text-[clamp(1.75rem,5vw,3.5rem)] leading-[0.85] font-light uppercase"
-                >
-                  {copy.requestTitle}
-                </h2>
-                <p className="mt-3 max-w-md text-sm text-gletcher-navy/75">
-                  {copy.requestLead}
-                </p>
-                <a
-                  href={copy.phone.href}
-                  className="font-display mt-6 inline-block text-xl font-extrabold tracking-wide"
-                >
-                  {copy.phone.label}
-                </a>
-              </Reveal>
-            </CompositionPanel>
-            <CompositionPanel>
-              <Reveal>
-                <ToursRequestForm fields={copy.requestFields} />
-              </Reveal>
-            </CompositionPanel>
-          </CompositionGrid>
-        </Container>
-      </SectionFrame>
     </div>
   );
 }

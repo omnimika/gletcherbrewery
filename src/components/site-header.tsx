@@ -7,7 +7,7 @@ import {
   useSyncExternalStore,
   type CSSProperties,
 } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LocaleSwitch } from "@/components/locale-switch";
 import { MainNavPanel } from "@/components/main-nav-overlay";
@@ -94,7 +94,6 @@ export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
-  const locale = useLocale() as PublishedLocale;
   const t = useTranslations("nav");
   const tA11y = useTranslations("a11y");
   const { vars, compact } = useSyncExternalStore(

@@ -83,6 +83,10 @@ export function HomeMenuGrid({ locale, labels }: HomeMenuGridProps) {
                         <Link href={card.href.path} className={cardClassName}>
                           {inner}
                         </Link>
+                      ) : card.href.kind === "absolute" ? (
+                        <a href={card.href.path} className={cardClassName}>
+                          {inner}
+                        </a>
                       ) : (
                         <a
                           href={productionHref(card.href.key, locale)}

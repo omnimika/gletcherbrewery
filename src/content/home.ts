@@ -17,9 +17,9 @@ export type HomeFeature = {
   ctaKey: string;
   /** Local Next path or production nav key. */
   href:
-    | { kind: "local"; path: "/beer" | "/blog" | "/tours" }
+    | { kind: "local"; path: "/beer" | "/blog" | "/tours" | "/map" }
     /** Unprefixed absolute path (RU-only pages reachable from EN chrome). */
-    | { kind: "absolute"; path: "/russian-craft-beer" }
+    | { kind: "absolute"; path: "/russian-craft-beer" | "/shop" }
     | { kind: "external"; key: ExternalNavKey };
 };
 
@@ -29,7 +29,7 @@ export const HOME_FEATURES: HomeFeature[] = [
     titleKey: "featureMapTitle",
     bodyKey: "featureMapBody",
     ctaKey: "featureMapCta",
-    href: { kind: "external", key: "map" },
+    href: { kind: "local", path: "/map" },
   },
   {
     id: "b2b",
@@ -43,7 +43,8 @@ export const HOME_FEATURES: HomeFeature[] = [
     titleKey: "featureShopTitle",
     bodyKey: "featureShopBody",
     ctaKey: "featureShopCta",
-    href: { kind: "external", key: "shop" },
+    /** Absolute RU path — EN peer unpublished; avoid /en/shop 404. */
+    href: { kind: "absolute", path: "/shop" },
   },
   {
     id: "tours",

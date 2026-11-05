@@ -281,8 +281,11 @@ export function ZbSbs({
   const ref = useRef<HTMLElement | null>(null);
   const stepsRef = useRef(steps);
   const baseRef = useRef(baseRotate);
-  stepsRef.current = steps;
-  baseRef.current = baseRotate;
+
+  useEffect(() => {
+    stepsRef.current = steps;
+    baseRef.current = baseRotate;
+  }, [steps, baseRotate]);
 
   useEffect(() => {
     const node = ref.current;

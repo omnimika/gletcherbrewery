@@ -54,3 +54,7 @@ next-env.d.ts
 /tmp/
 /assets/brand/fonts/**/*Trial*
 /public/fonts/*Trial*
+
+AGENTS.md
+/docs/
+/docs/discovery/

@@ -25,6 +25,7 @@ const RU_ONLY: ReadonlySet<ExternalNavKey> = new Set([
   "signup",
   "policy",
   "b2b",
+  "shop",
 ]);
 
 const PATHS: Record<ExternalNavKey, { ru: string; en?: string }> = {
@@ -33,7 +34,8 @@ const PATHS: Record<ExternalNavKey, { ru: string; en?: string }> = {
   tours: { ru: "/tours", en: "/en/tours" },
   map: { ru: "/map", en: "/en/map" },
   blog: { ru: "/blog", en: "/en/blog" },
-  shop: { ru: "/shop", en: "/en/shop" },
+  /** EN peer unpublished on production; keep RU path for fallback chrome. */
+  shop: { ru: "/shop" },
   /** Live EN home also links the RU B2B landing — keep until EN peer Confirmed. */
   b2b: { ru: "/russian-craft-beer" },
   login: { ru: "/members/login" },
