@@ -103,9 +103,14 @@ Tilda feed `text` field = entity-encoded JSON array of `{ ty, te|url, … }`.
 - Nav/menu → local `/blog`.
 - No Puck/CMS/ORM/Auth install in this stage.
 
-## 6. Open
+## 6. Legacy `/blog-all` listing (Confirmed Q3, 06.11.2026)
+
+Local listing stays at `/blog` (+ `/en/blog`). Visiting `/blog-all` or
+`/en/blog-all` uses Next.js `permanentRedirect` → listing (**HTTP 308**, not 301).
+Article URLs remain `/blog-all/tpost/{slug}` (and `/en/blog-all/tpost/...`).
+
+## 7. Open
 
 - Full peer map for all feed posts.
-- Legacy `/blog/{slug}` 301 table.
-- Local `/blog-all` listing alias (articles already use that path prefix).
+- Legacy `/blog/{slug}` redirect table (verify status codes; do not call 308 a 301).
 - Puck install + CRM routes when stage 5/CMS gate opens.

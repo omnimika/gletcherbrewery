@@ -23,15 +23,15 @@ campaign/archival решения и общий public gate.
 [Задание A1 и baseline](discovery/ABOUT_PAGE_BASELINE.md). Это не optional/archive scope.
 
 **Proposed очередь:** Q1 → Q2 → Q3 → **A1 /about** → C1/следующие подтверждённые campaigns →
-stage-4 exit → D5-0. **Q1/Q2 Done**; сейчас выполнить только Q3. Это результаты с
+stage-4 exit → D5-0. **Q1–Q3 Done**; сейчас выполнить только A1. Это результаты с
 зависимостями, не календарные обещания и не разрешение запускать всё сразу.
 
 | Спринт | Результат | Условия закрытия |
 |---|---|---|
 | **Q1 — Done 05.11** | Честные формы, locale, shop/map lifecycle | R01/R02/R07/R08 Done; R05/R06 out of scope (owner); см. ревью |
 | **Q2 — Done 05.11** | Design/motion/reflow regression | R03/R04/R09/R10 Done; shop/CompareCard candidates Open |
-| **Q3 — текущий** | Route/publication/SEO contract + точный remaining scope | Legacy URL решения, sitemap/robots/metadata, матрица HTTP/browser |
-| **A1 — обязательный** | /about по Tilda 71867465 вместе с animation/interaction logic | Source behavior parity + responsive/reduced-motion + owner acceptance |
+| **Q3 — Done 06.11** | Route/publication/SEO contract + remaining scope | blog-all 308; sitemap/robots gate; registry; HTTP evidence |
+| **A1 — текущий** | /about по Tilda 71867465 вместе с animation/interaction logic | Source behavior parity + responsive/reduced-motion + owner acceptance |
 | C1 → Cn | Один опубликованный campaign pilot, затем одобренные остальные | Fresh source baseline, content parity, archive/publication decision |
 | Stage-4 exit | Полное согласованное публичное покрытие или явные исключения | Общая RU/EN regression, sign-offs и legacy operation paths |
 | D5-0 | Backend discovery и архитектурные решения | Подтверждённые схемы/контракты и reviewable ADR; implementation отдельно |
@@ -51,27 +51,15 @@ Shop address / CompareCard / CompositionGrid candidates остаются Open б
 подтверждённого browser defect. /agent @320 visual QA Open. Details —
 [ревью Q2 outcomes](reviews/2026-11-05-public-integrity.md).
 
-## Q3 — URL, публикация и SEO перед завершением этапа
+## Q3 — Done (06.11.2026)
 
-Сверить [PUBLIC_ROUTE_MATRIX](discovery/PUBLIC_ROUTE_MATRIX.md) с кодом и
-свежим read-only MCP editor/published. Сделать воспроизводимый manifest:
-entity/locale/publication/local-external-deferred/canonical/peer/noindex/
-legacy redirect/status/evidence. Число locale registry entries не создаёт перевод.
-
-Закрыть решение /blog-all и /en/blog-all и остальных legacy URL: корректное
-локальное представление, подтверждённый redirect или явный остаток legacy.
-Проверять фактический HTTP-код; 308 не называть 301. Добавить sitemap/robots
-через существующий App Router, согласовать preview/production indexing policy;
-в sitemap/hreflang только реальные public indexable peers. Robots не access control.
-Сверить social/structured metadata с исходником, без придуманных offer/review данных.
-
-Зафиксировать source/publication/animation scope обязательного /about для A1.
-Отдельно список remaining campaigns, /aging, /restaurant, members и tours
-operation URLs. Для них — local/archive/external/exclude,
-основание и следующий scope; не закрывать stage 4 одной таблицей неизвестных.
-
-DoD: tests/HTTP/browser unknown/draft/RU-only/planned routes, SEO output и
-legacy transitions; fresh source/evidence. Не включать индексацию preview или DNS.
+- `/blog-all` → `/blog` и `/en/blog-all` → `/en/blog` via `permanentRedirect` (**HTTP 308**).
+- `src/app/sitemap.ts` + `robots.ts`; gate `ALLOW_SITE_INDEXING` (opt-in).
+- Code registry `src/content/seo/public-routes.ts` + updated PUBLIC_ROUTE_MATRIX.
+- Remaining campaigns/aging/restaurant/members/tours-ops documented as
+  external/deferred/archive/exclude (not closed as Done).
+- Fresh MCP settings for /about (A1 handoff). Social/structured deep parity Open.
+- HTTP localhost evidence in matrix. Preview stays noindex unless opt-in.
 
 ## A1 — обязательный /about с animation/interaction parity
 

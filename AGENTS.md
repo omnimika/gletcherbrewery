@@ -159,13 +159,13 @@
 2. **DS-1/DS-2 реализованы**, DS-3 широко перенесён. Не начинать их заново;
    конкретные grid/motion/reflow дефекты исправляются адресно. Прежние visual
    sign-offs — regression baseline, не закрытие новых функциональных замечаний.
-3. **Q1/Q2 Done (05.11):** Q1 R01/R02/R07/R08 (R05/R06 out of scope); Q2
- R03/R04/R09/R10. Outcomes: `docs/reviews/2026-11-05-public-integrity.md`.
- Сейчас **Q3 — URL/publication/SEO**. Задание: `docs/CURSOR_NEXT_STEPS.md`.
-4. Далее **A1 /about** (обязательный source landing с анимацией/логикой) →
- подтверждённые campaigns → stage-4 exit → D5-0 discovery/ADR. Подробности в
- `docs/SPRINT_PLAN.md`, coverage — `docs/discovery/PUBLIC_ROUTE_MATRIX.md`.
- Stage 4 ещё не Done.
+3. **Q1–Q3 Done (05–06.11):** forms/locale/map/shop; design/motion; blog-all 308 +
+ sitemap/robots (`ALLOW_SITE_INDEXING`). Outcomes:
+ `docs/reviews/2026-11-05-public-integrity.md`,
+ `docs/discovery/PUBLIC_ROUTE_MATRIX.md`. Сейчас **A1 — /about** с анимацией
+ (Tilda 71867465). Задание: `docs/CURSOR_NEXT_STEPS.md`.
+4. Далее C1 campaigns → stage-4 exit → D5-0 discovery/ADR. Stage 4 ещё не Done
+ без принятого A1.
 5. Mapbox frontend уже есть, CRM/публикация геоданных ещё нет; YCLIENTS и
    production members временно сохраняются. /shop RU-only без cart/checkout.
    Klin campaign в snapshot unpublished/password: MCP access не разрешает публикацию.

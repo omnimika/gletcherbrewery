@@ -1,43 +1,38 @@
-# Текущее задание Cursor Agent — Q3: URL / publication / SEO
+# Текущее задание Cursor Agent — A1: /about + animation
 
-Дата: **05.11.2026**. Baseline ревью **d6011d2**. **Q1/Q2 закрыты** в этой сессии.
-Следующий спринт — только Q3. [Ревью](reviews/2026-11-05-public-integrity.md),
-[серия](SPRINT_PLAN.md), [route matrix](discovery/PUBLIC_ROUTE_MATRIX.md).
+Дата: **06.11.2026**. Baseline ревью **d6011d2**; код Q1–Q3 поверх **0500789**.
+[Ревью](reviews/2026-11-05-public-integrity.md), [серия](SPRINT_PLAN.md),
+[route matrix](discovery/PUBLIC_ROUTE_MATRIX.md),
+[ABOUT baseline](discovery/ABOUT_PAGE_BASELINE.md).
 
-DS-1/DS-2/DS-3 не начинать заново. /agent 320 polish в d6011d2; visual QA Open.
-Прежние acceptances — regression baseline.
+## Q1 / Q2 / Q3 — закрыты
 
-## Q1 — закрыто (05.11)
+| Sprint | Status |
+|---|---|
+| Q1 | R01/R02/R07/R08 Done; R05/R06 out of scope (owner) |
+| Q2 | R03/R04/R09/R10 Done |
+| Q3 | `/blog-all` **308** → `/blog`; `sitemap.ts`/`robots.ts` + `ALLOW_SITE_INDEXING`; route registry; /about MCP settings for A1 |
 
-R01/R02/R07/R08 Done. **R05/R06 out of scope (owner).** Lint/tsc/build + Playwright.
+Q3 SEO: indexing **opt-in** (`ALLOW_SITE_INDEXING=true`); preview Disallow all + empty sitemap.
+Не называть 308 «301». Code registry: `src/content/seo/public-routes.ts`.
 
-## Q2 — закрыто (05.11)
+## Выполнить сейчас — только A1
 
-| ID | Статус | Outcome |
-|---|---|---|
-| R03 | Done | CardGrid `--ds-card-cols` в `minmax`; 8 cards / columns=3 → max 3 на 1440 |
-| R04 | Done | Vertical wheel не hijack; autoplay default `0`; Pause/Play только при speed>0; IO + visibility pause |
-| R09 | Done | `ManagedVideo`: reduced-motion → no `<video>`; offscreen pause; error fallback |
-| R10 | Done | Map `.heroAccent` `#3d5a9e` на ice ≈ **5.71:1** (было ~1.51:1) |
+Обязательный `/about` по Tilda **page 71867465 / project 1212341** вместе с
+анимацией и логикой landing. DoD и workflow — `ABOUT_PAGE_BASELINE.md` +
+`TILDA_MCP_WORKFLOW.md` (read-only). Не подменять статичной «О нас» / одним Reveal.
 
-Проверки: `tsc` / `eslint` / `build` PASS. Playwright: design-system cards, /partnership
-wheel, /map contrast, /agent video + `prefers-reduced-motion: reduce`.
-Browser candidates (shop address absolute, CompareCard hover/focus, CompositionGrid
-clip) — **не подтверждены дефекты в этой сессии**; не объявлены PASS/FAIL.
-/agent @320 visual sign-off по-прежнему Open (hero stack не трогали).
+Свежий MCP 06.11 (settings only): published, alias `about`, animations on,
+`nosearch`/`meta_nofollow` on, 37 records. Дальше — records/ZB/timelines/SBS
+через MCP, browser parity, reduced-motion/mobile/keyboard.
 
-## Выполнить сейчас — только Q3
-
-Не начинать A1/campaigns/Stage5 вместе с Q3 mass rollout. Scope из SPRINT_PLAN:
-route/publication manifest, legacy `/blog-all`, sitemap/robots/metadata policy,
-remaining coverage. MCP Tilda только read-only. Commit/push по запросу.
+Не начинать C1 campaigns / Stage5 / NocoDB вместе с A1 mass rollout.
+Klin unpublished/password: не публиковать. Commit/push по запросу.
 
 ## Следующие порции
 
-**A1 /about** (Tilda 71867465 + animation) → C1 campaigns → stage-4 exit → D5-0.
-Klin unpublished/password: не публиковать. Без NocoDB/CMS/cart/payment/новых языков.
+C1 campaigns → stage-4 exit → D5-0. Без cart/payment/новых языков.
 
 ## Git / docs
 
-`.gitignore:59` → `/docs/`. Safe Markdown allowlist — в ревью Q1 outcomes + Q2 notes.
-Не staging сейчас. Не раскрывать raw/source packs.
+`.gitignore:59` → `/docs/`. Safe Markdown allowlist в ревью. Не staging сейчас.
