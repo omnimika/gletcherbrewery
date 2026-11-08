@@ -1,12 +1,12 @@
 {
   "id": "yammy-jammy",
   "locale": "en",
-  "slug": "ffcmeohs71-yammy-jammy-summer-in-a-bottle",
+  "slug": "2021-06-17-yammy-jammy-summer-in-a-bottle",
   "title": "Yammy Jammy: summer in a bottle",
   "description": "Summer in the city, I want freshness, so we cooked a new milkshake with a banana.",
   "publishedAt": "2021-06-17 19:01",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6163-6664-4164-b361-623834306339/yammy_jammy_COVER.jpg",
+    "src": "/blog/2021-06-17-yammy-jammy-summer-in-a-bottle/cover.jpg",
     "alt": ""
   },
   "blocks": [

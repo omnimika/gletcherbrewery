@@ -31,13 +31,14 @@ export type BlogPostTranslation = {
   /** ISO calendar date when Confirmed; display formatting is UI concern. */
   publishedAt?: string;
   /**
-   * Production path including locale prefix for EN
-   * (e.g. `/blog-all/tpost/...` or `/en/blog-all/tpost/...`).
+   * Production (Tilda) path including locale prefix for EN
+   * (e.g. `/blog-all/tpost/{hash-slug}` or `/en/blog-all/tpost/...`).
+   * Kept for provenance / external fallback; local hrefs use `localSlug`.
    */
   productionPath: string;
   /**
-   * Public slug under `/blog-all/tpost/{slug}` when a local body exists.
-   * Matches production `postdefaulturl` segment.
+   * Public slug under `/blog/{slug}` when a local body exists.
+   * Shape: `YYYY-MM-DD-{descriptive-slug}` (Tilda hash prefix stripped).
    */
   localSlug?: string;
   /**
@@ -84,7 +85,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2026-10-09",
         productionPath:
           "/blog-all/tpost/913cadd4f1-9-oktyabrya-den-piva-i-pitstsi-idealnie",
-        localSlug: "913cadd4f1-9-oktyabrya-den-piva-i-pitstsi-idealnie",
+        localSlug: "2026-10-09-9-oktyabrya-den-piva-i-pitstsi-idealnie",
       },
       en: {
         status: "published",
@@ -94,7 +95,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2026-10-09",
         productionPath:
           "/en/blog-all/tpost/5od5iaktd1-october-9-international-beer-and-pizza-d",
-        localSlug: "5od5iaktd1-october-9-international-beer-and-pizza-d",
+        localSlug: "2026-10-09-october-9-international-beer-and-pizza-d",
       },
     },
   },
@@ -109,7 +110,7 @@ export const BLOG_POSTS: BlogPost[] = [
         categoryLabel: "БИБЛИОТЕКА",
         publishedAt: "2026-10-14",
         productionPath: "/blog-all/tpost/homebrewing-craft-beer-history",
-        localSlug: "homebrewing-craft-beer-history",
+        localSlug: "2026-10-14-homebrewing-craft-beer-history",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -124,7 +125,7 @@ export const BLOG_POSTS: BlogPost[] = [
         categoryLabel: "БИБЛИОТЕКА",
         publishedAt: "2026-10-02",
         productionPath: "/blog-all/tpost/barrel-aged-beer-day-2026",
-        localSlug: "barrel-aged-beer-day-2026",
+        localSlug: "2026-10-02-barrel-aged-beer-day-2026",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -140,7 +141,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2026-09-23",
         productionPath:
           "/blog-all/tpost/cf46mag0n1-afisha-gletcher-brewery-winepark-polyana",
-        localSlug: "cf46mag0n1-afisha-gletcher-brewery-winepark-polyana",
+        localSlug: "2026-09-23-afisha-gletcher-brewery-winepark-polyana",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -156,7 +157,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2026-03-26",
         productionPath:
           "/blog-all/tpost/u7ezeg5ax1-bezalkogolnoe-milk-of-amnesia",
-        localSlug: "u7ezeg5ax1-bezalkogolnoe-milk-of-amnesia",
+        localSlug: "2026-03-26-bezalkogolnoe-milk-of-amnesia",
       },
       en: {
         status: "published",
@@ -165,7 +166,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2026-03-26",
         productionPath:
           "/en/blog-all/tpost/za6t88elj1-milk-of-amnesia-non-alcoholic",
-        localSlug: "za6t88elj1-milk-of-amnesia-non-alcoholic",
+        localSlug: "2026-03-26-milk-of-amnesia-non-alcoholic",
       },
     },
   },
@@ -180,7 +181,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2026-01-22",
         productionPath:
           "/en/blog-all/tpost/93l8iii9y1-gletcher-aging-aged-to-perfection",
-        localSlug: "93l8iii9y1-gletcher-aging-aged-to-perfection",
+        localSlug: "2026-01-22-gletcher-aging-aged-to-perfection",
       },
       // Not the same entity as RU Cynic story `uvgfhv9ec1` — peer remains Open.
       ru: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
@@ -197,7 +198,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2025-02-07",
         productionPath:
           "/blog-all/tpost/6euma1kok1-tour-de-grapefruit-pshenichnii-tsitrusov",
-        localSlug: "6euma1kok1-tour-de-grapefruit-pshenichnii-tsitrusov",
+        localSlug: "2025-02-07-tour-de-grapefruit-pshenichnii-tsitrusov",
       },
       en: {
         status: "published",
@@ -206,7 +207,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2025-02-07",
         productionPath:
           "/en/blog-all/tpost/9i3ig0g2r1-tour-de-grapefruit-citrus-wheat-ale",
-        localSlug: "9i3ig0g2r1-tour-de-grapefruit-citrus-wheat-ale",
+        localSlug: "2025-02-07-tour-de-grapefruit-citrus-wheat-ale",
       },
     },
   },
@@ -221,7 +222,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2026-08-14",
         productionPath:
           "/blog-all/tpost/zd1a4a40u1-edem-v-kaliningrad-na-kenig-kraft-fest",
-        localSlug: "zd1a4a40u1-edem-v-kaliningrad-na-kenig-kraft-fest",
+        localSlug: "2026-08-14-edem-v-kaliningrad-na-kenig-kraft-fest",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -238,7 +239,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2026-07-08",
         productionPath:
           "/blog-all/tpost/5hportmx81-gorech-kraft-i-rok-n-roll-kak-mi-otorval",
-        localSlug: "5hportmx81-gorech-kraft-i-rok-n-roll-kak-mi-otorval",
+        localSlug: "2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -254,7 +255,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2026-02-09",
         productionPath:
           "/blog-all/tpost/gacdootci1-edem-v-arhangelsk-na-craft-fest",
-        localSlug: "gacdootci1-edem-v-arhangelsk-na-craft-fest",
+        localSlug: "2026-02-09-edem-v-arhangelsk-na-craft-fest",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -270,7 +271,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2026-01-22",
         productionPath:
           "/blog-all/tpost/uvgfhv9ec1-cynic-filosofiya-vremeni-i-triumf-impers",
-        localSlug: "uvgfhv9ec1-cynic-filosofiya-vremeni-i-triumf-impers",
+        localSlug: "2026-01-22-cynic-filosofiya-vremeni-i-triumf-impers",
       },
       // Not the same entity as EN Aging `93l8iii9y1` — peer remains Open.
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
@@ -287,7 +288,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-21",
         productionPath:
           "/blog-all/tpost/01gzr6nji1-friday-avenue-pivnoi-manifest-pyatnichno",
-        localSlug: "01gzr6nji1-friday-avenue-pivnoi-manifest-pyatnichno",
+        localSlug: "2024-06-21-friday-avenue-pivnoi-manifest-pyatnichno",
       },
       en: {
         status: "published",
@@ -296,7 +297,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-25",
         productionPath:
           "/en/blog-all/tpost/3z3igkl1u1-friday-avenue-friday-night-beer-manifest",
-        localSlug: "3z3igkl1u1-friday-avenue-friday-night-beer-manifest",
+        localSlug: "2024-06-25-friday-avenue-friday-night-beer-manifest",
       },
     },
   },
@@ -311,7 +312,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2026-01-13",
         productionPath:
           "/blog-all/tpost/l1amaxj121-gletcher-brewery-na-kraftomanii",
-        localSlug: "l1amaxj121-gletcher-brewery-na-kraftomanii",
+        localSlug: "2026-01-13-gletcher-brewery-na-kraftomanii",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -327,7 +328,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2025-12-30",
         productionPath:
           "/blog-all/tpost/bl766ufrx1-s-nastupayuschim-novim-2026-godom",
-        localSlug: "bl766ufrx1-s-nastupayuschim-novim-2026-godom",
+        localSlug: "2025-12-30-s-nastupayuschim-novim-2026-godom",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -343,7 +344,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2025-09-18",
         productionPath:
           "/blog-all/tpost/5vugn2kjy1-gletcher-podderzhal-kubok-rossii-po-matc",
-        localSlug: "5vugn2kjy1-gletcher-podderzhal-kubok-rossii-po-matc",
+        localSlug: "2025-09-18-gletcher-podderzhal-kubok-rossii-po-matc",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -358,7 +359,7 @@ export const BLOG_POSTS: BlogPost[] = [
         categoryLabel: "МЕРОПРИЯТИЯ",
         publishedAt: "2025-09-08",
         productionPath: "/blog-all/tpost/u1mk7vpiy1-bar-hub-expo-2025",
-        localSlug: "u1mk7vpiy1-bar-hub-expo-2025",
+        localSlug: "2025-09-08-bar-hub-expo-2025",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -374,7 +375,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-08-30",
         productionPath:
           "/blog-all/tpost/lypdkibzr1-brut-grapefruit-bryut-el-lyogkii-napitok",
-        localSlug: "lypdkibzr1-brut-grapefruit-bryut-el-lyogkii-napitok",
+        localSlug: "2024-08-30-brut-grapefruit-bryut-el-lyogkii-napitok",
       },
       en: {
         status: "published",
@@ -384,7 +385,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-09-03",
         productionPath:
           "/en/blog-all/tpost/24i9vt9881-brut-grapefruit-brutelle-a-light-drink-w",
-        localSlug: "24i9vt9881-brut-grapefruit-brutelle-a-light-drink-w",
+        localSlug: "2024-09-03-brut-grapefruit-brutelle-a-light-drink-w",
       },
     },
   },
@@ -399,7 +400,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2025-07-29",
         productionPath:
           "/blog-all/tpost/t3rp7u17x1-brainstorm-motor-fest-2025",
-        localSlug: "t3rp7u17x1-brainstorm-motor-fest-2025",
+        localSlug: "2025-07-29-brainstorm-motor-fest-2025",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -415,7 +416,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2025-07-01",
         productionPath:
           "/blog-all/tpost/zslbtrzf81-gletcher-edet-v-nizhnii-novgorod",
-        localSlug: "zslbtrzf81-gletcher-edet-v-nizhnii-novgorod",
+        localSlug: "2025-07-01-gletcher-edet-v-nizhnii-novgorod",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -431,7 +432,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2025-06-03",
         productionPath:
           "/blog-all/tpost/lvdpb93421-klin-mai-fest-2025-itogi",
-        localSlug: "lvdpb93421-klin-mai-fest-2025-itogi",
+        localSlug: "2025-06-03-klin-mai-fest-2025-itogi",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -447,7 +448,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2025-04-08",
         productionPath:
           "/blog-all/tpost/bvhspd8pm1-iron-woods-milk-stout-myagkii-slivochnii",
-        localSlug: "bvhspd8pm1-iron-woods-milk-stout-myagkii-slivochnii",
+        localSlug: "2025-04-08-iron-woods-milk-stout-myagkii-slivochnii",
       },
       // Not the same entity as EN dry stout — peer remains Open / not paired.
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
@@ -464,7 +465,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-07-23",
         productionPath:
           "/blog-all/tpost/pvbch1v1p1-rouge-de-fleur-vishnyovaya-simfoniya",
-        localSlug: "pvbch1v1p1-rouge-de-fleur-vishnyovaya-simfoniya",
+        localSlug: "2024-07-23-rouge-de-fleur-vishnyovaya-simfoniya",
       },
       en: {
         status: "published",
@@ -473,7 +474,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-08-20",
         productionPath:
           "/en/blog-all/tpost/k3spgxeyx1-rouge-de-fleur-cherry-symphony",
-        localSlug: "k3spgxeyx1-rouge-de-fleur-cherry-symphony",
+        localSlug: "2024-08-20-rouge-de-fleur-cherry-symphony",
       },
     },
   },
@@ -488,7 +489,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-07-28",
         productionPath:
           "/blog-all/tpost/r6g8ym6vs1-brainstorm-motor-fest-2024-festival-avto",
-        localSlug: "r6g8ym6vs1-brainstorm-motor-fest-2024-festival-avto",
+        localSlug: "2024-07-28-brainstorm-motor-fest-2024-festival-avto",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -504,7 +505,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-07-08",
         productionPath:
           "/blog-all/tpost/rrjjjry2e1-bowler-ipa-vkus-puteshestvii-i-priklyuch",
-        localSlug: "rrjjjry2e1-bowler-ipa-vkus-puteshestvii-i-priklyuch",
+        localSlug: "2024-07-08-bowler-ipa-vkus-puteshestvii-i-priklyuch",
       },
       en: {
         status: "published",
@@ -513,7 +514,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-07-16",
         productionPath:
           "/en/blog-all/tpost/08cj20t161-bowler-ipa-a-taste-of-travel-and-adventu",
-        localSlug: "08cj20t161-bowler-ipa-a-taste-of-travel-and-adventu",
+        localSlug: "2024-07-16-bowler-ipa-a-taste-of-travel-and-adventu",
       },
     },
   },
@@ -528,7 +529,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-07-05",
         productionPath:
           "/blog-all/tpost/uphlmfzxv1-iron-woods-sila-i-harizma-suhogo-stauta",
-        localSlug: "uphlmfzxv1-iron-woods-sila-i-harizma-suhogo-stauta",
+        localSlug: "2024-07-05-iron-woods-sila-i-harizma-suhogo-stauta",
       },
       en: {
         status: "published",
@@ -537,7 +538,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-07-02",
         productionPath:
           "/en/blog-all/tpost/a842y8num1-iron-woods-the-power-and-charisma-of-a-d",
-        localSlug: "a842y8num1-iron-woods-the-power-and-charisma-of-a-d",
+        localSlug: "2024-07-02-iron-woods-the-power-and-charisma-of-a-d",
       },
     },
   },
@@ -552,7 +553,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-27",
         productionPath:
           "/blog-all/tpost/s6hgiav341-brainstorm-vash-sputnik-zdorovogo-obraza",
-        localSlug: "s6hgiav341-brainstorm-vash-sputnik-zdorovogo-obraza",
+        localSlug: "2024-06-27-brainstorm-vash-sputnik-zdorovogo-obraza",
       },
       en: {
         status: "published",
@@ -561,7 +562,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-28",
         productionPath:
           "/en/blog-all/tpost/gumm02kpp1-brainstorm-your-companion-for-a-healthy",
-        localSlug: "gumm02kpp1-brainstorm-your-companion-for-a-healthy",
+        localSlug: "2024-06-28-brainstorm-your-companion-for-a-healthy",
       },
     },
   },
@@ -576,7 +577,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-24",
         productionPath:
           "/blog-all/tpost/lp53os88v1-ausweis-vash-propusk-v-mir-nemetskogo-pi",
-        localSlug: "lp53os88v1-ausweis-vash-propusk-v-mir-nemetskogo-pi",
+        localSlug: "2024-06-24-ausweis-vash-propusk-v-mir-nemetskogo-pi",
       },
       en: {
         status: "published",
@@ -585,7 +586,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-26",
         productionPath:
           "/en/blog-all/tpost/6xf9bvgit1-ausweis-your-passport-to-the-world-of-ge",
-        localSlug: "6xf9bvgit1-ausweis-your-passport-to-the-world-of-ge",
+        localSlug: "2024-06-26-ausweis-your-passport-to-the-world-of-ge",
       },
     },
   },
@@ -600,7 +601,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-19",
         productionPath:
           "/blog-all/tpost/han5v1ryi1-nut-butter-orehovaya-magiya-v-kazhdom-gl",
-        localSlug: "han5v1ryi1-nut-butter-orehovaya-magiya-v-kazhdom-gl",
+        localSlug: "2024-06-19-nut-butter-orehovaya-magiya-v-kazhdom-gl",
       },
       en: {
         status: "published",
@@ -609,7 +610,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-24",
         productionPath:
           "/en/blog-all/tpost/h91e4e7g91-nut-butter-nutty-magic-in-every-sip",
-        localSlug: "h91e4e7g91-nut-butter-nutty-magic-in-every-sip",
+        localSlug: "2024-06-24-nut-butter-nutty-magic-in-every-sip",
       },
     },
   },
@@ -624,7 +625,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-15",
         productionPath:
           "/blog-all/tpost/01ttab5vb1-blue-monkey-pshenichnii-el-vo-vsyom-svoy",
-        localSlug: "01ttab5vb1-blue-monkey-pshenichnii-el-vo-vsyom-svoy",
+        localSlug: "2024-06-15-blue-monkey-pshenichnii-el-vo-vsyom-svoy",
       },
       en: {
         status: "published",
@@ -633,7 +634,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-15",
         productionPath:
           "/en/blog-all/tpost/mlz4jtzag1-blue-monkey-wheat-ale-in-all-its-splendo",
-        localSlug: "mlz4jtzag1-blue-monkey-wheat-ale-in-all-its-splendo",
+        localSlug: "2024-06-15-blue-monkey-wheat-ale-in-all-its-splendo",
       },
     },
   },
@@ -648,7 +649,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-13",
         productionPath:
           "/blog-all/tpost/r1vxz57aa1-heidegger-hell-nemetskie-traditsii-v-vas",
-        localSlug: "r1vxz57aa1-heidegger-hell-nemetskie-traditsii-v-vas",
+        localSlug: "2024-06-13-heidegger-hell-nemetskie-traditsii-v-vas",
       },
       en: {
         status: "published",
@@ -657,7 +658,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-13",
         productionPath:
           "/en/blog-all/tpost/z246e2pvf1-heidegger-hell-german-traditions-in-your",
-        localSlug: "z246e2pvf1-heidegger-hell-german-traditions-in-your",
+        localSlug: "2024-06-13-heidegger-hell-german-traditions-in-your",
       },
     },
   },
@@ -672,7 +673,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-07",
         productionPath:
           "/blog-all/tpost/vo2xnz54a1-hop-dragon-yarkii-vkus-pyati-hmelei",
-        localSlug: "vo2xnz54a1-hop-dragon-yarkii-vkus-pyati-hmelei",
+        localSlug: "2024-06-07-hop-dragon-yarkii-vkus-pyati-hmelei",
       },
       en: {
         status: "published",
@@ -681,7 +682,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-07",
         productionPath:
           "/en/blog-all/tpost/8e11sgv211-hop-dragon-the-bright-taste-of-five-hops",
-        localSlug: "8e11sgv211-hop-dragon-the-bright-taste-of-five-hops",
+        localSlug: "2024-06-07-hop-dragon-the-bright-taste-of-five-hops",
       },
     },
   },
@@ -696,7 +697,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-03",
         productionPath:
           "/blog-all/tpost/db51dn3df1-ruby-road-nash-krepkii-vishnevii-el-v-no",
-        localSlug: "db51dn3df1-ruby-road-nash-krepkii-vishnevii-el-v-no",
+        localSlug: "2024-06-03-ruby-road-nash-krepkii-vishnevii-el-v-no",
       },
       en: {
         status: "published",
@@ -705,7 +706,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-06-03",
         productionPath:
           "/en/blog-all/tpost/s5buub3ik1-ruby-road-our-strong-cherry-ale-in-a-new",
-        localSlug: "s5buub3ik1-ruby-road-our-strong-cherry-ale-in-a-new",
+        localSlug: "2024-06-03-ruby-road-our-strong-cherry-ale-in-a-new",
       },
     },
   },
@@ -720,7 +721,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-05-29",
         productionPath:
           "/blog-all/tpost/nmvocr5vt1-milk-of-amnesia-novii-vzglyad-na-lyubimi",
-        localSlug: "nmvocr5vt1-milk-of-amnesia-novii-vzglyad-na-lyubimi",
+        localSlug: "2024-05-29-milk-of-amnesia-novii-vzglyad-na-lyubimi",
       },
       en: {
         status: "published",
@@ -729,7 +730,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-05-29",
         productionPath:
           "/en/blog-all/tpost/zxbflinfn1-milk-of-amnesia-a-new-look-at-your-favor",
-        localSlug: "zxbflinfn1-milk-of-amnesia-a-new-look-at-your-favor",
+        localSlug: "2024-05-29-milk-of-amnesia-a-new-look-at-your-favor",
       },
     },
   },
@@ -744,7 +745,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-02-26",
         productionPath:
           "/blog-all/tpost/v1p6azozg1-kratkaya-istoriya-pabov-barov-i-teh-lyud",
-        localSlug: "v1p6azozg1-kratkaya-istoriya-pabov-barov-i-teh-lyud",
+        localSlug: "2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -760,7 +761,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-02-04",
         productionPath:
           "/blog-all/tpost/plfsxpk1n1-razbiraemsya-v-sortah-stauti",
-        localSlug: "plfsxpk1n1-razbiraemsya-v-sortah-stauti",
+        localSlug: "2024-02-04-razbiraemsya-v-sortah-stauti",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -777,7 +778,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-02-01",
         productionPath:
           "/blog-all/tpost/pj8zx40cu1-gotovim-s-pivom-kartofel-fri-v-taiskom-s",
-        localSlug: "pj8zx40cu1-gotovim-s-pivom-kartofel-fri-v-taiskom-s",
+        localSlug: "2024-02-01-gotovim-s-pivom-kartofel-fri-v-taiskom-s",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -793,7 +794,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-01-23",
         productionPath:
           "/blog-all/tpost/kap55i5pe1-v-poiskah-istokov-pryanogo-zimnego-piva",
-        localSlug: "kap55i5pe1-v-poiskah-istokov-pryanogo-zimnego-piva",
+        localSlug: "2024-01-23-v-poiskah-istokov-pryanogo-zimnego-piva",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -809,7 +810,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2024-01-12",
         productionPath:
           "/blog-all/tpost/8ionj8vgo1-priglashaem-uchastnikov-na-klin-mai-fest",
-        localSlug: "8ionj8vgo1-priglashaem-uchastnikov-na-klin-mai-fest",
+        localSlug: "2024-01-12-priglashaem-uchastnikov-na-klin-mai-fest",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -824,7 +825,7 @@ export const BLOG_POSTS: BlogPost[] = [
         categoryLabel: "БИБЛИОТЕКА",
         publishedAt: "2023-12-17",
         productionPath: "/blog-all/tpost/u9dt270xo1-na-zdorove-0-na",
-        localSlug: "u9dt270xo1-na-zdorove-0-na",
+        localSlug: "2023-12-17-na-zdorove-0-na",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -840,7 +841,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2023-08-22",
         productionPath:
           "/blog-all/tpost/en25lxya61-fotootchyot-s-brainstorm-moto-fest",
-        localSlug: "en25lxya61-fotootchyot-s-brainstorm-moto-fest",
+        localSlug: "2023-08-22-fotootchyot-s-brainstorm-moto-fest",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -856,7 +857,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2023-08-03",
         productionPath:
           "/blog-all/tpost/ybi8xe5lc1-gletcher-v-arhangelske-craft-fest",
-        localSlug: "ybi8xe5lc1-gletcher-v-arhangelske-craft-fest",
+        localSlug: "2023-08-03-gletcher-v-arhangelske-craft-fest",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -871,7 +872,7 @@ export const BLOG_POSTS: BlogPost[] = [
         categoryLabel: "МЕРОПРИЯТИЯ",
         publishedAt: "2023-05-30",
         productionPath: "/blog-all/tpost/8imlu33eh1-itogi-klinmaifest-2023",
-        localSlug: "8imlu33eh1-itogi-klinmaifest-2023",
+        localSlug: "2023-05-30-itogi-klinmaifest-2023",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -887,7 +888,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2023-03-21",
         productionPath:
           "/blog-all/tpost/fjtb6ibov1-klin-mai-fest-2023-priglashaem-uchastnik",
-        localSlug: "fjtb6ibov1-klin-mai-fest-2023-priglashaem-uchastnik",
+        localSlug: "2023-03-21-klin-mai-fest-2023-priglashaem-uchastnik",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -903,7 +904,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2023-03-03",
         productionPath:
           "/blog-all/tpost/gjauaxmg91-pivnaya-kuhnya-tunets-aguachile-v-ipa-so",
-        localSlug: "gjauaxmg91-pivnaya-kuhnya-tunets-aguachile-v-ipa-so",
+        localSlug: "2023-03-03-pivnaya-kuhnya-tunets-aguachile-v-ipa-so",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -919,7 +920,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2023-02-24",
         productionPath:
           "/blog-all/tpost/kd7ovgz6k1-pivo-s-koritsei-kakoe-ono-bivaet",
-        localSlug: "kd7ovgz6k1-pivo-s-koritsei-kakoe-ono-bivaet",
+        localSlug: "2023-02-24-pivo-s-koritsei-kakoe-ono-bivaet",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -935,7 +936,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2022-11-24",
         productionPath:
           "/blog-all/tpost/hac96kiyz1-pivnaya-kuhnya-zharenii-losos-v-folge-s",
-        localSlug: "hac96kiyz1-pivnaya-kuhnya-zharenii-losos-v-folge-s",
+        localSlug: "2022-11-24-pivnaya-kuhnya-zharenii-losos-v-folge-s",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -951,7 +952,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2022-11-18",
         productionPath:
           "/blog-all/tpost/79g7nt4ny1-kislota-v-pive-kak-pivovarennaya-promish",
-        localSlug: "79g7nt4ny1-kislota-v-pive-kak-pivovarennaya-promish",
+        localSlug: "2022-11-18-kislota-v-pive-kak-pivovarennaya-promish",
       },
       en: {
         status: "published",
@@ -961,7 +962,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2022-11-18",
         productionPath:
           "/en/blog-all/tpost/lj8oemius1-acid-in-beer-how-the-brewing-industry-ha",
-        localSlug: "lj8oemius1-acid-in-beer-how-the-brewing-industry-ha",
+        localSlug: "2022-11-18-acid-in-beer-how-the-brewing-industry-ha",
       },
     },
   },
@@ -975,7 +976,7 @@ export const BLOG_POSTS: BlogPost[] = [
         categoryLabel: "НОВОСТИ",
         publishedAt: "2022-11-10",
         productionPath: "/blog-all/tpost/9gst01oa91-vsemirnii-den-kachestva",
-        localSlug: "9gst01oa91-vsemirnii-den-kachestva",
+        localSlug: "2022-11-10-vsemirnii-den-kachestva",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -991,7 +992,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2022-09-22",
         productionPath:
           "/blog-all/tpost/inxody6ls1-intervyu-dlya-assotsiatsii-craft-depot",
-        localSlug: "inxody6ls1-intervyu-dlya-assotsiatsii-craft-depot",
+        localSlug: "2022-09-22-intervyu-dlya-assotsiatsii-craft-depot",
       },
       en: {
         status: "published",
@@ -1000,7 +1001,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2022-09-22",
         productionPath:
           "/en/blog-all/tpost/c4olen1kd1-interview-for-the-craft-depot-associatio",
-        localSlug: "c4olen1kd1-interview-for-the-craft-depot-associatio",
+        localSlug: "2022-09-22-interview-for-the-craft-depot-associatio",
       },
     },
   },
@@ -1015,7 +1016,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2022-08-03",
         productionPath:
           "/blog-all/tpost/iyanfyplj1-pomorskii-kraftovii-festival",
-        localSlug: "iyanfyplj1-pomorskii-kraftovii-festival",
+        localSlug: "2022-08-03-pomorskii-kraftovii-festival",
       },
       en: {
         status: "published",
@@ -1024,7 +1025,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2022-07-31",
         productionPath:
           "/en/blog-all/tpost/dtxtl8kd91-nord-fest-pomeranian-foodampdrink-festiv",
-        localSlug: "dtxtl8kd91-nord-fest-pomeranian-foodampdrink-festiv",
+        localSlug: "2022-07-31-nord-fest-pomeranian-foodampdrink-festiv",
       },
     },
   },
@@ -1039,7 +1040,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2022-01-20",
         productionPath:
           "/blog-all/tpost/5uhnubazb1-istoriya-amerikanskogo-hmelya-chast-1",
-        localSlug: "5uhnubazb1-istoriya-amerikanskogo-hmelya-chast-1",
+        localSlug: "2022-01-20-istoriya-amerikanskogo-hmelya-chast-1",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1055,7 +1056,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2022-06-01",
         productionPath:
           "/blog-all/tpost/tfatlkslk1-degustatsiya-cheers-amp-beers",
-        localSlug: "tfatlkslk1-degustatsiya-cheers-amp-beers",
+        localSlug: "2022-06-01-degustatsiya-cheers-amp-beers",
       },
       en: {
         status: "published",
@@ -1064,7 +1065,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2022-06-01",
         productionPath:
           "/en/blog-all/tpost/poxg2fuvl1-tasting-cheers-amp-beers",
-        localSlug: "poxg2fuvl1-tasting-cheers-amp-beers",
+        localSlug: "2022-06-01-tasting-cheers-amp-beers",
       },
     },
   },
@@ -1079,7 +1080,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2022-02-03",
         productionPath:
           "/blog-all/tpost/2pminbnlo1-gletcher-na-prodekspo-2022",
-        localSlug: "2pminbnlo1-gletcher-na-prodekspo-2022",
+        localSlug: "2022-02-03-gletcher-na-prodekspo-2022",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1095,7 +1096,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-11-25",
         productionPath:
           "/blog-all/tpost/hxjjtbo7k1-kak-mi-oschuschaem-pivo-a-chto-esche-kro",
-        localSlug: "hxjjtbo7k1-kak-mi-oschuschaem-pivo-a-chto-esche-kro",
+        localSlug: "2021-11-25-kak-mi-oschuschaem-pivo-a-chto-esche-kro",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1111,7 +1112,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-11-12",
         productionPath:
           "/blog-all/tpost/4ryr3vef21-kak-mi-oschuschaem-pivo-kislotnost-sol-i",
-        localSlug: "4ryr3vef21-kak-mi-oschuschaem-pivo-kislotnost-sol-i",
+        localSlug: "2021-11-12-kak-mi-oschuschaem-pivo-kislotnost-sol-i",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1128,7 +1129,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-10-01",
         productionPath:
           "/blog-all/tpost/x3afu840s1-kak-mi-oschuschaem-pivo-gorech",
-        localSlug: "x3afu840s1-kak-mi-oschuschaem-pivo-gorech",
+        localSlug: "2021-10-01-kak-mi-oschuschaem-pivo-gorech",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1144,7 +1145,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-09-24",
         productionPath:
           "/blog-all/tpost/jb9hgilpm1-isporchenoe-pivo-glavnie-oshibki",
-        localSlug: "jb9hgilpm1-isporchenoe-pivo-glavnie-oshibki",
+        localSlug: "2021-09-24-isporchenoe-pivo-glavnie-oshibki",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1160,7 +1161,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-09-14",
         productionPath:
           "/blog-all/tpost/p1og5o2691-fudpeiring-karamelizatsiya",
-        localSlug: "p1og5o2691-fudpeiring-karamelizatsiya",
+        localSlug: "2021-09-14-fudpeiring-karamelizatsiya",
       },
       en: {
         status: "published",
@@ -1169,7 +1170,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-09-14",
         productionPath:
           "/en/blog-all/tpost/mejto1lui1-foodpairing-caramelization",
-        localSlug: "mejto1lui1-foodpairing-caramelization",
+        localSlug: "2021-09-14-foodpairing-caramelization",
       },
     },
   },
@@ -1184,7 +1185,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-08-18",
         productionPath:
           "/blog-all/tpost/ozy0n3ypa1-kak-mi-oschuschaem-pivo-vkuso-aromatiche",
-        localSlug: "ozy0n3ypa1-kak-mi-oschuschaem-pivo-vkuso-aromatiche",
+        localSlug: "2021-08-18-kak-mi-oschuschaem-pivo-vkuso-aromatiche",
       },
       en: {
         status: "published",
@@ -1193,7 +1194,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-08-18",
         productionPath:
           "/en/blog-all/tpost/ck3it9fx11-how-do-we-feel-about-beer-taste-and-arom",
-        localSlug: "ck3it9fx11-how-do-we-feel-about-beer-taste-and-arom",
+        localSlug: "2021-08-18-how-do-we-feel-about-beer-taste-and-arom",
       },
     },
   },
@@ -1208,7 +1209,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-08-05",
         productionPath:
           "/blog-all/tpost/pnenfyiyb1-kopchenii-solod-dim-i-pivo",
-        localSlug: "pnenfyiyb1-kopchenii-solod-dim-i-pivo",
+        localSlug: "2021-08-05-kopchenii-solod-dim-i-pivo",
       },
       en: {
         status: "published",
@@ -1217,7 +1218,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-08-05",
         productionPath:
           "/en/blog-all/tpost/d3vg4bzat1-smoked-malt-smoke-and-beer",
-        localSlug: "d3vg4bzat1-smoked-malt-smoke-and-beer",
+        localSlug: "2021-08-05-smoked-malt-smoke-and-beer",
       },
     },
   },
@@ -1232,7 +1233,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-07-30",
         productionPath:
           "/blog-all/tpost/eajyz692l1-suhoe-ohmelenie-v-pogone-za-yarkim-vkuso",
-        localSlug: "eajyz692l1-suhoe-ohmelenie-v-pogone-za-yarkim-vkuso",
+        localSlug: "2021-07-30-suhoe-ohmelenie-v-pogone-za-yarkim-vkuso",
       },
       en: {
         status: "published",
@@ -1241,7 +1242,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-07-30",
         productionPath:
           "/en/blog-all/tpost/txpbxbiek1-dry-hopping-in-pursuit-of-a-bright-taste",
-        localSlug: "txpbxbiek1-dry-hopping-in-pursuit-of-a-bright-taste",
+        localSlug: "2021-07-30-dry-hopping-in-pursuit-of-a-bright-taste",
       },
     },
   },
@@ -1258,7 +1259,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-07-14",
         productionPath:
           "/blog-all/tpost/2n2pr8dng1-fudpeiring-pochemu-eto-interesnee-prosto",
-        localSlug: "2n2pr8dng1-fudpeiring-pochemu-eto-interesnee-prosto",
+        localSlug: "2021-07-14-fudpeiring-pochemu-eto-interesnee-prosto",
       },
       en: {
         status: "published",
@@ -1268,7 +1269,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-07-14",
         productionPath:
           "/en/blog-all/tpost/xy53paori1-food-pairing-why-its-more-interesting-th",
-        localSlug: "xy53paori1-food-pairing-why-its-more-interesting-th",
+        localSlug: "2021-07-14-food-pairing-why-its-more-interesting-th",
       },
     },
   },
@@ -1283,7 +1284,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-06-08",
         productionPath:
           "/blog-all/tpost/730oojkrr1-bavariya-kolibel-pivovareniya",
-        localSlug: "730oojkrr1-bavariya-kolibel-pivovareniya",
+        localSlug: "2021-06-08-bavariya-kolibel-pivovareniya",
       },
       en: {
         status: "published",
@@ -1292,7 +1293,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-06-08",
         productionPath:
           "/en/blog-all/tpost/pu9xfazps1-bavaria-the-cradle-of-brewing",
-        localSlug: "pu9xfazps1-bavaria-the-cradle-of-brewing",
+        localSlug: "2021-06-08-bavaria-the-cradle-of-brewing",
       },
     },
   },
@@ -1308,7 +1309,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-05-17",
         productionPath:
           "/blog-all/tpost/0viy48tr71-stauti-pogovorim-o-krepkom",
-        localSlug: "0viy48tr71-stauti-pogovorim-o-krepkom",
+        localSlug: "2021-05-17-stauti-pogovorim-o-krepkom",
       },
       en: {
         status: "published",
@@ -1317,7 +1318,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-05-17",
         productionPath:
           "/en/blog-all/tpost/e40oxvnn01-lets-talk-about-stout",
-        localSlug: "e40oxvnn01-lets-talk-about-stout",
+        localSlug: "2021-05-17-lets-talk-about-stout",
       },
     },
   },
@@ -1332,7 +1333,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-04-23",
         productionPath:
           "/blog-all/tpost/9y0d4gr0y1-chto-mozhet-skazat-pivnaya-pena",
-        localSlug: "9y0d4gr0y1-chto-mozhet-skazat-pivnaya-pena",
+        localSlug: "2021-04-23-chto-mozhet-skazat-pivnaya-pena",
       },
       en: {
         status: "published",
@@ -1341,7 +1342,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-04-23",
         productionPath:
           "/en/blog-all/tpost/ymfo0i2t71-what-can-beer-foam-say",
-        localSlug: "ymfo0i2t71-what-can-beer-foam-say",
+        localSlug: "2021-04-23-what-can-beer-foam-say",
       },
     },
   },
@@ -1356,7 +1357,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-03-20",
         productionPath:
           "/blog-all/tpost/gya48ze261-el-ili-lager-istoriya-o-drozhzhah",
-        localSlug: "gya48ze261-el-ili-lager-istoriya-o-drozhzhah",
+        localSlug: "2021-03-20-el-ili-lager-istoriya-o-drozhzhah",
       },
       en: {
         status: "published",
@@ -1365,7 +1366,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-03-20",
         productionPath:
           "/en/blog-all/tpost/snfk1giyd1-ale-or-lager-a-story-about-yeast",
-        localSlug: "snfk1giyd1-ale-or-lager-a-story-about-yeast",
+        localSlug: "2021-03-20-ale-or-lager-a-story-about-yeast",
       },
     },
   },
@@ -1380,7 +1381,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-03-02",
         productionPath:
           "/blog-all/tpost/kcpdyda711-gaid-kak-vibrat-pivo-dlya-devushki",
-        localSlug: "kcpdyda711-gaid-kak-vibrat-pivo-dlya-devushki",
+        localSlug: "2021-03-02-gaid-kak-vibrat-pivo-dlya-devushki",
       },
       en: {
         status: "published",
@@ -1389,7 +1390,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-03-02",
         productionPath:
           "/en/blog-all/tpost/dou93nl341-guide-how-to-choose-a-beer-for-a-lady",
-        localSlug: "dou93nl341-guide-how-to-choose-a-beer-for-a-lady",
+        localSlug: "2021-03-02-guide-how-to-choose-a-beer-for-a-lady",
       },
     },
   },
@@ -1404,7 +1405,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-02-19",
         productionPath:
           "/blog-all/tpost/zg9u7nn2y1-chetire-ingredienta-i-more-vozmozhnostei",
-        localSlug: "zg9u7nn2y1-chetire-ingredienta-i-more-vozmozhnostei",
+        localSlug: "2021-02-19-chetire-ingredienta-i-more-vozmozhnostei",
       },
       en: {
         status: "published",
@@ -1414,7 +1415,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-02-19",
         productionPath:
           "/en/blog-all/tpost/okjzxv2gf1-four-ingredients-and-a-sea-of-possibilit",
-        localSlug: "okjzxv2gf1-four-ingredients-and-a-sea-of-possibilit",
+        localSlug: "2021-02-19-four-ingredients-and-a-sea-of-possibilit",
       },
     },
   },
@@ -1429,7 +1430,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-02-09",
         productionPath:
           "/blog-all/tpost/d1knu5x0k1-1000-km-raznitsi-mezhdu-blanshem-i-vaits",
-        localSlug: "d1knu5x0k1-1000-km-raznitsi-mezhdu-blanshem-i-vaits",
+        localSlug: "2021-02-09-1000-km-raznitsi-mezhdu-blanshem-i-vaits",
       },
       en: {
         status: "published",
@@ -1438,7 +1439,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-02-09",
         productionPath:
           "/en/blog-all/tpost/japn2sfx71-1000-km-difference-between-blanche-and-w",
-        localSlug: "japn2sfx71-1000-km-difference-between-blanche-and-w",
+        localSlug: "2021-02-09-1000-km-difference-between-blanche-and-w",
       },
     },
   },
@@ -1453,7 +1454,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-01-22",
         productionPath:
           "/blog-all/tpost/m7zvi7e051-milkshake-ipa-istoriya-i-osobennosti-sor",
-        localSlug: "m7zvi7e051-milkshake-ipa-istoriya-i-osobennosti-sor",
+        localSlug: "2021-01-22-milkshake-ipa-istoriya-i-osobennosti-sor",
       },
       en: {
         status: "published",
@@ -1462,7 +1463,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-01-22",
         productionPath:
           "/en/blog-all/tpost/i7nvy9f6m1-milkshake-ipa-history-and-features-of-th",
-        localSlug: "i7nvy9f6m1-milkshake-ipa-history-and-features-of-th",
+        localSlug: "2021-01-22-milkshake-ipa-history-and-features-of-th",
       },
     },
   },
@@ -1477,7 +1478,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-01-12",
         productionPath:
           "/blog-all/tpost/jbjnakk441-mne-ne-gorko-chto-takoe-ibu",
-        localSlug: "jbjnakk441-mne-ne-gorko-chto-takoe-ibu",
+        localSlug: "2021-01-12-mne-ne-gorko-chto-takoe-ibu",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1493,7 +1494,7 @@ export const BLOG_POSTS: BlogPost[] = [
         categoryLabel: "RELEASES",
         publishedAt: "2021-12-07",
         productionPath: "/en/blog-all/tpost/yuhkvdcho1-saison-new-taste",
-        localSlug: "yuhkvdcho1-saison-new-taste",
+        localSlug: "2021-12-07-saison-new-taste",
       },
     },
   },
@@ -1509,7 +1510,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-10-26",
         productionPath:
           "/blog-all/tpost/l52cympd71-viigrai-yaschik-piva-na-hellouin",
-        localSlug: "l52cympd71-viigrai-yaschik-piva-na-hellouin",
+        localSlug: "2021-10-26-viigrai-yaschik-piva-na-hellouin",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1526,7 +1527,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-10-19",
         productionPath:
           "/en/blog-all/tpost/a8p7c969z1-pumking-ale-new-taste-of-autumn",
-        localSlug: "a8p7c969z1-pumking-ale-new-taste-of-autumn",
+        localSlug: "2021-10-19-pumking-ale-new-taste-of-autumn",
       },
     },
   },
@@ -1541,7 +1542,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-08-27",
         productionPath:
           "/blog-all/tpost/hsri3ayv41-intervyu-vasiliya-mischenko-v-preddverii",
-        localSlug: "hsri3ayv41-intervyu-vasiliya-mischenko-v-preddverii",
+        localSlug: "2021-08-27-intervyu-vasiliya-mischenko-v-preddverii",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1558,7 +1559,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-06-17",
         productionPath:
           "/en/blog-all/tpost/ffcmeohs71-yammy-jammy-summer-in-a-bottle",
-        localSlug: "ffcmeohs71-yammy-jammy-summer-in-a-bottle",
+        localSlug: "2021-06-17-yammy-jammy-summer-in-a-bottle",
       },
     },
   },
@@ -1575,7 +1576,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-06-08",
         productionPath:
           "/en/blog-all/tpost/exvllok0p1-rauhbier-beer-label-from-idea-to-impleme",
-        localSlug: "exvllok0p1-rauhbier-beer-label-from-idea-to-impleme",
+        localSlug: "2021-06-08-rauhbier-beer-label-from-idea-to-impleme",
       },
     },
   },
@@ -1591,7 +1592,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-05-20",
         productionPath:
           "/en/blog-all/tpost/2jevneeme1-rauchbier-spicy-smoked-beer-with-seeds-o",
-        localSlug: "2jevneeme1-rauchbier-spicy-smoked-beer-with-seeds-o",
+        localSlug: "2021-05-20-rauchbier-spicy-smoked-beer-with-seeds-o",
       },
     },
   },
@@ -1607,7 +1608,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-05-19",
         productionPath:
           "/en/blog-all/tpost/775ra77481-oatmeal-stout-a-new-look-at-the-classic",
-        localSlug: "775ra77481-oatmeal-stout-a-new-look-at-the-classic",
+        localSlug: "2021-05-19-oatmeal-stout-a-new-look-at-the-classic",
       },
     },
   },
@@ -1622,7 +1623,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-05-13",
         productionPath:
           "/blog-all/tpost/0kau2y5h91-provedenie-klin-mai-fest-perenositsya-na",
-        localSlug: "0kau2y5h91-provedenie-klin-mai-fest-perenositsya-na",
+        localSlug: "2021-05-13-provedenie-klin-mai-fest-perenositsya-na",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1639,7 +1640,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-03-18",
         productionPath:
           "/en/blog-all/tpost/yuxd3l55l1-extra-virgin-a-new-taste-in-the-regular",
-        localSlug: "yuxd3l55l1-extra-virgin-a-new-taste-in-the-regular",
+        localSlug: "2021-03-18-extra-virgin-a-new-taste-in-the-regular",
       },
     },
   },
@@ -1655,7 +1656,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-02-26",
         productionPath:
           "/en/blog-all/tpost/d4xo37du81-the-return-of-coco-jungle",
-        localSlug: "d4xo37du81-the-return-of-coco-jungle",
+        localSlug: "2021-02-26-the-return-of-coco-jungle",
       },
     },
   },
@@ -1670,7 +1671,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2021-01-19",
         productionPath:
           "/blog-all/tpost/5vvkbd3bd1-lyudi-v-pive-intervyu-anori-mischenko",
-        localSlug: "5vvkbd3bd1-lyudi-v-pive-intervyu-anori-mischenko",
+        localSlug: "2021-01-19-lyudi-v-pive-intervyu-anori-mischenko",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1686,7 +1687,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2020-12-22",
         productionPath:
           "/blog-all/tpost/323zbj0y71-pochemu-bowler-ipa-ne-apa",
-        localSlug: "323zbj0y71-pochemu-bowler-ipa-ne-apa",
+        localSlug: "2020-12-22-pochemu-bowler-ipa-ne-apa",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1702,7 +1703,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2020-12-18",
         productionPath:
           "/blog-all/tpost/902x4oy5k1-pivnaya-kuhnya-govyadina-pod-nut-butter",
-        localSlug: "902x4oy5k1-pivnaya-kuhnya-govyadina-pod-nut-butter",
+        localSlug: "2020-12-18-pivnaya-kuhnya-govyadina-pod-nut-butter",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1719,7 +1720,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2020-12-11",
         productionPath:
           "/blog-all/tpost/f52uygiau1-intervyu-anora-mischenko-glavnii-tehnolo",
-        localSlug: "f52uygiau1-intervyu-anora-mischenko-glavnii-tehnolo",
+        localSlug: "2020-12-11-intervyu-anora-mischenko-glavnii-tehnolo",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1735,7 +1736,7 @@ export const BLOG_POSTS: BlogPost[] = [
         publishedAt: "2020-12-04",
         productionPath:
           "/blog-all/tpost/6ku96l8541-gzhanets-dva-sogrevayuschih-retsepta-s-r",
-        localSlug: "6ku96l8541-gzhanets-dva-sogrevayuschih-retsepta-s-r",
+        localSlug: "2020-12-04-gzhanets-dva-sogrevayuschih-retsepta-s-r",
       },
       en: { status: "missing", title: "", categoryLabel: "", productionPath: "" },
     },
@@ -1807,13 +1808,13 @@ export function blogArticlePathname(
   slug: string,
   locale: PublishedLocale,
 ): string {
-  const base = `/blog-all/tpost/${slug}`;
+  const base = `/blog/${slug}`;
   return locale === DEFAULT_LOCALE ? base : `/${locale}${base}`;
 }
 
 /** Pathname for LocaleSwitch / Link (locale prefix added by next-intl). */
 export function blogArticleLocalHref(slug: string): string {
-  return `/blog-all/tpost/${slug}`;
+  return `/blog/${slug}`;
 }
 
 export function getPostById(id: string): BlogPost | undefined {

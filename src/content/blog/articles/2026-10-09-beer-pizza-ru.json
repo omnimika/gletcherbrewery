@@ -1,11 +1,11 @@
 {
   "id": "beer-pizza",
   "locale": "ru",
-  "slug": "913cadd4f1-9-oktyabrya-den-piva-i-pitstsi-idealnie",
+  "slug": "2026-10-09-9-oktyabrya-den-piva-i-pitstsi-idealnie",
   "title": "9 октября — День пива и пиццы: идеальные сочетания от Gletcher",
   "description": "От классической «Маргариты» до пепперони, четырёх сыров и BBQ — разбираемся, какое пиво Gletcher лучше всего подобрать к любимой пицце.",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3834-3535-4366-a330-376666653539/____IPA___.png",
+    "src": "/blog/2026-10-09-9-oktyabrya-den-piva-i-pitstsi-idealnie/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -36,7 +36,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3965-3439-4564-b065-643133366635/_____.png",
+      "src": "/blog/2026-10-09-9-oktyabrya-den-piva-i-pitstsi-idealnie/01.png",
       "alt": "",
       "width": 1672,
       "height": 941
@@ -60,7 +60,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6437-6364-4534-a539-326437396161/___Gletcher__.png",
+      "src": "/blog/2026-10-09-9-oktyabrya-den-piva-i-pitstsi-idealnie/02.png",
       "alt": "",
       "width": 1672,
       "height": 941
@@ -88,7 +88,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6334-6164-4465-a133-326238653061/_____.png",
+      "src": "/blog/2026-10-09-9-oktyabrya-den-piva-i-pitstsi-idealnie/03.png",
       "alt": "",
       "width": 1672,
       "height": 941
@@ -116,7 +116,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3433-6639-4738-b030-616230383539/____.png",
+      "src": "/blog/2026-10-09-9-oktyabrya-den-piva-i-pitstsi-idealnie/04.png",
       "alt": "",
       "width": 1672,
       "height": 941

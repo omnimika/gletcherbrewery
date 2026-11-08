@@ -1,12 +1,12 @@
 {
   "id": "stout-talk",
   "locale": "en",
-  "slug": "e40oxvnn01-lets-talk-about-stout",
+  "slug": "2021-05-17-lets-talk-about-stout",
   "title": "Let's talk about Stout",
   "description": "Stouts are a category of top-fermented ales that are characterized by a dark color, usually opaque dark brown or almost black.",
   "publishedAt": "2021-05-17 17:45",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6563-3833-4566-a636-626234393263/20210319_gletcher_03.jpg",
+    "src": "/blog/2021-05-17-lets-talk-about-stout/cover.jpg",
     "alt": ""
   },
   "blocks": [

@@ -75,7 +75,7 @@ export function HomeToursCta({ locale, labels }: HomeToursCtaProps) {
           <CompositionPanel className="items-center justify-center">
             <Reveal className="flex h-full max-h-full w-full max-w-[760px] items-center justify-center lg:max-w-[960px] xl:max-w-[760px]">
               <Image
-                src="/home/crocodile.png"
+                src="/pages/home/crocodile.png"
                 alt=""
                 width={1200}
                 height={640}

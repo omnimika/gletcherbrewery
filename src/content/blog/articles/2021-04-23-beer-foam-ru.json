@@ -1,12 +1,12 @@
 {
   "id": "beer-foam",
   "locale": "ru",
-  "slug": "9y0d4gr0y1-chto-mozhet-skazat-pivnaya-pena",
+  "slug": "2021-04-23-chto-mozhet-skazat-pivnaya-pena",
   "title": "Что может сказать пивная пена?",
   "description": "Пивная шапка не только хорошо выглядит. Она на самом деле изменяет опыт питья. Разберёмся в предмете.",
   "publishedAt": "2021-04-23 10:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3034-6566-4537-a638-346435393131/IMG_3106.jpg",
+    "src": "/blog/2021-04-23-chto-mozhet-skazat-pivnaya-pena/cover.jpg",
     "alt": ""
   },
   "blocks": [

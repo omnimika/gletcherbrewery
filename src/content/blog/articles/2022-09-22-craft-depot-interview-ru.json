@@ -1,12 +1,12 @@
 {
   "id": "craft-depot-interview",
   "locale": "ru",
-  "slug": "inxody6ls1-intervyu-dlya-assotsiatsii-craft-depot",
+  "slug": "2022-09-22-intervyu-dlya-assotsiatsii-craft-depot",
   "title": "Интерьвью для ассоциации CRAFT DEPOT",
   "description": "«Эксперименты важны, но еще важнее честно варить свое пиво» – беседа с совладельцами Gletcher Brewery Вячеславом Кузьменко и Игорем Хавским",
   "publishedAt": "2022-09-22 13:40",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3934-6531-4166-b362-636563636131/image.png",
+    "src": "/blog/2022-09-22-intervyu-dlya-assotsiatsii-craft-depot/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3533-6632-4332-b537-353165656563/image.png",
+      "src": "/blog/2022-09-22-intervyu-dlya-assotsiatsii-craft-depot/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -29,7 +29,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6163-3664-4433-b264-643432306639/image.png",
+      "src": "/blog/2022-09-22-intervyu-dlya-assotsiatsii-craft-depot/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,

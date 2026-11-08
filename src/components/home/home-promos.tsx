@@ -63,7 +63,7 @@ export function HomePromos({ labels }: HomePromosProps) {
                     {labels.b2bTitle}
                   </h2>
                   <Image
-                    src="/home/partnership-icon.png"
+                    src="/pages/home/partnership-icon.png"
                     alt=""
                     width={128}
                     height={128}
@@ -106,7 +106,7 @@ export function HomePromos({ labels }: HomePromosProps) {
                     </span>
                   </h2>
                   <Image
-                    src="/home/map-pin.svg"
+                    src="/pages/home/map-pin.svg"
                     alt=""
                     width={120}
                     height={140}

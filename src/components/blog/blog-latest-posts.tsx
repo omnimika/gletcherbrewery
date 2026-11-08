@@ -36,7 +36,7 @@ export function BlogLatestPosts({
   items,
   id = "blog",
   snap = false,
-  titleMarkSrc = "/home/blog-title.svg",
+  titleMarkSrc = "/pages/home/blog-title.svg",
 }: BlogLatestPostsProps) {
   const cards = items.slice(0, BLOG_LATEST_DESKTOP_COUNT);
   if (cards.length === 0) return null;

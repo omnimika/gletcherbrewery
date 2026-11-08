@@ -1,12 +1,12 @@
 {
   "id": "iron-woods-dry-stout",
   "locale": "en",
-  "slug": "a842y8num1-iron-woods-the-power-and-charisma-of-a-d",
+  "slug": "2024-07-02-iron-woods-the-power-and-charisma-of-a-d",
   "title": "Iron Woods: the power and charisma of a dry stout",
   "description": "Enjoy the noble taste of Iron Woods, in which six types of malt create a unique composition of aromas and flavors.",
   "publishedAt": "2024-07-02 16:15",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3935-6632-4936-a663-366465663933/wood1_2.png",
+    "src": "/blog/2024-07-02-iron-woods-the-power-and-charisma-of-a-d/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3337-3661-4562-a134-303162373737/bottle-bg-name-ALL-2.png",
+      "src": "/blog/2024-07-02-iron-woods-the-power-and-charisma-of-a-d/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

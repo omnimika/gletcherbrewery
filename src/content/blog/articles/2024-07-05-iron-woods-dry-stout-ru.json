@@ -1,12 +1,12 @@
 {
   "id": "iron-woods-dry-stout",
   "locale": "ru",
-  "slug": "uphlmfzxv1-iron-woods-sila-i-harizma-suhogo-stauta",
+  "slug": "2024-07-05-iron-woods-sila-i-harizma-suhogo-stauta",
   "title": "Iron Woods: сила и харизма сухого стаута",
   "description": "Насладитесь благородным вкусом Iron Woods, в котором шесть видов солода создают неповторимую композицию ароматов и вкусов.",
   "publishedAt": "2024-07-05 11:29",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3263-6232-4261-b139-336635343732/wood1_2.png",
+    "src": "/blog/2024-07-05-iron-woods-sila-i-harizma-suhogo-stauta/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3364-3939-4565-a663-616133663931/bottle-bg-name-ALL-2.png",
+      "src": "/blog/2024-07-05-iron-woods-sila-i-harizma-suhogo-stauta/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

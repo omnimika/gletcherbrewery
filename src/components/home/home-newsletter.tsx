@@ -81,7 +81,7 @@ export function HomeNewsletter({
           <CompositionPanel className="items-center justify-center">
             <Reveal className="flex w-full max-w-[min(100%,28rem)] items-center justify-center sm:max-w-none">
               <Image
-                src="/home/crodile-subscribe.png"
+                src="/pages/home/crodile-subscribe.png"
                 alt=""
                 width={1472}
                 height={1481}

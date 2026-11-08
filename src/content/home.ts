@@ -80,28 +80,28 @@ const BLOG_RU: HomeBlogTeaser[] = [
     category: "БИБЛИОТЕКА",
     title:
       "День легализации домашнего пивоварения: как homebrew изменил крафтовое пиво",
-    href: "/blog-all/tpost/homebrewing-craft-beer-history",
+    href: "/blog/2026-10-14-homebrewing-craft-beer-history",
     date: "14.10",
   },
   {
     id: "beer-pizza",
     category: "НОВОСТИ",
     title: "9 октября — День пива и пиццы: идеальные сочетания от Gletcher",
-    href: "/blog-all/tpost/913cadd4f1-9-oktyabrya-den-piva-i-pitstsi-idealnie",
+    href: "/blog/2026-10-09-9-oktyabrya-den-piva-i-pitstsi-idealnie",
     date: "09.10",
   },
   {
     id: "barrel-aged",
     category: "БИБЛИОТЕКА",
     title: "Barrel-Aged Beer Day: День выдержанного в бочках пива",
-    href: "/blog-all/tpost/barrel-aged-beer-day-2026",
+    href: "/blog/2026-10-02-barrel-aged-beer-day-2026",
     date: "02.10",
   },
   {
     id: "afisha",
     category: "МЕРОПРИЯТИЯ",
     title: "Афиша Gletcher Brewery: WINEPARK, Поляна Пикник и Chicano Day",
-    href: "/blog-all/tpost/cf46mag0n1-afisha-gletcher-brewery-winepark-polyana",
+    href: "/blog/2026-09-23-afisha-gletcher-brewery-winepark-polyana",
     date: "23.09",
   },
 ];
@@ -112,29 +112,29 @@ const BLOG_EN: HomeBlogTeaser[] = [
     category: "NEWS",
     title:
       "October 9 — International Beer and Pizza Day: perfect pairings by Gletcher",
-    href: "/en/blog-all/tpost/5od5iaktd1-october-9-international-beer-and-pizza-d",
+    href: "/blog/2026-10-09-october-9-international-beer-and-pizza-d",
   },
   {
     id: "moa-na",
     category: "LIBRARY",
     title: "Milk of Amnesia Non-Alcoholic",
-    href: "/en/blog-all/tpost/za6t88elj1-milk-of-amnesia-non-alcoholic",
+    href: "/blog/2026-03-26-milk-of-amnesia-non-alcoholic",
   },
   {
     id: "aging",
     category: "LIBRARY",
     title: "Gletcher Aging: Aged to Perfection",
-    href: "/en/blog-all/tpost/93l8iii9y1-gletcher-aging-aged-to-perfection",
+    href: "/blog/2026-01-22-gletcher-aging-aged-to-perfection",
   },
   {
     id: "tour",
     category: "NEWS",
     title: "Tour De Grapefruit: citrus wheat ale",
-    href: "/en/blog-all/tpost/9i3ig0g2r1-tour-de-grapefruit-citrus-wheat-ale",
+    href: "/blog/2025-02-07-tour-de-grapefruit-citrus-wheat-ale",
   },
 ];
 
-/** Production tpost URLs for home teasers (RU Confirmed 01.11.2026; EN from live scrape). */
+/** Home blog teasers: locale-relative `/blog/{YYYY-MM-DD-descriptive}` slugs. */
 export function getHomeBlogTeasers(locale: PublishedLocale): HomeBlogTeaser[] {
   return locale === "en" ? BLOG_EN : BLOG_RU;
 }

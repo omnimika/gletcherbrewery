@@ -25,7 +25,7 @@ export const HOME_MENU_CARDS: HomeMenuCard[] = [
     titleKey: "menuBeerTitle",
     bodyKey: "menuBeerBody",
     ctaKey: "menuBeerCta",
-    image: "/home/menu-beer_.png",
+    image: "/pages/home/menu-beer_.png",
     href: { kind: "local", path: "/beer" },
   },
   {
@@ -33,7 +33,7 @@ export const HOME_MENU_CARDS: HomeMenuCard[] = [
     titleKey: "menuBlogTitle",
     bodyKey: "menuBlogBody",
     ctaKey: "menuBlogCta",
-    image: "/home/menu-blog_.png",
+    image: "/pages/home/menu-blog_.png",
     href: { kind: "local", path: "/blog" },
   },
   {
@@ -41,7 +41,7 @@ export const HOME_MENU_CARDS: HomeMenuCard[] = [
     titleKey: "menuPartnersTitle",
     bodyKey: "menuPartnersBody",
     ctaKey: "menuPartnersCta",
-    image: "/home/menu-partership_.png",
+    image: "/pages/home/menu-partership_.png",
     href: { kind: "local", path: "/partnership" },
   },
   {
@@ -49,7 +49,7 @@ export const HOME_MENU_CARDS: HomeMenuCard[] = [
     titleKey: "menuMapTitle",
     bodyKey: "menuMapBody",
     ctaKey: "menuMapCta",
-    image: "/home/menu-map_.png",
+    image: "/pages/home/menu-map_.png",
     href: { kind: "local", path: "/map" },
   },
   {
@@ -57,7 +57,7 @@ export const HOME_MENU_CARDS: HomeMenuCard[] = [
     titleKey: "menuToursTitle",
     bodyKey: "menuToursBody",
     ctaKey: "menuToursCta",
-    image: "/home/menu-tours_.png",
+    image: "/pages/home/menu-tours_.png",
     href: { kind: "local", path: "/tours" },
   },
   {
@@ -65,7 +65,7 @@ export const HOME_MENU_CARDS: HomeMenuCard[] = [
     titleKey: "menuShopTitle",
     bodyKey: "menuShopBody",
     ctaKey: "menuShopCta",
-    image: "/home/menu-shop_.png",
+    image: "/pages/home/menu-shop_.png",
     /** Absolute RU path — EN peer unpublished. */
     href: { kind: "absolute", path: "/shop" },
   },

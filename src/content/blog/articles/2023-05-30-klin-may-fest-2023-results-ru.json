@@ -1,12 +1,12 @@
 {
   "id": "klin-may-fest-2023-results",
   "locale": "ru",
-  "slug": "8imlu33eh1-itogi-klinmaifest-2023",
+  "slug": "2023-05-30-itogi-klinmaifest-2023",
   "title": "ИТОГИ КЛИНМАЙФЕСТ 2023",
   "description": "Фотоотчёт и главные итоги с ежегодного международного фестиваля ремесленных пивоварен",
   "publishedAt": "2023-05-30 21:09",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3238-3266-4239-b561-623432363532/088A1985.jpg",
+    "src": "/blog/2023-05-30-itogi-klinmaifest-2023/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -31,7 +31,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3937-3465-4537-a431-316561316633/088A1984.jpg",
+      "src": "/blog/2023-05-30-itogi-klinmaifest-2023/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -45,7 +45,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3534-3438-4062-a539-366638386162/088A2009.jpg",
+      "src": "/blog/2023-05-30-itogi-klinmaifest-2023/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -58,7 +58,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3562-3732-4365-b566-613937646537/088A2106.jpg",
+      "src": "/blog/2023-05-30-itogi-klinmaifest-2023/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -67,7 +67,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6630-3332-4634-b365-356266646435/088A2214.jpg",
+      "src": "/blog/2023-05-30-itogi-klinmaifest-2023/04.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -76,7 +76,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3231-3937-4137-b832-656666373365/088A2189.jpg",
+      "src": "/blog/2023-05-30-itogi-klinmaifest-2023/05.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -85,7 +85,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3736-3938-4538-a538-626363396337/088A1975.jpg",
+      "src": "/blog/2023-05-30-itogi-klinmaifest-2023/06.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -98,7 +98,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3030-3464-4161-b335-353435643535/088A2001.jpg",
+      "src": "/blog/2023-05-30-itogi-klinmaifest-2023/07.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -112,7 +112,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3635-3137-4561-a537-616263333632/088A2139.jpg",
+      "src": "/blog/2023-05-30-itogi-klinmaifest-2023/08.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,12 +1,12 @@
 {
   "id": "blanche-weizen",
   "locale": "ru",
-  "slug": "d1knu5x0k1-1000-km-raznitsi-mezhdu-blanshem-i-vaits",
+  "slug": "2021-02-09-1000-km-raznitsi-mezhdu-blanshem-i-vaits",
   "title": "1000 км разницы между Бланшем и Вайценом. А что ещё?",
   "description": "Разбирёмся в особенностях самых популярных пшеничных сортов пива: Бланш (Blanche) и Вайс (Weiss).",
   "publishedAt": "2021-02-09 14:15",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3634-3464-4131-b664-336361306339/DSC_3272a.jpg",
+    "src": "/blog/2021-02-09-1000-km-raznitsi-mezhdu-blanshem-i-vaits/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -25,7 +25,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6130-3765-4836-a133-333233356231/20200723_svam_0122_w.jpg",
+      "src": "/blog/2021-02-09-1000-km-raznitsi-mezhdu-blanshem-i-vaits/01.jpg",
       "alt": "Ausweiss – пример немецкого Вайцена от пивоварни Gletcher Brewery",
       "caption": "Ausweiss – пример немецкого Вайцена от пивоварни Gletcher Brewery",
       "width": 1200,
@@ -52,7 +52,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3535-3934-4362-a238-303261636262/20200723_svam_0163_w.jpg",
+      "src": "/blog/2021-02-09-1000-km-raznitsi-mezhdu-blanshem-i-vaits/02.jpg",
       "alt": "Blanche de Fleur – бельгийский пшеничный бланш от пивоварни GLetcher Brewery",
       "caption": "Blanche de Fleur – бельгийский пшеничный бланш от пивоварни GLetcher Brewery",
       "width": 1200,

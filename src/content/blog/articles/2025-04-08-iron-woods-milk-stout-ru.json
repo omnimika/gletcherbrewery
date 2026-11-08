@@ -1,12 +1,12 @@
 {
   "id": "iron-woods-milk-stout",
   "locale": "ru",
-  "slug": "bvhspd8pm1-iron-woods-milk-stout-myagkii-slivochnii",
+  "slug": "2025-04-08-iron-woods-milk-stout-myagkii-slivochnii",
   "title": "Iron Woods Milk Stout: мягкий сливочный стаут",
   "description": "Десертный стаут с мягким сливочным вкусом с нотками кофе, ванили, шоколада и карамельной сладостью",
   "publishedAt": "2025-04-08 02:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6434-3963-4037-a562-386231366638/iron_woods.png",
+    "src": "/blog/2025-04-08-iron-woods-milk-stout-myagkii-slivochnii/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3237-3666-4034-b337-326665363131/iron-woods-name-bott.png",
+      "src": "/blog/2025-04-08-iron-woods-milk-stout-myagkii-slivochnii/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

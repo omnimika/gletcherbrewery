@@ -97,9 +97,9 @@ export type ToursCopy = {
 };
 
 export const TOURS_REVIEW_STICKERS = {
-  wow: "/tours/sticker-wow.png",
-  peace: "/tours/sticker-peace.png",
-  eyes: "/tours/sticker-eyes.png",
+  wow: "/pages/tours/sticker-wow.png",
+  peace: "/pages/tours/sticker-peace.png",
+  eyes: "/pages/tours/sticker-eyes.png",
 } as const;
 
 const RU: ToursCopy = {
@@ -311,6 +311,6 @@ export function getToursCopy(locale: PublishedLocale): ToursCopy {
 }
 
 export const TOURS_HERO_IMAGE = {
-  src: "/tours/hero-brewery.png",
+  src: "/pages/tours/hero-brewery.png",
   alt: "",
 } as const;

@@ -1,12 +1,12 @@
 {
   "id": "blue-monkey",
   "locale": "ru",
-  "slug": "01ttab5vb1-blue-monkey-pshenichnii-el-vo-vsyom-svoy",
+  "slug": "2024-06-15-blue-monkey-pshenichnii-el-vo-vsyom-svoy",
   "title": "Blue Monkey: пшеничный эль во всём своём великолепии",
   "description": "Мы сварили новую партию нашего главного пшеничного хита, доведя рецепт до абсолютного совершенства.",
   "publishedAt": "2024-06-15 14:21",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6165-6230-4339-a237-336235663037/monkey_.png",
+    "src": "/blog/2024-06-15-blue-monkey-pshenichnii-el-vo-vsyom-svoy/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3236-6138-4065-b930-646332376134/bottle-bg-name-ALL-b.png",
+      "src": "/blog/2024-06-15-blue-monkey-pshenichnii-el-vo-vsyom-svoy/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

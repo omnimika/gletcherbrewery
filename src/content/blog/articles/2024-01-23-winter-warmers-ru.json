@@ -1,12 +1,12 @@
 {
   "id": "winter-warmers",
   "locale": "ru",
-  "slug": "kap55i5pe1-v-poiskah-istokov-pryanogo-zimnego-piva",
+  "slug": "2024-01-23-v-poiskah-istokov-pryanogo-zimnego-piva",
   "title": "В поисках истоков пряного зимнего пива",
   "description": "История Winter Warmers глубоко уходит корнями в древние традиции пивоварения. Пробуем разобраться во всех гранях этого популярного во всем мире напитка",
   "publishedAt": "2024-01-23 09:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3936-3632-4534-b137-613231353239/image.png",
+    "src": "/blog/2024-01-23-v-poiskah-istokov-pryanogo-zimnego-piva/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -24,7 +24,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3963-3866-4638-b462-613564396161/image.png",
+      "src": "/blog/2024-01-23-v-poiskah-istokov-pryanogo-zimnego-piva/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -41,7 +41,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6536-3630-4537-b735-373665386663/image.png",
+      "src": "/blog/2024-01-23-v-poiskah-istokov-pryanogo-zimnego-piva/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -66,7 +66,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6136-3132-4139-b466-353935393033/image.png",
+      "src": "/blog/2024-01-23-v-poiskah-istokov-pryanogo-zimnego-piva/03.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -79,7 +79,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3230-6535-4465-a566-623065616434/20230714_gletcher_02.jpg",
+      "src": "/blog/2024-01-23-v-poiskah-istokov-pryanogo-zimnego-piva/04.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

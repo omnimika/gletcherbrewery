@@ -1,12 +1,12 @@
 {
   "id": "ausweis",
   "locale": "en",
-  "slug": "6xf9bvgit1-ausweis-your-passport-to-the-world-of-ge",
+  "slug": "2024-06-26-ausweis-your-passport-to-the-world-of-ge",
   "title": "Ausweis: your passport to the world of German beer",
   "description": "The new Ausweis wheat variety is our signature monogram in the passport of true German beer.",
   "publishedAt": "2024-06-26 15:28",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3363-6431-4539-b231-656261363036/ausweis-fon.png",
+    "src": "/blog/2024-06-26-ausweis-your-passport-to-the-world-of-ge/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6130-3766-4262-b363-653765633733/bottle-bg-name-ALL-a.png",
+      "src": "/blog/2024-06-26-ausweis-your-passport-to-the-world-of-ge/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

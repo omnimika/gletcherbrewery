@@ -225,7 +225,7 @@ export function HomeHero({
         style={{ opacity: 0, transform: "rotate(30deg)" }}
       >
         <Image
-          src="/home/slogan-red.png"
+          src="/pages/home/slogan-red.png"
           alt=""
           width={164}
           height={164}

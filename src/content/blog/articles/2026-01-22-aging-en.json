@@ -1,11 +1,11 @@
 {
   "id": "aging",
   "locale": "en",
-  "slug": "93l8iii9y1-gletcher-aging-aged-to-perfection",
+  "slug": "2026-01-22-gletcher-aging-aged-to-perfection",
   "title": "Gletcher Aging: Aged to Perfection",
   "description": "Two Years of Aging, French Oak and Cognac Barrels: The Story of CYNIC",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6565-3863-4534-a436-313062313061/BLOG2png.webp",
+    "src": "/blog/2026-01-22-gletcher-aging-aged-to-perfection/cover.webp",
     "alt": ""
   },
   "blocks": [
@@ -24,7 +24,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3039-6438-4236-b565-646532343939/__1_________2_______.png",
+      "src": "/blog/2026-01-22-gletcher-aging-aged-to-perfection/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -51,7 +51,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3663-3434-4535-b634-633765643532/________________110_.png",
+      "src": "/blog/2026-01-22-gletcher-aging-aged-to-perfection/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -69,7 +69,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3630-6665-4366-a661-353663626233/photo_2025-10-07_12-.jpg",
+      "src": "/blog/2026-01-22-gletcher-aging-aged-to-perfection/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -87,7 +87,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3731-6535-4666-b039-653636383764/111.png",
+      "src": "/blog/2026-01-22-gletcher-aging-aged-to-perfection/04.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -114,7 +114,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3638-6465-4637-b063-656432333439/photo_2026-01-27_125.jpeg",
+      "src": "/blog/2026-01-22-gletcher-aging-aged-to-perfection/05.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,

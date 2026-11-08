@@ -1,12 +1,12 @@
 {
   "id": "kraftomania",
   "locale": "ru",
-  "slug": "l1amaxj121-gletcher-brewery-na-kraftomanii",
+  "slug": "2026-01-13-gletcher-brewery-na-kraftomanii",
   "title": "Gletcher Brewery на КРАФТОМАНИИ!",
   "description": "Зимний праздник крафтового пива в Москве с безлимитной дегустацией – отличный повод для встречи!",
   "publishedAt": "2026-01-13 12:50",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3436-6635-4436-b234-343761626634/image.png",
+    "src": "/blog/2026-01-13-gletcher-brewery-na-kraftomanii/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6431-3336-4332-a566-303632353261/photo_2026-01-13_134.png",
+      "src": "/blog/2026-01-13-gletcher-brewery-na-kraftomanii/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -33,7 +33,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6534-3937-4639-a632-303430613639/image.png",
+      "src": "/blog/2026-01-13-gletcher-brewery-na-kraftomanii/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,

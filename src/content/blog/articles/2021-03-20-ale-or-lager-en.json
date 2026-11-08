@@ -1,12 +1,12 @@
 {
   "id": "ale-or-lager",
   "locale": "en",
-  "slug": "snfk1giyd1-ale-or-lager-a-story-about-yeast",
+  "slug": "2021-03-20-ale-or-lager-a-story-about-yeast",
   "title": "Ale or lager: a story about yeast",
   "description": "Despite the fact that there are many existing beers and they are very different, they can all be divided into two large families: top-fermented beer and bottom-fermented beer.",
   "publishedAt": "2021-03-20 16:24",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6339-3232-4333-a332-346332623166/20210318_gletcher_01.jpg",
+    "src": "/blog/2021-03-20-ale-or-lager-a-story-about-yeast/cover.jpg",
     "alt": ""
   },
   "blocks": [

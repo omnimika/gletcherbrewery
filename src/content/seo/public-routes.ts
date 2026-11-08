@@ -69,7 +69,7 @@ export const STATIC_PUBLIC_ROUTES: readonly PublicRouteEntry[] = [
     disposition: "local",
     decision: "Confirmed",
     notes:
-      "Q3: permanentRedirect (HTTP 308) → /blog and /en/blog; articles stay under /blog-all/tpost/*",
+      "Q3: permanentRedirect (HTTP 308) → /blog and /en/blog; articles at /blog/{YYYY-MM-DD-…}, legacy /blog-all/tpost/* → 308",
   },
   {
     id: "partnership",
@@ -183,10 +183,10 @@ export const STATIC_PUBLIC_ROUTES: readonly PublicRouteEntry[] = [
     id: "about",
     pathRu: "/about",
     indexable: false,
-    disposition: "deferred",
+    disposition: "local",
     decision: "Confirmed",
     notes:
-      "A1 Confirmed: Tilda 71867465/project1212341 + animation; local route not yet shipped; indexing Open",
+      "A1: Tilda 71867465/project1212341 + animation shipped; RU-only; source nosearch/nofollow → robots noindex until publication decision",
   },
   {
     id: "brainstorm-moto-fest-2023",

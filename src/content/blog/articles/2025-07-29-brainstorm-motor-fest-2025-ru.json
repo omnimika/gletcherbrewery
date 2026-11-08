@@ -1,12 +1,12 @@
 {
   "id": "brainstorm-motor-fest-2025",
   "locale": "ru",
-  "slug": "t3rp7u17x1-brainstorm-motor-fest-2025",
+  "slug": "2025-07-29-brainstorm-motor-fest-2025",
   "title": "BRAINSTORM MOTOR FEST 2025",
   "description": "Уже в субботу – моторы, музыка, крафт и драйв на Gletcher Brewery!",
   "publishedAt": "2025-07-29 19:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3565-3362-4162-b138-363537623939/image.png",
+    "src": "/blog/2025-07-29-brainstorm-motor-fest-2025/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3431-3836-4336-a232-366263353465/giBf1mNybh_oIJ6Fcy2F.jpg",
+      "src": "/blog/2025-07-29-brainstorm-motor-fest-2025/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -29,7 +29,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3833-6164-4465-b235-336331326333/__2_page-0001_1jpg.webp",
+      "src": "/blog/2025-07-29-brainstorm-motor-fest-2025/02.webp",
       "alt": "Brainstorm Motor Fest | Карта фестиваля",
       "caption": "",
       "width": 1200,
@@ -42,7 +42,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3637-3937-4337-b761-613034656332/photo_2025-07-31_195.jpeg",
+      "src": "/blog/2025-07-29-brainstorm-motor-fest-2025/03.jpeg",
       "alt": "Brainstorm Motor Fest",
       "caption": "",
       "width": 1200,
@@ -55,7 +55,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3030-3765-4137-a435-656162633465/VcS1ztBCUfNX3tsSo6I5.jpg",
+      "src": "/blog/2025-07-29-brainstorm-motor-fest-2025/04.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -64,7 +64,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3764-3966-4031-b366-303330383164/Dx44PME1OMN5P1m42CPU.jpg",
+      "src": "/blog/2025-07-29-brainstorm-motor-fest-2025/05.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -73,7 +73,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6433-3438-4663-b831-353534353761/--cGkOfZE5YfCwMXE5Zn.jpg",
+      "src": "/blog/2025-07-29-brainstorm-motor-fest-2025/06.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

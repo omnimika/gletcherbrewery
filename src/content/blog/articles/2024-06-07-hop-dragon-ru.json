@@ -1,12 +1,12 @@
 {
   "id": "hop-dragon",
   "locale": "ru",
-  "slug": "vo2xnz54a1-hop-dragon-yarkii-vkus-pyati-hmelei",
+  "slug": "2024-06-07-hop-dragon-yarkii-vkus-pyati-hmelei",
   "title": "Hop Dragon: яркий вкус пяти хмелей",
   "description": "В честь года Дракона мы решили сварить пиво Hop Dragon и, таким образом, отдать дань легендарному напитку шаолиньских мастеров",
   "publishedAt": "2024-06-07 13:43",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3337-3532-4035-a262-613137373538/cROCO_1.png",
+    "src": "/blog/2024-06-07-hop-dragon-yarkii-vkus-pyati-hmelei/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6333-3734-4038-b439-653937636338/bottle-bg-name-hopdr.png",
+      "src": "/blog/2024-06-07-hop-dragon-yarkii-vkus-pyati-hmelei/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

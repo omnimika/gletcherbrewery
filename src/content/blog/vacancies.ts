@@ -18,7 +18,7 @@ export const VACANCIES_PAGE = {
   description:
     "Мы ищем заместителя главного инженера, лаборанта-микробиолога, мастера варочного порядка и старшего оператора линии розлива.",
   cover: {
-    src: "https://static.tildacdn.com/tild3831-6161-4031-b863-316133333437/WhatsApp_Image_2017-.png",
+    src: "/pages/blog-misc/whatsapp_image_2017-.png",
     alt: "",
   },
   pullQuote:

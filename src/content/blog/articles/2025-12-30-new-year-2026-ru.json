@@ -1,12 +1,12 @@
 {
   "id": "new-year-2026",
   "locale": "ru",
-  "slug": "bl766ufrx1-s-nastupayuschim-novim-2026-godom",
+  "slug": "2025-12-30-s-nastupayuschim-novim-2026-godom",
   "title": "С Наступающим Новым 2026 годом!",
   "description": "Вспоминаем уходящий год и готовимся встречать новый!",
   "publishedAt": "2025-12-30 11:35",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3664-6664-4235-a361-376363663435/1Q8A1704.jpg",
+    "src": "/blog/2025-12-30-s-nastupayuschim-novim-2026-godom/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -33,7 +33,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3935-6131-4837-a433-326662646233/1Q8A1739.jpg",
+      "src": "/blog/2025-12-30-s-nastupayuschim-novim-2026-godom/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

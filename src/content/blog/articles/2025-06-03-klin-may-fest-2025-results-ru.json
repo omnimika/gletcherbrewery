@@ -1,12 +1,12 @@
 {
   "id": "klin-may-fest-2025-results",
   "locale": "ru",
-  "slug": "lvdpb93421-klin-mai-fest-2025-itogi",
+  "slug": "2025-06-03-klin-mai-fest-2025-itogi",
   "title": "КЛИН МАЙ ФЕСТ 2025: ИТОГИ",
   "description": "Окунитесь снова в атмосферу фестиваля! Смотрим, улыбаемся, планируем следующий год!",
   "publishedAt": "2025-06-03 16:13",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6334-3436-4739-a135-313136613262/photo.jpg",
+    "src": "/blog/2025-06-03-klin-mai-fest-2025-itogi/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -25,7 +25,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3766-6361-4436-b865-376263643635/1Q8A8243.jpg",
+      "src": "/blog/2025-06-03-klin-mai-fest-2025-itogi/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -34,7 +34,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3963-3266-4166-a165-373330363863/1Q8A8612.jpg",
+      "src": "/blog/2025-06-03-klin-mai-fest-2025-itogi/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -47,7 +47,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6661-3665-4065-b230-613761346535/1Q8A8666.jpg",
+      "src": "/blog/2025-06-03-klin-mai-fest-2025-itogi/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,12 +1,12 @@
 {
   "id": "pumking-ale",
   "locale": "en",
-  "slug": "a8p7c969z1-pumking-ale-new-taste-of-autumn",
+  "slug": "2021-10-19-pumking-ale-new-taste-of-autumn",
   "title": "Pumking Ale: new taste of autumn",
   "description": "Try our pumpkin ale with cinnamon and caramel",
   "publishedAt": "2021-10-19 16:57",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6138-3838-4731-a338-663561333736/20211017_gletcher_02.jpg",
+    "src": "/blog/2021-10-19-pumking-ale-new-taste-of-autumn/cover.jpg",
     "alt": ""
   },
   "blocks": [

@@ -1,12 +1,12 @@
 {
   "id": "blue-monkey",
   "locale": "en",
-  "slug": "mlz4jtzag1-blue-monkey-wheat-ale-in-all-its-splendo",
+  "slug": "2024-06-15-blue-monkey-wheat-ale-in-all-its-splendo",
   "title": "Blue Monkey: wheat ale in all its splendor",
   "description": "We have brewed a new batch of our main wheat hit, bringing the recipe to absolute perfection. And we are in a hurry to share it with you!",
   "publishedAt": "2024-06-15 16:12",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6161-3761-4162-a362-386666613262/monkey_.png",
+    "src": "/blog/2024-06-15-blue-monkey-wheat-ale-in-all-its-splendo/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6365-3838-4539-a438-636635303439/bottle-bg-name-ALL-b.png",
+      "src": "/blog/2024-06-15-blue-monkey-wheat-ale-in-all-its-splendo/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

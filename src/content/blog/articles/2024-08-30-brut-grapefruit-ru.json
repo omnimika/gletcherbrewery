@@ -1,12 +1,12 @@
 {
   "id": "brut-grapefruit",
   "locale": "ru",
-  "slug": "lypdkibzr1-brut-grapefruit-bryut-el-lyogkii-napitok",
+  "slug": "2024-08-30-brut-grapefruit-bryut-el-lyogkii-napitok",
   "title": "Brut Grapefruit: брют-эль, лёгкий напиток с искристым характером",
   "description": "Почувствуйте праздничное настроение вместе с нашим уникальным брют-элем с ароматом грейпфрута — легким, ярким и освежающим, как настоящее пивное шампанское.",
   "publishedAt": "2024-08-30 13:51",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3264-3262-4839-a433-663963623635/GRAPE1_1.png",
+    "src": "/blog/2024-08-30-brut-grapefruit-bryut-el-lyogkii-napitok/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -34,7 +34,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3438-6464-4235-b834-653133633230/111121212.png",
+      "src": "/blog/2024-08-30-brut-grapefruit-bryut-el-lyogkii-napitok/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -52,7 +52,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3634-3162-4062-b738-323636306335/brut-grapefruit-post.png",
+      "src": "/blog/2024-08-30-brut-grapefruit-bryut-el-lyogkii-napitok/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -74,7 +74,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6637-3331-4764-b730-333134363964/3423rf23qf2q3f.png",
+      "src": "/blog/2024-08-30-brut-grapefruit-bryut-el-lyogkii-napitok/03.png",
       "alt": "",
       "caption": "",
       "width": 1200,

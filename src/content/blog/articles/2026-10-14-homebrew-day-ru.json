@@ -1,11 +1,11 @@
 {
   "id": "homebrew-day",
   "locale": "ru",
-  "slug": "homebrewing-craft-beer-history",
+  "slug": "2026-10-14-homebrewing-craft-beer-history",
   "title": "День легализации домашнего пивоварения: как homebrew изменил крафтовое пиво",
   "description": "14 октября 1978 года домашнее пивоварение получило федеральное правовое основание в США — и изменило всю крафтовую индустрию.",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3137-3363-4231-b333-633730633537/a1a4fea2-83ad-4487-a.png",
+    "src": "/blog/2026-10-14-homebrewing-craft-beer-history/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -36,7 +36,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6633-3364-4838-b239-656436383436/photo_2026-10-14_154.jpeg",
+      "src": "/blog/2026-10-14-homebrewing-craft-beer-history/01.jpeg",
       "alt": "",
       "width": 1672,
       "height": 941
@@ -68,7 +68,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6434-3633-4033-a331-333963623639/4cb7bd0e-071a-441b-8.png",
+      "src": "/blog/2026-10-14-homebrewing-craft-beer-history/02.png",
       "alt": "",
       "width": 1672,
       "height": 941
@@ -117,7 +117,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3366-3830-4666-b132-353236336533/02.jpg",
+      "src": "/blog/2026-10-14-homebrewing-craft-beer-history/03.jpg",
       "alt": "",
       "width": 1672,
       "height": 941
@@ -170,7 +170,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3262-3332-4563-b834-393237366433/088A9362.jpg",
+      "src": "/blog/2026-10-14-homebrewing-craft-beer-history/04.jpg",
       "alt": "",
       "width": 1672,
       "height": 941

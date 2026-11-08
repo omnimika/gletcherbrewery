@@ -1,12 +1,12 @@
 {
   "id": "klin-may-fest-2024-invite",
   "locale": "ru",
-  "slug": "8ionj8vgo1-priglashaem-uchastnikov-na-klin-mai-fest",
+  "slug": "2024-01-12-priglashaem-uchastnikov-na-klin-mai-fest",
   "title": "Приглашаем участников на Клин Май Фест 2024",
   "description": "Объявляем открытым сбор заявок на участие в 5-м юбилейном крупнейшем пивном фестивале России!",
   "publishedAt": "2024-01-12 12:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3261-6231-4234-b833-666331303763/image.png",
+    "src": "/blog/2024-01-12-priglashaem-uchastnikov-na-klin-mai-fest/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6432-3663-4339-b330-333230333539/image.png",
+      "src": "/blog/2024-01-12-priglashaem-uchastnikov-na-klin-mai-fest/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3262-3039-4735-a130-383533363630/image.png",
+      "src": "/blog/2024-01-12-priglashaem-uchastnikov-na-klin-mai-fest/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,

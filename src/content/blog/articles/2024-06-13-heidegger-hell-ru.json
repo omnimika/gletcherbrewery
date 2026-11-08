@@ -1,12 +1,12 @@
 {
   "id": "heidegger-hell",
   "locale": "ru",
-  "slug": "r1vxz57aa1-heidegger-hell-nemetskie-traditsii-v-vas",
+  "slug": "2024-06-13-heidegger-hell-nemetskie-traditsii-v-vas",
   "title": "Heidegger Hell: немецкие традиции в вашем бокале",
   "description": "Встречайте классический рецепт хэля в новой бутылке: светлое лёгкое пиво по немецкому рецепту, проверенному веками.",
   "publishedAt": "2024-06-13 12:55",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6666-3463-4161-b663-633663303534/heidegger1_1.png",
+    "src": "/blog/2024-06-13-heidegger-hell-nemetskie-traditsii-v-vas/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3930-3131-4865-b435-316562653439/bottle-bg-name-ALL-.png",
+      "src": "/blog/2024-06-13-heidegger-hell-nemetskie-traditsii-v-vas/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

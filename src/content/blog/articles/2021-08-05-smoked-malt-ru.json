@@ -1,12 +1,12 @@
 {
   "id": "smoked-malt",
   "locale": "ru",
-  "slug": "pnenfyiyb1-kopchenii-solod-dim-i-pivo",
+  "slug": "2021-08-05-kopchenii-solod-dim-i-pivo",
   "title": "Копченый солод: дым и пиво",
   "description": "Рассказываем о производстве копченого солода.",
   "publishedAt": "2021-08-05 16:52",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3232-3532-4434-a363-643165326536/20210613_gletcher_03.jpg",
+    "src": "/blog/2021-08-05-kopchenii-solod-dim-i-pivo/cover.jpg",
     "alt": ""
   },
   "blocks": [

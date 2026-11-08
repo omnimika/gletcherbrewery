@@ -1,12 +1,12 @@
 {
   "id": "nizhny-gorky-craft",
   "locale": "ru",
-  "slug": "zslbtrzf81-gletcher-edet-v-nizhnii-novgorod",
+  "slug": "2025-07-01-gletcher-edet-v-nizhnii-novgorod",
   "title": "GLETCHER ЕДЕТ В НИЖНИЙ НОВГОРОД!",
   "description": "Седьмой фестиваль крафтовых культур Горький Крафт в Нижнем Новгороде! В этом году встречаемся 5 и 6 июля в пространстве “экс-ПОРТ Фудхолл”",
   "publishedAt": "2025-07-01 11:58",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3439-6638-4132-a433-353039366636/NGrWi7C5mBdUOTzBV_md.jpg",
+    "src": "/blog/2025-07-01-gletcher-edet-v-nizhnii-novgorod/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3262-3739-4139-b433-393331613536/TMqnh0EkOHC9MuXEioGN.jpg",
+      "src": "/blog/2025-07-01-gletcher-edet-v-nizhnii-novgorod/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -33,7 +33,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3333-3839-4662-b535-653065636632/A1utM_1nMvLei_Ami6Ap.jpg",
+      "src": "/blog/2025-07-01-gletcher-edet-v-nizhnii-novgorod/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -46,7 +46,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3639-6236-4562-b634-343235383637/0aYeH4zCoNRjZpRQcwKX.jpg",
+      "src": "/blog/2025-07-01-gletcher-edet-v-nizhnii-novgorod/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,12 +1,12 @@
 {
   "id": "spoiled-beer",
   "locale": "ru",
-  "slug": "jb9hgilpm1-isporchenoe-pivo-glavnie-oshibki",
+  "slug": "2021-09-24-isporchenoe-pivo-glavnie-oshibki",
   "title": "Испорченое пиво: главные ошибки",
   "description": "Порча вкуса пива может произойти по целому ряду причин, но обычно это связано с отсутствием контроля. Рассказываем о самых распространенных ошибках.",
   "publishedAt": "2021-09-24 14:39",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3462-6264-4363-b639-623766313361/20210425_gletcher_05.jpg",
+    "src": "/blog/2021-09-24-isporchenoe-pivo-glavnie-oshibki/cover.jpg",
     "alt": ""
   },
   "blocks": [

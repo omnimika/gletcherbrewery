@@ -1,12 +1,12 @@
 {
   "id": "bavaria-brewing",
   "locale": "ru",
-  "slug": "730oojkrr1-bavariya-kolibel-pivovareniya",
+  "slug": "2021-06-08-bavariya-kolibel-pivovareniya",
   "title": "Бавария: колыбель пивоварения",
   "description": "Краткая история зарождения пивоварения в Баварии и появления первых законов, регулирующих качество пива.",
   "publishedAt": "2021-06-08 17:18",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3731-3032-4633-a461-623737366661/20210605_gletcher_03.jpg",
+    "src": "/blog/2021-06-08-bavariya-kolibel-pivovareniya/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6465-3533-4433-b736-343630386261/image.png",
+      "src": "/blog/2021-06-08-bavariya-kolibel-pivovareniya/cover.png",
       "alt": "Вайнштефан: самая старая пивоварня в мире",
       "caption": "В 1852 году Центральная сельскохозяйственная школа переехала из Шлейсхайма в Вайенштефан, а вместе с ней и баварские студенты-пивовары.",
       "width": 1200,
@@ -33,7 +33,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6164-3930-4430-a162-373732303662/Bild2_Karte08-min-1.jpg",
+      "src": "/blog/2021-06-08-bavariya-kolibel-pivovareniya/01.jpg",
       "alt": "Вайнштефан: самая старая пивоварня в мире",
       "caption": "Первое историческое упоминание о хмеле в Вайенштефане относится к 768 году. В то время рядом с монастырем Вайенштефан был хмелевой сад, владелец которого был обязан платить 10 процентов десятины монастырю.",
       "width": 1200,
@@ -46,7 +46,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3833-3630-4430-b664-623833616332/image.png",
+      "src": "/blog/2021-06-08-bavariya-kolibel-pivovareniya/02.png",
       "alt": "",
       "caption": "Prince of purity: Wilhelm IV of Bavaria and the Reinheitsgebot. (Bridgeman Images)",
       "width": 1200,

@@ -1,11 +1,11 @@
 {
   "id": "moa-na",
   "locale": "ru",
-  "slug": "u7ezeg5ax1-bezalkogolnoe-milk-of-amnesia",
+  "slug": "2026-03-26-bezalkogolnoe-milk-of-amnesia",
   "title": "Безалкогольное Milk of Amnesia!",
   "description": "Тропический эскапизм в каждом глотке",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3735-3764-4133-b431-383331323937/image.png",
+    "src": "/blog/2026-03-26-bezalkogolnoe-milk-of-amnesia/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3039-3661-4538-a464-376437363537/image.png",
+      "src": "/blog/2026-03-26-bezalkogolnoe-milk-of-amnesia/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3536-6435-4535-b138-636335343734/2SH_MOA_nonalco_stag.png",
+      "src": "/blog/2026-03-26-bezalkogolnoe-milk-of-amnesia/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -56,7 +56,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3232-3265-4534-a262-646236363538/badge.png",
+      "src": "/blog/2026-03-26-bezalkogolnoe-milk-of-amnesia/03.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -69,7 +69,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6132-6539-4438-b762-613064333837/bottle-bg-name-ALL-2.png",
+      "src": "/blog/2026-03-26-bezalkogolnoe-milk-of-amnesia/04.png",
       "alt": "",
       "caption": "",
       "width": 1200,

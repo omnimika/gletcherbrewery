@@ -1,12 +1,12 @@
 {
   "id": "brainstorm-apa",
   "locale": "ru",
-  "slug": "s6hgiav341-brainstorm-vash-sputnik-zdorovogo-obraza",
+  "slug": "2024-06-27-brainstorm-vash-sputnik-zdorovogo-obraza",
   "title": "Brainstorm: ваш спутник здорового образа жизни",
   "description": "Откройте для себя безалкогольное пиво Brainstorm с насыщенным вкусом и комплексом витаминов и минералов, поддерживающих ваше здоровье и бодрость духа.",
   "publishedAt": "2024-06-27 09:36",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3031-6136-4435-b536-333239626232/Brainstorm.png",
+    "src": "/blog/2024-06-27-brainstorm-vash-sputnik-zdorovogo-obraza/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3766-6466-4432-b065-333731356437/brainstorm1212.png",
+      "src": "/blog/2024-06-27-brainstorm-vash-sputnik-zdorovogo-obraza/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

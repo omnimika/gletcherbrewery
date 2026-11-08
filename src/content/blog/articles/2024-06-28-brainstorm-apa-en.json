@@ -1,12 +1,12 @@
 {
   "id": "brainstorm-apa",
   "locale": "en",
-  "slug": "gumm02kpp1-brainstorm-your-companion-for-a-healthy",
+  "slug": "2024-06-28-brainstorm-your-companion-for-a-healthy",
   "title": "Brainstorm: your companion for a healthy lifestyle",
   "description": "Discover Brainstorm non-alcoholic beer with a rich taste and a complex of vitamins and minerals that support your health and cheerfulness.",
   "publishedAt": "2024-06-28 16:08",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3031-6136-4435-b536-333239626232/Brainstorm.png",
+    "src": "/blog/2024-06-28-brainstorm-your-companion-for-a-healthy/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3364-3030-4330-a632-346530393765/brainstorm1212_1.png",
+      "src": "/blog/2024-06-28-brainstorm-your-companion-for-a-healthy/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

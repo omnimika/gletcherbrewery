@@ -1,12 +1,12 @@
 {
   "id": "four-ingredients",
   "locale": "en",
-  "slug": "okjzxv2gf1-four-ingredients-and-a-sea-of-possibilit",
+  "slug": "2021-02-19-four-ingredients-and-a-sea-of-possibilit",
   "title": "Four ingredients and a sea of possibilities: what beer is made of?",
   "description": "We tell you what beer consists of, and what role each ingredient plays.",
   "publishedAt": "2021-02-19 18:58",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3363-3134-4635-b861-633834363866/fridaybeer.png",
+    "src": "/blog/2021-02-19-four-ingredients-and-a-sea-of-possibilit/cover.png",
     "alt": ""
   },
   "blocks": [

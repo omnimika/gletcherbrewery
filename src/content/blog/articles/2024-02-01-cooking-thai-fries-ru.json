@@ -1,12 +1,12 @@
 {
   "id": "cooking-thai-fries",
   "locale": "ru",
-  "slug": "pj8zx40cu1-gotovim-s-pivom-kartofel-fri-v-taiskom-s",
+  "slug": "2024-02-01-gotovim-s-pivom-kartofel-fri-v-taiskom-s",
   "title": "Готовим с пивом: картофель фри в тайском стиле с хмелевым майонезом и арахисом",
   "description": "Хрустящий жареный картофель всегда был любимой и самой очевидной закуской к пиву. Мы же предлагаем вам его оригинальный вариант с ярким, пряным вкусам Тайланда и америкаского пейл-эля.",
   "publishedAt": "2024-02-01 10:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3964-6164-4436-b430-316162313963/image.png",
+    "src": "/blog/2024-02-01-gotovim-s-pivom-kartofel-fri-v-taiskom-s/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -25,7 +25,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3561-3039-4037-b339-666564333363/image.png",
+      "src": "/blog/2024-02-01-gotovim-s-pivom-kartofel-fri-v-taiskom-s/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

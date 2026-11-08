@@ -1,12 +1,12 @@
 {
   "id": "milk-of-amnesia",
   "locale": "en",
-  "slug": "zxbflinfn1-milk-of-amnesia-a-new-look-at-your-favor",
+  "slug": "2024-05-29-milk-of-amnesia-a-new-look-at-your-favor",
   "title": "Milk of Amnesia: A new look at your favorite taste",
   "description": "We have come up with a fresh image for everyone's favorite recipe – meet the milk of amnesia in a new bottle!",
   "publishedAt": "2024-05-29 10:24",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3135-6662-4631-b565-643939643734/image.png",
+    "src": "/blog/2024-05-29-milk-of-amnesia-a-new-look-at-your-favor/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -22,7 +22,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/ffb6456b-781b-40e8-9517-ffb5225e8bcd/imgfish.jpg",
+      "src": "/blog/2024-05-29-milk-of-amnesia-a-new-look-at-your-favor/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

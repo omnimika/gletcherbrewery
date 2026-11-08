@@ -1,12 +1,12 @@
 {
   "id": "milk-of-amnesia",
   "locale": "ru",
-  "slug": "nmvocr5vt1-milk-of-amnesia-novii-vzglyad-na-lyubimi",
+  "slug": "2024-05-29-milk-of-amnesia-novii-vzglyad-na-lyubimi",
   "title": "Milk of Amnesia: Новый взгляд на любимый вкус",
   "description": "Мы придумали свежий образ для всем полюбившегося рецепта – встречайте \"молоко амнезии\" в новой бутылке!",
   "publishedAt": "2024-05-29 12:03",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3133-6661-4664-b963-646339343035/02.jpg",
+    "src": "/blog/2024-05-29-milk-of-amnesia-novii-vzglyad-na-lyubimi/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6137-3537-4864-b761-663563313130/20240514_gletcher_01.jpg",
+      "src": "/blog/2024-05-29-milk-of-amnesia-novii-vzglyad-na-lyubimi/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -35,7 +35,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3836-6330-4632-b136-336435336131/04.jpg",
+      "src": "/blog/2024-05-29-milk-of-amnesia-novii-vzglyad-na-lyubimi/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -48,7 +48,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6533-3663-4665-b534-336134343464/088A9372_.jpg",
+      "src": "/blog/2024-05-29-milk-of-amnesia-novii-vzglyad-na-lyubimi/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -57,7 +57,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3938-3536-4238-b830-303532313833/088A9413_.jpg",
+      "src": "/blog/2024-05-29-milk-of-amnesia-novii-vzglyad-na-lyubimi/04.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -66,7 +66,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3234-6630-4462-a464-356436643531/088A9442_.jpg",
+      "src": "/blog/2024-05-29-milk-of-amnesia-novii-vzglyad-na-lyubimi/05.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -75,7 +75,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6363-3231-4936-b831-386636353735/088A9491_.jpg",
+      "src": "/blog/2024-05-29-milk-of-amnesia-novii-vzglyad-na-lyubimi/06.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

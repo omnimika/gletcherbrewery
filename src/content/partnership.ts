@@ -17,7 +17,7 @@ export type PartnershipMaterial = {
   href: string;
   /**
    * Hover preview (ZB `751210595`). Catalog has none on source.
-   * Local assets under /public/partnership-*.png.
+   * Local assets under /public/pages/partnership/.
    */
   previewSrc?: string;
   previewWidth?: number;
@@ -94,7 +94,7 @@ const RU: PartnershipCopy = {
       title: "Для меню",
       description: "Продуктовые фотографии для HoReCa [ PNG, бутылки и бокалы ]",
       href: FILES.bottles,
-      previewSrc: "/partnership-bottleglass.png",
+      previewSrc: "/pages/partnership/bottleglass.png",
       previewWidth: 400,
       previewHeight: 400,
     },
@@ -104,7 +104,7 @@ const RU: PartnershipCopy = {
       description:
         "Логотипы пивоварни, палитра и другие материалы для дизайнера [ PDF, AI, PSD ]",
       href: FILES.brandbook,
-      previewSrc: "/partnership-brandbook.png",
+      previewSrc: "/pages/partnership/brandbook.png",
       previewWidth: 400,
       previewHeight: 400,
     },
@@ -113,7 +113,7 @@ const RU: PartnershipCopy = {
       title: "Сортовые лого",
       description: "Логотипы и обложки по сортовым брендам [ PNG, SVG ]",
       href: FILES.sortLogos,
-      previewSrc: "/partnership-logo.png",
+      previewSrc: "/pages/partnership/logo.png",
       previewWidth: 400,
       previewHeight: 192,
     },
@@ -122,7 +122,7 @@ const RU: PartnershipCopy = {
       title: "Ценники",
       description: "Стилизованные ценники под печать [ PDF ]",
       href: FILES.priceTags,
-      previewSrc: "/partnership-pricetag.png",
+      previewSrc: "/pages/partnership/pricetag.png",
       previewWidth: 400,
       previewHeight: 561,
     },
@@ -131,7 +131,7 @@ const RU: PartnershipCopy = {
       title: "Бирдекели",
       description: "Макеты [ PDF, PNG, JPG ]",
       href: FILES.bierdeckels,
-      previewSrc: "/partnership-Bierdeckel.png",
+      previewSrc: "/pages/partnership/bierdeckel.png",
       previewWidth: 400,
       previewHeight: 400,
     },
@@ -203,7 +203,7 @@ const EN: PartnershipCopy = {
       description:
         "Product images [ PNG, bottles, glasses and bierdeckels ]",
       href: FILES.bottles,
-      previewSrc: "/partnership-bottleglass.png",
+      previewSrc: "/pages/partnership/bottleglass.png",
       previewWidth: 400,
       previewHeight: 400,
     },
@@ -212,7 +212,7 @@ const EN: PartnershipCopy = {
       title: "Brandbook",
       description: "Logos, color palette & other design files [ PDF, AI, PSD ]",
       href: FILES.brandbook,
-      previewSrc: "/partnership-brandbook.png",
+      previewSrc: "/pages/partnership/brandbook.png",
       previewWidth: 400,
       previewHeight: 400,
     },
@@ -221,7 +221,7 @@ const EN: PartnershipCopy = {
       title: "Price tags",
       description: "Print-ready price tags [ PDF ]",
       href: FILES.priceTags,
-      previewSrc: "/partnership-pricetag.png",
+      previewSrc: "/pages/partnership/pricetag.png",
       previewWidth: 400,
       previewHeight: 561,
     },

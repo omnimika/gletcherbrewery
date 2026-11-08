@@ -1,12 +1,12 @@
 {
   "id": "pub-history",
   "locale": "ru",
-  "slug": "v1p6azozg1-kratkaya-istoriya-pabov-barov-i-teh-lyud",
+  "slug": "2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud",
   "title": "Краткая история пабов, баров и тех людей, кто наливает",
   "description": "Концепция сбора в общественных местах и наслаждения алкогольными напитками возникла еще в глубокой древности – исследуем историю этого культурного феномена",
   "publishedAt": "2024-02-26 12:22",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6364-6261-4531-b336-303735376139/007.jpg",
+    "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -29,7 +29,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3639-6132-4761-b761-353336616238/_.jpeg",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/01.jpeg",
       "alt": "tabernae, таберна",
       "caption": "",
       "width": 1200,
@@ -51,7 +51,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6161-3635-4866-a330-353238373139/Untitled_design.png",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -81,7 +81,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6431-3732-4331-b230-656631393835/image.png",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/03.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -94,7 +94,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3065-3038-4065-a137-653930373162/UK-Pub-Closes-After-.jpg",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/04.jpg",
       "alt": "Старейший британский паб Ye Olde Fighting Cocks, существующий с 793.",
       "caption": "",
       "width": 1200,
@@ -112,7 +112,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6262-3264-4963-b965-303465396237/William_Hogarth_-_Gi.jpg",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/05.jpg",
       "alt": "William Hogarth - Gin Lane",
       "caption": "",
       "width": 1200,
@@ -133,7 +133,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3030-3562-4136-b232-613035363765/2024-02-26_14-00-03-.png",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/06.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -159,7 +159,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6463-3133-4332-b938-393432666136/2024-02-26_14-04-42-.png",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/07.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -181,7 +181,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6662-3338-4266-b332-653039333639/2024-02-26_14-08-34-.png",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/08.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -199,7 +199,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6432-6331-4263-b431-653634313764/ada-inside-header.jpg",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/09.jpg",
       "alt": "Ада Коулман - Ada Coleman",
       "caption": "",
       "width": 1200,
@@ -217,7 +217,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3132-6437-4137-b763-633264653938/DeWatermarkai_170894.png",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/10.png",
       "alt": "Четверо мужчин играют в карты и пьют пиво в английском пабе, конец 70-х.",
       "caption": "",
       "width": 1200,
@@ -238,7 +238,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3263-6631-4136-b162-353162316332/2024-02-26_14-28-06-.png",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/11.png",
       "alt": "Пение традиционных песен в пабе Haxey в праздник крещения 6 января, 1970-е",
       "caption": "",
       "width": 1200,
@@ -256,7 +256,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6635-6233-4261-b338-623563623733/DeWatermarkai_170894.png",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/12.png",
       "alt": "Интерьер деревенского паба, King's Head, Хай Хэм, Сомерсет, 1980-е",
       "caption": "",
       "width": 1200,
@@ -282,7 +282,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3337-3432-4465-b262-663363346364/DeWatermarkai_170894.jpg",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/13.jpg",
       "alt": "Гастропаб The Eagle, Фаррингдон-роуд, Лондон.",
       "caption": "",
       "width": 1200,
@@ -308,7 +308,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3838-3761-4131-a364-666464663039/016.jpg",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/14.jpg",
       "alt": "Brewer's House при пивоварне Gletcher Brewery",
       "caption": "",
       "width": 1200,
@@ -325,7 +325,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3836-3663-4131-b137-653936343162/049.jpg",
+      "src": "/blog/2024-02-26-kratkaya-istoriya-pabov-barov-i-teh-lyud/15.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,12 +1,12 @@
 {
   "id": "klin-may-fest-2023-invite",
   "locale": "ru",
-  "slug": "fjtb6ibov1-klin-mai-fest-2023-priglashaem-uchastnik",
+  "slug": "2023-03-21-klin-mai-fest-2023-priglashaem-uchastnik",
   "title": "КЛИН МАЙ ФЕСТ 2023: Приглашаем участников!",
   "description": "Объявлена дата проведения всероссийского фестиваля крафтового пивоварения – 20 мая.",
   "publishedAt": "2023-03-21 12:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3161-3538-4134-a366-663435626264/__3-.png",
+    "src": "/blog/2023-03-21-klin-mai-fest-2023-priglashaem-uchastnik/cover.png",
     "alt": ""
   },
   "blocks": [

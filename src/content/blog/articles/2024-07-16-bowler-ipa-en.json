@@ -1,12 +1,12 @@
 {
   "id": "bowler-ipa",
   "locale": "en",
-  "slug": "08cj20t161-bowler-ipa-a-taste-of-travel-and-adventu",
+  "slug": "2024-07-16-bowler-ipa-a-taste-of-travel-and-adventu",
   "title": "Bowler IPA: A taste of travel and adventure",
   "description": "An amber ale with pronounced bitterness and a bouquet of citrus and fruity notes, Bowler IPAD is the perfect choice for true connoisseurs of complex and rich drinks.",
   "publishedAt": "2024-07-16 16:21",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3332-6434-4265-a164-333132616264/CROCO_.png",
+    "src": "/blog/2024-07-16-bowler-ipa-a-taste-of-travel-and-adventu/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3266-3466-4962-b838-346537623239/bottle-bg-name-ALL-b.png",
+      "src": "/blog/2024-07-16-bowler-ipa-a-taste-of-travel-and-adventu/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,12 +1,12 @@
 {
   "id": "hop-dragon",
   "locale": "en",
-  "slug": "8e11sgv211-hop-dragon-the-bright-taste-of-five-hops",
+  "slug": "2024-06-07-hop-dragon-the-bright-taste-of-five-hops",
   "title": "Hop Dragon: the bright taste of five hops",
   "description": "In honor of the year of the Dragon, we decided to brew Hop Dragon beer and thus pay tribute to the legendary drink of the Shaolin masters",
   "publishedAt": "2024-06-07 10:36",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6436-3962-4138-b832-303234623434/cROCO_1.png",
+    "src": "/blog/2024-06-07-hop-dragon-the-bright-taste-of-five-hops/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3434-3532-4833-b735-663131326338/bottle-bg-name-hopdr.png",
+      "src": "/blog/2024-06-07-hop-dragon-the-bright-taste-of-five-hops/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

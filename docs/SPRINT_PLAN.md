@@ -23,7 +23,7 @@ campaign/archival решения и общий public gate.
 [Задание A1 и baseline](discovery/ABOUT_PAGE_BASELINE.md). Это не optional/archive scope.
 
 **Proposed очередь:** Q1 → Q2 → Q3 → **A1 /about** → C1/следующие подтверждённые campaigns →
-stage-4 exit → D5-0. **Q1–Q3 Done**; сейчас выполнить только A1. Это результаты с
+stage-4 exit → D5-0. **Q1–Q3 + A1 code Done**; owner visual accept A1 Open; далее C1. Это результаты с
 зависимостями, не календарные обещания и не разрешение запускать всё сразу.
 
 | Спринт | Результат | Условия закрытия |
@@ -31,7 +31,7 @@ stage-4 exit → D5-0. **Q1–Q3 Done**; сейчас выполнить тол�
 | **Q1 — Done 05.11** | Честные формы, locale, shop/map lifecycle | R01/R02/R07/R08 Done; R05/R06 out of scope (owner); см. ревью |
 | **Q2 — Done 05.11** | Design/motion/reflow regression | R03/R04/R09/R10 Done; shop/CompareCard candidates Open |
 | **Q3 — Done 06.11** | Route/publication/SEO contract + remaining scope | blog-all 308; sitemap/robots gate; registry; HTTP evidence |
-| **A1 — текущий** | /about по Tilda 71867465 вместе с animation/interaction logic | Source behavior parity + responsive/reduced-motion + owner acceptance |
+| **A1 — code Done** | /about по Tilda 71867465 + animation/interaction | Code shipped; owner visual acceptance Open; see SECTION_MANIFEST |
 | C1 → Cn | Один опубликованный campaign pilot, затем одобренные остальные | Fresh source baseline, content parity, archive/publication decision |
 | Stage-4 exit | Полное согласованное публичное покрытие или явные исключения | Общая RU/EN regression, sign-offs и legacy operation paths |
 | D5-0 | Backend discovery и архитектурные решения | Подтверждённые схемы/контракты и reviewable ADR; implementation отдельно |
@@ -76,8 +76,8 @@ Reduced-motion/mobile/keyboard и native scroll — часть приёмки. S
 published версии различать; старый Disallow не отменяет обязательность страницы,
 но и не определяет разрешение индексации. EN/publication — по подтверждённым данным.
 
-Stage-4 exit требует принятого /about с этими критериями. Q1 остаётся текущим;
-A1 — отдельный будущий sprint, без параллельного массового rollout.
+Stage-4 exit требует принятого /about с этими критериями. A1 code shipped
+06.11; owner visual acceptance Open. Далее C1 — без параллельного Stage5.
 
 ## C1 → Cn — campaigns по одному, после определения scope
 

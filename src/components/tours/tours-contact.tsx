@@ -69,7 +69,7 @@ export function ToursContactSection({ copy }: { copy: ToursCopy }) {
             </div>
             <div className={styles.guidePhoto}>
               <Image
-                src="/tours/guide-inna.png"
+                src="/pages/tours/guide-inna.png"
                 alt={c.guideName}
                 width={1008}
                 height={560}

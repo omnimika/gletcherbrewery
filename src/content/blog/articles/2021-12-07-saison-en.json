@@ -1,12 +1,12 @@
 {
   "id": "saison",
   "locale": "en",
-  "slug": "yuhkvdcho1-saison-new-taste",
+  "slug": "2021-12-07-saison-new-taste",
   "title": "Saison: new taste",
   "description": "Try our new variety according to the recipe of Farmhouse Ale - a Belgian farmer's ale with the taste of coriander, orange peel and Guinea pepper",
   "publishedAt": "2021-12-07 16:16",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3338-6235-4566-b663-626539386639/20211123_gletcher_05.png",
+    "src": "/blog/2021-12-07-saison-new-taste/cover.png",
     "alt": ""
   },
   "blocks": [

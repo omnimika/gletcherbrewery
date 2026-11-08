@@ -1,12 +1,12 @@
 {
   "id": "blanche-weizen",
   "locale": "en",
-  "slug": "japn2sfx71-1000-km-difference-between-blanche-and-w",
+  "slug": "2021-02-09-1000-km-difference-between-blanche-and-w",
   "title": "1000 km difference between Blanche and Weizen. What else?",
   "description": "Let's look at the features of the most popular wheat beers: Blanche and Weiss.",
   "publishedAt": "2021-02-09 14:55",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6164-3661-4337-b966-623661373035/DSC_3272a.jpg",
+    "src": "/blog/2021-02-09-1000-km-difference-between-blanche-and-w/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -25,7 +25,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3236-3835-4333-b834-373037633762/20200723_svam_0122_w.jpg",
+      "src": "/blog/2021-02-09-1000-km-difference-between-blanche-and-w/01.jpg",
       "alt": "Ausweis – weizen beer from Gletcher Brewery",
       "caption": "Ausweis – weizen beer from Gletcher Brewery",
       "width": 1200,
@@ -42,7 +42,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3236-3461-4263-a363-336666643738/20200723_svam_0163_w.jpg",
+      "src": "/blog/2021-02-09-1000-km-difference-between-blanche-and-w/02.jpg",
       "alt": "Blanche de Fleur – blanche beer from Gletcher Brewery",
       "caption": "Blanche de Fleur – blanche beer from Gletcher Brewery",
       "width": 1200,

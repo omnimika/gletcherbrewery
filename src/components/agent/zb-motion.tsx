@@ -469,3 +469,150 @@ export function ZbMouseParallax({
     </div>
   );
 }
+
+/* ——— Scroll-linked SBS (sbsevent: scroll; di/dd steps) ——— */
+
+type ZbScrollLinkedStep = {
+  mx?: number;
+  my?: number;
+  sx?: number;
+  sy?: number;
+  op?: number;
+  ro?: number;
+  /** Scroll distance for this step (px) — Tilda `di` */
+  di?: number;
+  /** Scroll delay before this step (px) — Tilda `dd` */
+  dd?: number;
+};
+
+type ZbScrollLinkedProps = {
+  children: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+  steps: ZbScrollLinkedStep[];
+  /** sbstrg: 0 top / 0.5 center / 1 bottom */
+  triggerLine?: TriggerLine;
+  /** animmobile */
+  mobile?: boolean;
+};
+
+/**
+ * Progresses through SBS scroll steps as the page scrolls past the element.
+ * Native document scroll; no scroll hijack. Reduced-motion → final step.
+ */
+export function ZbScrollLinked({
+  children,
+  className = "",
+  style,
+  steps,
+  triggerLine = 1,
+  mobile = true,
+}: ZbScrollLinkedProps) {
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node || steps.length < 2) return;
+
+    if (prefersReducedMotion() || desktopOnlyBlocked(mobile)) {
+      applyStep(node, steps[steps.length - 1]!);
+      return;
+    }
+
+    // Build cumulative scroll ranges: [0]=start, then each next step.
+    type Segment = {
+      startPx: number;
+      endPx: number;
+      from: ZbScrollLinkedStep;
+      to: ZbScrollLinkedStep;
+    };
+    const segments: Segment[] = [];
+    let cursor = 0;
+    for (let i = 1; i < steps.length; i++) {
+      const to = steps[i]!;
+      const from = steps[i - 1]!;
+      const dd = to.dd ?? 0;
+      const di = Math.max(to.di ?? 0, 1);
+      cursor += dd;
+      segments.push({ startPx: cursor, endPx: cursor + di, from, to });
+      cursor += di;
+    }
+    const total = Math.max(cursor, 1);
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    const mix = (from: ZbScrollLinkedStep, to: ZbScrollLinkedStep, t: number) => {
+      applyStep(node, {
+        mx: lerp(from.mx ?? 0, to.mx ?? 0, t),
+        my: lerp(from.my ?? 0, to.my ?? 0, t),
+        sx: lerp(from.sx ?? 1, to.sx ?? 1, t),
+        sy: lerp(from.sy ?? 1, to.sy ?? 1, t),
+        op: lerp(from.op ?? 1, to.op ?? 1, t),
+        ro: lerp(from.ro ?? 0, to.ro ?? 0, t),
+      });
+    };
+
+    /**
+     * Progress = document scroll delta after the element top first crosses the
+     * trigger line. If already past on mount (hero at top), origin = scrollY
+     * so progress starts at 0 — text stays visible until the user scrolls.
+     */
+    let originScroll: number | null = null;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const rect = node.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const lineY =
+        triggerLine <= 0 ? 0 : triggerLine <= 0.5 ? vh * 0.5 : vh;
+
+      if (originScroll === null) {
+        if (rect.top <= lineY) {
+          originScroll = window.scrollY;
+        } else {
+          applyStep(node, steps[0]!);
+          return;
+        }
+      }
+
+      const p = Math.min(Math.max(window.scrollY - originScroll, 0), total);
+
+      if (p <= 0) {
+        applyStep(node, steps[0]!);
+        return;
+      }
+      if (p >= total) {
+        applyStep(node, steps[steps.length - 1]!);
+        return;
+      }
+      for (const seg of segments) {
+        if (p >= seg.startPx && p <= seg.endPx) {
+          const t = (p - seg.startPx) / Math.max(seg.endPx - seg.startPx, 1);
+          mix(seg.from, seg.to, t);
+          return;
+        }
+      }
+    };
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [steps, triggerLine, mobile]);
+
+  return (
+    <div
+      ref={ref}
+      className={`zb-scroll-linked ${className}`}
+      style={{ willChange: "transform, opacity", ...style }}
+    >
+      {children}
+    </div>
+  );
+}

@@ -1,11 +1,11 @@
 {
   "id": "afisha-winepark",
   "locale": "ru",
-  "slug": "cf46mag0n1-afisha-gletcher-brewery-winepark-polyana",
+  "slug": "2026-09-23-afisha-gletcher-brewery-winepark-polyana",
   "title": "Афиша Gletcher Brewery: WINEPARK, Поляна Пикник и Chicano Day",
   "description": "Друзья, собрали для вас афишу ближайших событий, где можно попробовать свежий эль Gletcher Brewery и круто провести время.",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3062-6166-4231-a564-373332666163/1_.jpg",
+    "src": "/blog/2026-09-23-afisha-gletcher-brewery-winepark-polyana/cover.jpg",
     "alt": "Осенний маршрут Gletcher Brewery"
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3834-6433-4566-b735-616363633137/2_.jpg",
+      "src": "/blog/2026-09-23-afisha-gletcher-brewery-winepark-polyana/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3564-3634-4662-b934-373634393061/3_.jpg",
+      "src": "/blog/2026-09-23-afisha-gletcher-brewery-winepark-polyana/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -56,7 +56,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6435-3236-4638-b535-376265396238/4_.jpg",
+      "src": "/blog/2026-09-23-afisha-gletcher-brewery-winepark-polyana/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

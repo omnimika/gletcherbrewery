@@ -1,12 +1,12 @@
 {
   "id": "foodpairing-caramel",
   "locale": "ru",
-  "slug": "p1og5o2691-fudpeiring-karamelizatsiya",
+  "slug": "2021-09-14-fudpeiring-karamelizatsiya",
   "title": "Фудпейринг: карамелизация",
   "description": "Среди многообразия вкусов самый сильным будет вкус карамели, или если более корректно, то карамелизации. Рассказываем что это подробнее.",
   "publishedAt": "2021-09-14 14:29",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6437-3934-4436-a637-393337393930/caramelfood.jpg",
+    "src": "/blog/2021-09-14-fudpeiring-karamelizatsiya/cover.jpg",
     "alt": ""
   },
   "blocks": [

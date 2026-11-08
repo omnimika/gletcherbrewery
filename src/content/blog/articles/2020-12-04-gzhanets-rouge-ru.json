@@ -1,12 +1,12 @@
 {
   "id": "gzhanets-rouge",
   "locale": "ru",
-  "slug": "6ku96l8541-gzhanets-dva-sogrevayuschih-retsepta-s-r",
+  "slug": "2020-12-04-gzhanets-dva-sogrevayuschih-retsepta-s-r",
   "title": "Гжанец: два согревающих рецепта с Rouge de Fleur",
   "description": "Старое проверенное польское средство от простуды – гжа́нец. Этот напиток на основе подогретого фруктового пива со специями  поможет вам согреться зимними вечерами",
   "publishedAt": "2020-12-04 14:07",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3164-3864-4537-b539-366137643830/Mask_group.png",
+    "src": "/blog/2020-12-04-gzhanets-dva-sogrevayuschih-retsepta-s-r/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -21,7 +21,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3430-6434-4961-a336-653965656166/image.png",
+      "src": "/blog/2020-12-04-gzhanets-dva-sogrevayuschih-retsepta-s-r/01.png",
       "alt": "Рецепт горячего пива с розмарином и апльсином",
       "caption": "",
       "width": 1200,
@@ -48,7 +48,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3738-6537-4866-a632-303061396161/image.png",
+      "src": "/blog/2020-12-04-gzhanets-dva-sogrevayuschih-retsepta-s-r/02.png",
       "alt": "Grzane Piwo",
       "caption": "Это традиционный напиток на рождественских ярмарках в Польше наравне с глинтвейном.",
       "width": 1200,

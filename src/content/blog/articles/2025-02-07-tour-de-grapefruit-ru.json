@@ -1,11 +1,11 @@
 {
   "id": "tour-de-grapefruit",
   "locale": "ru",
-  "slug": "6euma1kok1-tour-de-grapefruit-pshenichnii-tsitrusov",
+  "slug": "2025-02-07-tour-de-grapefruit-pshenichnii-tsitrusov",
   "title": "Tour De Grapefruit: пшеничный цитрусовый эль",
   "description": "Нежное, «пушистое» пиво со свежим вкусом и выраженным цитрусово-хмелевым ароматом",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3766-6235-4066-a361-383331386133/tourde-grapefr.png",
+    "src": "/blog/2025-02-07-tour-de-grapefruit-pshenichnii-tsitrusov/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -15,7 +15,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3061-3638-4135-a161-316330313466/tour-de-grapefruit-.png",
+      "src": "/blog/2025-02-07-tour-de-grapefruit-pshenichnii-tsitrusov/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,12 +1,12 @@
 {
   "id": "pomor-craft-fest-2022",
   "locale": "ru",
-  "slug": "iyanfyplj1-pomorskii-kraftovii-festival",
+  "slug": "2022-08-03-pomorskii-kraftovii-festival",
   "title": "Поморский крафтовый фестиваль",
   "description": "13 августа в Архангельске Gletcher Brewery примет участие в поморском фестивале еды и напитков «Craft Fest»",
   "publishedAt": "2022-08-03 15:51",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3533-6463-4034-a233-366563323138/image.png",
+    "src": "/blog/2022-08-03-pomorskii-kraftovii-festival/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -36,7 +36,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6233-6333-4531-b030-303337323064/2022-08-05_15-53-45.png",
+      "src": "/blog/2022-08-03-pomorskii-kraftovii-festival/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

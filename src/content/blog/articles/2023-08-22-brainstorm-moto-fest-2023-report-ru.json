@@ -1,12 +1,12 @@
 {
   "id": "brainstorm-moto-fest-2023-report",
   "locale": "ru",
-  "slug": "en25lxya61-fotootchyot-s-brainstorm-moto-fest",
+  "slug": "2023-08-22-fotootchyot-s-brainstorm-moto-fest",
   "title": "ФОТООТЧЁТ С BRAINSTORM MOTO FEST",
   "description": "Ревущие моторы мотоциклов, ретро авто, ремесленное пиво и рок-н-ролл!",
   "publishedAt": "2023-08-22 10:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3930-3730-4235-b634-373436303834/_D7A3464.JPG",
+    "src": "/blog/2023-08-22-fotootchyot-s-brainstorm-moto-fest/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6330-3165-4530-a134-643564653665/_D7A3210.JPG",
+      "src": "/blog/2023-08-22-fotootchyot-s-brainstorm-moto-fest/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -25,7 +25,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3465-6630-4533-b562-356236633061/_D7A3428.JPG",
+      "src": "/blog/2023-08-22-fotootchyot-s-brainstorm-moto-fest/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -34,7 +34,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3534-3264-4330-b563-363432653131/_D7A2598.JPG",
+      "src": "/blog/2023-08-22-fotootchyot-s-brainstorm-moto-fest/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -52,7 +52,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3065-3466-4264-b533-356531336564/_D7A3939.JPG",
+      "src": "/blog/2023-08-22-fotootchyot-s-brainstorm-moto-fest/04.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

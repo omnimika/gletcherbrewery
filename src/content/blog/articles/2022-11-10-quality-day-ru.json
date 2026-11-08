@@ -1,12 +1,12 @@
 {
   "id": "quality-day",
   "locale": "ru",
-  "slug": "9gst01oa91-vsemirnii-den-kachestva",
+  "slug": "2022-11-10-vsemirnii-den-kachestva",
   "title": "Всемирный день качества",
   "description": "Именно любовь к качественному пиву привела нас к тому, что в 2011 в городе Клин была построена пивоварня Gletcher. Для нашего коллектива соблюдение высоких стандартов качества – не пустая формальность, а правило жизни.",
   "publishedAt": "2022-11-10 14:03",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6530-3432-4630-b265-653433643030/D31A1884_1_.jpg",
+    "src": "/blog/2022-11-10-vsemirnii-den-kachestva/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6661-6230-4631-a632-323766363132/image.png",
+      "src": "/blog/2022-11-10-vsemirnii-den-kachestva/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -33,7 +33,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6266-3764-4066-b035-623562323436/IMG_20221110_132708.jpg",
+      "src": "/blog/2022-11-10-vsemirnii-den-kachestva/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -46,7 +46,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6434-6264-4437-a465-666166373862/image.png",
+      "src": "/blog/2022-11-10-vsemirnii-den-kachestva/03.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -55,7 +55,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3865-3338-4565-b861-383562316263/image.png",
+      "src": "/blog/2022-11-10-vsemirnii-den-kachestva/04.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -64,7 +64,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3432-3539-4665-a361-663731393237/IMG_3044.jpg",
+      "src": "/blog/2022-11-10-vsemirnii-den-kachestva/05.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -73,7 +73,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3632-3633-4463-b334-396538376131/image.png",
+      "src": "/blog/2022-11-10-vsemirnii-den-kachestva/06.png",
       "alt": "",
       "caption": "",
       "width": 1200,

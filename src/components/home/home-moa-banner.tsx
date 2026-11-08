@@ -34,7 +34,7 @@ export function HomeMoaBanner({ ariaLabel }: HomeMoaBannerProps) {
                 className="group relative mx-auto flex max-h-full w-full max-w-[min(100%,90rem)] items-center justify-center overflow-hidden rounded-[10px] border border-gletcher-red outline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gletcher-navy"
               >
                 <Image
-                  src="/home/banner-moa-nonalco.png"
+                  src="/pages/home/banner-moa-nonalco.png"
                   alt=""
                   width={1680}
                   height={289}

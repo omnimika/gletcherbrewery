@@ -1,12 +1,12 @@
 {
   "id": "beer-sensation-acidity-salt",
   "locale": "ru",
-  "slug": "4ryr3vef21-kak-mi-oschuschaem-pivo-kislotnost-sol-i",
+  "slug": "2021-11-12-kak-mi-oschuschaem-pivo-kislotnost-sol-i",
   "title": "Как мы ощущаем пиво: кислотность, соль и умами",
   "description": "Продолжаем рассказывать о том, как мы ощущаем пиво во рту.",
   "publishedAt": "2021-11-12 14:29",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3039-3334-4831-b035-393663316638/20211111_gletcher_05.jpg",
+    "src": "/blog/2021-11-12-kak-mi-oschuschaem-pivo-kislotnost-sol-i/cover.jpg",
     "alt": ""
   },
   "blocks": [

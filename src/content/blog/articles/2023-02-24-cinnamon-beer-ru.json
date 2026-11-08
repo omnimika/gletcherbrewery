@@ -1,12 +1,12 @@
 {
   "id": "cinnamon-beer",
   "locale": "ru",
-  "slug": "kd7ovgz6k1-pivo-s-koritsei-kakoe-ono-bivaet",
+  "slug": "2023-02-24-pivo-s-koritsei-kakoe-ono-bivaet",
   "title": "Пиво с корицей: какое оно бывает?",
   "description": "По мотивом нашей последней новинки – коричного портера КОРЕШ – рассказываем об уникальном и ароматном стиле пива, которое приобрело популярность в последние годы",
   "publishedAt": "2023-02-24 10:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3433-6535-4233-b539-313333306466/spice_slide.jpeg",
+    "src": "/blog/2023-02-24-pivo-s-koritsei-kakoe-ono-bivaet/cover.jpeg",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3234-3836-4939-a564-633130373262/spice_slide.jpeg",
+      "src": "/blog/2023-02-24-pivo-s-koritsei-kakoe-ono-bivaet/01.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -33,7 +33,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6162-6131-4535-b636-623164616332/mrw6chk9axdhvcpi93sm.jpeg",
+      "src": "/blog/2023-02-24-pivo-s-koritsei-kakoe-ono-bivaet/02.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -46,7 +46,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6236-3861-4734-b433-623537313337/Koresh_banner.jpg",
+      "src": "/blog/2023-02-24-pivo-s-koritsei-kakoe-ono-bivaet/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

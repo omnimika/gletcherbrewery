@@ -1,12 +1,12 @@
 {
   "id": "rouge-de-fleur",
   "locale": "en",
-  "slug": "k3spgxeyx1-rouge-de-fleur-cherry-symphony",
+  "slug": "2024-08-20-rouge-de-fleur-cherry-symphony",
   "title": "Rouge de Fleur: Cherry Symphony",
   "description": "Enjoy the fruity charm of the Belgian scream in our Rouge de Fleur, a beer with a vibrant aroma and refreshing taste.",
   "publishedAt": "2024-08-20 16:28",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6533-3535-4139-a562-633637323137/rouge1_2.png",
+    "src": "/blog/2024-08-20-rouge-de-fleur-cherry-symphony/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6530-3663-4163-b163-353636643034/bottle-bg-name-ALL-2.png",
+      "src": "/blog/2024-08-20-rouge-de-fleur-cherry-symphony/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

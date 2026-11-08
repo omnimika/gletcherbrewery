@@ -29,11 +29,11 @@ export const SHOP_PAGE = {
 
   gallery: [
     {
-      src: "https://static.tildacdn.com/tild3933-6163-4138-b566-343434346130/1Q8A1762.jpg",
+      src: "/pages/shop/1q8a1762.jpg",
       alt: "Фирменный магазин Gletcher Brewery",
     },
     {
-      src: "https://static.tildacdn.com/tild3233-3763-4261-b439-383031333832/1Q8A1770.jpg",
+      src: "/pages/shop/1q8a1770.jpg",
       alt: "Интерьер фирменного магазина Gletcher",
     },
   ],

@@ -1,12 +1,12 @@
 {
   "id": "ruby-road",
   "locale": "ru",
-  "slug": "db51dn3df1-ruby-road-nash-krepkii-vishnevii-el-v-no",
+  "slug": "2024-06-03-ruby-road-nash-krepkii-vishnevii-el-v-no",
   "title": "Ruby Road: наш крепкий вишневый эль в новом исполнении",
   "description": "Встречайте выразительные 7% с фруктово-вишневым, древесным, немного танинным, чуть травянистым букетом",
   "publishedAt": "2024-06-03 11:33",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3835-3632-4238-b534-626530386366/rubyroad_11.png",
+    "src": "/blog/2024-06-03-ruby-road-nash-krepkii-vishnevii-el-v-no/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3035-3765-4266-b438-343032343766/rubyroad.png",
+      "src": "/blog/2024-06-03-ruby-road-nash-krepkii-vishnevii-el-v-no/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

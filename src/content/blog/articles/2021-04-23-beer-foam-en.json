@@ -1,12 +1,12 @@
 {
   "id": "beer-foam",
   "locale": "en",
-  "slug": "ymfo0i2t71-what-can-beer-foam-say",
+  "slug": "2021-04-23-what-can-beer-foam-say",
   "title": "What can beer foam say?",
   "description": "The beer cap doesn't just look good. It actually changes the drinking experience. Let's understand the subject.",
   "publishedAt": "2021-04-23 15:43",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3439-3330-4765-b964-366535376330/IMG_3106.jpg",
+    "src": "/blog/2021-04-23-what-can-beer-foam-say/cover.jpg",
     "alt": ""
   },
   "blocks": [

@@ -18,11 +18,11 @@ export const EXPANSION_PAGE = {
   description:
     "Большие планы требуют больших перемен! Мы начинаем новую главу развития российского крафта и расширяем производство.",
   cover: {
-    src: "https://static.tildacdn.com/tild3461-3034-4838-b166-623530386365/088A2981.jpg",
+    src: "/pages/blog-misc/088a2981.jpg",
     alt: "",
   },
   heroImage: {
-    src: "https://static.tildacdn.com/tild6166-3738-4766-b162-386631383532/088A2977.jpg",
+    src: "/pages/blog-misc/088a2977.jpg",
     alt: "",
   },
   lead: [
@@ -34,18 +34,18 @@ export const EXPANSION_PAGE = {
       value: "9",
       label:
         "новых ЦКТ (Цилиндро-конический танков) установлено на нашем производстве",
-      icon: "https://static.tildacdn.com/tild6335-6164-4131-a466-303231323636/image.png",
+      icon: "/pages/blog-misc/asset-31323636.png",
     },
     {
       value: "55 000",
       label: "литров вмещает каждый из ЦКТ",
-      icon: "https://static.tildacdn.com/tild3162-3961-4430-b335-616333616338/image.png",
+      icon: "/pages/blog-misc/asset-33616338.png",
     },
     {
       value: "756 000",
       label:
         "на столько больше бутылок пива будут радовать наших потребителей",
-      icon: "https://static.tildacdn.com/tild6231-6336-4439-a236-343637623035/beer_2.png",
+      icon: "/pages/blog-misc/beer_2.png",
     },
   ],
   pullQuote: "Нам есть куда расти и есть новые возможности воплощать мечты.",

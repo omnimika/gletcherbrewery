@@ -41,7 +41,7 @@ export const HORECA_PAGE = {
   },
   sloganImage: {
     /** Same seal as home hero; circular «QUI QUAERIT, REPERIT!» frames the R. */
-    src: "/home/slogan-red.png",
+    src: "/pages/home/slogan-red.png",
     alt: "",
   },
   whyTitle: "Почему импортное пиво больше не выгодно?",
@@ -65,7 +65,7 @@ export const HORECA_PAGE = {
     "Дистрибуторы и оптовые покупатели, которые закупают пиво оптом и мелким оптом.",
   ],
   audienceImage: {
-    src: "https://static.tildacdn.com/tild3632-3161-4136-a139-326434363966/Hop_Dragon.png",
+    src: "/pages/horeca/hop_dragon.png",
     alt: "Hop Dragon",
   },
   distributionTitle: "Широкая сеть дистрибуции",
@@ -74,7 +74,7 @@ export const HORECA_PAGE = {
   distributionExtra:
     "Кроме того, с нами работают более 80 официальных дистрибьюторов по всей территории России. Наша служба доставки найдёт вас, где бы вы ни находились. Мы открыты для сотрудничества с дистрибьюторами, оптовыми и розничными продавцами, представителями HoReCa и импортёрами по всему миру.",
   distributionMap: {
-    src: "https://static.tildacdn.com/tild3861-6131-4264-a336-636632396564/MapChart_Map_3.png",
+    src: "/pages/horeca/mapchart_map_3.png",
     alt: "Карта присутствия Gletcher",
   },
   formLead:
@@ -108,11 +108,11 @@ export const HORECA_PAGE = {
       styleLabel: "Английский эль",
       importLead: "Тёмный эль, насыщенный вкус, барная классика:",
       artImage:
-        "https://static.tildacdn.com/tild6138-3638-4364-b134-643232623362/Underground_Ale.png",
+        "/pages/horeca/underground_ale.png",
       productImage:
-        "https://static.tildacdn.com/tild6234-3135-4733-a534-386439323236/CATALOGUE__0003_Unde.png",
+        "/pages/horeca/catalogue__0003_unde.png",
       importImage:
-        "https://static.tildacdn.com/tild3262-6664-4133-b361-316637643630/4f7f6d875214635dba9f.png",
+        "/pages/horeca/4f7f6d875214635dba9f.png",
       imports: [
         "Fuller’s London Pride",
         "Newcastle Brown Ale",
@@ -130,11 +130,11 @@ export const HORECA_PAGE = {
       importLead:
         "Weissbier, Weizenbier, Hefeweizen, Bière blanche, белое пиво:",
       artImage:
-        "https://static.tildacdn.com/tild3036-6664-4039-b961-326265653838/Ausweis.png",
+        "/pages/horeca/ausweis.png",
       productImage:
-        "https://static.tildacdn.com/tild6435-6364-4261-b331-623038386631/CATALOGUE__0016_Ausw.png",
+        "/pages/horeca/catalogue__0016_ausw.png",
       importImage:
-        "https://static.tildacdn.com/tild3530-6562-4731-a561-363136383831/Schneider_Weisse_Tap.png",
+        "/pages/horeca/schneider_weisse_tap.png",
       imports: [
         "Edelweiss Weissbier",
         "Weihenstephaner Hefeweiss",
@@ -151,11 +151,11 @@ export const HORECA_PAGE = {
       styleLabel: "IPA",
       importLead: "Indian Pale Ale, насыщенный вкус, популярный стиль:",
       artImage:
-        "https://static.tildacdn.com/tild6434-3762-4365-b238-333062313532/CROCO__2.png",
+        "/pages/horeca/croco__2.png",
       productImage:
-        "https://static.tildacdn.com/tild3264-6663-4262-a362-366633393864/CATALOGUE__0014_Bowl.png",
+        "/pages/horeca/catalogue__0014_bowl.png",
       importImage:
-        "https://static.tildacdn.com/tild3831-3563-4636-b939-316534343133/Punk_IPA.png",
+        "/pages/horeca/punk_ipa.png",
       imports: [
         "Punk IPA",
         "Sierra Nevada Pale Ale",
@@ -173,11 +173,11 @@ export const HORECA_PAGE = {
       importLead:
         "Освежающий напиток, летний хит, пиво с добавлением цитрусовых соков:",
       artImage:
-        "https://static.tildacdn.com/tild6333-3662-4761-b334-643438303736/Tour_de_Grapefruit.png",
+        "/pages/horeca/tour_de_grapefruit.png",
       productImage:
-        "https://static.tildacdn.com/tild3835-3038-4365-a338-626433633533/CATALOGUE__0004_Tour.png",
+        "/pages/horeca/catalogue__0004_tour.png",
       importImage:
-        "https://static.tildacdn.com/tild6565-3965-4234-a261-333839623162/Schofferhofer_Grapef.png",
+        "/pages/horeca/schofferhofer_grapef.png",
       imports: [
         "Schöfferhofer Grapefruit",
         "Stiegl Grapefruit",
@@ -194,11 +194,11 @@ export const HORECA_PAGE = {
       styleLabel: "Хэль лагер",
       importLead: "Светлый лагер, классика, лёгкое, востребованное пиво:",
       artImage:
-        "https://static.tildacdn.com/tild3432-3438-4762-b833-313238633763/Heidegger_Hell.png",
+        "/pages/horeca/heidegger_hell.png",
       productImage:
-        "https://static.tildacdn.com/tild6561-3765-4432-b538-656536356431/CATALOGUE__0011_Heid.png",
+        "/pages/horeca/catalogue__0011_heid.png",
       importImage:
-        "https://static.tildacdn.com/tild6337-6662-4635-a436-306438613334/Ayinger.png",
+        "/pages/horeca/ayinger.png",
       imports: [
         "Ayinger",
         "Hofbräu Original",
@@ -217,11 +217,11 @@ export const HORECA_PAGE = {
       styleLabel: "Крепкое вишнёвое",
       importLead: "Вишнёвое крепкое пиво:",
       artImage:
-        "https://static.tildacdn.com/tild3937-3164-4231-b662-393631663531/Ruby_Road.png",
+        "/pages/horeca/ruby_road.png",
       productImage:
-        "https://static.tildacdn.com/tild6234-3339-4665-a232-656437396637/CATALOGUE__0005_Ruby.png",
+        "/pages/horeca/catalogue__0005_ruby.png",
       importImage:
-        "https://static.tildacdn.com/tild6165-6330-4335-a164-633466643839/Castel_Rouge232.png",
+        "/pages/horeca/castel_rouge232.png",
       imports: [
         "Barbar Ruby",
         "Castel Rouge",

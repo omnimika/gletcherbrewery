@@ -1,12 +1,12 @@
 {
   "id": "non-alcohol-trend",
   "locale": "ru",
-  "slug": "u9dt270xo1-na-zdorove-0-na",
+  "slug": "2023-12-17-na-zdorove-0-na",
   "title": "На здоровье! 0% N/A",
   "description": "Делимся своими наблюдениями о росте мировой популярности безалкогольного пива",
   "publishedAt": "2023-12-17 13:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3463-3232-4436-a466-393766306431/image.png",
+    "src": "/blog/2023-12-17-na-zdorove-0-na/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6531-6365-4530-b137-666165623039/prohibition-non-alco.jpg",
+      "src": "/blog/2023-12-17-na-zdorove-0-na/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -33,7 +33,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3735-3538-4432-b239-626366333738/history-non-alcoholi.jpeg",
+      "src": "/blog/2023-12-17-na-zdorove-0-na/02.jpeg",
       "alt": "The History of Non-Alcoholic Beer in America - NA Beer Club",
       "caption": "",
       "width": 1200,
@@ -46,7 +46,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6366-6638-4536-a236-353238613334/Article-Golden-Age-N.jpg",
+      "src": "/blog/2023-12-17-na-zdorove-0-na/03.jpg",
       "alt": "Nonalcoholic Beer Has Entered Its Golden Age | PUNCH",
       "caption": "",
       "width": 1200,
@@ -59,7 +59,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3334-3238-4239-b464-653963346663/image.png",
+      "src": "/blog/2023-12-17-na-zdorove-0-na/04.png",
       "alt": "",
       "caption": "",
       "width": 1200,

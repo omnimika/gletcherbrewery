@@ -1,12 +1,12 @@
 {
   "id": "people-in-beer-anora",
   "locale": "ru",
-  "slug": "5vvkbd3bd1-lyudi-v-pive-intervyu-anori-mischenko",
+  "slug": "2021-01-19-lyudi-v-pive-intervyu-anori-mischenko",
   "title": "Люди в пиве: интервью Аноры Мищенко",
   "description": "Главный технолог Gletcher Brewery Анора Мищенко рассказала телеграм-каналу сети магазинов «Ещё парочку!» о том, как всё начиналось",
   "publishedAt": "2021-01-19 16:12",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3339-3663-4131-b039-643461393933/WhatsApp_Image_2017-.png",
+    "src": "/blog/2021-01-19-lyudi-v-pive-intervyu-anori-mischenko/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -28,7 +28,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6565-3465-4461-a239-333561383666/PRN_8318.jpg",
+      "src": "/blog/2021-01-19-lyudi-v-pive-intervyu-anori-mischenko/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -45,7 +45,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3832-6534-4337-a462-666331656633/289_resize.JPG",
+      "src": "/blog/2021-01-19-lyudi-v-pive-intervyu-anori-mischenko/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

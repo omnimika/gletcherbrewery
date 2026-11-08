@@ -5,7 +5,7 @@ import { HOME_BOTTLE_VIDEO } from "@/content/home";
 
 /** Transparent PNG while media loads / if playback fails. */
 const FALLBACK_BOTTLE =
-  "/catalog/bottles/CATALOGUE__0014_Bowler-IPA---bottle.png";
+  "/products/bowler-ipa/bottle.png";
 
 /** Near-black candidates for matte; only border-connected regions are cut. */
 const MATTE_THRESHOLD = 28;

@@ -1,12 +1,12 @@
 {
   "id": "heidegger-hell",
   "locale": "en",
-  "slug": "z246e2pvf1-heidegger-hell-german-traditions-in-your",
+  "slug": "2024-06-13-heidegger-hell-german-traditions-in-your",
   "title": "Heidegger Hell: German traditions in your glass",
   "description": "Meet the classic recipe of hel in a new bottle: light light beer according to a German recipe that has been tested for centuries",
   "publishedAt": "2024-06-13 10:52",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3631-3530-4662-a534-613066366364/heidegger1_1.png",
+    "src": "/blog/2024-06-13-heidegger-hell-german-traditions-in-your/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6339-3563-4566-b164-376565353265/bottle-bg-name-ALL-.png",
+      "src": "/blog/2024-06-13-heidegger-hell-german-traditions-in-your/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

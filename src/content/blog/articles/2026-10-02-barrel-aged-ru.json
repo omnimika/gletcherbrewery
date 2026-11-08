@@ -1,11 +1,11 @@
 {
   "id": "barrel-aged",
   "locale": "ru",
-  "slug": "barrel-aged-beer-day-2026",
+  "slug": "2026-10-02-barrel-aged-beer-day-2026",
   "title": "Barrel-Aged Beer Day: День выдержанного в бочках пива",
   "description": "2 октября 2026 года — День выдержанного в бочках пива. Как дуб меняет вкус, откуда появился праздник и чем интересен стаут CYNIC из серии Gletcher Aging.",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6131-3030-4166-a537-633730333634/cynic_beer_281125-6.png",
+    "src": "/blog/2026-10-02-barrel-aged-beer-day-2026/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -37,7 +37,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6666-6265-4163-a239-383934396232/444.png",
+      "src": "/blog/2026-10-02-barrel-aged-beer-day-2026/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -59,7 +59,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3231-6539-4563-a664-313964353664/BLOG2.png",
+      "src": "/blog/2026-10-02-barrel-aged-beer-day-2026/02.png",
       "alt": "Бутылка имперского стаута CYNIC  – выдержан в дубовых коньячных бочках",
       "caption": "",
       "width": 1200,
@@ -93,7 +93,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3330-3836-4537-b665-343837316532/pic2.png",
+      "src": "/blog/2026-10-02-barrel-aged-beer-day-2026/03.png",
       "alt": "",
       "caption": "",
       "width": 1200,

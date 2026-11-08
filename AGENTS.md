@@ -160,12 +160,12 @@
    конкретные grid/motion/reflow дефекты исправляются адресно. Прежние visual
    sign-offs — regression baseline, не закрытие новых функциональных замечаний.
 3. **Q1–Q3 Done (05–06.11):** forms/locale/map/shop; design/motion; blog-all 308 +
- sitemap/robots (`ALLOW_SITE_INDEXING`). Outcomes:
- `docs/reviews/2026-11-05-public-integrity.md`,
- `docs/discovery/PUBLIC_ROUTE_MATRIX.md`. Сейчас **A1 — /about** с анимацией
- (Tilda 71867465). Задание: `docs/CURSOR_NEXT_STEPS.md`.
-4. Далее C1 campaigns → stage-4 exit → D5-0 discovery/ADR. Stage 4 ещё не Done
- без принятого A1.
+ sitemap/robots (`ALLOW_SITE_INDEXING`). **A1 /about code Done** (Tilda 71867465
+ + motion; RU-only; noindex). Manifest:
+ `docs/discovery/ABOUT_SECTION_MANIFEST.md`. Owner visual accept A1 Open.
+ Задание: `docs/CURSOR_NEXT_STEPS.md`.
+4. Далее C1 campaigns → stage-4 exit (нужен owner accept A1) → D5-0.
+ Stage 4 ещё не Done.
 5. Mapbox frontend уже есть, CRM/публикация геоданных ещё нет; YCLIENTS и
    production members временно сохраняются. /shop RU-only без cart/checkout.
    Klin campaign в snapshot unpublished/password: MCP access не разрешает публикацию.
@@ -188,6 +188,7 @@
 - `docs/reviews/2026-11-05-public-integrity.md` — актуальное ревью `d6011d2`, R01–R10 и quality gates.
 - `docs/discovery/PUBLIC_ROUTE_MATRIX.md` — code/publication coverage и legacy/campaign решения до cutover.
 - `docs/discovery/ABOUT_PAGE_BASELINE.md` — обязательный /about: Tilda 71867465, animation/interaction parity и DoD A1.
+- `docs/discovery/ABOUT_SECTION_MANIFEST.md` — A1 records/ZB/animation map и adaptations.
 - `docs/reviews/2026-11-01-design-system.md` — историческое ревью `6b137e7` и follow-up DS-1/DS-2.
 - `docs/reviews/2026-11-01-home-and-sprints.md` — историческое ревью `2c1a9d0`.
 - `docs/SPRINT_PLAN.md` — Q1/Q2/Q3 → обязательный A1 /about → campaigns/public gate → D5-0; прежняя серия в docs/archive.

@@ -1,11 +1,11 @@
 {
   "id": "arkhangelsk-craft-fest",
   "locale": "ru",
-  "slug": "gacdootci1-edem-v-arhangelsk-na-craft-fest",
+  "slug": "2026-02-09-edem-v-arhangelsk-na-craft-fest",
   "title": "Едем в Архангельск на CRAFT FEST!",
   "description": "21 февраля в Норд-Экспо пройдёт зимний CRAFT FEST — большой фестиваль вкусов, музыки и ярких эмоций.",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3136-6334-4136-b130-306530383435/10001000_.png",
+    "src": "/blog/2026-02-09-edem-v-arhangelsk-na-craft-fest/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -23,7 +23,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6663-6564-4438-a235-313966333433/photo_2026-02-09_145.jpeg",
+      "src": "/blog/2026-02-09-edem-v-arhangelsk-na-craft-fest/01.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -40,7 +40,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3039-3234-4336-b035-356331633932/3_.jpg",
+      "src": "/blog/2026-02-09-edem-v-arhangelsk-na-craft-fest/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

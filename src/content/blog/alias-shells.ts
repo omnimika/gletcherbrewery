@@ -36,7 +36,7 @@ export const ALIAS_SHELLS_RU: AliasShell[] = [
     publishedAt: "2023-07-05",
     productionPath: "/brainstorm-moto-fest-2023",
     cover: {
-      src: "https://static.tildacdn.com/tild3633-3034-4565-a466-626631303431/photo_2023-05-31_163.jpeg",
+      src: "/pages/blog-misc/photo_2023-05-31_163.jpeg",
       alt: "",
     },
     notes:
@@ -52,7 +52,7 @@ export const ALIAS_SHELLS_RU: AliasShell[] = [
     publishedAt: "2023-05-17",
     productionPath: "/klin-may-fest-2023",
     cover: {
-      src: "https://static.tildacdn.com/tild6137-3261-4365-a566-383465353733/_2023_3.jpg",
+      src: "/pages/blog-misc/_2023_3.jpg",
       alt: "",
     },
     notes:
@@ -68,7 +68,7 @@ export const ALIAS_SHELLS_RU: AliasShell[] = [
     publishedAt: "2021-04-05",
     productionPath: "/10-years",
     cover: {
-      src: "https://static.tildacdn.com/tild3334-6263-4339-b163-633738653339/D31A1884_.jpg",
+      src: "/pages/blog-misc/d31a1884_.jpg",
       alt: "",
     },
     notes:

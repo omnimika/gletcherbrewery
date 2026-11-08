@@ -1,12 +1,12 @@
 {
   "id": "bowler-ipa",
   "locale": "ru",
-  "slug": "rrjjjry2e1-bowler-ipa-vkus-puteshestvii-i-priklyuch",
+  "slug": "2024-07-08-bowler-ipa-vkus-puteshestvii-i-priklyuch",
   "title": "Bowler IPA: вкус путешествий и приключений",
   "description": "Янтарный эль с выраженной горечью и букетом цитрусовых и фруктовых нот, Bowler IPA станет идеальным выбором для истинных ценителей сложных и насыщенных напитков.",
   "publishedAt": "2024-07-08 11:12",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3366-3062-4039-b533-356335633662/CROCO_.png",
+    "src": "/blog/2024-07-08-bowler-ipa-vkus-puteshestvii-i-priklyuch/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6662-3230-4465-b866-626639393233/bottle-bg-name-ALL-b.png",
+      "src": "/blog/2024-07-08-bowler-ipa-vkus-puteshestvii-i-priklyuch/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,12 +1,12 @@
 {
   "id": "ausweis",
   "locale": "ru",
-  "slug": "lp53os88v1-ausweis-vash-propusk-v-mir-nemetskogo-pi",
+  "slug": "2024-06-24-ausweis-vash-propusk-v-mir-nemetskogo-pi",
   "title": "Ausweis: ваш пропуск в мир немецкого пива",
   "description": "Новый пшеничный сорт Ausweis - наш фирменный вензель в паспорте истинно немецкого пива.",
   "publishedAt": "2024-06-24 11:39",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3363-6431-4539-b231-656261363036/ausweis-fon.png",
+    "src": "/blog/2024-06-24-ausweis-vash-propusk-v-mir-nemetskogo-pi/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3434-6463-4436-b733-323566616263/bottle-bg-name-ALL-a.png",
+      "src": "/blog/2024-06-24-ausweis-vash-propusk-v-mir-nemetskogo-pi/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

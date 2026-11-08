@@ -1,12 +1,12 @@
 {
   "id": "prodexpo-2022",
   "locale": "ru",
-  "slug": "2pminbnlo1-gletcher-na-prodekspo-2022",
+  "slug": "2022-02-03-gletcher-na-prodekspo-2022",
   "title": "Gletcher на ПРОДЭКСПО 2022",
   "description": "Мы представим полную линейку нашей продукции, доступной на настоящий момент. Регистрируйтесь и приходите знакомиться и дегустировать!",
   "publishedAt": "2022-02-03 08:54",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3863-6466-4437-b530-346536343038/23.jpg",
+    "src": "/blog/2022-02-03-gletcher-na-prodekspo-2022/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3032-3239-4630-b232-346166363034/088A8243-2.jpg",
+      "src": "/blog/2022-02-03-gletcher-na-prodekspo-2022/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -29,7 +29,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3865-6535-4634-a133-663135393530/14.jpg",
+      "src": "/blog/2022-02-03-gletcher-na-prodekspo-2022/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

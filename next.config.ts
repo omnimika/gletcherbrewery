@@ -9,14 +9,8 @@ const nextConfig: NextConfig = {
   // Allow LAN preview (e.g. http://10.10.10.189:3000) without blocking assets.
   allowedDevOrigins: ["10.10.10.189"],
   images: {
-    // Local catalog PNGs + SVG placeholders under /public
+    // Local media under /public (catalog, about, blog, …)
     formats: ["image/avif", "image/webp"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "static.tildacdn.com",
-      },
-    ],
   },
   turbopack: {
     rules: {

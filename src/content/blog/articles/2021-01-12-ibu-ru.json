@@ -1,12 +1,12 @@
 {
   "id": "ibu",
   "locale": "ru",
-  "slug": "jbjnakk441-mne-ne-gorko-chto-takoe-ibu",
+  "slug": "2021-01-12-mne-ne-gorko-chto-takoe-ibu",
   "title": "Мне не горько. Что такое IBU?",
   "description": "Узнаем, как возник один из основных критериев оценки качества пива, какое пиво самое горькое и из-за чего.",
   "publishedAt": "2021-01-12 15:53",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6430-3161-4135-b839-653738326134/20201212_gletcher_03.jpg",
+    "src": "/blog/2021-01-12-mne-ne-gorko-chto-takoe-ibu/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3338-6238-4734-a138-343162616435/image.png",
+      "src": "/blog/2021-01-12-mne-ne-gorko-chto-takoe-ibu/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -29,7 +29,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6633-3736-4937-a366-656631383031/image.png",
+      "src": "/blog/2021-01-12-mne-ne-gorko-chto-takoe-ibu/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,

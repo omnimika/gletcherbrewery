@@ -1,11 +1,11 @@
 {
   "id": "cynic-story",
   "locale": "ru",
-  "slug": "uvgfhv9ec1-cynic-filosofiya-vremeni-i-triumf-impers",
+  "slug": "2026-01-22-cynic-filosofiya-vremeni-i-triumf-impers",
   "title": "Cynic: Философия времени и триумф имперского вкуса",
   "description": "Мы запустили новую уникальную линейку бочкового пива – новая эра выдержанного пива в России",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3731-6135-4365-a337-656436366361/BLOG2.png",
+    "src": "/blog/2026-01-22-cynic-filosofiya-vremeni-i-triumf-impers/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -24,7 +24,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3531-6236-4638-a539-343435636263/__1_________2_______.png",
+      "src": "/blog/2026-01-22-cynic-filosofiya-vremeni-i-triumf-impers/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -51,7 +51,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3164-3361-4638-b637-613436636330/________________110_.png",
+      "src": "/blog/2026-01-22-cynic-filosofiya-vremeni-i-triumf-impers/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -69,7 +69,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6630-3736-4832-b638-623135313435/photo_2025-10-07_12-.jpg",
+      "src": "/blog/2026-01-22-cynic-filosofiya-vremeni-i-triumf-impers/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -91,7 +91,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6137-3630-4335-a638-313032393563/111.png",
+      "src": "/blog/2026-01-22-cynic-filosofiya-vremeni-i-triumf-impers/04.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -114,7 +114,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3330-6362-4830-b636-376633623063/photo_2026-01-27_125.jpeg",
+      "src": "/blog/2026-01-22-cynic-filosofiya-vremeni-i-triumf-impers/05.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,

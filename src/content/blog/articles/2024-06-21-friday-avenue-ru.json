@@ -1,11 +1,11 @@
 {
   "id": "friday-avenue",
   "locale": "ru",
-  "slug": "01gzr6nji1-friday-avenue-pivnoi-manifest-pyatnichno",
+  "slug": "2024-06-21-friday-avenue-pivnoi-manifest-pyatnichno",
   "title": "Friday Avenue: пивной манифест пятничного вечера",
   "description": "Представляем обновленный Friday Avenue American Pale Ale, воплотивший дух весеннего города с его неоновыми огнями и пятничной энергией.",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3137-3764-4263-a366-333331376536/Dog_.png",
+    "src": "/blog/2024-06-21-friday-avenue-pivnoi-manifest-pyatnichno/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -15,7 +15,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3637-6339-4232-b036-326436626638/bottle-bg-name-ALL-f.png",
+      "src": "/blog/2024-06-21-friday-avenue-pivnoi-manifest-pyatnichno/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

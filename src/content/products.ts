@@ -38,25 +38,25 @@ export const PRODUCT_FILTERS = [
 export type ProductFilterId = (typeof PRODUCT_FILTERS)[number]["id"];
 
 const BOTTLE = {
-  cynic: "/catalog/bottles/CATALOGUE__0018_CYNIC---bottle.png",
+  cynic: "/products/cynic/bottle.png",
   milkNonAlco:
-    "/catalog/bottles/CATALOGUE__0017_Milk-of-Amnesia-non-alcoholic---bottle.png",
-  milk: "/catalog/bottles/CATALOGUE__0008_Milk-of-Amnesia---bottle.png",
-  brainstorm: "/catalog/bottles/CATALOGUE__0013_Brainstorm---bottle.png",
-  blueMonkey: "/catalog/bottles/CATALOGUE__0015_Blue-Monkey---bottle.png",
-  nutButter: "/catalog/bottles/CATALOGUE__0007_Nut-Butter---bottle.png",
-  bowler: "/catalog/bottles/CATALOGUE__0014_Bowler-IPA---bottle.png",
-  underground: "/catalog/bottles/CATALOGUE__0003_Underground-Ale---bottle.png",
-  friday: "/catalog/bottles/CATALOGUE__0012_Friday-Avenue---bottle.png",
-  ironDry: "/catalog/bottles/CATALOGUE__0010_Iron-Woods---bottle.png",
-  ironMilk: "/catalog/bottles/CATALOGUE__0009_Iron-Woods-Milk-Stout---bottle.png",
-  ruby: "/catalog/bottles/CATALOGUE__0005_Ruby-Road---bottle.png",
-  ausweis: "/catalog/bottles/CATALOGUE__0016_Ausweis---bottle.png",
-  heidegger: "/catalog/bottles/CATALOGUE__0011_Heidegger-Hell---bottle.png",
-  rouge: "/catalog/bottles/CATALOGUE__0006_Rouge-de-Fleur---bottle.png",
-  brut: "/catalog/bottles/CATALOGUE__0002_Brut-Grapefruit---bottle.png",
-  hopDragon: "/catalog/bottles/CATALOGUE__0001_Hop-Dragon---bottle.png",
-  tour: "/catalog/bottles/CATALOGUE__0004_Tour-De-Grapefruit---bottle.png",
+    "/products/milk-of-amnesia-non-alco/bottle.png",
+  milk: "/products/milk-of-amnesia-v-tropic/bottle.png",
+  brainstorm: "/products/brainstorm/bottle.png",
+  blueMonkey: "/products/blue-monkey/bottle.png",
+  nutButter: "/products/nut-butter/bottle.png",
+  bowler: "/products/bowler-ipa/bottle.png",
+  underground: "/products/underground-ale/bottle.png",
+  friday: "/products/friday-avenue-apa/bottle.png",
+  ironDry: "/products/iron-woods-dry-stout/bottle.png",
+  ironMilk: "/products/iron-woods-milk-stout/bottle.png",
+  ruby: "/products/ruby-road/bottle.png",
+  ausweis: "/products/ausweis/bottle.png",
+  heidegger: "/products/heidegger-hell/bottle.png",
+  rouge: "/products/rouge-de-fleur/bottle.png",
+  brut: "/products/brut-grapefruit/bottle.png",
+  hopDragon: "/products/hop-dragon/bottle.png",
+  tour: "/products/tour-de-grapefruit/bottle.png",
 } as const;
 
 /**

@@ -1,11 +1,11 @@
 {
   "id": "tour-de-grapefruit",
   "locale": "en",
-  "slug": "9i3ig0g2r1-tour-de-grapefruit-citrus-wheat-ale",
+  "slug": "2025-02-07-tour-de-grapefruit-citrus-wheat-ale",
   "title": "Tour De Grapefruit: citrus wheat ale",
   "description": "A delicate, \"fluffy\" beer with a fresh taste and a pronounced citrusy, hoppy aroma.",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6165-3364-4935-b634-323534633338/tourde-grapefr.png",
+    "src": "/blog/2025-02-07-tour-de-grapefruit-citrus-wheat-ale/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -15,7 +15,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3830-6363-4334-b863-373933643439/tour-de-grapefruit-.png",
+      "src": "/blog/2025-02-07-tour-de-grapefruit-citrus-wheat-ale/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

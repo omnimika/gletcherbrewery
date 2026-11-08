@@ -1,11 +1,11 @@
 {
   "id": "friday-avenue",
   "locale": "en",
-  "slug": "3z3igkl1u1-friday-avenue-friday-night-beer-manifest",
+  "slug": "2024-06-25-friday-avenue-friday-night-beer-manifest",
   "title": "Friday Avenue: friday night beer manifesto",
   "description": "We present the updated Friday Avenue American Pale Ale, embodying the spirit of the spring city with its neon lights and Friday energy.",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6463-6236-4931-a264-336230666262/image.png",
+    "src": "/blog/2024-06-25-friday-avenue-friday-night-beer-manifest/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -15,7 +15,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6666-3062-4132-b539-633131353239/bottle-bg-name-ALL-f.png",
+      "src": "/blog/2024-06-25-friday-avenue-friday-night-beer-manifest/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

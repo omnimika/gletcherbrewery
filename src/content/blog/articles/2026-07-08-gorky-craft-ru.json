@@ -1,11 +1,11 @@
 {
   "id": "gorky-craft",
   "locale": "ru",
-  "slug": "5hportmx81-gorech-kraft-i-rok-n-roll-kak-mi-otorval",
+  "slug": "2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval",
   "title": "Горечь, крафт и рок-н-ролл: как мы оторвались на «Горьком Крафте»!",
   "description": "В арт-кластере «Красная Слобода» прошёл восьмой фестиваль крафтовых культур «Горький Крафт» — и мы были рады стать частью этого большого летнего праздника",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3833-3936-4138-b964-323162363034/190A5256.jpg",
+    "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -19,7 +19,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3937-3162-4038-b932-323764303262/190A5441.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -37,7 +37,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3732-3931-4233-b736-353835333734/MK_249_MK_20260705_2.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -46,7 +46,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6238-3262-4333-b833-653966666162/190A5541.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -64,7 +64,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3863-6430-4130-b231-393161376165/photo_2026-07-08_094.jpeg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/04.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -110,7 +110,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3334-3836-4633-b866-663163396233/photo_2026-07-08_094.jpeg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/05.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -144,7 +144,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6266-6330-4838-a162-653065313663/photo_2026-07-08_094.jpeg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/06.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -157,7 +157,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6363-6436-4430-a631-386364366464/MK_077_MK_20260705_1.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/07.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -166,7 +166,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6335-3932-4463-b036-363762626362/MK_036_MK_20260705_1.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/08.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -175,7 +175,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6233-3362-4431-b761-646634336365/MK_048_MK_20260705_1.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/09.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -184,7 +184,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3137-3862-4637-a337-366232313938/MK_067_MK_20260705_1.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/10.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -193,7 +193,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6232-3336-4133-b031-363361343637/MK_068_MK_20260705_1.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/11.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -202,7 +202,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6234-3838-4161-b136-656537343039/MK_073_MK_20260705_1.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/12.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -211,7 +211,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6432-6663-4331-a163-366339626562/190A5511.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/13.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -220,7 +220,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3137-3835-4731-b837-393434383132/190A5393.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/14.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -229,7 +229,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3061-6633-4235-b932-303936343733/190A5334.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/15.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -238,7 +238,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6639-3461-4538-a264-376231316266/190A5326.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/16.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -247,7 +247,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6231-3730-4662-a635-306236373737/190A5247.jpg",
+      "src": "/blog/2026-07-08-gorech-kraft-i-rok-n-roll-kak-mi-otorval/17.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,12 +1,12 @@
 {
   "id": "bavaria-brewing",
   "locale": "en",
-  "slug": "pu9xfazps1-bavaria-the-cradle-of-brewing",
+  "slug": "2021-06-08-bavaria-the-cradle-of-brewing",
   "title": "Bavaria: the cradle of brewing",
   "description": "From home-brewed beer to the first regulatory laws. A brief history of the origin of brewing in Bavaria and the appearance of the first laws regulating the quality of beer.",
   "publishedAt": "2021-06-08 18:53",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6465-3533-4433-b736-343630386261/image.png",
+    "src": "/blog/2021-06-08-bavaria-the-cradle-of-brewing/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6465-3533-4433-b736-343630386261/image.png",
+      "src": "/blog/2021-06-08-bavaria-the-cradle-of-brewing/cover.png",
       "alt": "Вайнштефан: самая старая пивоварня в мире",
       "caption": "In 1852, the Central Agricultural School moved from Schleisheim to Weienstephan, and with it the Bavarian beer students.",
       "width": 1200,
@@ -33,7 +33,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6164-3930-4430-a162-373732303662/Bild2_Karte08-min-1.jpg",
+      "src": "/blog/2021-06-08-bavaria-the-cradle-of-brewing/01.jpg",
       "alt": "Вайнштефан: самая старая пивоварня в мире",
       "caption": "The first historical mention of hops in Weienstephan dates back to 768. At that time, there was a hop garden near the Weienstephan monastery, the owner of which was obliged to pay 10 percent of the tithe to the monastery.",
       "width": 1200,
@@ -46,7 +46,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3833-3630-4430-b664-623833616332/image.png",
+      "src": "/blog/2021-06-08-bavaria-the-cradle-of-brewing/02.png",
       "alt": "",
       "caption": "Prince of purity: Wilhelm IV of Bavaria and the Reinheitsgebot. (Bridgeman Images)",
       "width": 1200,

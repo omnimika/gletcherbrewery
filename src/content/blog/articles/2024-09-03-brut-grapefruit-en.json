@@ -1,12 +1,12 @@
 {
   "id": "brut-grapefruit",
   "locale": "en",
-  "slug": "24i9vt9881-brut-grapefruit-brutelle-a-light-drink-w",
+  "slug": "2024-09-03-brut-grapefruit-brutelle-a-light-drink-w",
   "title": "Brut Grapefruit: brutelle, a light drink with a sparkling character",
   "description": "Feel the festive mood with our unique grapefruit-scented brut ale — light, bright and refreshing, like real beer champagne.",
   "publishedAt": "2024-09-03 16:37",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6438-3761-4234-b833-313938656337/GRAPE1_1.png",
+    "src": "/blog/2024-09-03-brut-grapefruit-brutelle-a-light-drink-w/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -43,7 +43,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6234-3939-4265-a262-303462353561/111121212_1.png",
+      "src": "/blog/2024-09-03-brut-grapefruit-brutelle-a-light-drink-w/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -65,7 +65,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3566-3336-4533-b336-653463393364/brut-grapefruit-post.png",
+      "src": "/blog/2024-09-03-brut-grapefruit-brutelle-a-light-drink-w/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -83,7 +83,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3431-6432-4932-a265-363564366434/3423rf23qf2q3f_1.png",
+      "src": "/blog/2024-09-03-brut-grapefruit-brutelle-a-light-drink-w/03.png",
       "alt": "",
       "caption": "",
       "width": 1200,

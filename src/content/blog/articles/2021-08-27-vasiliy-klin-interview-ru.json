@@ -1,12 +1,12 @@
 {
   "id": "vasiliy-klin-interview",
   "locale": "ru",
-  "slug": "hsri3ayv41-intervyu-vasiliya-mischenko-v-preddverii",
+  "slug": "2021-08-27-intervyu-vasiliya-mischenko-v-preddverii",
   "title": "Интервью Василия Мищенко в преддверии КлинМайФест",
   "description": "В преддверии фестиваля журналисты местного телеканала взяли интервью у директора по маркетингу «Gletcher Brewery» Василия Мищенко и начальника Управления социально-значимых проектов Администрации городского округа Клин Оксаны Кутиловой.",
   "publishedAt": "2021-08-27 14:26",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3638-6365-4566-b865-396662663561/image.png",
+    "src": "/blog/2021-08-27-intervyu-vasiliya-mischenko-v-preddverii/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -50,7 +50,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6137-3064-4632-b334-663465346532/image.png",
+      "src": "/blog/2021-08-27-intervyu-vasiliya-mischenko-v-preddverii/01.png",
       "alt": "",
       "caption": "КЛИН ОНЛАЙН",
       "width": 1200,

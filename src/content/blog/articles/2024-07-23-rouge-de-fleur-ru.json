@@ -1,12 +1,12 @@
 {
   "id": "rouge-de-fleur",
   "locale": "ru",
-  "slug": "pvbch1v1p1-rouge-de-fleur-vishnyovaya-simfoniya",
+  "slug": "2024-07-23-rouge-de-fleur-vishnyovaya-simfoniya",
   "title": "Rouge de Fleur: вишнёвая симфония",
   "description": "Насладитесь фруктовым шармом бельгийского крика в нашем Rouge de Fleur — пиве с ярким ароматом и освежающим вкусом.",
   "publishedAt": "2024-07-23 11:41",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3030-3664-4861-b736-323338303335/rouge1_2.png",
+    "src": "/blog/2024-07-23-rouge-de-fleur-vishnyovaya-simfoniya/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3962-6138-4138-a332-643335353361/bottle-bg-name-ALL-2.png",
+      "src": "/blog/2024-07-23-rouge-de-fleur-vishnyovaya-simfoniya/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

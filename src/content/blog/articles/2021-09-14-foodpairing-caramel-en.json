@@ -1,12 +1,12 @@
 {
   "id": "foodpairing-caramel",
   "locale": "en",
-  "slug": "mejto1lui1-foodpairing-caramelization",
+  "slug": "2021-09-14-foodpairing-caramelization",
   "title": "Foodpairing: caramelization",
   "description": "Among the variety of flavors, the strongest will be the taste of caramel, or if more correctly, then caramelization. We tell you about this in more detail.",
   "publishedAt": "2021-09-14 16:21",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6437-3934-4436-a637-393337393930/caramelfood.jpg",
+    "src": "/blog/2021-09-14-foodpairing-caramelization/cover.jpg",
     "alt": ""
   },
   "blocks": [

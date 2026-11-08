@@ -11,7 +11,7 @@ export const CONTACTS_PAGE = {
   metaDescription: "Контакты",
   heroTitle: "Контакты",
   heroImage: {
-    src: "https://static.tildacdn.com/tild6137-3263-4439-a637-653939636334/IMG_3189.jpg",
+    src: "/pages/contacts/img_3189.jpg",
     alt: "Пивоварня Gletcher",
   },
   companyName: "OOO «ГЛЕТЧЕР»",

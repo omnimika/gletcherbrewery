@@ -1,0 +1,163 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  /* Fill split/media column — matches shop gallery + Tilda stretch box */
+  flex: 1 1 auto;
+  align-self: stretch;
+  height: 100%;
+}
+
+.viewport {
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: min(28svh, 12rem);
+  border-radius: 8px;
+  border: 1px solid var(--gallery-border, #0d0f49);
+  background: rgb(0 0 0 / 0.06);
+  overflow: hidden;
+}
+
+/* Explicit ZB ratio (e.g. Brewer's House 444×250) — width-bound, no column stretch */
+.viewportRatio {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: var(--gallery-ratio, 16 / 9);
+  max-height: min(42svh, 18rem);
+}
+
+.imageCover {
+  object-fit: cover;
+  object-position: center;
+}
+
+.controls {
+  position: absolute;
+  left: 50%;
+  bottom: 0.45rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  transform: translateX(-50%);
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: 1px solid var(--gallery-arrow, #e5373c);
+  border-radius: 2px;
+  background: rgb(255 255 255 / 0.88);
+  color: var(--gallery-arrow, #e5373c);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.arrow:hover,
+.arrow:focus-visible {
+  opacity: 0.85;
+  outline: none;
+}
+
+.arrow:focus-visible {
+  outline: 2px solid var(--gallery-arrow, #e5373c);
+  outline-offset: 2px;
+}
+
+.accentRed {
+  --gallery-border: #e5373c;
+  --gallery-arrow: #e5373c;
+}
+
+.accentBlack {
+  --gallery-border: #fff;
+  --gallery-arrow: #000;
+}
+
+.accentBlack .arrow {
+  background: rgb(255 255 255 / 0.92);
+}
+
+.accentWhite {
+  --gallery-border: #e5373c;
+  --gallery-arrow: #e5373c;
+}
+
+/* ——— Beer bottle columns (ZB 1144235866 ~100×360, slds_stretch:cover) ——— */
+
+.rootBottle {
+  height: 100%;
+  gap: 0.35rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.viewportBottle {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 7.5rem;
+  min-height: 0;
+  aspect-ratio: 100 / 360;
+  max-height: min(42svh, 22rem);
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+.imageBottle {
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+.slideLinkFill {
+  position: absolute;
+  inset: 0;
+  display: block;
+  line-height: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.controlsUnder {
+  position: static;
+  left: auto;
+  bottom: auto;
+  transform: none;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@media (max-height: 700px) {
+  .viewport {
+    min-height: min(22svh, 9rem);
+  }
+
+  .viewportRatio {
+    max-height: min(32svh, 12rem);
+  }
+
+  .viewportBottle {
+    max-height: min(28svh, 12rem);
+  }
+}
+
+@media (max-width: 719px) {
+  .viewportBottle {
+    max-width: 4rem;
+    max-height: min(16svh, 6.5rem);
+  }
+}

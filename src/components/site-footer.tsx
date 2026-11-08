@@ -48,7 +48,7 @@ export async function SiteFooter() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element -- local SVG; Next/Image crops odd viewBoxes */}
               <img
-                src="/home/footer/vk-svg.svg"
+                src="/pages/home/footer/vk-svg.svg"
                 alt=""
                 width={30}
                 height={30}
@@ -64,7 +64,7 @@ export async function SiteFooter() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element -- local SVG; keep 1:1 with asset */}
               <img
-                src="/home/footer/telegram.svg"
+                src="/pages/home/footer/telegram.svg"
                 alt=""
                 width={30}
                 height={30}
@@ -81,7 +81,7 @@ export async function SiteFooter() {
               className="flex h-[54px] w-[147px] shrink-0 items-center gap-1.5 rounded-lg border border-gletcher-navy bg-white px-2 transition-opacity hover:opacity-80"
             >
               <Image
-                src="/home/footer/yandex-mark.svg"
+                src="/pages/home/footer/yandex-mark.svg"
                 alt=""
                 width={16}
                 height={16}
@@ -117,7 +117,7 @@ export async function SiteFooter() {
               aria-label="Untappd"
             >
               <Image
-                src="/home/footer/untappd.png"
+                src="/pages/home/footer/untappd.png"
                 alt=""
                 width={54}
                 height={54}

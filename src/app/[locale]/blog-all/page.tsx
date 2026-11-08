@@ -10,7 +10,7 @@ type PageProps = {
 
 /**
  * Legacy production archive listing `/blog-all` (+ `/en/blog-all`).
- * Local listing lives at `/blog`. Articles remain under `/blog-all/tpost/*`.
+ * Local listing lives at `/blog`; articles at `/blog/{YYYY-MM-DD-…}`.
  * Next.js `permanentRedirect` emits HTTP **308** (not 301).
  */
 export default async function BlogAllListingRedirect({ params }: PageProps) {

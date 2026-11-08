@@ -65,7 +65,7 @@ export function HomeMenuGrid({ locale, labels }: HomeMenuGridProps) {
                         {cta}
                       </span>
                       <Image
-                        src="/home/menu-arrow.svg"
+                        src="/pages/home/menu-arrow.svg"
                         alt=""
                         width={80}
                         height={40}

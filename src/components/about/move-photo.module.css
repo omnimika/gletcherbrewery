@@ -1,0 +1,18 @@
+.movePhoto {
+  cursor: grab;
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+}
+
+.dragging {
+  /* Matches Tilda `.draggable-dragging` */
+  transform: scale(0.9);
+  cursor: grabbing;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dragging {
+    transform: none;
+  }
+}

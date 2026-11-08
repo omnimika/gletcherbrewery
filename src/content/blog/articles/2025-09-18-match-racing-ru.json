@@ -1,12 +1,12 @@
 {
   "id": "match-racing",
   "locale": "ru",
-  "slug": "5vugn2kjy1-gletcher-podderzhal-kubok-rossii-po-matc",
+  "slug": "2025-09-18-gletcher-podderzhal-kubok-rossii-po-matc",
   "title": "Gletcher поддержал Кубок России по матчевым гонкам",
   "description": "12-14 сентября в Ореховой Бухте прошло важное событие в мире парусное спорта. Рассказываем, как это было!",
   "publishedAt": "2025-09-18 11:39",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3265-3135-4661-a530-346338366338/WhatsApp_Image_2025-.jpeg",
+    "src": "/blog/2025-09-18-gletcher-podderzhal-kubok-rossii-po-matc/cover.jpeg",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3561-6432-4366-b662-633964393839/0134.jpg",
+      "src": "/blog/2025-09-18-gletcher-podderzhal-kubok-rossii-po-matc/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -37,7 +37,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6262-3730-4564-a562-346234333139/photo_2025-09-18_114.jpeg",
+      "src": "/blog/2025-09-18-gletcher-podderzhal-kubok-rossii-po-matc/02.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -50,7 +50,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3338-6434-4563-b633-353930636466/0035.jpg",
+      "src": "/blog/2025-09-18-gletcher-podderzhal-kubok-rossii-po-matc/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -59,7 +59,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6532-3534-4463-b131-316534326138/photo_2025-09-18_114.jpeg",
+      "src": "/blog/2025-09-18-gletcher-podderzhal-kubok-rossii-po-matc/04.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -68,7 +68,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6265-6338-4636-b730-383161663463/0715.jpg",
+      "src": "/blog/2025-09-18-gletcher-podderzhal-kubok-rossii-po-matc/05.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -77,7 +77,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6531-3930-4332-b732-643961346665/0607.jpg",
+      "src": "/blog/2025-09-18-gletcher-podderzhal-kubok-rossii-po-matc/06.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

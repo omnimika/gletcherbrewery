@@ -1,12 +1,12 @@
 {
   "id": "stout-guide",
   "locale": "ru",
-  "slug": "plfsxpk1n1-razbiraemsya-v-sortah-stauti",
+  "slug": "2024-02-04-razbiraemsya-v-sortah-stauti",
   "title": "Разбираемся в сортах: стауты",
   "description": "Исследуем особенности самого известного тёмного сорта пива и пытаемся разобраться, где проходит грань между стаутами и портерами",
   "publishedAt": "2024-02-04 18:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6637-3031-4633-a361-336666346666/0D3A6313.jpg",
+    "src": "/blog/2024-02-04-razbiraemsya-v-sortah-stauti/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3233-3930-4635-b762-626534363935/image.png",
+      "src": "/blog/2024-02-04-razbiraemsya-v-sortah-stauti/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6162-3332-4665-b935-306233626265/image.png",
+      "src": "/blog/2024-02-04-razbiraemsya-v-sortah-stauti/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -74,7 +74,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6632-3430-4632-b164-663136646166/0D3A6339.jpg",
+      "src": "/blog/2024-02-04-razbiraemsya-v-sortah-stauti/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -92,7 +92,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3630-3661-4935-a539-306265653332/image.png",
+      "src": "/blog/2024-02-04-razbiraemsya-v-sortah-stauti/04.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -110,7 +110,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6363-3138-4236-b135-313135353637/Underground_stout_ba.png",
+      "src": "/blog/2024-02-04-razbiraemsya-v-sortah-stauti/05.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -119,7 +119,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6535-3131-4262-b235-393831633337/20210506_gletcher_06.jpg",
+      "src": "/blog/2024-02-04-razbiraemsya-v-sortah-stauti/06.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -128,7 +128,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3831-6335-4334-a235-623934666335/20210319_gletcher_03.jpg",
+      "src": "/blog/2024-02-04-razbiraemsya-v-sortah-stauti/07.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

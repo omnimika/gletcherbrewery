@@ -1,12 +1,12 @@
 {
   "id": "beer-sensation-more",
   "locale": "ru",
-  "slug": "hxjjtbo7k1-kak-mi-oschuschaem-pivo-a-chto-esche-kro",
+  "slug": "2021-11-25-kak-mi-oschuschaem-pivo-a-chto-esche-kro",
   "title": "Как мы ощущаем пиво: а что еще, кроме вкуса?",
   "description": "Завершаем рассказ о том, как человек ощущает вкус пива",
   "publishedAt": "2021-11-25 21:53",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6634-3336-4131-a362-323039313539/088A8214.jpg",
+    "src": "/blog/2021-11-25-kak-mi-oschuschaem-pivo-a-chto-esche-kro/cover.jpg",
     "alt": ""
   },
   "blocks": [

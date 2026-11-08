@@ -1,12 +1,12 @@
 {
   "id": "ruby-road",
   "locale": "en",
-  "slug": "s5buub3ik1-ruby-road-our-strong-cherry-ale-in-a-new",
+  "slug": "2024-06-03-ruby-road-our-strong-cherry-ale-in-a-new",
   "title": "Ruby Road: our strong cherry ale in a new version",
   "description": "Meet the expressive 7% with a fruity cherry, woody, slightly tannic, slightly herbaceous bouquet",
   "publishedAt": "2024-06-03 10:28",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3161-3438-4163-a136-353938326239/image.png",
+    "src": "/blog/2024-06-03-ruby-road-our-strong-cherry-ale-in-a-new/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3863-3937-4433-a130-376663306261/rubyroad-all.png",
+      "src": "/blog/2024-06-03-ruby-road-our-strong-cherry-ale-in-a-new/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,

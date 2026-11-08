@@ -1,12 +1,12 @@
 {
   "id": "cheers-beers",
   "locale": "en",
-  "slug": "poxg2fuvl1-tasting-cheers-amp-beers",
+  "slug": "2022-06-01-tasting-cheers-amp-beers",
   "title": "Tasting Cheers & Beers 🍺",
   "description": "Watch our video about how we conducted a tasting at the Extra Lounge in Serpukhov, and how it all ended",
   "publishedAt": "2022-06-01 18:10",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3261-6638-4639-b139-373737393564/2022-06-01_17-33-49.png",
+    "src": "/blog/2022-06-01-tasting-cheers-amp-beers/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3261-6638-4639-b139-373737393564/2022-06-01_17-33-49.png",
+      "src": "/blog/2022-06-01-tasting-cheers-amp-beers/cover.png",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,11 +1,11 @@
 {
   "id": "beer-pizza",
   "locale": "en",
-  "slug": "5od5iaktd1-october-9-international-beer-and-pizza-d",
+  "slug": "2026-10-09-october-9-international-beer-and-pizza-d",
   "title": "October 9 — International Beer and Pizza Day: Perfect Pairings by Gletcher",
   "description": "From classic Margherita to pepperoni, four cheese, and BBQ — discover which Gletcher beers pair best with your favorite pizza.",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3737-6165-4735-b664-366164323832/__.png",
+    "src": "/blog/2026-10-09-october-9-international-beer-and-pizza-d/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -36,7 +36,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6536-3838-4136-b832-373461643364/_-__Hell.png",
+      "src": "/blog/2026-10-09-october-9-international-beer-and-pizza-d/01.png",
       "alt": "",
       "width": 1672,
       "height": 941
@@ -64,7 +64,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3661-3238-4566-b233-616137613332/___.png",
+      "src": "/blog/2026-10-09-october-9-international-beer-and-pizza-d/02.png",
       "alt": "",
       "width": 1672,
       "height": 941
@@ -84,7 +84,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3939-6662-4939-b730-343361343866/Blue_Monkey___.png",
+      "src": "/blog/2026-10-09-october-9-international-beer-and-pizza-d/03.png",
       "alt": "",
       "width": 1672,
       "height": 941
@@ -100,7 +100,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3937-3865-4061-a161-363238376362/____Nut_Butter.png",
+      "src": "/blog/2026-10-09-october-9-international-beer-and-pizza-d/04.png",
       "alt": "",
       "width": 1672,
       "height": 941

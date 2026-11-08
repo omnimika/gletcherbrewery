@@ -1,12 +1,12 @@
 {
   "id": "craft-depot-interview",
   "locale": "en",
-  "slug": "c4olen1kd1-interview-for-the-craft-depot-associatio",
+  "slug": "2022-09-22-interview-for-the-craft-depot-associatio",
   "title": "Interview for the CRAFT DEPOT Association",
   "description": "Experiments are important, but it is even more important to brew your beer honestly – a conversation with the co-owners of Gletcher Brewery",
   "publishedAt": "2022-09-22 13:55",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3935-3731-4264-b564-346164356530/image.png",
+    "src": "/blog/2022-09-22-interview-for-the-craft-depot-associatio/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3935-3731-4264-b564-346164356530/image.png",
+      "src": "/blog/2022-09-22-interview-for-the-craft-depot-associatio/cover.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -29,7 +29,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3138-6661-4265-b537-343130646663/image.png",
+      "src": "/blog/2022-09-22-interview-for-the-craft-depot-associatio/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -42,7 +42,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3062-6462-4637-a561-633836643136/image.png",
+      "src": "/blog/2022-09-22-interview-for-the-craft-depot-associatio/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -55,7 +55,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6239-6264-4934-a539-306331396336/image.png",
+      "src": "/blog/2022-09-22-interview-for-the-craft-depot-associatio/03.png",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,11 +1,11 @@
 {
   "id": "moa-na",
   "locale": "en",
-  "slug": "za6t88elj1-milk-of-amnesia-non-alcoholic",
+  "slug": "2026-03-26-milk-of-amnesia-non-alcoholic",
   "title": "Milk of Amnesia Non-Alcoholic",
   "description": "Tropical escapism in every sip—for when alcohol doesn't fit the schedule.",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3836-3166-4562-a134-653937613266/imagepng.webp",
+    "src": "/blog/2026-03-26-milk-of-amnesia-non-alcoholic/cover.webp",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3739-3563-4034-a638-666266623234/image.png",
+      "src": "/blog/2026-03-26-milk-of-amnesia-non-alcoholic/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -42,7 +42,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3933-3837-4365-a639-303765303239/2SH_MOA_nonalco_stag.png",
+      "src": "/blog/2026-03-26-milk-of-amnesia-non-alcoholic/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -60,7 +60,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3434-3466-4836-a630-663765373661/badgepng.webp",
+      "src": "/blog/2026-03-26-milk-of-amnesia-non-alcoholic/03.webp",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -73,7 +73,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3963-6531-4635-a366-393630363963/bottle-bg-name-ALL-2.png",
+      "src": "/blog/2026-03-26-milk-of-amnesia-non-alcoholic/04.png",
       "alt": "",
       "caption": "",
       "width": 1200,

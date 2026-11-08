@@ -1,12 +1,12 @@
 {
   "id": "bar-hub-expo",
   "locale": "ru",
-  "slug": "u1mk7vpiy1-bar-hub-expo-2025",
+  "slug": "2025-09-08-bar-hub-expo-2025",
   "title": "bar hub EXPO 2025",
   "description": "Приглашаем на самое глобальное мероприятие барной индустрии России — ждём вас на стенде № НА-2 от Gletcher Brewery & SVAM Group!",
   "publishedAt": "2025-09-08 11:13",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3962-3364-4936-a634-343838616366/image.png",
+    "src": "/blog/2025-09-08-bar-hub-expo-2025/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6237-3163-4339-b465-383532616464/___10.png",
+      "src": "/blog/2025-09-08-bar-hub-expo-2025/01.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -46,7 +46,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3732-3031-4835-a263-333530333831/_bur_hub-4.png",
+      "src": "/blog/2025-09-08-bar-hub-expo-2025/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,

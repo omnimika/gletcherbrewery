@@ -1,12 +1,12 @@
 {
   "id": "four-ingredients",
   "locale": "ru",
-  "slug": "zg9u7nn2y1-chetire-ingredienta-i-more-vozmozhnostei",
+  "slug": "2021-02-19-chetire-ingredienta-i-more-vozmozhnostei",
   "title": "Четыре ингредиента и море возможностей: из чего состоит пиво",
   "description": "Рассказываем из чего состоит пиво, и какую роль играет каждый ингредиент.",
   "publishedAt": "2021-02-19 17:29",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3363-3134-4635-b861-633834363866/fridaybeer.png",
+    "src": "/blog/2021-02-19-chetire-ingredienta-i-more-vozmozhnostei/cover.png",
     "alt": ""
   },
   "blocks": [

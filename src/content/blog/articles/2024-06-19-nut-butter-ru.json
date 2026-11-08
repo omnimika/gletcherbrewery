@@ -1,12 +1,12 @@
 {
   "id": "nut-butter",
   "locale": "ru",
-  "slug": "han5v1ryi1-nut-butter-orehovaya-magiya-v-kazhdom-gl",
+  "slug": "2024-06-19-nut-butter-orehovaya-magiya-v-kazhdom-gl",
   "title": "Nut Butter: ореховая магия в каждом глотке",
   "description": "Gletcher Brewery представляет браун-эль с итальянским ореховым ликером, который был специально разработан для создания этого уникального сорта.",
   "publishedAt": "2024-06-19 11:37",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3836-3166-4335-b765-613763376537/SQUIRELL_.png",
+    "src": "/blog/2024-06-19-nut-butter-orehovaya-magiya-v-kazhdom-gl/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3266-3930-4632-b236-353035656534/20240528_gletcher_01.jpg",
+      "src": "/blog/2024-06-19-nut-butter-orehovaya-magiya-v-kazhdom-gl/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -25,7 +25,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6535-3234-4232-b336-316336643165/bottle-bg-name-ALL-n.png",
+      "src": "/blog/2024-06-19-nut-butter-orehovaya-magiya-v-kazhdom-gl/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,

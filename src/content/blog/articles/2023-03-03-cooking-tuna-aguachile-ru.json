@@ -1,12 +1,12 @@
 {
   "id": "cooking-tuna-aguachile",
   "locale": "ru",
-  "slug": "gjauaxmg91-pivnaya-kuhnya-tunets-aguachile-v-ipa-so",
+  "slug": "2023-03-03-pivnaya-kuhnya-tunets-aguachile-v-ipa-so",
   "title": "Пивная кухня: Тунец Агуачиле в IPA соусе",
   "description": "Хорошо подобранный IPA придаёт тропический оттенок этому простому, но восхитительному блюду на основе тунца, лайма и перцев",
   "publishedAt": "2023-03-03 15:22",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3930-6330-4863-a337-626537633832/image.png",
+    "src": "/blog/2023-03-03-pivnaya-kuhnya-tunets-aguachile-v-ipa-so/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -58,7 +58,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3931-6164-4461-b235-363034313961/20210309_gletcher_00.jpeg",
+      "src": "/blog/2023-03-03-pivnaya-kuhnya-tunets-aguachile-v-ipa-so/01.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -79,7 +79,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6438-6436-4436-a366-323264616264/027_.jpeg",
+      "src": "/blog/2023-03-03-pivnaya-kuhnya-tunets-aguachile-v-ipa-so/02.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,

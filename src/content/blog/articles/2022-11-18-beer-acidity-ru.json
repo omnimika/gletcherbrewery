@@ -1,12 +1,12 @@
 {
   "id": "beer-acidity",
   "locale": "ru",
-  "slug": "79g7nt4ny1-kislota-v-pive-kak-pivovarennaya-promish",
+  "slug": "2022-11-18-kislota-v-pive-kak-pivovarennaya-promish",
   "title": "Кислота в пиве: как пивоваренная промышленность изменила химию",
   "description": "Мир может быть благодарен пиву за более глубокое понимание кислот, их поведения и способов их измерения, и эти знания продолжают приносить большую пользу пивоварам сегодня.",
   "publishedAt": "2022-11-18 11:00",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3231-3336-4538-a338-623530363863/image.png",
+    "src": "/blog/2022-11-18-kislota-v-pive-kak-pivovarennaya-promish/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6633-6433-4433-b163-396262363262/image.png",
+      "src": "/blog/2022-11-18-kislota-v-pive-kak-pivovarennaya-promish/01.png",
       "alt": "",
       "caption": "С. П. Л. Сёренсен в своей лаборатории компании «Карлсберг». Конец 1920-х гг.",
       "width": 1200,
@@ -56,7 +56,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3839-3064-4462-a463-313666616464/DSC_3261.jpg",
+      "src": "/blog/2022-11-18-kislota-v-pive-kak-pivovarennaya-promish/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,12 +1,12 @@
 {
   "id": "rauchbier",
   "locale": "en",
-  "slug": "2jevneeme1-rauchbier-spicy-smoked-beer-with-seeds-o",
+  "slug": "2021-05-20-rauchbier-spicy-smoked-beer-with-seeds-o",
   "title": "Rauchbier: Spicy smoked beer with seeds of Guinea pepper",
   "description": "Collaboration with the author of the blog \"Two beers, please!\" Oleg Korotkiy and the head of the laboratory of the Avangard malt factory Martin Heuser",
   "publishedAt": "2021-05-20 15:53",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6137-3933-4162-a633-333634326435/20210507_gletcher_06.png",
+    "src": "/blog/2021-05-20-rauchbier-spicy-smoked-beer-with-seeds-o/cover.png",
     "alt": ""
   },
   "blocks": [

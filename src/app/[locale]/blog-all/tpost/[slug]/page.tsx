@@ -1,99 +1,42 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 import { hasLocale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import { BlogArticle } from "@/components/blog/blog-article";
-import { SiteShell } from "@/components/site-shell";
+import { setRequestLocale } from "next-intl/server";
+import { blogArticlePathname } from "@/content/blog";
+import slugRedirects from "@/content/blog/slug-redirects.json";
 import {
-  blogArticleLocaleHrefs,
-  blogArticlePathname,
-  blogListingHref,
-  getLocalBlogStaticParams,
-  resolveBlogArticle,
-} from "@/content/blog";
-import {
-  DEFAULT_LOCALE,
-  type LocaleHrefs,
-  type PublishedLocale,
   isPublishedLocale,
+  type PublishedLocale,
 } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
 
-type ArticlePageProps = {
+type PageProps = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
-export function generateStaticParams() {
-  return getLocalBlogStaticParams();
-}
-
-export async function generateMetadata({
-  params,
-}: ArticlePageProps): Promise<Metadata> {
-  const { locale, slug } = await params;
-  if (!isPublishedLocale(locale)) return {};
-  const resolved = resolveBlogArticle(locale, slug);
-  if (!resolved) return {};
-
-  const { post, body } = resolved;
-  const canonical = blogArticlePathname(body.slug, locale);
-  const peers = blogArticleLocaleHrefs(post);
-  const languages: Record<string, string> = {};
-  for (const code of Object.keys(peers) as PublishedLocale[]) {
-    const path = peers[code];
-    if (!path) continue;
-    languages[code] = blogArticlePathname(
-      path.replace(/^\/blog-all\/tpost\//, ""),
-      code,
-    );
-  }
-  languages["x-default"] = peers.ru
-    ? blogArticlePathname(
-        peers.ru.replace(/^\/blog-all\/tpost\//, ""),
-        DEFAULT_LOCALE,
-      )
-    : canonical;
-
-  return {
-    title: { absolute: body.title },
-    description: body.description,
-    alternates: {
-      canonical,
-      languages,
-    },
-  };
-}
-
-export default async function BlogArticlePage({ params }: ArticlePageProps) {
+/**
+ * Legacy Tilda article URLs `/blog-all/tpost/{hash-slug}`.
+ * Permanent redirect (308) → `/blog/YYYY-MM-DD-{descriptive-slug}`.
+ */
+export default async function LegacyBlogTpostRedirect({ params }: PageProps) {
   const { locale, slug } = await params;
   if (!hasLocale(routing.locales, locale) || !isPublishedLocale(locale)) {
-    notFound();
+    permanentRedirect("/blog");
   }
+
   setRequestLocale(locale);
+  const map = slugRedirects as Record<string, string>;
+  const nextSlug = map[slug] ?? slug;
+  permanentRedirect(blogArticlePathname(nextSlug, locale as PublishedLocale));
+}
 
-  const published = locale as PublishedLocale;
-  const resolved = resolveBlogArticle(published, slug);
-  if (!resolved) notFound();
-
-  const { post, translation, body } = resolved;
-  const t = await getTranslations("blog");
-
-  const peers = blogArticleLocaleHrefs(post);
-  // Missing peer → listing fallback (no invented article URL; no foreign hash).
-  const localeHrefs: LocaleHrefs = {
-    ru: peers.ru ?? { fallback: blogListingHref() },
-    en: peers.en ?? { fallback: blogListingHref() },
-  };
-
-  return (
-    <SiteShell localeHrefs={localeHrefs}>
-      <BlogArticle
-        article={body}
-        categoryLabel={translation.categoryLabel}
-        publishedAt={body.publishedAt || translation.publishedAt}
-        backHref="/blog"
-        backLabel={t("backToBlog")}
-      />
-    </SiteShell>
-  );
+export function generateStaticParams() {
+  const map = slugRedirects as Record<string, string>;
+  const params: { locale: string; slug: string }[] = [];
+  for (const oldSlug of Object.keys(map)) {
+    for (const locale of routing.locales) {
+      if (!isPublishedLocale(locale)) continue;
+      params.push({ locale, slug: oldSlug });
+    }
+  }
+  return params;
 }

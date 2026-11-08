@@ -1,12 +1,12 @@
 {
   "id": "anora-podcast-interview",
   "locale": "ru",
-  "slug": "f52uygiau1-intervyu-anora-mischenko-glavnii-tehnolo",
+  "slug": "2020-12-11-intervyu-anora-mischenko-glavnii-tehnolo",
   "title": "Интервью: Анора Мищенко, главный технолог Gletcher Brewery",
   "description": "Наш технолог Анора стала героиней 6-го выпуска подкаста «Два пива, пожалуйста» Олега Короткого. Чем обернётся для пивоварен обязательная маркировка? Насколько подорожает при этом пиво? Как правильно проводить тестовые варки?",
   "publishedAt": "2020-12-11 21:44",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3832-6232-4466-b536-326431386232/__2020-12-11__215003.png",
+    "src": "/blog/2020-12-11-intervyu-anora-mischenko-glavnii-tehnolo/cover.png",
     "alt": ""
   },
   "blocks": [

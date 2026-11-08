@@ -1,12 +1,12 @@
 {
   "id": "brainstorm-motor-fest-2024",
   "locale": "ru",
-  "slug": "r6g8ym6vs1-brainstorm-motor-fest-2024-festival-avto",
+  "slug": "2024-07-28-brainstorm-motor-fest-2024-festival-avto",
   "title": "Brainstorm Motor Fest 2024: фестиваль авто и мото культуры",
   "description": "Ощутите дух свободы под рëв моторов – мы с огромным удовольствием приглашаем вас принять участие в фестивале, который окунет вас в увлекательный мир эксклюзивных авто и мото проектов, вкусов и звука!",
   "publishedAt": "2024-07-28 12:37",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3864-3566-4862-b764-363437316630/8t1UNrm0Q8M.jpg",
+    "src": "/blog/2024-07-28-brainstorm-motor-fest-2024-festival-avto/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6539-6134-4135-a165-386332656236/photo_2023-07-21_143.jpeg",
+      "src": "/blog/2024-07-28-brainstorm-motor-fest-2024-festival-avto/01.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -29,7 +29,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3632-3734-4633-b164-663737663738/AFLwmM_ZDl0.jpg",
+      "src": "/blog/2024-07-28-brainstorm-motor-fest-2024-festival-avto/02.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -42,7 +42,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3539-3162-4134-b930-366234626639/QfWi3BS2FLM.jpg",
+      "src": "/blog/2024-07-28-brainstorm-motor-fest-2024-festival-avto/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -55,7 +55,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3231-6166-4332-b037-333838656664/WhatsApp_Image_2024-.jpeg",
+      "src": "/blog/2024-07-28-brainstorm-motor-fest-2024-festival-avto/04.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -64,7 +64,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3939-3935-4430-b533-383435363461/photo_2023-07-21_144.jpeg",
+      "src": "/blog/2024-07-28-brainstorm-motor-fest-2024-festival-avto/05.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,

@@ -1,12 +1,12 @@
 {
   "id": "nut-butter",
   "locale": "en",
-  "slug": "h91e4e7g91-nut-butter-nutty-magic-in-every-sip",
+  "slug": "2024-06-24-nut-butter-nutty-magic-in-every-sip",
   "title": "Nut Butter: nutty magic in every sip",
   "description": "We present a new look for everyone's favorite brown ale with Italian walnut liqueur, which was specially developed to create this unique variety.",
   "publishedAt": "2024-06-24 15:12",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3637-3733-4536-b164-323362633031/image.png",
+    "src": "/blog/2024-06-24-nut-butter-nutty-magic-in-every-sip/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6539-6533-4839-a436-643361633932/20240528_gletcher_01.jpg",
+      "src": "/blog/2024-06-24-nut-butter-nutty-magic-in-every-sip/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -25,7 +25,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3130-6330-4638-a138-386335666338/bottle-bg-name-ALL-n.png",
+      "src": "/blog/2024-06-24-nut-butter-nutty-magic-in-every-sip/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,

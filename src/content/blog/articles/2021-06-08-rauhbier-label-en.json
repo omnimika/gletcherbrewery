@@ -1,12 +1,12 @@
 {
   "id": "rauhbier-label",
   "locale": "en",
-  "slug": "exvllok0p1-rauhbier-beer-label-from-idea-to-impleme",
+  "slug": "2021-06-08-rauhbier-beer-label-from-idea-to-impleme",
   "title": "Rauhbier: beer label from idea to implementation",
   "description": "A beer label is like clothing for beer. Using the example of the Rauchbier label, we wanted to show what stages of design a label goes through: from idea to implementation.",
   "publishedAt": "2021-06-08 19:23",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3936-3162-4034-a261-623330643966/image.png",
+    "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/cover.png",
     "alt": ""
   },
   "blocks": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3936-3162-4034-a261-623330643966/image.png",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/cover.png",
       "alt": "",
       "caption": "The reference was as follows",
       "width": 1200,
@@ -29,7 +29,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6264-6331-4465-b030-653237646233/image.png",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/01.png",
       "alt": "",
       "caption": "Then there was the first visualization",
       "width": 1200,
@@ -42,7 +42,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3939-3739-4963-a234-306137373935/image.png",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -51,7 +51,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3536-3938-4539-b736-666434663930/image.png",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/03.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -60,7 +60,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3566-6135-4634-b032-353134326137/image.png",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/04.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -78,7 +78,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6137-3564-4633-b235-656236353335/image.png",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/05.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -91,7 +91,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6162-3034-4464-b538-356535326563/image.png",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/06.png",
       "alt": "",
       "caption": "",
       "width": 1200,

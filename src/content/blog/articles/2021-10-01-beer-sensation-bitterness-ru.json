@@ -1,12 +1,12 @@
 {
   "id": "beer-sensation-bitterness",
   "locale": "ru",
-  "slug": "x3afu840s1-kak-mi-oschuschaem-pivo-gorech",
+  "slug": "2021-10-01-kak-mi-oschuschaem-pivo-gorech",
   "title": "Как мы ощущаем пиво: горечь",
   "description": "Рассказываем о том, как человеком ощущается горечь в пиве.",
   "publishedAt": "2021-10-01 17:32",
   "cover": {
-    "src": "https://static.tildacdn.com/tild6237-6235-4138-b365-346562633561/bowler.jpg",
+    "src": "/blog/2021-10-01-kak-mi-oschuschaem-pivo-gorech/cover.jpg",
     "alt": ""
   },
   "blocks": [

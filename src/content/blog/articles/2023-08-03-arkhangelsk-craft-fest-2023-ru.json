@@ -1,12 +1,12 @@
 {
   "id": "arkhangelsk-craft-fest-2023",
   "locale": "ru",
-  "slug": "ybi8xe5lc1-gletcher-v-arhangelske-craft-fest",
+  "slug": "2023-08-03-gletcher-v-arhangelske-craft-fest",
   "title": "Gletcher в Архангельске: Craft Fest!",
   "description": "Самые актуальные вкусы от нашей пивоварни на поморском фестивале напитков и еды",
   "publishedAt": "2023-08-03 12:54",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3462-6139-4263-a462-626330396662/2023-08-03_131524.jpg",
+    "src": "/blog/2023-08-03-gletcher-v-arhangelske-craft-fest/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6231-3038-4665-b835-666164333763/sKoYUcIxhdY.jpg",
+      "src": "/blog/2023-08-03-gletcher-v-arhangelske-craft-fest/01.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -34,7 +34,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild6234-6438-4165-a436-643033386263/_28002500_2023.png",
+      "src": "/blog/2023-08-03-gletcher-v-arhangelske-craft-fest/02.png",
       "alt": "",
       "caption": "",
       "width": 1200,
@@ -47,7 +47,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3738-3537-4666-b932-323365356635/8w8NHJcOqtA.jpg",
+      "src": "/blog/2023-08-03-gletcher-v-arhangelske-craft-fest/03.jpg",
       "alt": "",
       "caption": "",
       "width": 1200,

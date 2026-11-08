@@ -1,11 +1,11 @@
 {
   "id": "kenig-kraft-fest",
   "locale": "ru",
-  "slug": "zd1a4a40u1-edem-v-kaliningrad-na-kenig-kraft-fest",
+  "slug": "2026-08-14-edem-v-kaliningrad-na-kenig-kraft-fest",
   "title": "Едем в Калининград на Kenig Kraft Fest!",
   "description": "15–16 августа 2026 года в самом западном регионе России произойдёт событие, которого здесь ещё не было.",
   "cover": {
-    "src": "https://static.tildacdn.com/tild3139-3966-4237-b434-306539363434/cibQPtU_7R7KVDHt10F7.jpg",
+    "src": "/blog/2026-08-14-edem-v-kaliningrad-na-kenig-kraft-fest/cover.jpg",
     "alt": ""
   },
   "blocks": [
@@ -15,7 +15,7 @@
     },
     {
       "type": "image",
-      "src": "https://static.tildacdn.com/tild3137-6264-4930-b935-623933326131/photo_2026-08-14_113.jpeg",
+      "src": "/blog/2026-08-14-edem-v-kaliningrad-na-kenig-kraft-fest/01.jpeg",
       "alt": "",
       "caption": "",
       "width": 1200,
