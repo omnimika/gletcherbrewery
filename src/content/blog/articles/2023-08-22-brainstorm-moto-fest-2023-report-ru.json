@@ -1,0 +1,63 @@
+{
+  "id": "brainstorm-moto-fest-2023-report",
+  "locale": "ru",
+  "slug": "2023-08-22-fotootchyot-s-brainstorm-moto-fest",
+  "title": "ФОТООТЧЁТ С BRAINSTORM MOTO FEST",
+  "description": "Ревущие моторы мотоциклов, ретро авто, ремесленное пиво и рок-н-ролл!",
+  "publishedAt": "2023-08-22 10:00",
+  "cover": {
+    "src": "/blog/2023-08-22-fotootchyot-s-brainstorm-moto-fest/cover.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "Благодарим всех участников и посетителей фестиваля!"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2023-08-22-fotootchyot-s-brainstorm-moto-fest/01.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "image",
+      "src": "/blog/2023-08-22-fotootchyot-s-brainstorm-moto-fest/02.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "image",
+      "src": "/blog/2023-08-22-fotootchyot-s-brainstorm-moto-fest/03.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "html": "<a href=\"/brainstorm-moto-fest-2023\">ПОЛНЫЙ ФОТООТЧЁТ СМОТРИТЕ НА СТРАНИЦЕ МЕРОПРИЯТИЯ</a>"
+    },
+    {
+      "type": "paragraph",
+      "html": "<a href=\"/brainstorm-moto-fest-2023\"><strong>https://www.gletcherbrewery.com/brainstorm-moto-fest-2023</strong></a>"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2023-08-22-fotootchyot-s-brainstorm-moto-fest/04.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

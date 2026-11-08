@@ -1,6 +1,6 @@
 # Gletcher Brewery — AGENTS.md
 
-> Версия: 0.5 (31 октября 2026 г.)
+> Версия: 0.13 (5 ноября 2026 г.)
 > Назначение: единые постоянные инструкции для Cursor Agent и OpenAI Codex.  
 > Подробный план реализации: `docs/ROADMAP.md` (при размещении файла из поставки в проекте).  
 > **Не считать этот документ подтверждением неизвестных деталей исходной системы.**
@@ -14,6 +14,14 @@
 ### Зафиксировано владельцем проекта
 
 - Frontend/full-stack: Next.js, TypeScript, Tailwind CSS.
+- /about обязателен вместе с анимацией и логикой source landing: Tilda page
+  71867465, project 1212341. Задание/приёмка: `docs/discovery/ABOUT_PAGE_BASELINE.md`.
+  Статичная упрощённая страница без исходного поведения не закрывает этот scope.
+- Дизайн-код: презентационные композиции с адаптацией к ширине **и высоте** окна,
+  якорями, мягким позиционированием, сетками 50/50 и 25/50/25 по обеим осям,
+  cards 3/4/6, banners/carousels. Сохранить характер палитры/шрифтов/границ;
+  общие компоненты, состояния и motion: `docs/design/DESIGN_SYSTEM.md`.
+- MCP Tilda подключён в Cursor; владелец подтвердил доступ к исходникам страниц. Для анализа использовать read-only workflow `docs/discovery/TILDA_MCP_WORKFLOW.md`, различая редакторскую и опубликованную версии.
 - Хостинг и инфраструктура: **Yandex Cloud**.
 - Замена Airtable: **NocoDB обязателен**; репозиторий: https://github.com/nocodb/nocodb.
 - Требуется мигрировать участников и историю бонусной программы **«Агент Глетчер»** из Airtable.
@@ -28,7 +36,7 @@
 - Структура и права доступа к исходной Google-таблице торговых сетей.
 - Конкретные Mapbox tileset IDs, source-layer, style-фильтры и режим публикации/обновления. В экспортированных файлах поле называется `Product` (singular); фактический формат активного tileset пока не подтверждён.
 - Текущие цены и условия всех типов экскурсий, политика возвратов, количество мест, правила сертификатов и налогово-правовая схема приёма платежей.
-- Наличие прав на исходники, экспорт Tilda, медиа, настройки домена, сценарии Make.com, данные YCLIENTS и Collabza.
+- Полнота экспорта Tilda, совпадение editor/published, права на экспорт и медиа, настройки домена, сценарии Make.com, данные YCLIENTS и Collabza. Подключённый MCP сам по себе этого не подтверждает.
 - Выбранные ORM, авторизация, CMS, фоновые задачи, конкретная конфигурация деплоя, CI/CD.
 
 **Не подменять неизвестные бизнес-правила предположениями.** Помечать решения как `Confirmed`, `Proposed`, `Open` в технической документации.
@@ -45,7 +53,7 @@
 ### OpenAI Codex — независимый ревьюер
 - Ревью архитектуры, TypeScript, безопасности, скорости, доступности, совместимости и миграционной надёжности.
 - Код приложения при стандартном ревью — **read-only**: читает файлы, тесты и staged/unstaged diff, возвращает замечания P0–P3 с файлами и строками. Если рабочее дерево чистое, явно указывает проверяемый commit и baseline.
-- По явному разрешению владельца может редактировать `AGENTS.md`, `ROADMAP.md` и `docs/**`, включая `docs/discovery/**`; изменения документации не означают исправления кода или принятия Proposed-решений.
+- Владелец разрешил Codex редактировать `AGENTS.md`, `ROADMAP.md`, `README.md` и `docs/**`, включая `docs/discovery/**`, для ревью и передачи задач Cursor. Код приложения остаётся read-only; изменения документации не означают исправления кода или принятия Proposed-решений.
 - Не устанавливает пакеты, не делает коммиты, push или миграции без отдельного задания. Для read-only проверки типов отключает incremental-кеш; build/dev запускает только в режиме, допускающем запись генерируемых файлов.
 
 ### Одновременная работа
@@ -72,6 +80,9 @@
 - Перенести страницы, компоненты, русскую/английскую локализацию (после инвентаризации), каталог сортов, блог, раздел партнёров, контакты, карту, экскурсии и «Агента Глетчер».
 - Максимально сохранить URL, метаданные SEO, alt, canonical, sitemap, structured data и редиректы 301 для изменённых адресов.
 - Сверять дизайн по исходному сайту, а не копировать неконтролируемо Tilda-HTML.
+- Новый дизайн-код — целевое развитие исходного бренда. Screen sections растут
+  по содержимому; статьи/legal/forms сохраняют reading flow. Native document
+  scroll, opt-in proximity и reduced-motion; без whole-UI scale/scroll hijack.
 - Поддерживать mobile-first, семантическую разметку, доступность, оптимизацию изображений и Core Web Vitals.
 - Сохранить возрастные ограничения и юридические предупреждения; проверять применимое законодательство РФ и **не реализовывать онлайн-продажу алкоголя без отдельного юридического согласования**.
 - i18n: сохранять RU URL без префикса и существующие EN URL; будущие `sr`/`hy`/`ka`/`de` остаются **Proposed** до согласования и публикации переводов. Язык, письменность и рынок — отдельные параметры; маршрут, переключатель и SEO используют только опубликованные версии. Контракт: `docs/adr/0001-i18n-routing-and-content.md`.
@@ -142,11 +153,25 @@
 
 **Строго соблюдать очередность `docs/ROADMAP.md`:** (0) Bootstrap Next.js → (1) Site Discovery → (2) базовая дизайн-система → (3) одна эталонная страница → (4) остальной публичный сайт → (5+) backend, NocoDB, Mapbox, бонусы и бронирования. Преждевременная разработка CRM/Mapbox не является текущей задачей.
 
-1. Bootstrap и документы Discovery созданы; утверждённый эталон — `/beer`. Это не подтверждает визуальную приёмку этапов 2–3.
-2. Сверить актуальные замечания в `docs/reviews/2026-10-31-current-state.md`, исправить подтверждённые дефекты кода и проверить desktop/mobile, клавиатуру, ссылки и высоту viewport.
-3. Завершить визуальную приёмку `/beer` владельцем и необходимые lint/typecheck/build проверки. Не выдавать статический анализ за браузерное тестирование.
-4. До массового переноса согласовать i18n-контракт: стабильные ID, локализованные slug, статусы переводов, SEO, сербскую письменность и шрифтовое покрытие. Выбор библиотеки пока Proposed.
-5. После приёмки эталона и согласования следующего задания начать этап 4 с одного сквозного RU/EN среза. Добавление остальных языков — отдельные переводы и проверка готовности публикации.
+1. Bootstrap/Discovery, каталог/product, home/blog и основные public templates
+   реализованы. По записям Cursor map/shop приняты 04.11; /agent 320 polish уже
+   в d6011d2, отдельный visual QA Open. Не искать несуществующий dirty-tree gate.
+2. **DS-1/DS-2 реализованы**, DS-3 широко перенесён. Не начинать их заново;
+   конкретные grid/motion/reflow дефекты исправляются адресно. Прежние visual
+   sign-offs — regression baseline, не закрытие новых функциональных замечаний.
+3. **Q1–Q3 Done (05–06.11):** forms/locale/map/shop; design/motion; blog-all 308 +
+ sitemap/robots (`ALLOW_SITE_INDEXING`). **A1 /about code Done** (Tilda 71867465
+ + motion; RU-only; noindex). Manifest:
+ `docs/discovery/ABOUT_SECTION_MANIFEST.md`. Owner visual accept A1 Open.
+ Задание: `docs/CURSOR_NEXT_STEPS.md`.
+4. Далее C1 campaigns → stage-4 exit (нужен owner accept A1) → D5-0.
+ Stage 4 ещё не Done.
+5. Mapbox frontend уже есть, CRM/публикация геоданных ещё нет; YCLIENTS и
+   production members временно сохраняются. /shop RU-only без cart/checkout.
+   Klin campaign в snapshot unpublished/password: MCP access не разрешает публикацию.
+6. ADR 0001 Accepted; RU/EN, `sr`/`hy`/`ka`/`de` planned до translation/script/font
+   gates. ADR 0010 direction Confirmed, implementation reviewable. Свежие проверки
+   обязательны; новые CMS/DB/платежи, commit/push/production — отдельные задания.
 
 Подробная архитектура CRM, data model, миграции Airtable, выбор ORM/Auth/CMS и инфраструктурные ADR — отдельные будущие задачи по этапам, а не блокеры инвентаризации сайта.
 
@@ -157,7 +182,24 @@
 - `docs/ROADMAP.md` — приоритеты реализации.
 - `docs/discovery/PRODUCT_PROPS_INVENTORY.md` — props карточек пива RU/EN + контракт под будущие локали.
 - `docs/adr/0001-i18n-routing-and-content.md` — маршрутизация и модель контента для `ru`/`en`/`sr`/`hy`/`ka`/`de`.
-- `docs/reviews/2026-10-31-current-state.md` — ревью `a6a13a9`, ограничения проверки и задачи Cursor; статус закрытия замечаний подтверждать кодом и проверками.
+- `docs/CURSOR_NEXT_STEPS.md` — актуальное задание Cursor с критериями приёмки; обновлять после подтверждённых изменений.
+- `docs/design/DESIGN_SYSTEM.md` — дизайн-код, containers/grids, anchors/scroll, UI/state/motion и DoD.
+- `docs/adr/0010-design-system-and-section-layout.md` — архитектура дизайн-системы и границы rollout.
+- `docs/reviews/2026-11-05-public-integrity.md` — актуальное ревью `d6011d2`, R01–R10 и quality gates.
+- `docs/discovery/PUBLIC_ROUTE_MATRIX.md` — code/publication coverage и legacy/campaign решения до cutover.
+- `docs/discovery/ABOUT_PAGE_BASELINE.md` — обязательный /about: Tilda 71867465, animation/interaction parity и DoD A1.
+- `docs/discovery/ABOUT_SECTION_MANIFEST.md` — A1 records/ZB/animation map и adaptations.
+- `docs/reviews/2026-11-01-design-system.md` — историческое ревью `6b137e7` и follow-up DS-1/DS-2.
+- `docs/reviews/2026-11-01-home-and-sprints.md` — историческое ревью `2c1a9d0`.
+- `docs/SPRINT_PLAN.md` — Q1/Q2/Q3 → обязательный A1 /about → campaigns/public gate → D5-0; прежняя серия в docs/archive.
+- `docs/discovery/HOME_PAGE_BASELINE.md` — source baseline и приёмка текущей home.
+- `docs/reviews/2026-10-31-product-acceptance.md` — историческое ревью `6f84465`; A01–A03 исправлены в `0df9706`.
+- `docs/reviews/2026-10-31-product-template.md` — историческое ревью `9e0ee8e` + рабочего дерева.
+- `docs/discovery/PRODUCT_PAGE_BASELINE.md` — source baseline Friday и media-варианты шаблона.
+- `docs/reviews/2026-10-31-follow-up.md` — историческое ревью `81713e4`.
+- `docs/reviews/2026-10-31-current-state.md` — историческое ревью `5b4910d`.
+- `docs/discovery/TILDA_MCP_WORKFLOW.md` — чтение исходников, provenance, editor/published и сверка результата.
+- `docs/CURSOR_REVIEW_PROMPT.md` — готовый промпт для продолжения Cursor.
 
 ## 9. Полезные ссылки
 

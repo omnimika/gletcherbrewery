@@ -115,7 +115,8 @@ Footer всегда ведёт на policy и контакты.
 | Источник | Кандидат действия | Статус |
 |---|---|---|
 | Disallow legacy `/beer/*` (десятки) | 301 на актуальный сорт или `/beer` / 410 | Open с владельцем |
-| `/about`, `/vacancies` | Publish или noindex+redirect | Open |
+| `/about` | Обязательный local landing с animation/interaction logic, Tilda 71867465; см. [A1 baseline](ABOUT_PAGE_BASELINE.md) | **Confirmed owner 05.11** для реализации; index/publication/EN Open |
+| `/vacancies` | Publish или noindex+redirect | Open из исторического inventory |
 | `/horeca` vs `/partnership` | Возможный дубль тематики | Open SEO |
 | `/shop-old`, `/toursold`, `/indexold` | 410/301 | Legacy |
 | Events `/klin-may-fest-*` | Архив/redirect | Open |

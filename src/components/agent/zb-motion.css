@@ -1,0 +1,146 @@
+/**
+ * Tilda Zero Block appear — armed until viewport trigger, then play once.
+ * fadeinleft = from the right; fadeinright = from the left (Tilda docs).
+ */
+
+.zb-appear {
+  opacity: 1;
+}
+
+.zb-appear[data-zb-armed="true"]:not([data-zb-play="true"]) {
+  opacity: 0;
+  animation: none !important;
+}
+
+.zb-appear--zoomin[data-zb-armed="true"]:not([data-zb-play="true"]) {
+  transform: scale(var(--zb-scale, 0.9));
+}
+
+.zb-appear--fadeinup[data-zb-armed="true"]:not([data-zb-play="true"]) {
+  transform: translateY(var(--zb-distance, 100px));
+}
+
+.zb-appear--fadeindown[data-zb-armed="true"]:not([data-zb-play="true"]) {
+  transform: translateY(calc(-1 * var(--zb-distance, 100px)));
+}
+
+.zb-appear--fadeinleft[data-zb-armed="true"]:not([data-zb-play="true"]) {
+  transform: translateX(var(--zb-distance, 100px));
+}
+
+.zb-appear--fadeinright[data-zb-armed="true"]:not([data-zb-play="true"]) {
+  transform: translateX(calc(-1 * var(--zb-distance, 100px)));
+}
+
+.zb-appear--fadein[data-zb-armed="true"]:not([data-zb-play="true"]) {
+  transform: none;
+}
+
+.zb-appear[data-zb-play="true"] {
+  animation-duration: var(--zb-duration, 1s);
+  animation-delay: var(--zb-delay, 0s);
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+}
+
+.zb-appear--zoomin[data-zb-play="true"] {
+  animation-name: zb-zoomin;
+}
+
+.zb-appear--fadeinup[data-zb-play="true"] {
+  animation-name: zb-fadeinup;
+}
+
+.zb-appear--fadeindown[data-zb-play="true"] {
+  animation-name: zb-fadeindown;
+}
+
+.zb-appear--fadeinleft[data-zb-play="true"] {
+  animation-name: zb-fadeinleft;
+}
+
+.zb-appear--fadeinright[data-zb-play="true"] {
+  animation-name: zb-fadeinright;
+}
+
+.zb-appear--fadein[data-zb-play="true"] {
+  animation-name: zb-fadein;
+}
+
+.zb-sbs {
+  will-change: transform, opacity;
+}
+
+@keyframes zb-zoomin {
+  from {
+    opacity: 0;
+    transform: scale(var(--zb-scale, 0.9));
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zb-fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zb-fadeinup {
+  from {
+    opacity: 0;
+    transform: translateY(var(--zb-distance, 100px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zb-fadeindown {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--zb-distance, 100px)));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zb-fadeinleft {
+  from {
+    opacity: 0;
+    transform: translateX(var(--zb-distance, 100px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes zb-fadeinright {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--zb-distance, 100px)));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zb-appear,
+  .zb-appear[data-zb-armed="true"]:not([data-zb-play="true"]),
+  .zb-appear[data-zb-play="true"] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

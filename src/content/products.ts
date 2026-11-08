@@ -1,17 +1,20 @@
+import { sortAllViewOrder } from "@/content/listing-order";
+
 /**
  * Catalog fixtures for `/beer` listing (cards/filters).
  * Categories/order/badges: **Confirmed** from owner CSV
  * `tmp/Gletcher beer groups.csv` (copied to docs/discovery/_raw/).
  * Unified listing+detail: `src/content/catalog.ts` (stable id + translations).
  * Raw props fixture: `product-props.ts` / `tmp/Gletcher beer categories and props.csv`.
- * UI filters on Tilda remain ALL / CLASSIC / CRAFT / LIMITED —
- * AGED (Cynic) appears in ALL only (no AGED chip on production).
- * Categories CLASSIC/CRAFT/LIMITED/AGED — **Confirmed** from owner groups CSV.
+ * UI filters: ALL / CLASSIC / CRAFT / LIMITED / AGING (Cynic).
+ * Category key is `aging` (not `aged`). Owner CSV historically said AGED —
+ * corrected to AGING by owner 2026-10-31.
+ * ALL strip order: `listing-order.ts` (MCP ZB 802918687).
  */
 
-export type ProductCategory = "classic" | "craft" | "limited" | "aged";
+export type ProductCategory = "classic" | "craft" | "limited" | "aging";
 
-export type ProductBadge = "new" | "alcofree";
+export type ProductBadge = "new" | "alcofree" | "discontinued";
 
 export type CatalogProduct = {
   slug: string;
@@ -29,43 +32,44 @@ export const PRODUCT_FILTERS = [
   { id: "classic", label: "CLASSIC" },
   { id: "craft", label: "CRAFT" },
   { id: "limited", label: "LIMITED" },
+  { id: "aging", label: "AGING" },
 ] as const;
 
 export type ProductFilterId = (typeof PRODUCT_FILTERS)[number]["id"];
 
 const BOTTLE = {
-  cynic: "/catalog/bottles/CATALOGUE__0018_CYNIC---bottle.png",
+  cynic: "/products/cynic/bottle.png",
   milkNonAlco:
-    "/catalog/bottles/CATALOGUE__0017_Milk-of-Amnesia-non-alcoholic---bottle.png",
-  milk: "/catalog/bottles/CATALOGUE__0008_Milk-of-Amnesia---bottle.png",
-  brainstorm: "/catalog/bottles/CATALOGUE__0013_Brainstorm---bottle.png",
-  blueMonkey: "/catalog/bottles/CATALOGUE__0015_Blue-Monkey---bottle.png",
-  nutButter: "/catalog/bottles/CATALOGUE__0007_Nut-Butter---bottle.png",
-  bowler: "/catalog/bottles/CATALOGUE__0014_Bowler-IPA---bottle.png",
-  underground: "/catalog/bottles/CATALOGUE__0003_Underground-Ale---bottle.png",
-  friday: "/catalog/bottles/CATALOGUE__0012_Friday-Avenue---bottle.png",
-  ironDry: "/catalog/bottles/CATALOGUE__0010_Iron-Woods---bottle.png",
-  ironMilk: "/catalog/bottles/CATALOGUE__0009_Iron-Woods-Milk-Stout---bottle.png",
-  ruby: "/catalog/bottles/CATALOGUE__0005_Ruby-Road---bottle.png",
-  ausweis: "/catalog/bottles/CATALOGUE__0016_Ausweis---bottle.png",
-  heidegger: "/catalog/bottles/CATALOGUE__0011_Heidegger-Hell---bottle.png",
-  rouge: "/catalog/bottles/CATALOGUE__0006_Rouge-de-Fleur---bottle.png",
-  brut: "/catalog/bottles/CATALOGUE__0002_Brut-Grapefruit---bottle.png",
-  hopDragon: "/catalog/bottles/CATALOGUE__0001_Hop-Dragon---bottle.png",
-  tour: "/catalog/bottles/CATALOGUE__0004_Tour-De-Grapefruit---bottle.png",
+    "/products/milk-of-amnesia-non-alco/bottle.png",
+  milk: "/products/milk-of-amnesia-v-tropic/bottle.png",
+  brainstorm: "/products/brainstorm/bottle.png",
+  blueMonkey: "/products/blue-monkey/bottle.png",
+  nutButter: "/products/nut-butter/bottle.png",
+  bowler: "/products/bowler-ipa/bottle.png",
+  underground: "/products/underground-ale/bottle.png",
+  friday: "/products/friday-avenue-apa/bottle.png",
+  ironDry: "/products/iron-woods-dry-stout/bottle.png",
+  ironMilk: "/products/iron-woods-milk-stout/bottle.png",
+  ruby: "/products/ruby-road/bottle.png",
+  ausweis: "/products/ausweis/bottle.png",
+  heidegger: "/products/heidegger-hell/bottle.png",
+  rouge: "/products/rouge-de-fleur/bottle.png",
+  brut: "/products/brut-grapefruit/bottle.png",
+  hopDragon: "/products/hop-dragon/bottle.png",
+  tour: "/products/tour-de-grapefruit/bottle.png",
 } as const;
 
 /**
- * Order follows owner CSV within each category.
- * ALL view: new-badged first (production hero order), then remaining CSV order.
+ * Order follows owner CSV within each category (metadata / filters).
+ * ALL / category strip order: `listing-order.ts` (MCP ALL artboard `left`).
  */
 export const CATALOG_PRODUCTS: CatalogProduct[] = [
-  // AGED
+  // AGING
   {
     slug: "cynic",
     name: "CYNIC",
     title: "Cynic Russian Imperial Stout",
-    category: "aged",
+    category: "aging",
     image: BOTTLE.cynic,
     badges: ["new"],
   },
@@ -141,6 +145,8 @@ export const CATALOG_PRODUCTS: CatalogProduct[] = [
     title: "Iron Woods Milk Stout",
     category: "craft",
     image: BOTTLE.ironMilk,
+    badges: ["discontinued"],
+    outOfStock: true,
   },
   {
     slug: "ruby-road",
@@ -178,6 +184,8 @@ export const CATALOG_PRODUCTS: CatalogProduct[] = [
     title: "Brut Grapefruit",
     category: "limited",
     image: BOTTLE.brut,
+    badges: ["discontinued"],
+    outOfStock: true,
   },
   {
     slug: "hop-dragon",
@@ -185,6 +193,8 @@ export const CATALOG_PRODUCTS: CatalogProduct[] = [
     title: "Hop Dragon",
     category: "limited",
     image: BOTTLE.hopDragon,
+    badges: ["discontinued"],
+    outOfStock: true,
   },
   {
     slug: "tour-de-grapefruit",
@@ -196,14 +206,18 @@ export const CATALOG_PRODUCTS: CatalogProduct[] = [
   },
 ];
 
-/** ALL view: NEW first (Cynic, MoA NA, Tour), then remaining in CSV group order. */
+/** ALL: NEW first, out-of-stock last; relative order from listing-order.ts. */
 export function productsForAllView(
   products: CatalogProduct[] = CATALOG_PRODUCTS,
 ): CatalogProduct[] {
-  const isNew = (p: CatalogProduct) => p.badges?.includes("new");
-  const news = products.filter(isNew);
-  const rest = products.filter((p) => !isNew(p));
-  return [...news, ...rest];
+  return sortAllViewOrder(
+    products.map((p) => ({
+      id: p.slug,
+      badges: p.badges,
+      outOfStock: p.outOfStock,
+      product: p,
+    })),
+  ).map((row) => row.product);
 }
 
 export function filterProducts(
@@ -211,5 +225,5 @@ export function filterProducts(
   filter: ProductFilterId,
 ): CatalogProduct[] {
   if (filter === "all") return productsForAllView(products);
-  return products.filter((p) => p.category === filter);
+  return productsForAllView(products.filter((p) => p.category === filter));
 }

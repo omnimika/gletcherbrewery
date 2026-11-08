@@ -1,0 +1,27 @@
+{
+  "id": "ruby-road",
+  "locale": "en",
+  "slug": "2024-06-03-ruby-road-our-strong-cherry-ale-in-a-new",
+  "title": "Ruby Road: our strong cherry ale in a new version",
+  "description": "Meet the expressive 7% with a fruity cherry, woody, slightly tannic, slightly herbaceous bouquet",
+  "publishedAt": "2024-06-03 10:28",
+  "cover": {
+    "src": "/blog/2024-06-03-ruby-road-our-strong-cherry-ale-in-a-new/cover.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "<strong><a href=\"/en/beer/ruby-road\">Ruby Road</a></strong> strong cherry ale is a novelty that all style connoisseurs have been waiting for.<br /><br />This beer is a real find! The expressive, brutal strength of 7% is beautifully combined with a noble, fruity-cherry, woody-barrel, slightly tannic, slightly herbaceous bouquet. Fragrant cherries have a pleasant aroma; a stunning, sparkling cascade of sour-sweet flavors and a long, refined, unique citrus aftertaste.<br /><br />The formulation used noble, coniferous-fruity, slightly bitter Styrian Bobek hops. As well as malts: traditional light sweet-nut Pilsner, special Belgian dark caramel malt Cara120 and wheat soft Wheat malt, which enriches the bouquet with fruitiness and notes of cereals.<br /><br />The excellent taste of cherry ale is most fully revealed in combination with dishes such as grilled meat, ham and various soft cheeses.<br /><br />A great variety for a great mood! <a href=\"/en/map\">Search</a> the store shelves!"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2024-06-03-ruby-road-our-strong-cherry-ale-in-a-new/01.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

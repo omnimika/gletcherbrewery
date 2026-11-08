@@ -2,6 +2,12 @@
 
 Источник: редактор Tilda page `16494049` / project `1212341` (после логина владельца).
 
+> Это записанный Cursor source audit; повторное ревью Codex не выполняло live
+> MCP-запросов. По [workflow](TILDA_MCP_WORKFLOW.md) сверить editor/published,
+> формулу итоговой высоты/масштабирования и колонки около 1200px, где второй
+> Tilda-аудит расходится с этим. Приведённое «Следствие для Next.js» не означает,
+> что текущий код уже выполняет контракт: см. [ревью](../reviews/2026-10-31-follow-up.md).
+
 ## Архитектура (не один React-слайдер)
 
 Два HTML-виджета **NOLIM**:
@@ -72,9 +78,10 @@ Next: `src/lib/tilda-artboard-scale.ts` + `ProductGallery`.
 | CLASSIC | Ausweis, Heidegger Hell, Rouge de Fleur |
 | CRAFT | MoA NA, MoA, Brainstorm, Blue Monkey, Nut Butter, Bowler, Underground, Friday Avenue, Iron Woods Dry/Milk, Ruby Road |
 | LIMITED | Brut Grapefruit, Hop Dragon, Tour de Grapefruit |
-| AGED | CYNIC |
+| AGING | CYNIC |
 
-UI-фильтры Tilda: ALL / CLASSIC / CRAFT / LIMITED (AGED только в ALL).
+UI-фильтры Next: ALL / CLASSIC / CRAFT / LIMITED / AGING.
+(На Tilda production chip AGING пока может отсутствовать; владелец подтвердил AGING, не AGED.)
 
 ## Следствие для Next.js
 

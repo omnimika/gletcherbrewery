@@ -2,7 +2,8 @@
 
 > Дата: **31 октября 2026**  
 > **Решение владельца: эталон утверждён — `/beer` (кандидат A).**  
-> Этапы 2–3 реализованы в коде; визуальная приёмка остаётся открытой.
+> `/beer` **принят владельцем 31.10.2026** по актуальному AGENTS §7.
+> Ниже сохранена история выбора эталона; текущая задача — product template этапа 4.
 > Дополнено: шрифты/ассеты из `tmp/` перенесены в `assets/`; ЛК исследован (см. `MEMBERS_LK_INVENTORY.md`).
 
 ## 0. Статус решения
@@ -11,7 +12,7 @@
 |---|---|
 | Утверждённая эталонная страница | **`/beer`** |
 | Дата утверждения | 31.10.2026 |
-| Следующий шаг | исправить замечания ревью, провести проверки и визуальную приёмку `/beer`; затем согласованный этап 4 |
+| Следующий шаг | завершить проверки и приёмку product template по [baseline](PRODUCT_PAGE_BASELINE.md) |
 | Вне scope эталона | Mapbox, YCLIENTS, Tilda Members/ЛК, shop cart, payments |
 | Реализация | **Started 31.10.2026** — Design Foundation + `/beer` в коде |
 
@@ -89,6 +90,10 @@
 
 ## 6. Критерии визуальной приёмки эталона
 
+Исторический checklist этапов 2–3 ниже не является требованием повторной
+приёмки `/beer`. Факт принятия не подменяет отдельные технические проверки;
+новые функциональные замечания — в [текущем ревью](../reviews/2026-10-31-product-template.md).
+
 - [ ] Age-gate выглядит и ведёт себя близко к Tilda (copy + CTA).
 - [ ] Header/logo/lang/menu на 1440 и 390 совпадают по композиции.
 - [ ] Menu overlay: пункты, CTA входа, цвет фона.
@@ -110,10 +115,10 @@
 | Логотипы | **В репо:** `assets/brand/logos/` + PDF в `docs/brand/` |
 | Бутылки CATALOGUE | **В репо:** `assets/catalog/bottles/` |
 | Обложки / сортовые лого | **В репо:** `assets/catalog/covers`, `assets/catalog/logos` |
-| Категории CLASSIC/CRAFT/LIMITED/AGED, порядок и badges | **Confirmed** — owner CSV отражён в `src/content/products.ts`; AGED показывается в ALL |
+| Категории CLASSIC/CRAFT/LIMITED/AGING, порядок и badges | **Confirmed** — owner CSV + chip AGING для CYNIC; ключ `aging` (не `aged`) |
 | PNG Cynic и MoA non-alcoholic | **Есть** — пути `CATALOGUE__0018_CYNIC---bottle.png` и `CATALOGUE__0017_Milk-of-Amnesia-non-alcoholic---bottle.png` существуют в `public/catalog/bottles/` |
-| Tilda full export | **Open** |
-| EN на эталоне | **Open** (по умолчанию RU only) |
+| Tilda sources | **MCP доступ подтверждён** в Cursor; полный датированный snapshot и editor/published сверка открыты: [workflow](TILDA_MCP_WORKFLOW.md) |
+| EN на эталоне | RU/EN срез реализован; каталог принят, product template имеет отдельный gate |
 | Лицензии Trial-шрифтов | **Open** — не публиковать Trial в прод без покупки |
 
 ## 8. Неизвестные параметры (не блокируют старт этапа 2)
@@ -130,9 +135,18 @@
 
 - Tokens / fonts / `SiteShell` (AgeGate, Header, Menu, Footer)
 - Route `http://localhost:3000/beer` — hero, filters, gallery, lead form stub
-- Предыдущая реализация сообщала о green lint/typecheck/build. В ревью `a6a13a9` повторно прошли ESLint и TypeScript без incremental-кеша; build и браузерные проверки не запускались, поэтому текущая визуальная готовность не подтверждена.
+- Историческая проверка `81713e4`: TypeScript PASS, ESLint FAIL в галерее.
+  В `9e0ee8e` + product working tree свежие TypeScript/ESLint PASS; Codex
+  не запускал текущий build/browser. Подробности в новом ревью.
 - ADR: `docs/adr/0000-site-migration-strategy.md`
 
-**Open перед приёмкой:** подтверждение прав на публичные шрифты; визуальный sign-off владельца для `/beer` и RU↔EN (меню/portal, locale switch на карточке с разными slug). Категории/badges, PNG Cynic и P1 меню (`inert`/portal) закрыты в коде.
+**Сейчас:** `/beer` принят; прежние F01–F05 исправлены по коду, F06 остался
+в home CTA. Новый product template ждёт T01 H1, media/SEO/browser проверки и
+собственной приёмки: [ревью](../reviews/2026-10-31-product-template.md).
+Лицензии публичных шрифтов остаются отдельным gate перед деплоем.
+
+Исходный scope этапа 3 выше сохранён как история выбора эталона. Фактически
+идёт RU/EN срез этапа 4 по Accepted ADR 0001 после принятия каталога.
+Операционный порядок: [CURSOR_NEXT_STEPS](../CURSOR_NEXT_STEPS.md).
 
 Коммит/push — только по запросу.

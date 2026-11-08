@@ -1,0 +1,18 @@
+{
+  "id": "halloween-contest-2021",
+  "locale": "ru",
+  "slug": "2021-10-26-viigrai-yaschik-piva-na-hellouin",
+  "title": "Выиграй ящик пива на Хеллоуин!",
+  "description": "Совершайте покупки в нашем магазине, и получайте призы!",
+  "publishedAt": "2021-10-26 11:04",
+  "cover": {
+    "src": "/blog/2021-10-26-viigrai-yaschik-piva-na-hellouin/cover.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "Предлагаем отпраздновать Хеллоуин вместе с пивоварней Gletcher.<br /><br />Совершайте покупки в нашем <a href=\"/shop\">фирменном магазине</a> в г. Клин с 24 по 30 октября. Заполните специальную форму у продавца и получите возможность выиграть лимитированную футболку Pumpkin Ale и упаковку пива Pumpkin Ale: Candy Apple. Итоги подведём 1 ноября путём случайного выбора среди участников.<br /><br />А также участвуйте в розыгрышах в <a href=\"https://www.instagram.com/p/CVe4yL9DYa1/?utm_medium=copy_link\" target=\"_blank\" rel=\"noopener noreferrer\">Instagram</a> и <a href=\"https://vk.com/gletcherbrewery?w=wall-57309563_3922\" target=\"_blank\" rel=\"noopener noreferrer\">VK</a>."
+    }
+  ]
+}

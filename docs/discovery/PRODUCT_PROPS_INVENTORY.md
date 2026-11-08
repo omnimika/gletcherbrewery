@@ -14,7 +14,7 @@
 | `category` | — | Confirmed (owner groups CSV) |
 | `title` | shared brand name | Confirmed |
 | `url` | RU canonical | Confirmed |
-| `badge` | — | Confirmed (`new`, `alcofree`, `discontinued`) |
+| `badge` | — | Confirmed (`new` lime New!/Новинка!; `alcofree` sky 0% Alco / Безалкогольное 0%; `discontinued` red Out of Stock / Нет в наличии) |
 | `abv`, `og`, `ibu` | shared (locale-invariant) | Confirmed from pages |
 | `style`, `malts`, `hops` | shared; stored in **CapitalCase** (Title Case; `IPA`/`APA`/`EBC`/`R.I.S.` kept; camelCase brands e.g. `MelaBeech` preserved) | Confirmed |
 | `bottleVol`, `kegVol` | shared | Confirmed; keg **absent** on Cynic & Hop Dragon pages |
@@ -64,9 +64,14 @@ See ADR 0001. Practical rules for this dataset:
 3. UI chrome (filters «ВСЕ», age gate, footer) is a separate message catalog, not product CSV columns.
 4. Do not invent Serbian/Armenian/Georgian/German product text; mark status `Open` until translation brief + owner sign-off.
 
-## 5. Next code steps (not done here)
+## 5. Implementation and remaining checks
 
-- Before wiring detail pages, unify list/detail records around a stable product ID and test a `(locale, slug)` resolver. Current `getProductProps` searches only ID/RU/EN; it does not yet resolve future locale slugs.
-- Add page publication status: `productPath` currently builds planned-locale URLs from fallback slugs, which is not proof that those pages exist. Only published peers may appear in SEO/navigation.
-- After reference-page acceptance, implement one RU/EN slice using `[locale]`, a locale-aware root layout and `src/proxy.ts` for Next.js 16, per ADR 0001.
+- `src/content/catalog.ts` now supplies stable IDs, locale-aware resolution, listing projection and publication-aware paths. Current data has 18 published RU and 18 EN records; canonical round-trip checks passed in memory.
+- `[locale]` routes, `src/proxy.ts`, registry and UI dictionaries are implemented. Planned locales do not have published product paths. Old criticism of the deprecated helper is not a current public-route failure.
+- In `81713e4`, form/detail UI translation, home metadata, permanentRedirect and client-safe filtering are implemented. Runtime HTTP/SEO and fresh bundle verification remain; see [current review](../reviews/2026-10-31-follow-up.md). Listing order must be explicit and independent of PRODUCT_PROPS array order.
 - Owner review of CSV for editorial fixes before CMS import.
+
+`badge` wording above records the earlier observed copy. The current user edit
+uses RU «Безалкогольное» without `0%`; preserve it. `discontinued` is an editorial
+flag, not independently verified live stock. Reconcile source/current copy via
+[MCP workflow](TILDA_MCP_WORKFLOW.md), without deriving new business rules.

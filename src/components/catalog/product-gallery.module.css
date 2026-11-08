@@ -1,46 +1,57 @@
 /**
- * Catalog carousel ≈ Tilda `#rec802918687` (upscale=window).
- * Stage height = artboardHeight * (100vw / screen).
+ * Catalog carousel — Tilda ZB 802918687 (MCP 2026-10-31).
+ * height = max(ab_height_vh * vh, ab_height px); bottles fill stage.
+ * 1200px: width-res-1200 25% → 4 cols; ab_height-res-1200 700; vh 80.
+ * 1400+: width 20% → 5 cols.
  */
 
 .stage {
-  --catalog-screen: 320;
-  --catalog-artboard-h: 596;
-  --catalog-item-w: 100%;
+  --catalog-cols: 1;
+  --stage-vh: 70;
+  --stage-min: 37.25rem; /* 596px — ab_height-res-320 */
   position: relative;
   width: 100%;
+  height: calc(var(--stage-vh) * 1vh);
+  min-height: var(--stage-min);
   overflow: hidden;
-  height: calc(var(--catalog-artboard-h) * 100vw / var(--catalog-screen));
 }
 
 .track {
+  position: absolute;
+  inset: 0;
   display: flex;
-  height: 100%;
-  width: 100%;
   overflow-x: auto;
   scroll-behavior: smooth;
+  justify-content: center;
+  justify-content: safe center;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  padding-top: 0.25rem;
+  padding-bottom: 0.5rem;
+  box-sizing: border-box;
 }
 
 .track::-webkit-scrollbar {
   display: none;
 }
 
+.trackOverflow {
+  justify-content: flex-start;
+}
+
 .slot {
   position: relative;
   flex-shrink: 0;
   height: 100%;
-  width: var(--catalog-item-w);
+  width: calc(100% / var(--catalog-cols));
 }
 
 .slotInner {
   position: absolute;
-  left: 0;
+  inset: 0;
   width: 100%;
-  /* Tilda catalogItem top≈105/876 ≈ 12%; keep bottles under filters */
-  top: 6%;
-  height: 90%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .arrow {
@@ -66,17 +77,17 @@
 
 @media (min-width: 480px) {
   .stage {
-    --catalog-screen: 480;
-    --catalog-artboard-h: 500;
-    --catalog-item-w: 50%;
+    --catalog-cols: 2;
+    --stage-vh: 50;
+    --stage-min: 31.25rem; /* 500px */
   }
 }
 
 @media (min-width: 640px) {
   .stage {
-    --catalog-screen: 640;
-    --catalog-artboard-h: 520;
-    --catalog-item-w: 33.333%;
+    --catalog-cols: 3;
+    --stage-vh: 50;
+    --stage-min: 32.5rem; /* 520px */
   }
 
   .arrow {
@@ -97,24 +108,24 @@
 
 @media (min-width: 960px) {
   .stage {
-    --catalog-screen: 960;
-    --catalog-artboard-h: 630;
-    --catalog-item-w: 25%;
+    --catalog-cols: 4;
+    --stage-vh: 100;
+    --stage-min: 39.375rem; /* 630px */
   }
 }
 
 @media (min-width: 1200px) {
   .stage {
-    --catalog-screen: 1200;
-    --catalog-artboard-h: 700;
-    --catalog-item-w: 25%;
+    /* Still 4 cols: width-res-1200 = 25% */
+    --stage-vh: 80;
+    --stage-min: 43.75rem; /* 700px — ab_height-res-1200 */
   }
 }
 
 @media (min-width: 1400px) {
   .stage {
-    --catalog-screen: 1400;
-    --catalog-artboard-h: 876;
-    --catalog-item-w: 20%;
+    --catalog-cols: 5;
+    --stage-vh: 80;
+    --stage-min: 54.75rem; /* 876px — ab_height default */
   }
 }

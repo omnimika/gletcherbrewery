@@ -1,0 +1,303 @@
+/**
+ * Agent landing layout — motion lives in zb-motion (Tilda appear / SBS).
+ */
+
+.screen {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 100svh;
+  width: 100%;
+  flex-direction: column;
+  overflow-x: clip;
+  overflow-y: hidden;
+  background: #e6eefc;
+  color: #0d0f49;
+}
+
+@media (max-width: 639px) {
+  /* Tall card stacks (partner/status) must not clip on phone */
+  .screen {
+    height: auto;
+    min-height: 100svh;
+    overflow-y: visible;
+  }
+}
+
+.stage {
+  position: relative;
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1200px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ——— Hero artboard (ZB 711680591) ——— */
+
+.heroStage {
+  width: min(100%, 75rem);
+  max-width: none;
+}
+
+.heroTitle {
+  position: relative;
+  z-index: 3;
+  margin: 0;
+  padding-top: clamp(3.5rem, 12svh, 7rem);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.75rem, 21.25vw, 15.9375rem);
+  font-weight: 300;
+  line-height: 0.82;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
+  color: #0d0f49;
+}
+
+.heroBrand {
+  position: relative;
+  z-index: 4;
+  margin: -0.06em 0 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.75rem, 15vw, 11.25rem);
+  font-weight: 100;
+  line-height: 0.82;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: uppercase;
+  color: #0d0f49;
+}
+
+.heroMobileLines {
+  display: none;
+  margin-top: 0.2rem;
+  text-align: center;
+}
+
+.heroMobileLines p {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.5rem, 10vw, 2.25rem);
+  font-weight: 300;
+  line-height: 0.85;
+  text-transform: uppercase;
+  color: #0d0f49;
+}
+
+.heroPills {
+  position: absolute;
+  z-index: 10;
+  top: 44%;
+  left: 1.5%;
+  right: 1.5%;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.pillRightCluster {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+@media (min-width: 640px) {
+  .heroPills {
+    display: flex;
+  }
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(1.85rem, 3.2vw, 3rem);
+  padding: 0 clamp(0.7rem, 1.2vw, 1.25rem);
+  border: 1px solid #0d0f49;
+  border-radius: 999px;
+  background: #e6eefb;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(0.7rem, 1.45vw, 1.3125rem);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #0d0f49;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.heroCta {
+  position: absolute;
+  z-index: 14;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+
+.heroVideo {
+  position: absolute;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  width: min(37%, 28rem);
+  height: min(74%, 66svh);
+  translate: -50% -46%;
+  /* visible so seal can hang past the bottle frame */
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Seal anchors to the bottle frame (heroVideo) on all breakpoints */
+.heroSeal {
+  position: absolute;
+  z-index: 16;
+  top: 55%;
+  left: -32%;
+  width: clamp(5rem, 10vw, 7.5rem);
+  height: clamp(5rem, 10vw, 7.5rem);
+  pointer-events: none;
+}
+
+/**
+ * Phone artboard: production stacks title → brand → taglines → bottle → CTA.
+ * Absolute desktop composition breaks below ~480px.
+ */
+@media (max-width: 479px) {
+  .heroStage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    width: 100%;
+    padding: calc(var(--hh, 72px) + 0.75rem) 0.75rem 1.5rem;
+  }
+
+  .heroTitle {
+    padding-top: 0;
+    font-size: clamp(2rem, 13vw, 2.75rem);
+    font-weight: 800;
+    line-height: 0.9;
+  }
+
+  .heroBrand {
+    margin-top: 0.05em;
+    font-size: clamp(1.75rem, 12vw, 2.5rem);
+    font-weight: 300;
+  }
+
+  .heroMobileLines {
+    display: block;
+    position: relative;
+    z-index: 5;
+    margin-top: 0.35rem;
+  }
+
+  .heroPills {
+    display: none !important;
+  }
+
+  .heroVideo {
+    position: relative;
+    z-index: 8;
+    top: auto;
+    left: auto;
+    width: min(52vw, 10.5rem);
+    height: min(42svh, 18rem);
+    margin: 0.5rem auto 0;
+    translate: none;
+    overflow: visible;
+  }
+
+  /* Bottom-right of bottle; stays clear of CTA below */
+  .heroSeal {
+    top: auto;
+    left: auto;
+    right: -22%;
+    bottom: 4%;
+    width: 4.25rem;
+    height: 4.25rem;
+  }
+
+  .heroCta {
+    position: relative;
+    z-index: 14;
+    top: auto;
+    left: auto;
+    width: 100%;
+    max-width: 16rem;
+    margin-top: 0.85rem;
+    translate: none;
+  }
+
+  .heroCta :global(a),
+  .heroCta a {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* ——— Shared ——— */
+
+.display {
+  font-family: var(--font-display), sans-serif;
+  line-height: 0.82;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: #0d0f49;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  min-width: min(100%, 320px);
+  padding: 0 1.25rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1rem;
+  font-weight: 100;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #fff;
+  background: radial-gradient(
+    circle at center,
+    rgba(246, 112, 116, 1) 0%,
+    rgba(254, 36, 42, 1) 48%,
+    rgba(223, 30, 35, 1) 100%
+  );
+  border: 1px solid #0d0f49;
+  transition: filter 0.2s ease;
+}
+
+.cta:hover {
+  filter: brightness(1.06);
+}
+
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  min-width: min(100%, 320px);
+  padding: 0 1.25rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.55;
+  color: #0d0f49;
+  background: transparent;
+  border: 1px solid #0d0f49;
+  transition: filter 0.2s ease;
+}
+
+.videoFill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

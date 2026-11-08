@@ -1,0 +1,40 @@
+{
+  "id": "prodexpo-2022",
+  "locale": "ru",
+  "slug": "2022-02-03-gletcher-na-prodekspo-2022",
+  "title": "Gletcher на ПРОДЭКСПО 2022",
+  "description": "Мы представим полную линейку нашей продукции, доступной на настоящий момент. Регистрируйтесь и приходите знакомиться и дегустировать!",
+  "publishedAt": "2022-02-03 08:54",
+  "cover": {
+    "src": "/blog/2022-02-03-gletcher-na-prodekspo-2022/cover.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "Приглашаем вас на международную выставку <strong>ПРОДЭКСПО</strong>. <br /><br />Она пройдёт с 7 по 11 февраля в <a href=\"https://yandex.ru/maps/-/CCU5eUvtOA\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>Экспоцентре, Москва, Краснопресненская наб., 14</strong></a>."
+    },
+    {
+      "type": "image",
+      "src": "/blog/2022-02-03-gletcher-na-prodekspo-2022/01.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "На стенде <strong>SVAM Group</strong> можно будет попробовать наши лимитированные сорта, освежить впечатление о регулярной линейке, а также продегустировать новинку TANJ DIPA и пообщаться с нашим бренд-менеджером Алексеем Котельниковым.<br /><br />Вход на выставку <strong>бесплатный</strong>, но осуществляется <a href=\"https://www.prod-expo.ru/ru/visitors/ticket/\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>по предварительной регистрации</strong></a>.<br />Ищите нас на стенде <strong>СB01</strong> в павильоне Центральный!<br />Ждём вас!"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2022-02-03-gletcher-na-prodekspo-2022/02.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

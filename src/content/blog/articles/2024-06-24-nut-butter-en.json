@@ -1,0 +1,40 @@
+{
+  "id": "nut-butter",
+  "locale": "en",
+  "slug": "2024-06-24-nut-butter-nutty-magic-in-every-sip",
+  "title": "Nut Butter: nutty magic in every sip",
+  "description": "We present a new look for everyone's favorite brown ale with Italian walnut liqueur, which was specially developed to create this unique variety.",
+  "publishedAt": "2024-06-24 15:12",
+  "cover": {
+    "src": "/blog/2024-06-24-nut-butter-nutty-magic-in-every-sip/cover.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "We embarked on a journey to explore the history of British brown ale in collaboration with Shepherd Neame, one of the oldest breweries in the UK. Together, we’ve succeeded in preserving the unique qualities of this classic style, crafted for discerning connoisseurs. At Gletcher Brewery, we blend tradition and innovation to create a beer that honors its historical roots while remaining fresh and exciting for today’s enthusiasts of fine brews.<br /><br />Our Nut Butter beer boasts a rich, smoky-nutty hue and a sweet flavor reminiscent of chocolate hazelnut spread. This sweetness is carefully balanced, never overpowering, and gradually gives way to a moderate hop bitterness that unfolds into an aromatic, nutty finish. The distinctive nutty notes are achieved through a meticulous balance of malt and hops, making every bottle a harmonious masterpiece of flavor.<br /><br />The beer’s foundation lies in German Pale Ale and Munich malt, with special malts like Cara Dark Malt, Cara 120, Special B from the Dingemans malt house, and Golden Naked Oats—an English malt from Simpson Malt that imparts its signature nutty taste. During fermentation, we add a natural Italian nut extract, exclusively developed for Gletcher Brewery’s Nut Butter, enhancing its complex and captivating flavor.<br /><br />This beer is a bridge between past and present, preserving timeless brewing traditions while incorporating modern techniques to uncover new dimensions of nutty richness. Each bottle tells a story inspired by centuries-old heritage and cutting-edge craftsmanship.<br /><br />Savor the taste of England’s brewing legacy with Gletcher Brewery and Shepherd Neame’s new brown ale—Nut Butter!"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2024-06-24-nut-butter-nutty-magic-in-every-sip/01.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "image",
+      "src": "/blog/2024-06-24-nut-butter-nutty-magic-in-every-sip/02.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "You can always buy this and other varieties from Gletcher Brewery in our branded stores.:<br />— <strong>Gletcher store</strong>: Moscow region, Klin, Tereshkova str., 1 p.4I (<a href=\"https://yandex.ru/maps/-/CCQxZTqdsC\" target=\"_blank\" rel=\"noopener noreferrer\">set route</a>)<br />— <strong>SVAM Group store</strong>: Moscow, Novomeshchersky passage, 9/1 (<a href=\"https://yandex.ru/maps/?from=api-maps&amp;ll=37.051486%2C56.041765&amp;mode=routes&amp;origin=jsapi_2_1_77&amp;pt=36.694416%2C56.348616&amp;rtext=~55.657121%2C37.370751&amp;rtt=auto&amp;ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D133465474893&amp;z=9.82\" target=\"_blank\" rel=\"noopener noreferrer\">set route</a>)<br /><br />In addition, you can find the nearest store of one of the largest retail chains on our sales map. Check the availability of the varieties you are interested in."
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # Gletcher Brewery — Roadmap и технический план миграции
 
-> Версия: 0.5 (31 октября 2026 г.)
-> Статус: Bootstrap/Discovery Done; меню/portal исправлены; ADR 0001 Accepted; стартовал RU/EN срез этапа 4. Этап 3 ждёт визуальной приёмки `/beer`.
+> Версия: 0.13 (5 ноября 2026 г.)
+> Статус: чистый `d6011d2` проверен относительно `6b137e7`; TypeScript/ESLint PASS, build/browser Codex не запускал. DS-1/DS-2 реализованы, DS-3 широко перенесён; map/shop frontend уже в коде. Текущее — Q1 функциональной надёжности, затем Q2/Q3 и public gate. Ревью: `docs/reviews/2026-11-05-public-integrity.md`; серия: `docs/SPRINT_PLAN.md`.
 > Для репозитория: поместить в `docs/ROADMAP.md`.
 
 ## 1. Концепция
@@ -57,7 +57,7 @@ Production hosting target: Yandex Cloud
 
 Для каждого маршрута: точный URL, язык, тип страницы, заголовок, SEO title/description/canonical, H1–H3, контентные блоки, изображения/видео/шрифты, общие и уникальные компоненты, навигационные переходы, формы/CTA, внешние интеграции, интерактивность, мобильное поведение, юридические предупреждения, приоритет миграции и полнота наблюдений.
 
-Создать **снимки-референсы** десктопа и мобильного вида, если у агента есть браузерный инструмент; документировать размеры viewport, дату, страницу, состояния меню/модалок. Не выдавать HTTP-текстовый скрейпинг за полный визуальный аудит. Если браузера нет, прямо написать об ограничении и запросить снимки/экспорт Tilda.
+Создать **снимки-референсы** десктопа и мобильного вида, если у агента есть браузерный инструмент; документировать размеры viewport, дату, страницу, состояния меню/модалок. Не выдавать HTTP-текстовый скрейпинг за полный визуальный аудит. MCP Tilda теперь доступен в Cursor: использовать [протокол исходников](discovery/TILDA_MCP_WORKFLOW.md), сохраняя editor/published раздельно. Отсутствие браузера отмечать явно; исходники его не заменяют.
 
 Отдельно сравнить повторяемые UI-паттерны: header, footer, меню, типографика, сетка, кнопки, карточки, секции, формы, модальные окна, локализация и age/legal notices. На основе этого выбрать **2–3 кандидата** для первой эталонной страницы и предложить один с аргументами (репрезентативность компонентов, умеренная сложность, минимум критичных backend-интеграций, проверяемая мобильная версия).
 
@@ -67,7 +67,7 @@ Production hosting target: Yandex Cloud
 
 | Система | Что исследовать | Результат |
 |---|---|---|
-| Tilda | Экспорт страниц, ассеты, метатеги, SEO URL, формы, JS-вставки, интеграции | Route inventory + asset inventory |
+| Tilda | MCP доступ подтверждён; сверить страницы/records/Zero Block, ассеты, SEO, формы/inserts, editor vs published | Датированный source manifest + route/asset inventory |
 | Collabza | Регистрация, вход, сессии, персонализация, ID пользователей | Identity/auth migration plan |
 | Airtable | Базы, таблицы, поля, связи, формулы, файлы, история, права | ERD + безопасный экспорт |
 | Make.com | Все сценарии, webhooks, расписания, ошибки, внешние токены | Event/workflow inventory |
@@ -91,17 +91,17 @@ Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCB
 
 > **Правило порядка:** аналитика по отдельной подсистеме допустима заранее; её реализация — только в согласованной очереди. Публикация на действующий домен, изменения production-сервисов и миграция персональных данных запрещены без отдельного согласования.
 
-| Этап | Результат | Статус на 31.10.2026 |
+| Этап | Результат | Статус на 05.11.2026 |
 |---|---|---|
 | 0. Bootstrap | Работающий локально Next.js + TS + Tailwind и чистый Git | **Done** (проверено 31.10.2026) |
 | 1. Site Discovery | Реестр URL, UI-инвентаризация, SEO/контент и кандидат эталона | **Done** — эталон `/beer` утверждён |
-| 2. Design Foundation | Минимальная дизайн-система и общий каркас | **In progress** — chrome + portal overlays; i18n shell |
-| 3. Reference Page | Одна принятая адаптивная эталонная страница | **In progress** — `/beer` RU/EN; визуальная приёмка владельца открыта |
-| 4. Public Migration | Публичные страницы, каталог/блог, SEO, контент | **Started** — `[locale]`, next-intl, catalog by id, `/beer/[slug]` |
+| 2. Design Foundation | Общие tokens, containers, grid, UI/state/motion | DS-1 реализован; конкретные дефекты grid/motion — Q2, не новый foundation |
+| 3. Reference Page | Одна принятая адаптивная эталонная страница | `/beer` принят 31.10; DS-2 Horeca pilot реализован, sign-offs отдельно |
+| 4. Public Migration | Публичные страницы, каталог/блог, SEO, контент | **In progress**, Q1 → Q2/Q3 → remaining coverage/public gate |
 | 5. Data & Infrastructure | PostgreSQL, NocoDB, серверные границы, staging | В очереди |
-| 6. Retail Map | CRM торговых точек и Mapbox | В очереди |
-| 7. Agent Gletcher | Миграция Airtable/Collabza и бонусная программа | В очереди |
-| 8. Tours & Certificates | Запись, оплата, PDF/email | В очереди |
+| 6. Retail Map | CRM торговых точек и публикация данных | Backend в очереди; legacy Mapbox frontend уже реализован |
+| 7. Agent Gletcher | Миграция Airtable/Collabza и бонусная программа | Backend в очереди; public landing уже реализован |
+| 8. Tours & Certificates | Запись, оплата, PDF/email | Backend в очереди; public tours с YCLIENTS и firm shop уже реализованы |
 | 9. Launch | Проверки, параллельный запуск, cutover и rollback | В очереди |
 
 ### Этап 0 — Инициализация и технический фундамент (первый обязательный gate)
@@ -140,7 +140,23 @@ Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCB
 
 **Работы:** по результатам аудита создать дизайн-токены (цвета, шрифты, размеры, сетки, spacing, адаптивные размеры), UI primitives, глобальные layout/header/footer, соглашения об assets и именовании, доступность и базовую навигацию. Не копировать Tilda DOM/стили без проверки. По необходимости предложить библиотеку компонентов, но не добавлять автоматически большой UI-фреймворк.
 
-**Критерий готовности:** согласованы глобальные компоненты и адаптивные состояния; реализация подтверждена desktop/mobile и проходит lint/typecheck/build. Никаких реальных подключений CRM или платежей.
+**Требование владельца 01.11.2026 — действующий дизайн-контракт:** полноценный
+[дизайн-код](design/DESIGN_SYSTEM.md) и [ADR 0010](adr/0010-design-system-and-section-layout.md):
+презентационные секции, autoscale-композиции по ширине/высоте, anchors/native
+soft snap, 50/50 и 25/50/25 по обеим осям, cards 3/4/6, banners/carousels.
+Это плановая доработка foundation в ходе этапа 4, не повтор Bootstrap/Discovery.
+DS-1 tokens/primitives/showcase и DS-2 pilot уже реализованы, DS-3 широко
+перенесён. Не выполнять их заново; проверенные R03/R04/R09/R10 и reflow
+candidates — ограниченный Q2. Новая серия/доказательства в текущем ревью.
+Прежние приёмки не запрещают явно запрошенную систематизацию; содержание,
+URL/локали/сценарии сохраняются. Численные values реализованы/reviewable;
+это не подтверждает owner sign-off каждого layout/state.
+
+**Критерий готовности:** есть локальная showcase всех grids/states, читаемый
+контент при short viewport/zoom, focus/reduced-motion/no-JS fallback; реальные
+desktop/mobile evidence и lint/typecheck/build. Native document scroll;
+screen min-height может расти, статьи/legal/form — reading flow. Не создавать
+mandatory full-page wrapper, не уменьшать весь UI transform-ом. CRM/платежи вне scope.
 
 ### Этап 3 — Первая эталонная страница
 
@@ -148,17 +164,45 @@ Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCB
 
 **Критерий готовности:** владелец принимает визуал и UX, соблюдены SEO-атрибуты, мобильная адаптация, доступность, нет регрессий в build. Создана воспроизводимая схема переноса других страниц.
 
-**Текущий gate:** [ревью a6a13a9](reviews/2026-10-31-current-state.md) фиксирует P1 модального меню и P2 карусели. Эти замечания не закрыты изменением документации. Категории/badges из owner CSV и все 18 bottle assets уже имеются; повторно запрашивать их не требуется.
+**Статус gate:** `/beer` принят владельцем по актуальным инструкциям AGENTS §7.
+Исторические lint/focus-origin/contrast/min-height/order исправлены по коду;
+в срезе 0df9706 header/menu/footer использовали временный production mapping. Loop clone
+links исправлены. A01–A03 [исторического ревью](reviews/2026-10-31-product-acceptance.md)
+закрыты по коду в `0df9706`, product template принят. Не выполнять их повторно.
 
-**Подготовка перед массовым переносом:** согласовать [ADR i18n](adr/0001-i18n-routing-and-content.md): RU/EN URL, список опубликованных локалей, стабильный ID продукта и slug-map, fallback/publication policy, сербскую письменность, шрифты и SEO. Это документальный gate, не разрешение переносить все страницы или подключать backend.
+**Перед массовым переносом:** проверить реализацию [Accepted ADR i18n](adr/0001-i18n-routing-and-content.md): RU/EN URL, ID/slug-map, published peers, fallback и SEO. Next-intl уже установлен. Сербская письменность, шрифты и допуск остальных локалей остаются открытыми; изменение статуса ADR не заменяет проверки реализации.
 
 ### Этап 4 — Постепенный перенос публичных страниц и контента
 
 **Работы:** переносить страницы **по шаблонам и общим компонентам**, а не случайным порядком URL: каталог и карточки, блог и статьи, разделы о пивоварне/партнёрах, юридические страницы, формы. Составить редакционную модель CMS и принять отдельный ADR для rich-content редактора; NocoDB не считать автоматически полноценной заменой CMS. Для интеграционно сложных страниц (карта, агент, экскурсии) сначала сохранить публичный UI, а реальные данные и операции подключить на профильных этапах.
 
-**Первый согласуемый срез:** locale-aware layout и один шаблон страницы RU/EN с типизированными UI messages, серверной проекцией контента, корректными `<html lang>`, self-canonical и взаимными опубликованными locale peers. Проверить разные RU/EN slug Milk of Amnesia и Brainstorm, alias redirects, 404 неподдерживаемых локалей и отсутствие planned-версий в SEO. `sr`/`hy`/`ka`/`de` добавляются после перевода и отдельной проверки публикации; публичные URL не создавать одним fallback текста.
+**Текущий срез `d6011d2`:** catalog/product, home/blog, B2B/contacts/legal,
+agent/tours/map/shop реализованы; конкретные локали и external boundaries —
+[PUBLIC_ROUTE_MATRIX](discovery/PUBLIC_ROUTE_MATRIX.md). По записям Cursor map/shop
+приняты 04.11; отдельный /agent 320 polish ждёт visual QA, код уже committed.
+Не повторять home/blog import и DS-1/DS-2. Карта использует существующий Mapbox
+style/layers, не новую CRM; members и YCLIENTS остаются production integrations.
 
-**Критерий готовности:** публичные маршруты сопоставлены с исходными, SEO-метаданные/canonical/sitemap/redirects спланированы, медиа оптимизированы, дизайн последователен; не делаем DNS cutover.
+**Следующая очередь:** [Q1 → Q2 → Q3](SPRINT_PLAN.md): честные form outcomes,
+locale transitions и map/shop integrity → UI/motion/reflow → URL/publication/SEO.
+Затем **обязательный A1 /about с анимацией и логикой**, подтверждённые campaigns
+по одному и stage-4 exit. Владелец указал [Tilda page 71867465/project1212341](https://tilda.ru/page/?pageid=71867465&projectid=1212341);
+подробные source workflow/DoD: [ABOUT_PAGE_BASELINE](discovery/ABOUT_PAGE_BASELINE.md).
+Для /about решение «нужен ли» закрыто; publication/index/peers уточняются отдельно.
+/blog-all aliases, campaign/aging/restaurant и operation URLs ещё требуют scope-решения.
+Klin snapshot unpublished/password не публиковать автоматически из MCP.
+Публичный UI не требует установки CMS/БД; Puck preference подтверждён,
+архитектура [ADR 0005](adr/0005-cms.md) Proposed, сам editor отложен до CRM.
+`sr`/`hy`/`ka`/`de` требуют перевода/шрифтов и publication checks; fallback
+сам по себе не создаёт публичную версию.
+
+**Критерий готовности:** /about реализован и принят вместе с animation/interaction
+logic; остальные пункты согласованного public scope закрыты или имеют явные
+legacy/archive/exclude решения; URL/статусы/peers, canonical/hreflang/sitemap/
+redirects и preview/production index policy реализованы и проверены. Нет
+ложных отправок/недоступных controls; media/reflow/keyboard/locale regression
+подтверждены свежими проверками. Новые sign-offs только по evidence. DNS cutover
+остаётся отдельным этапом; один build PASS не закрывает Stage 4.
 
 ### Этап 5 — База данных и инфраструктура приложений
 
@@ -224,15 +268,19 @@ tour_types ──1:N── tour_slots ──1:N── bookings ──1:N── p
 | Будущий `0002-database.md` | PostgreSQL + NocoDB, роли/схемы, миграции, edition; этап 5 |
 | Будущий `0003-orm.md` | Prisma vs Drizzle и транзакции; этап 5 |
 | Будущий `0004-auth.md` | Идентичность, Collabza, MFA, восстановление; перед auth |
-| Будущий `0005-cms.md` | Rich-content редактор, медиатека и переводы |
+| `0005-cms.md` | Proposed; Puck preference Confirmed, установка editor на CRM-этапе |
 | Будущий `0006-map.md` | GeoJSON/MTS, контракт и публикация карты |
 | Будущий `0007-background-jobs.md` | Email/webhooks, outbox/worker, retries |
 | Будущий `0008-hosting.md` | Yandex Cloud, сеть, стоимость, среды |
 | Будущий `0009-booking-payments.md` | Бронь, merchant, чеки/возвраты, идемпотентность |
+| `0010-design-system-and-section-layout.md` | Direction Confirmed; DS-1/2 реализованы, rollout reviewable; текущие defects — Q2 |
 
 ## 6. Технические принципы
 
 - Сначала работающий Next.js, затем доказуемый UI-аудит, затем дизайн-система и эталонная страница. Запрещено подменять этот порядок техническим энтузиазмом по одной подсистеме.
+- В этапе 4 DS-1/DS-2 уже реализованы, DS-3 широко перенесён. Текущий Q1/Q2
+  проверяет business outcomes и design contracts до новых templates;
+  исправления сохраняют native scroll, чтение/zoom и locale publication.
 - Одна SQL-схема, управляемая миграциями; NocoDB как рабочий табличный UI, по умолчанию без прав изменять схему.
 - Бонусы, деньги и бронирования — только атомарные операции backend с audit log.
 - У каждого импорта есть `source`, `source_id`, временная метка, checksum/версия, dry-run, статистика результатов и возможность отката.
@@ -260,20 +308,30 @@ tour_types ──1:N── tour_slots ──1:N── bookings ──1:N── p
 
 ## 8. Что потребуется от владельца проекта — в правильном порядке
 
-**Сейчас (этапы 2–3):** визуальный sign-off `/beer` после исправлений, сверка desktop/mobile и используемых шрифтов. Эталон, категории/порядок/badges и PNG бутылок уже отражены в материалах; новых production-ключей для этого не требуется.
+**Сейчас (quality gate этапа 4):** Cursor выполняет конкретный Q1, затем Q2/Q3.
+Не запрашивать повторное разрешение на изучение/подготовку исправлений. Владельцу
+предъявлять проверенные scenarios/diff и /agent @320 polish для visual QA.
+Далее согласовать remaining campaign/archive scope на свежем source snapshot;
+не выбирать вслепую «все campaigns» или «сразу backend» до public coverage gate.
 
-**Перед RU/EN срезом этапа 4:** утвердить i18n-контракт и библиотеку, правила неполного перевода и обязательные локализованные поля. Для будущего сербского выбрать письменность; для остальных локалей определить приоритет перевода. Юридические тексты и market-specific условия требуют отдельного подтверждения; язык сам не определяет рынок.
+**Для завершения RU/EN среза этапа 4:** подтвердить UX и полноту обязательных локализованных полей; i18n ADR уже Accepted. Для будущего сербского выбрать письменность, для остальных локалей — приоритет перевода и шрифты. Юридические тексты и market-specific условия требуют отдельного подтверждения; язык сам не определяет рынок.
 
 **Перед миграцией backend (этапы 5–8):** read-only структура Airtable, Make сценарии, Collabza, фактическая Google-таблица, Mapbox style/tileset IDs, YCLIENTS, ЮKassa, доступы Yandex Cloud и домена. Не собирать всё сразу, если это не блокирует очередной этап.
 
 ## 9. Следующее задание Cursor Agent
 
-1. Прочитать актуальные инструкции, [ревью](reviews/2026-10-31-current-state.md) и ADR; проверить Git и отделить найденные проблемы от уже исправленных.
-2. Исправить P1 меню одним изменением lifecycle: модальный DOM вне inert-фона; снять inert до возврата фокуса; проверить мышь, touch, Tab и Escape.
-3. Исправить сброс позиции фильтра, сверить высоту карусели с сохранённым эталоном и выбрать image preload по начальной видимости, а не badge.
-4. Проверить реальные ссылки, viewport 390 и 1440, низкое окно и 960×900, затем lint/typecheck/build. Зафиксировать ограничения, если browser QA недоступен.
-5. Предъявить `/beer` на визуальную приёмку. Параллельно согласовать Proposed i18n-контракт без подключения БД или других backend-сервисов.
-6. После согласования следующего задания реализовать один RU/EN срез этапа 4 и его URL/SEO/content проверки. Коммит/push и production-действия — только по отдельному разрешению.
+1. Прочитать [задание](CURSOR_NEXT_STEPS.md), [дизайн-код](design/DESIGN_SYSTEM.md),
+   [ADR 0010](adr/0010-design-system-and-section-layout.md),
+   [ревью](reviews/2026-11-05-public-integrity.md), [план](SPRINT_PLAN.md),
+   [route matrix](discovery/PUBLIC_ROUTE_MATRIX.md), Accepted i18n ADR.
+   Проверить актуальный Git state; baseline отчёта `d6011d2`.
+2. Выполнить **только Q1**: R01/R02/R05/R06/R07/R08, fresh lint/typecheck/build/
+   browser по заданию. DS-1/DS-2/agent commit повторно не делать.
+3. Затем Q2 UI/UX → Q3 URL/SEO → **A1 /about с source animation/logic** →
+   approved campaigns → public gate. /about не исключать как optional/archive.
+   Backend discovery допустим read-only; D5-0/реализация отдельными scope.
+4. Backend installation/migrations, commit/push/production — отдельные задания.
+   [Готовый промпт](CURSOR_REVIEW_PROMPT.md).
 
 ## 10. Результаты аудита
 

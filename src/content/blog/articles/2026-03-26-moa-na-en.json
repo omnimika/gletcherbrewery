@@ -1,0 +1,89 @@
+{
+  "id": "moa-na",
+  "locale": "en",
+  "slug": "2026-03-26-milk-of-amnesia-non-alcoholic",
+  "title": "Milk of Amnesia Non-Alcoholic",
+  "description": "Tropical escapism in every sip—for when alcohol doesn't fit the schedule.",
+  "cover": {
+    "src": "/blog/2026-03-26-milk-of-amnesia-non-alcoholic/cover.webp",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "Sometimes you just want to hit pause — switch off the notifications, forget about deadlines for a while, and escape somewhere far away, where the sound of traffic is replaced by the ocean. That spirit of escape inspired <strong>Milk of Amnesia</strong>, a beer first created in 2018 and destined to become one of Gletcher Brewery’s most distinctive releases."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "A Beer with a Story"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2026-03-26-milk-of-amnesia-non-alcoholic/01.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "Milk of Amnesia began as a bold collaboration between <strong>Gletcher Brewery</strong> and the British troublemakers at <strong>Anarchy Brew Co.</strong> The result was a full-bodied, juicy and unapologetically expressive <strong>Milkshake IPA</strong>."
+    },
+    {
+      "type": "paragraph",
+      "html": "Its name — <em>Milk of Amnesia</em> — is a playful reference to medical slang associated with anaesthesia. Our version works rather differently, though: instead of switching you off, it is designed to help you leave the unnecessary stress behind and simply enjoy the moment."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Non-Alcoholic, Without Compromise"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2026-03-26-milk-of-amnesia-non-alcoholic/02.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "Modern life rarely slows down. Driving, training, work, meetings and everyday responsibilities often mean that alcohol simply does not fit into the schedule.<br /><br />But that should not mean giving up the flavour and character of craft beer.<br /><br /><strong><a href=\"/en/beer/milk-of-amnesia-non-alco\">Milk of Amnesia Non-Alcoholic</a></strong> retains the rich body and powerful aromatic profile that made the original beer so memorable, while removing the alcohol. A carefully controlled dealcoholisation process allows us to preserve the character of the beer and create a genuinely full-flavoured non-alcoholic alternative."
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "<strong>What Makes It Taste So Distinctive?</strong>"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2026-03-26-milk-of-amnesia-non-alcoholic/03.webp",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "The character of Milk of Amnesia comes from an unusual balance of tropical fruit, creamy texture and expressive hops.<br /><br />Natural <strong>pineapple, mango and passion fruit juices</strong> provide a bright tropical foundation, while <strong>lactose</strong> gives the beer its characteristic smooth, milkshake-like body.<br /><br />Four hop varieties — <strong>Nugget, Columbus, Centennial and Mosaic</strong> — add layers of bitterness, citrus and hop aroma, keeping the sweetness in balance and giving the beer a fresh, lively finish.<br /><br />Milk of Amnesia Non-Alcoholic is made for those who want to stay clear-headed without compromising on flavour.<br /><br />Think of it as your personal ticket to the tropics — one you can use even in the middle of a working day."
+    },
+    {
+      "type": "image",
+      "src": "/blog/2026-03-26-milk-of-amnesia-non-alcoholic/04.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "<strong>Forget the boredom. Remember the flavour.</strong><br /><br />You can find Milk of Amnesia and other Gletcher Brewery beers at our official stores:<br /><br /><strong>Gletcher Brewery Shop</strong><br />1 Tereshkova St., Building 4I, Klin, Moscow Region<br /><br /><strong>SVAM Group Shop</strong><br />9/1 Novomeshchersky Proezd, Moscow"
+    }
+  ],
+  "publishedAt": "2026-03-26 18:04"
+}

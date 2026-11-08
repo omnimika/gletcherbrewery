@@ -1,0 +1,31 @@
+{
+  "id": "ausweis",
+  "locale": "en",
+  "slug": "2024-06-26-ausweis-your-passport-to-the-world-of-ge",
+  "title": "Ausweis: your passport to the world of German beer",
+  "description": "The new Ausweis wheat variety is our signature monogram in the passport of true German beer.",
+  "publishedAt": "2024-06-26 15:28",
+  "cover": {
+    "src": "/blog/2024-06-26-ausweis-your-passport-to-the-world-of-ge/cover.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "Discover <strong><a href=\"/en/beer/ausweis\">Ausweis</a></strong> Wheat Beer – a true masterpiece crafted from premium-quality natural ingredients. We’ve combined the finest elements to deliver the gold standard of flavor: crystal-clear water, select malt, and aromatic hops.<br /><br />The foundation of this brew lies in its German ingredients. Four malts from Avangard Malz—Wheat Malt, Pilsner, Munich Malt, and Caramel Malt—are perfectly balanced in color and fermentation. Slovenian Bobek Styrian Golding hops, known for their moderate bitterness and aroma, add the perfect finishing touch.<br /><br />The flavor and aroma profile of Ausweis unfolds harmoniously from start to finish. Its full-bodied character concludes with hints of ripe banana, a result of top-fermenting yeasts that lend a modern twist to a classic. This distinctive note is our signature flourish, a hallmark of authentic German beer.<br /><br />The brewing process for wheat beer in Germany begins with the meticulous selection and preparation of ingredients. Crushed malt is mixed with water and undergoes mashing, where the malt’s starch is converted into sugar. This step is carefully monitored to achieve the ideal consistency and flavor profile of the beer. The wort is then separated from the mash and boiled with hops, which impart characteristic bitterness and aroma.<br /><br />After boiling, the wort is cooled, and yeast is added to initiate fermentation. At this stage, top-fermenting yeasts produce esters that give the beer its signature fruity notes, such as ripe banana. Fermentation lasts several days, followed by a maturation period to unlock the beer’s full flavor potential. The final step, dry hopping, adds an extra layer of aroma and depth.<br /><br />While preserving the original recipe of Ausweis, we’ve updated its appearance with a new bottle and label. Now, your favorite wheat beer not only delights with its timeless flavor but also catches the eye with a modern design that highlights its premium quality."
+    },
+    {
+      "type": "image",
+      "src": "/blog/2024-06-26-ausweis-your-passport-to-the-world-of-ge/01.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "You can always buy this and other varieties from Gletcher Brewery in our branded stores.:<br />— <strong>Gletcher store</strong>: Moscow region, Klin, Tereshkova str., 1 p.4I (<em><a href=\"https://yandex.ru/maps/-/CCQxZTqdsC\" target=\"_blank\" rel=\"noopener noreferrer\">set route</a></em>)<br />— <strong>SVAM Group store</strong>: Moscow, Novomeshchersky passage, 9/1 (<em><a href=\"https://yandex.ru/maps/?from=api-maps&amp;ll=37.051486%2C56.041765&amp;mode=routes&amp;origin=jsapi_2_1_77&amp;pt=36.694416%2C56.348616&amp;rtext=~55.657121%2C37.370751&amp;rtt=auto&amp;ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D133465474893&amp;z=9.82\" target=\"_blank\" rel=\"noopener noreferrer\">set route</a></em>)<br /><br />In addition, you can find the nearest store of one of the largest retail chains on our <strong><a href=\"/en/map\">sales map</a></strong>. Check the availability of the varieties you are interested in."
+    }
+  ]
+}

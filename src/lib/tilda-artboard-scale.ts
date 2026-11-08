@@ -89,3 +89,118 @@ export function getCatalogBreakpoint(windowWidth: number): CatalogBreakpoint {
     CATALOG_BREAKPOINTS[CATALOG_BREAKPOINTS.length - 1]!
   );
 }
+
+/**
+ * Tilda Zero Block `ab_upscale: window`:
+ * scale = windowWidth / matchedScreen (screens 320…1400).
+ * Header ZB `711698335` uses the same mode.
+ */
+export function windowArtboardScale(windowWidth: number): {
+  screen: number;
+  scale: number;
+} {
+  const screen = matchArtboardScreen(windowWidth);
+  return { screen, scale: windowWidth / screen };
+}
+
+/**
+ * Design-time sizes for header chrome at each Tilda screen
+ * (MCP `711698335`, before window upscale).
+ */
+export type HeaderDesign = {
+  screen: number;
+  bar: number;
+  logoH: number;
+  logoW: number;
+  controlH: number;
+  agentW: number;
+  menuW: number;
+  padX: number;
+  gap: number;
+  fontPx: number;
+};
+
+export const HEADER_DESIGNS: HeaderDesign[] = [
+  {
+    screen: 320,
+    bar: 56,
+    logoH: 38,
+    logoW: 78,
+    controlH: 32,
+    agentW: 32,
+    menuW: 32,
+    padX: 10,
+    gap: 8,
+    fontPx: 14,
+  },
+  {
+    screen: 480,
+    bar: 64,
+    logoH: 38,
+    logoW: 78,
+    controlH: 32,
+    agentW: 32,
+    menuW: 32,
+    padX: 10,
+    gap: 8,
+    fontPx: 14,
+  },
+  {
+    screen: 640,
+    bar: 72,
+    logoH: 39,
+    logoW: 80,
+    controlH: 40,
+    agentW: 32,
+    menuW: 107,
+    padX: 12,
+    gap: 10,
+    fontPx: 15,
+  },
+  {
+    screen: 960,
+    bar: 72,
+    logoH: 44,
+    logoW: 91,
+    controlH: 32,
+    agentW: 94,
+    menuW: 107,
+    padX: 16,
+    gap: 10,
+    fontPx: 15,
+  },
+  {
+    screen: 1200,
+    bar: 84,
+    logoH: 52,
+    logoW: 108,
+    controlH: 40,
+    agentW: 90,
+    menuW: 107,
+    padX: 20,
+    gap: 10,
+    fontPx: 17,
+  },
+  {
+    screen: 1400,
+    bar: 84,
+    logoH: 52,
+    logoW: 108,
+    controlH: 40,
+    agentW: 90,
+    menuW: 107,
+    padX: 20,
+    gap: 10,
+    fontPx: 17,
+  },
+];
+
+export function getHeaderDesign(windowWidth: number): HeaderDesign & {
+  scale: number;
+} {
+  const { screen, scale } = windowArtboardScale(windowWidth);
+  const design =
+    HEADER_DESIGNS.find((d) => d.screen === screen) ??
+    HEADER_DESIGNS[HEADER_DESIGNS.length - 1]!;
+  return { ...design, scale };
+}

@@ -1,0 +1,58 @@
+{
+  "id": "arkhangelsk-craft-fest-2023",
+  "locale": "ru",
+  "slug": "2023-08-03-gletcher-v-arhangelske-craft-fest",
+  "title": "Gletcher в Архангельске: Craft Fest!",
+  "description": "Самые актуальные вкусы от нашей пивоварни на поморском фестивале напитков и еды",
+  "publishedAt": "2023-08-03 12:54",
+  "cover": {
+    "src": "/blog/2023-08-03-gletcher-v-arhangelske-craft-fest/cover.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "5 августа в Архангельском Норд-Экспо развернется поморский фестиваль еды и напитков «Craft Fest» – праздник пивоварения, вкусной еды, музыки и развлечений.<br /><br />Это как Октоберфест, только круче!<br /><br />В одном месте будет собрано множество разнообразных сортов пива с хорошей закуской. Вас ждут отечественные и иностранные марки пива, гастрономическая зона с лучшими стритфудами и пивными барами города, развлекательные площадки с тематическими конкурсами, спортивными и интеллектуальными состязаниями, а также драйвовая музыка от самых крутых кавер-групп города."
+    },
+    {
+      "type": "image",
+      "src": "/blog/2023-08-03-gletcher-v-arhangelske-craft-fest/01.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "<br />Наш бренд-менеджер Алексей Котельников привезёт 8 самых актуальных вкусов от нашей пивоварни: <br />"
+    },
+    {
+      "type": "list",
+      "style": "ul",
+      "html": "<ul><li><a href=\"/beer/avalanche\"><strong>AVALANCHE</strong></a> Nitro Lager,</li><li><a href=\"/beer/blue-monkey\"><strong>BLUE MONKEY</strong></a> Wheat Ale,</li><li><a href=\"/beer/koresh\"><strong>КОРЕШ</strong></a> Cinnamon Porter,</li><li><a href=\"/beer/milk-of-amnesia-v-tropic\"><strong>MILK OF AMNESIA</strong></a> Milkshake IPA,</li><li><a href=\"/beer/yammy-jammy\"><strong>YAMMY JAMMY</strong></a> Milkshake IPA,</li><li><a href=\"/beer/ketchup\"><strong>KETCHUP</strong></a> Tomato Gose,</li><li><a href=\"/beer/brainstorm\"><strong>BRAINSTORM</strong></a> 0% APA,</li><li><a href=\"/beer/rouge-de-fleur\"><strong>ROUGE DE FLEUR</strong></a> Cherry Beer</li></ul>"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2023-08-03-gletcher-v-arhangelske-craft-fest/02.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "quote",
+      "html": "<strong>ПОДРОБНЕЕ О ПОМОРСКОМ ФЕСТИВАЛЕ ЕДЫ И НАПИТКОВ CRAFT FEST:</strong><br /><a href=\"https://t.me/craft_fest\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>t.me/craft_fest</strong></a><br /><a href=\"http://vk.com/craft_fest29\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>vk.com/craft_fest29</strong></a>"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2023-08-03-gletcher-v-arhangelske-craft-fest/03.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

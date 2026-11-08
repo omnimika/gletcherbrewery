@@ -82,3 +82,69 @@ Compatible with `products` + `product_translations` (one entity, many locales). 
 | `milk-of-amnesia-v-tropic` | `milk-of-amnesia` |
 | `brainstorm` | `brainstorm-apa-alcohol-free` |
 | others | same as RU |
+
+## Historical implementation verification (01.11.2026)
+
+Accepted architecture is distinct from owner acceptance and verification.
+`/beer` and product template are owner-accepted (`0df9706`). Current `2c1a9d0`
+is assessed in the [home review](../reviews/2026-11-01-home-and-sprints.md)
+and [Cursor task](../CURSOR_NEXT_STEPS.md). Lint/typecheck pass; new product
+components are server-rendered, UI labels and Intl formatting are implemented.
+Home RU/EN v1 is implemented and awaits its own gate. Earlier product
+overflow/modal/focus findings A01–A03 are closed by code; don't reopen them.
+Home messages have matching 140/140 keys; this does not publish new languages.
+HTTP 308 aliases must not be described as 301 legacy redirects.
+
+Implementation detail replacing the earlier portal description in section 6:
+menu now uses one dialog shell containing header controls and panel; it inerts
+`#site-content`, while age gate outside the page still inerts `#site-root`.
+The accepted UX is preserved. Hash state now re-syncs on pathname changes;
+keep locale/hash/client-navigation checks in regression QA.
+
+Before enabling another language, also address current implementation limits:
+
+- `catalog.ts` builds translations and product alternates by explicitly iterating
+  RU/EN. Expand those paths through the approved registry and publication model;
+  adding a registry item alone is not sufficient today.
+- `LocaleSwitch` must distinguish a missing published page peer from a missing
+  optional override. Its current Partial<string> input falls back to pathname
+  for undefined; its null check does not match the declared type. The existing
+  complete RU/EN dataset does not exercise that case. Product peers are now
+  passed through SiteShell to the header, avoiding an unnecessary cross-slug
+  redirect for complete translations. Missing/draft peer entries still need an
+  explicit contract. Resolve this before partial blog translation publication.
+- Recheck required message coverage, locale font glyphs, number formatting,
+  draft/missing pages, SEO and 404 for the newly enabled locale.
+- Home/listing metadata also hard-code RU/EN peers. Derive them from publication
+  state. UI messages currently load only the active JSON; define required keys
+  and fallback policy separately from the product-copy fallback.
+
+Future-locale work remains gated by translation/script/font approval; these
+notes do not enable `sr`, `hy`, `ka` or `de` or choose new business rules.
+
+The proposed [sprint series](../SPRINT_PLAN.md) applies this publication model to
+blog entities before article batches; it does not select/install a CMS or backend.
+
+## Implementation verification (05.11.2026, d6011d2)
+
+The earlier paragraph is historical: blog entities/listing/article batches and
+public templates are now implemented. Current gaps and route availability:
+[review](../reviews/2026-11-05-public-integrity.md),
+[route matrix](../discovery/PUBLIC_ROUTE_MATRIX.md). Do not repeat blog migration.
+
+Q1 R02 (05.11.2026) implemented the explicit contract in `src/i18n/locales.ts`:
+`LocaleHrefTarget = string | { fallback: string } | null`. LocaleSwitch transfers
+fragments only for peer `string` targets; `{fallback}` never keeps a foreign hash;
+`null` hides the locale option. RU-only pages (incl. russian-craft-beer) use
+`{ fallback: "/" }` or listing fallbacks. Peer pathnames for next-intl `Link`
+must omit the `/en` prefix (Link + `locale` adds it).
+
+RU-only shop is deliberate: source EN peer unpublished. Agent/Horeca/contacts/
+legal and other RU-only cases must stay absent from EN SEO unless a real peer
+is published. Q3 adds route/publication-driven sitemap, metadata and legacy
+URL checks. A fallback home destination is not a translation peer/hreflang.
+
+sr/hy/ka/de remain planned. Before enabling one, expand hardcoded RU/EN content
+builders and peer loops, load/validate messages, prove publication/draft cases,
+font/script/line-height and legal content. Registry inclusion alone remains
+insufficient. This follow-up does not change the Accepted routing decision.

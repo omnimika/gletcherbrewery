@@ -60,7 +60,7 @@
 | `/10-years` | Юбилейная | Campaign | Mapbox упоминается в HTML | P3 |
 | `/restaurant` | Банкеты/ресторан | Landing + forms | — | P3 |
 | `/vacancies` | Вакансии | Landing | robots Disallow, но HTTP 200 | P3 |
-| `/about` | О нас | Long page | robots Disallow, HTTP 200 | P3 / уточнить статус |
+| `/about` | О нас | Landing с анимацией/логикой | Исторически robots Disallow, HTTP 200; source page71867465 | **Обязательный A1, owner 05.11**; см. ABOUT_PAGE_BASELINE.md |
 
 ### 2.2. EN-локаль — Confirmed в sitemap
 
@@ -244,7 +244,10 @@ Sitemap может отставать (исторически ~17 EN beer URL); 
 
 ## 8. Открытые вопросы владельцу
 
-1. Актуальный ли `/about` и `/vacancies` (Disallow, но 200)? Нужны ли в новой IA?
+1. `/about` **обязателен Confirmed владельцем 05.11**, включая animation/interaction
+   logic Tilda 71867465: [baseline A1](ABOUT_PAGE_BASELINE.md). Вопрос о необходимости
+   снят; актуальные editor/published, EN/index уточнить. Для `/vacancies` вопрос
+   публикационного статуса из этого исторического inventory решается отдельно.
 2. Полный список активных сортов vs Disallow legacy — что 301, что 410?
 3. Лицензии шрифтов: можно ли использовать **Trial** ABC Gravity / demo Gratimo в staging/prod, или есть купленные файлы?
 4. Таблица сортов → CLASSIC / CRAFT / LIMITED для `/beer`.

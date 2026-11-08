@@ -1,121 +1,102 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
-import { LocaleSwitch } from "@/components/locale-switch";
-import { useFocusTrap } from "@/lib/use-focus-trap";
+import {
+  productionHref,
+  type ExternalNavKey,
+} from "@/lib/site-links";
+import type { PublishedLocale } from "@/i18n/locales";
 
-const NAV_HREFS = [
-  "/beer",
-  "/partnership",
-  "/tours",
-  "/map",
-  "/blog",
-] as const;
+/** Order mirrors Tilda overlay ZB `715585432`. */
+const NAV_ITEMS: {
+  key: ExternalNavKey | "products";
+  labelKey: "products" | "partners" | "tours" | "map" | "blog";
+  localHref?: "/beer" | "/blog" | "/partnership" | "/tours" | "/map";
+}[] = [
+  { key: "products", labelKey: "products", localHref: "/beer" },
+  { key: "partners", labelKey: "partners", localHref: "/partnership" },
+  { key: "tours", labelKey: "tours", localHref: "/tours" },
+  { key: "map", labelKey: "map", localHref: "/map" },
+  { key: "blog", labelKey: "blog", localHref: "/blog" },
+];
 
-type MainNavOverlayProps = {
-  open: boolean;
+type MainNavPanelProps = {
   onClose: () => void;
 };
 
-export function MainNavOverlay({ open, onClose }: MainNavOverlayProps) {
-  const dialogRef = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
+/**
+ * Menu body under the live header chrome. Dialog role lives on the SiteHeader
+ * shell so locale/close stay inside the modal accessibility subtree (A02).
+ */
+export function MainNavPanel({ onClose }: MainNavPanelProps) {
+  const locale = useLocale() as PublishedLocale;
   const t = useTranslations("nav");
-  const tA11y = useTranslations("a11y");
-  useFocusTrap(dialogRef, open);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const root = document.getElementById("site-root");
-    root?.setAttribute("inert", "");
-    return () => {
-      document.body.style.overflow = previous;
-      root?.removeAttribute("inert");
-    };
-  }, [open]);
-
-  if (!open || !mounted) return null;
-
-  const portalTarget =
-    document.getElementById("portal-root") ?? document.body;
-
-  return createPortal(
-    <div
-      ref={dialogRef}
-      id="main-nav-dialog"
-      className="animate-menu-fade fixed inset-0 z-[90] flex flex-col overflow-y-auto overscroll-contain bg-gletcher-ice"
-      role="dialog"
-      aria-modal="true"
-      aria-label={tA11y("mainMenu")}
-    >
-      <div className="flex shrink-0 items-center justify-between px-5 py-5 sm:px-10">
-        <LocaleSwitch />
-        <button
-          type="button"
-          onClick={onClose}
-          className="font-display text-sm tracking-widest text-gletcher-navy"
-          aria-label={tA11y("closeMenu")}
-        >
-          {t("close")}
-        </button>
-      </div>
-
-      <nav className="flex min-h-0 flex-1 flex-col justify-center px-6 py-6 sm:px-16 lg:px-24">
-        <ul className="flex flex-col items-end gap-3 sm:gap-4">
-          {NAV_HREFS.map((href, index) => (
+  return (
+    <>
+      <nav className="flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto overscroll-contain px-4 py-6">
+        <ul className="flex w-full max-w-[760px] flex-col items-center gap-1 sm:gap-2">
+          {NAV_ITEMS.map((item, index) => (
             <li
-              key={href}
-              className="animate-menu-rise"
+              key={item.key}
+              className="animate-menu-rise w-full text-center"
               style={{ animationDelay: `${80 + index * 60}ms` }}
             >
-              <Link
-                href={href}
-                onClick={onClose}
-                className="font-display text-4xl text-gletcher-navy transition-colors hover:text-gletcher-red sm:text-6xl lg:text-7xl"
-              >
-                {t(
-                  href === "/beer"
-                    ? "products"
-                    : href === "/partnership"
-                      ? "partners"
-                      : href === "/tours"
-                        ? "tours"
-                        : href === "/map"
-                          ? "map"
-                          : "blog",
-                )}
-              </Link>
+              {item.localHref ? (
+                <Link
+                  href={item.localHref}
+                  onClick={onClose}
+                  className="font-display block py-1 text-[clamp(2.5rem,8vw,6.5rem)] leading-none font-extrabold tracking-wide text-gletcher-navy uppercase transition-colors hover:text-gletcher-red"
+                >
+                  {t(item.labelKey)}
+                </Link>
+              ) : (
+                <a
+                  href={productionHref(item.key as ExternalNavKey, locale)}
+                  onClick={onClose}
+                  className="font-display block py-1 text-[clamp(2.5rem,8vw,6.5rem)] leading-none font-extrabold tracking-wide text-gletcher-navy uppercase transition-colors hover:text-gletcher-red"
+                >
+                  {t(item.labelKey)}
+                </a>
+              )}
             </li>
           ))}
         </ul>
       </nav>
 
-      <div className="mt-auto flex shrink-0 flex-col items-stretch gap-3 px-6 pt-4 pb-10 sm:flex-row sm:items-center sm:justify-end sm:gap-6 sm:px-16 lg:px-24">
-        <Link
-          href="/members/signup"
+      <div
+        className="mx-auto mt-auto flex w-full max-w-[452px] shrink-0 flex-col px-6 pt-4 pb-10 sm:pb-12"
+        style={{ gap: "calc(12px * var(--hs, 1))" }}
+      >
+        <a
+          href={productionHref("login", locale)}
           onClick={onClose}
-          className="text-center text-xs font-semibold tracking-wide text-gletcher-navy/80 uppercase underline-offset-4 hover:underline sm:text-sm"
-        >
-          {t("signup")}
-        </Link>
-        <Link
-          href="/members/login"
-          onClick={onClose}
-          className="bg-gletcher-red px-6 py-3 text-center text-sm font-semibold tracking-wide text-gletcher-white uppercase transition-colors hover:bg-gletcher-deep"
+          className="text-center font-thin tracking-wide text-gletcher-white uppercase"
+          style={{
+            padding: `calc(12px * var(--hs, 1)) calc(16px * var(--hs, 1))`,
+            fontSize: `calc(14px * var(--hs, 1))`,
+            background:
+              "radial-gradient(circle at center, rgba(253,102,102,0.78) 0%, rgba(229,55,60,1) 64%)",
+          }}
         >
           {t("login")}
-        </Link>
+        </a>
+        <a
+          href={productionHref("signup", locale)}
+          onClick={onClose}
+          className="border border-gletcher-navy text-center font-semibold tracking-wide text-gletcher-navy uppercase"
+          style={{
+            padding: `calc(12px * var(--hs, 1)) calc(16px * var(--hs, 1))`,
+            fontSize: `calc(14px * var(--hs, 1))`,
+          }}
+        >
+          {t("signup")}
+        </a>
       </div>
-    </div>,
-    portalTarget,
+    </>
   );
 }
+
+/** @deprecated Prefer MainNavPanel; kept name for import clarity in reviews. */
+export const MainNavOverlay = MainNavPanel;

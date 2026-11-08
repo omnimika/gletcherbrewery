@@ -1,0 +1,27 @@
+{
+  "id": "hop-dragon",
+  "locale": "en",
+  "slug": "2024-06-07-hop-dragon-the-bright-taste-of-five-hops",
+  "title": "Hop Dragon: the bright taste of five hops",
+  "description": "In honor of the year of the Dragon, we decided to brew Hop Dragon beer and thus pay tribute to the legendary drink of the Shaolin masters",
+  "publishedAt": "2024-06-07 10:36",
+  "cover": {
+    "src": "/blog/2024-06-07-hop-dragon-the-bright-taste-of-five-hops/cover.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "There is a legend that the founder of Buddhism, Bodhidharma, who visited the famous Shaolin Monastery during his trip to China, left behind not only a treatise on martial arts, but also a recipe for an amazing refreshing drink that restores vigor to the body after exhausting workouts. It was brewed once every 12 years – in the year of the Dragon, when the five types of hops included in its composition acquired a special flavor. In honor of the year of the Dragon, we decided to brew Hop Dragon beer and thus pay tribute to the legendary drink of the Shaolin masters.<br /><br />The bright aroma of the five hops is accentuated by exotic notes of citrus and passion fruit, reminiscent of the Indian roots of Bodhidharma. The noble matte honey shade of the dense unfiltered body perfectly contrasts with the dense snow-white foam, evoking the bright colors of the Chinese new year. The initial light sweetness characteristic of double IPAs finishes with a pleasant freshness of balanced hop bitterness.<br /><br />In Chinese mythology, the Dragon represents a good beginning and symbolizes life. Our Dragon, without any doubt, will give you a real celebration of life!"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2024-06-07-hop-dragon-the-bright-taste-of-five-hops/01.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

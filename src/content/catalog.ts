@@ -13,14 +13,17 @@ import {
   CATALOG_PRODUCTS,
   type ProductBadge,
   type ProductCategory,
-  type ProductFilterId,
-  productsForAllView,
 } from "@/content/products";
 import {
   PRODUCT_PROPS,
   type ProductProps,
   type ProductSpecs,
 } from "@/content/product-props";
+import { sortAllViewOrder } from "@/content/listing-order";
+import type { CatalogCard } from "@/content/catalog-filter";
+
+export type { CatalogCard } from "@/content/catalog-filter";
+export { filterCatalogCards } from "@/content/catalog-filter";
 
 export type TranslationStatus = "published" | "draft" | "missing";
 
@@ -34,7 +37,7 @@ export type ProductTranslation = {
   about?: string;
   foodPairing?: string;
   fermentation?: string;
-  /** Historical path segments that 301 to `slug` for this locale */
+  /** Historical path segments that permanently redirect to `slug` for this locale */
   aliases?: string[];
 };
 
@@ -48,20 +51,23 @@ export type CatalogProductRecord = {
   translations: Partial<Record<AppLocale, ProductTranslation>>;
 };
 
-export type CatalogCard = {
-  id: string;
-  slug: string;
-  title: string;
-  category: ProductCategory;
-  image: string;
-  badges: ProductBadge[];
-  outOfStock?: boolean;
-  href: string;
-};
-
 const LISTING_BY_ID = new Map(
   CATALOG_PRODUCTS.map((p) => [p.slug, p] as const),
 );
+
+const BADGE_ORDER: ProductBadge[] = ["new", "alcofree", "discontinued"];
+
+function mergeBadges(
+  listing?: ProductBadge[],
+  fromProps?: readonly string[],
+): ProductBadge[] {
+  const set = new Set<ProductBadge>();
+  for (const b of listing ?? []) set.add(b);
+  for (const b of fromProps ?? []) {
+    if (b === "new" || b === "alcofree" || b === "discontinued") set.add(b);
+  }
+  return BADGE_ORDER.filter((b) => set.has(b));
+}
 
 function translationStatus(locale: AppLocale, props: ProductProps): TranslationStatus {
   if (!isPublishedLocale(locale)) return "missing";
@@ -93,8 +99,11 @@ function buildTranslation(
   };
 }
 
-function toCategory(raw: ProductProps["category"]): ProductCategory {
-  return raw.toLowerCase() as ProductCategory;
+function toCategory(raw: ProductProps["category"] | string): ProductCategory {
+  const key = raw.toLowerCase();
+  // Legacy CSV/fixture label "AGED" → canonical "aging"
+  if (key === "aged") return "aging";
+  return key as ProductCategory;
 }
 
 /** Full catalog records (source of truth for stage-4 product work). */
@@ -109,9 +118,10 @@ export const CATALOG: CatalogProductRecord[] = PRODUCT_PROPS.map((props) => {
     id: props.id,
     category: listing?.category ?? toCategory(props.category),
     image: listing?.image ?? "",
-    badges: (listing?.badges ??
-      (props.badges.filter((b) => b === "new" || b === "alcofree") as ProductBadge[])),
-    outOfStock: listing?.outOfStock,
+    badges: mergeBadges(listing?.badges, props.badges),
+    outOfStock: Boolean(
+      listing?.outOfStock || props.badges.includes("discontinued"),
+    ),
     specs: props.specs,
     translations,
   };
@@ -218,32 +228,8 @@ export function getCatalogCards(locale: PublishedLocale): CatalogCard[] {
       href,
     });
   }
-  return cards;
-}
-
-export function filterCatalogCards(
-  cards: CatalogCard[],
-  filter: ProductFilterId,
-): CatalogCard[] {
-  if (filter === "all") {
-    const asListing = cards.map((c) => ({
-      slug: c.slug,
-      name: c.title,
-      title: c.title,
-      category: c.category,
-      image: c.image,
-      badges: c.badges,
-      outOfStock: c.outOfStock,
-    }));
-    const ordered = productsForAllView(asListing);
-    const byId = new Map(cards.map((c) => [c.id, c]));
-    // productsForAllView uses slug; map back via slug within cards
-    const bySlug = new Map(cards.map((c) => [c.slug, c]));
-    return ordered
-      .map((p) => bySlug.get(p.slug) ?? byId.get(p.slug))
-      .filter((c): c is CatalogCard => Boolean(c));
-  }
-  return cards.filter((c) => c.category === filter);
+  /** Default ALL order: NEW first, out-of-stock last (see listing-order.ts). */
+  return sortAllViewOrder(cards);
 }
 
 /** hreflang peers for a product (published locales only). */

@@ -1,15 +1,113 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+} from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LocaleSwitch } from "@/components/locale-switch";
-import { MainNavOverlay } from "@/components/main-nav-overlay";
+import { MainNavPanel } from "@/components/main-nav-overlay";
+import { MenuToggleIcon } from "@/components/menu-toggle-icon";
+import { useFocusTrap } from "@/lib/use-focus-trap";
+import { AGENT_PATH } from "@/content/agent";
+import { getHeaderDesign } from "@/lib/tilda-artboard-scale";
+import type { LocaleHrefs } from "@/i18n/locales";
 
-export function SiteHeader() {
+/**
+ * Chrome bar mirrors Tilda header-new Zero Block `711698335`
+ * (`ab_upscale: window` — whole chrome scales with window width).
+ * Same chrome while menu is open; burger morphs to X in place.
+ * When open, header + panel share one `role=dialog` shell (A02).
+ */
+type HeaderChrome = {
+  vars: CSSProperties;
+  compact: boolean;
+};
+
+function subscribeViewport(onStoreChange: () => void) {
+  window.addEventListener("resize", onStoreChange);
+  return () => window.removeEventListener("resize", onStoreChange);
+}
+
+let cachedClientChrome: HeaderChrome | null = null;
+let cachedClientWidth = -1;
+
+function headerChromeClient(): HeaderChrome {
+  const width = window.innerWidth;
+  if (cachedClientChrome && cachedClientWidth === width) {
+    return cachedClientChrome;
+  }
+  const d = getHeaderDesign(width);
+  const s = d.scale;
+  cachedClientWidth = width;
+  cachedClientChrome = {
+    compact: d.agentW <= 40,
+    vars: {
+      ["--hh" as string]: `${d.bar * s}px`,
+      ["--hs" as string]: String(s),
+      ["--logo-h" as string]: `${d.logoH * s}px`,
+      ["--ctrl-h" as string]: `${d.controlH * s}px`,
+      ["--agent-w" as string]: `${d.agentW * s}px`,
+      ["--menu-w" as string]: `${d.menuW * s}px`,
+      ["--pad-x" as string]: `${d.padX * s}px`,
+      ["--gap" as string]: `${d.gap * s}px`,
+      ["--font" as string]: `${d.fontPx * s}px`,
+      ["--burger-w" as string]: `${14 * s}px`,
+      ["--burger-h" as string]: `${11 * s}px`,
+    },
+  };
+  return cachedClientChrome;
+}
+
+const HEADER_CHROME_SERVER: HeaderChrome = {
+  compact: false,
+  vars: {
+    ["--hh" as string]: "84px",
+    ["--hs" as string]: "1",
+    ["--logo-h" as string]: "52px",
+    ["--ctrl-h" as string]: "40px",
+    ["--agent-w" as string]: "90px",
+    ["--menu-w" as string]: "107px",
+    ["--pad-x" as string]: "20px",
+    ["--gap" as string]: "10px",
+    ["--font" as string]: "17px",
+    ["--burger-w" as string]: "14px",
+    ["--burger-h" as string]: "11px",
+  },
+};
+
+function headerChromeServer(): HeaderChrome {
+  return HEADER_CHROME_SERVER;
+}
+
+type SiteHeaderProps = {
+  /** Peer / fallback / unavailable destinations for LocaleSwitch (ADR 0001). */
+  localeHrefs?: LocaleHrefs;
+};
+
+export function SiteHeader({ localeHrefs }: SiteHeaderProps = {}) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const t = useTranslations("nav");
   const tA11y = useTranslations("a11y");
+  const { vars, compact } = useSyncExternalStore(
+    subscribeViewport,
+    headerChromeClient,
+    headerChromeServer,
+  );
+  /** Solid bar after scroll / with menu — never frost or soft glow over covers. */
+  const solidChrome = scrolled || menuOpen;
+
+  useFocusTrap(dialogRef, menuOpen, {
+    restoreFocus: false,
+    initialFocusWithin: "nav",
+  });
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -20,62 +118,182 @@ export function SiteHeader() {
     return () => window.removeEventListener("keydown", onKey);
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const trigger = menuButtonRef.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const content = document.getElementById("site-content");
+    content?.setAttribute("inert", "");
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      content?.removeAttribute("inert");
+      queueMicrotask(() => trigger?.focus());
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const readY = () =>
+      window.scrollY ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0;
+    const onScroll = () => setScrolled(readY() > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Expose chrome metrics so page heroes can fill 100svh under the fixed
+  // header and align block frames with header pad (RU/EN … МЕНЮ).
+  useEffect(() => {
+    const root = document.documentElement;
+    const hh = vars["--hh" as keyof CSSProperties];
+    const padX = vars["--pad-x" as keyof CSSProperties];
+    if (typeof hh === "string") {
+      root.style.setProperty("--hh", hh);
+      root.style.setProperty("--header-height", hh);
+      root.style.setProperty("--header-h", hh);
+    }
+    if (typeof padX === "string") root.style.setProperty("--pad-x", padX);
+  }, [vars]);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <>
-      <header className="relative z-40 w-full bg-gletcher-ice/90 backdrop-blur-sm">
-        <div className="mx-auto grid max-w-[1440px] grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-4 sm:px-8 sm:py-5">
-          <div className="justify-self-start">
-            <LocaleSwitch />
-          </div>
+    <div style={vars}>
+      <div
+        ref={dialogRef}
+        id={menuOpen ? "main-nav-dialog" : undefined}
+        role={menuOpen ? "dialog" : undefined}
+        aria-modal={menuOpen ? true : undefined}
+        aria-label={menuOpen ? tA11y("mainMenu") : undefined}
+        className={
+          menuOpen
+            ? "animate-menu-fade fixed inset-0 z-[120] flex flex-col bg-gletcher-ice"
+            : undefined
+        }
+      >
+        <header
+          className={
+            menuOpen
+              ? "relative isolate z-[1] shrink-0"
+              : "fixed inset-x-0 top-0 isolate z-[100]"
+          }
+        >
+          <div
+            aria-hidden
+            className={`pointer-events-none absolute inset-x-0 top-0 border-b transition-[background-color,border-color] duration-300 ease-out ${
+              solidChrome
+                ? "border-gletcher-navy/10 bg-gletcher-ice"
+                : "border-transparent bg-transparent"
+            }`}
+            style={{ height: "var(--hh)" }}
+          />
 
-          <Link
-            href="/"
-            className="justify-self-center"
-            aria-label={t("homeAria")}
+          <div
+            className="relative grid grid-cols-[1fr_auto_1fr] items-center"
+            style={{
+              height: "var(--hh)",
+              paddingInline: "var(--pad-x)",
+              columnGap: "var(--gap)",
+            }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/brand/logo-main.svg"
-              alt="Gletcher Brewery since 2011"
-              width={168}
-              height={56}
-              className="h-10 w-auto sm:h-12"
-            />
-          </Link>
+            <div className="justify-self-start">
+              <LocaleSwitch
+                variant="header"
+                scaled
+                localeHrefs={localeHrefs}
+              />
+            </div>
 
-          <div className="flex items-center justify-end gap-3 sm:gap-5">
             <Link
-              href="/agent"
-              className="hidden text-sm font-semibold tracking-widest text-gletcher-navy uppercase sm:inline"
+              href="/"
+              className="justify-self-center"
+              aria-label={t("homeAria")}
+              onClick={closeMenu}
             >
-              {t("agent")}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/brand/logo-main.svg"
+                alt="Gletcher Brewery since 2011"
+                width={108}
+                height={52}
+                className={
+                  solidChrome
+                    ? undefined
+                    : "drop-shadow-[0_0_10px_rgba(230,238,252,0.95)]"
+                }
+                style={{ height: "var(--logo-h)", width: "auto" }}
+              />
             </Link>
-            <Link
-              href="/agent"
-              className="inline text-sm font-bold text-gletcher-navy sm:hidden"
-              aria-label={tA11y("agent")}
+
+            <div
+              className="flex items-center justify-end"
+              style={{ gap: "var(--gap)" }}
             >
-              {t("agentShort")}
-            </Link>
-            <button
-              type="button"
-              onClick={() => setMenuOpen(true)}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-gletcher-navy text-[10px] font-bold tracking-wide text-gletcher-navy uppercase sm:h-auto sm:w-auto sm:rounded-none sm:border-0 sm:text-sm sm:tracking-widest"
-              aria-expanded={menuOpen}
-              aria-controls="main-nav-dialog"
-              aria-label={tA11y("openMenu")}
-            >
-              <span className="sm:hidden" aria-hidden>
-                ≡
-              </span>
-              <span className="hidden sm:inline" aria-hidden>
-                {t("menu")}
-              </span>
-            </button>
+              {/*
+                Same control height, font-size and Condensed (700) for АГЕНТ +
+                МЕНЮ so glyph caps sit on one line (Extended 100 was taller).
+              */}
+              {/* Absolute RU path — page is RU-only; avoid /en/agent 404 + hydration fork. */}
+              <a
+                href={AGENT_PATH}
+                className="font-display box-border inline-flex h-[var(--ctrl-h)] items-center justify-center rounded-full border border-transparent leading-none tracking-normal text-gletcher-white uppercase"
+                style={{
+                  width: "var(--agent-w)",
+                  fontSize: "calc(var(--font) * 1.12)",
+                  fontWeight: 700,
+                  background:
+                    "radial-gradient(circle at center, rgba(253,102,102,0.78) 0%, rgba(229,55,60,1) 64%)",
+                }}
+                aria-label={tA11y("agent")}
+                onClick={closeMenu}
+              >
+                <span aria-hidden className="translate-y-[0.12em] leading-none">
+                  {compact ? t("agentShort") : t("agent")}
+                </span>
+              </a>
+
+              <button
+                ref={menuButtonRef}
+                type="button"
+                onClick={() => setMenuOpen((v) => !v)}
+                className={`font-display box-border inline-flex h-[var(--ctrl-h)] items-center justify-center rounded-full border border-gletcher-navy leading-none tracking-normal text-gletcher-navy uppercase transition-[background-color,color,border-color] duration-300 ease-out ${
+                  solidChrome ? "" : "bg-gletcher-ice/85"
+                }`}
+                style={{
+                  width: "var(--menu-w)",
+                  fontSize: "calc(var(--font) * 1.12)",
+                  gap: `calc(8px * var(--hs))`,
+                  fontWeight: 700,
+                }}
+                aria-expanded={menuOpen}
+                aria-controls="main-nav-dialog"
+                aria-label={menuOpen ? tA11y("closeMenu") : tA11y("openMenu")}
+              >
+                {!compact ? (
+                  <span
+                    className={`translate-y-[0.12em] leading-none overflow-hidden whitespace-nowrap transition-[max-width,opacity,margin] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
+                      menuOpen
+                        ? "mr-0 max-w-0 opacity-0"
+                        : "max-w-[5rem] opacity-100"
+                    }`}
+                    aria-hidden
+                  >
+                    {t("menu")}
+                  </span>
+                ) : null}
+                <MenuToggleIcon open={menuOpen} className="shrink-0" />
+              </button>
+            </div>
           </div>
-        </div>
-      </header>
-      <MainNavOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
-    </>
+        </header>
+
+        {menuOpen ? <MainNavPanel onClose={closeMenu} /> : null}
+      </div>
+
+      <div style={{ height: "var(--hh)" }} className="shrink-0" aria-hidden />
+    </div>
   );
 }

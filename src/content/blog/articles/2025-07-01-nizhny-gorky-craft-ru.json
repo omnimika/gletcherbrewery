@@ -1,0 +1,61 @@
+{
+  "id": "nizhny-gorky-craft",
+  "locale": "ru",
+  "slug": "2025-07-01-gletcher-edet-v-nizhnii-novgorod",
+  "title": "GLETCHER ЕДЕТ В НИЖНИЙ НОВГОРОД!",
+  "description": "Седьмой фестиваль крафтовых культур Горький Крафт в Нижнем Новгороде! В этом году встречаемся 5 и 6 июля в пространстве “экс-ПОРТ Фудхолл”",
+  "publishedAt": "2025-07-01 11:58",
+  "cover": {
+    "src": "/blog/2025-07-01-gletcher-edet-v-nizhnii-novgorod/cover.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "Приглашаем жителей Нижнего Новгорода посетить стенд Gletcher Brewery на главном крафтовом фестивале города Горький Крафт!"
+    },
+    {
+      "type": "paragraph",
+      "html": "<strong><a href=\"https://vk.com/gorkycraft\" target=\"_blank\" rel=\"noopener noreferrer\">Горький Крафт</a></strong> – фестиваль без которого уже сложно представить Нижний Новгород, симбиоз самого лучшего, что придумало человечество: отличная музыка, вкусная еда, шикарная атмосфера, в которую хочется возвращаться снова, и снова, и, конечно же, отборный крафт со всей России! <br /><br />Популярные и редкие сорта крафтового пенного и сидра, лёгкие закуски и сложносочинённые блюда от лучших ресторанов города, лекции и мастер-классы от профессионалов индустрии, зоны промо-активностей, развлечений и насыщенная музыкальная программа. <br /><br />Формат фестиваля «безлимит» — все крафтовые напитки дегустируются гостями бесплатно!"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2025-07-01-gletcher-edet-v-nizhnii-novgorod/01.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "Мы привезём на фестиваль 5 сортов от Gletcher Brewery: полюбившийся многим молочно-тропический <strong><a href=\"/beer/milk-of-amnesia\">Milk of Amnesia</a></strong>, крепкий вишневый <strong><a href=\"/beer/ruby-road\">Ruby Road</a></strong>, насыщенный ореховый <strong><a href=\"/beer/nut-butter\">Nut Butter</a></strong>, мягкий пшеничный <strong><a href=\"/beer/blue-monkey\">Blue Monkey</a></strong> и классический <strong><a href=\"/beer/heidegger-hell\">Heidegger Hell</a></strong>. Ищите нас на фудкорт-зоне фестиваля!<br /><br />"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2025-07-01-gletcher-edet-v-nizhnii-novgorod/02.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "Вас ждет незабываемая атмосфера в сочетании с местной гастрономией и лучшим крафтом со всех уголков России и не только... И, конечно же, много отличной музыки! В этом году на сцене: The Diasonics, группа Кирпичи, ВИА Велюр и другие – подробности ищите в <a href=\"https://vk.com/gorkycraft\" target=\"_blank\" rel=\"noopener noreferrer\">официальной VK группе фестиваля</a>."
+    },
+    {
+      "type": "image",
+      "src": "/blog/2025-07-01-gletcher-edet-v-nizhnii-novgorod/03.jpg",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "Для тех, у кого нет возможности попасть на фестиваль, <strong>4 июля в 20:00</strong> наш бренд-менеджер Алексей Котельников проведет презентацию с дегустацией <strong>в баре BEER MUG на Коминтерна</strong> – будем рады пообщаться в непринуждённой атмосфере! <br /><br />Приходите, ждём вас, и будем рады угостить нашим лучшим пивом!"
+    }
+  ]
+}

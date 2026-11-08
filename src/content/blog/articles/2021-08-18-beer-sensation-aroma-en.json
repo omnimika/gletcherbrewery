@@ -1,0 +1,18 @@
+{
+  "id": "beer-sensation-aroma",
+  "locale": "en",
+  "slug": "2021-08-18-how-do-we-feel-about-beer-taste-and-arom",
+  "title": "How do we feel about beer: taste and aroma bouquet.",
+  "description": "The taste and aroma bouquet is the main aspect by which we distinguish one beer from another. We understand what we feel when tasting.",
+  "publishedAt": "2021-08-18 13:03",
+  "cover": {
+    "src": "/blog/2021-08-18-how-do-we-feel-about-beer-taste-and-arom/cover.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "The flavor and aroma bouquet is the main aspect by which we distinguish one beer from another, and probably one of the most susceptible to change in the modern world. In order to feel the taste, our olfactory system receives data from the nose and tongue. Olfactory bulbs are located in the nasal cavity and bind to thousands of receptors that respond to certain aromatic molecules. The mouth is connected to the nasal cavity by a retronasal route. In this way, we feel the fullness of the taste of food or drink.<br />A person has about 10,000 taste buds, located mostly on the tongue, but also on the soft and hard palate, cheeks and lips. The palate and tongue feel only a few tastes-sweet, salty, bitter, sour and umami, the taste of glutamate.<br /><br />Sweetness is the most understandable for us, and perhaps this is the very first thing that we remember. If we think about childhood, we are more likely to remember a sweet taste than a salty or sour one. The human brain knows that sweet things should be loved. Perhaps this is due to the high calorie content of sweets. Unlike wine, beer always contains residual sugars, even if the beer does not seem sweet. The sweetness of malt balances hop bitterness, burnt bitterness, carbonation and possible acidity of beer. There are not many styles of beer that contain a noticeable amount of residual sugars and sweetness rarely dominates the taste. However, some strong beer styles, such as barley wine, doppelbocks and Scottish ales often have a semi-sweet taste profile. The feeling of sweetness is more complex than just the presence of sugar as such, since other components can also act as triggers of sweetness. Alcohol, for example, may seem sweet, so strong beer will seem sweet at first, even there are few residual sugars. Various esters that the olfactory system can recognize as fruit will enhance the feeling of sweetness. The brain will gather all the sensations together: from sugar, alcohol and esters directly into one complex idea of sweetness. Unlike other types of sweetness, the feeling of residual sugars will appear only when you swallow a beer.<br /><br />All beer by its nature has an acidity with an average pH value between 4.1 and 4.5. However, noticeable acidity is not the main taste in most varieties. Since the dawn of civilization, beer has been fermenting spontaneously with the help of wild yeast and bacteria, and then the acidity prevailed over all other taste and aroma notes. Today, it is present only in some varieties, including lambics and fruit varieties. Among craft brewers in recent years, interest in sour beer has increased many times. And for those who have read up to this point of the text, we are happy to inform you that very soon you will find an experiment from the Gletcher brewery using sour malt."
+    }
+  ]
+}

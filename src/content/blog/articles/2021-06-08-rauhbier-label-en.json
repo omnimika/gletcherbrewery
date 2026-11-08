@@ -1,0 +1,102 @@
+{
+  "id": "rauhbier-label",
+  "locale": "en",
+  "slug": "2021-06-08-rauhbier-beer-label-from-idea-to-impleme",
+  "title": "Rauhbier: beer label from idea to implementation",
+  "description": "A beer label is like clothing for beer. Using the example of the Rauchbier label, we wanted to show what stages of design a label goes through: from idea to implementation.",
+  "publishedAt": "2021-06-08 19:23",
+  "cover": {
+    "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/cover.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "preface",
+      "html": "A beer label is a &quot;clothing&quot; for beer. It makes the first impression on the consumer and distinguishes beer from others. A label can tell a story and become a collectible."
+    },
+    {
+      "type": "paragraph",
+      "html": "Using the example of the Rauchbier label, we wanted to show what stages of design a label goes through: from idea to implementation.<br /><br />In the beginning there was a word, and it was &quot;recipe&quot;.<br />Rauhbir is a collaboration between Anora Mishchenko, Oleg Korotkiy (podcast &quot;Two beers, pzhlst!&quot;) and Martin Heuser (Avangard malt house, Germany). The three of them developed a recipe and decided to share it not only in the form of beer, but also in the form of a real beer recipe. We decided to put the recipe on the bottle label."
+    },
+    {
+      "type": "image",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/cover.png",
+      "alt": "",
+      "caption": "The reference was as follows",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "image",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/01.png",
+      "alt": "",
+      "caption": "Then there was the first visualization",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "The desire for a recipe on the label was followed by the idea that this is a collaborative cooking. Therefore, the idea of the label was disassembled into &quot;bricks&quot; of what we want to see, and then re-connected. The hands of the three cooking participants add the ingredients to one pot. And, in fact, the beer recipe."
+    },
+    {
+      "type": "image",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/02.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "image",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/03.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "image",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/04.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Happy end"
+    },
+    {
+      "type": "paragraph",
+      "html": "A few more edits later, we got what we needed. The label fully reflected the idea of three people working together and contained a beer recipe that the brewers wanted to share. And, of course, it reflected the contents of the package-rauhbir with Guinea pepper."
+    },
+    {
+      "type": "image",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/05.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "paragraph",
+      "html": "That's how one simple idea could be transformed beyond recognition. Did you like it?"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2021-06-08-rauhbier-beer-label-from-idea-to-impleme/06.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "yammy-jammy",
+  "locale": "en",
+  "slug": "2021-06-17-yammy-jammy-summer-in-a-bottle",
+  "title": "Yammy Jammy: summer in a bottle",
+  "description": "Summer in the city, I want freshness, so we cooked a new milkshake with a banana.",
+  "publishedAt": "2021-06-17 19:01",
+  "cover": {
+    "src": "/blog/2021-06-17-yammy-jammy-summer-in-a-bottle/cover.jpg",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "Summer in the city, I want freshness, so we cooked a new milkshake with a banana. <br /><br /><a href=\"/beer/yammy-jammy\"><strong>Yammy Jammy Milkshake IPA</strong></a> with a cloudy, silky body and rich banana flavor. American hops &quot;Magnum&quot;, &quot;Columbus&quot;, &quot;Pecco&quot; and &quot;Comet&quot; added tropical notes of mango, passion fruit and pineapple. Thanks to lactose, creaminess appeared in the taste, and wheat malt added softness and balance. The ale was light, with a rich taste of ripe bananas. <br /><br />We recommend you to try it with soft cheeses, grilled white meat or seafood, chocolate ice cream. <br /><br />ABV 5,0% <br />Available in 20 l kegs and 0.5 l bottles. — <a href=\"/beer/yammy-jammy\"><strong>Order.</strong></a>"
+    }
+  ]
+}

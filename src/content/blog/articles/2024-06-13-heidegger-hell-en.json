@@ -1,0 +1,27 @@
+{
+  "id": "heidegger-hell",
+  "locale": "en",
+  "slug": "2024-06-13-heidegger-hell-german-traditions-in-your",
+  "title": "Heidegger Hell: German traditions in your glass",
+  "description": "Meet the classic recipe of hel in a new bottle: light light beer according to a German recipe that has been tested for centuries",
+  "publishedAt": "2024-06-13 10:52",
+  "cover": {
+    "src": "/blog/2024-06-13-heidegger-hell-german-traditions-in-your/cover.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "<strong><a href=\"/en/beer/heidegger-hell\">Heidegger Hell</a></strong> is a classic light beer of low fermentation for true connoisseurs of old German traditions. Hell is not for nothing considered one of the most popular drinks not only in Germany, but all over the world, because it is distinguished by its characteristic recognizable bouquet and excellent German quality, proven over the centuries. Pilsner noble malt from the leading German malt company Avangard Malz is used here. The hop component is the base bitter German hop Nugget, bitterly fragrant woody-coniferous hop Aurora, as well as expressive floral-pine hop Bobek Styrian Golding, grown on the alpine slopes of central Slovenia, in the valley of the Savinja River.<br /><br />The beer is of a small strength, straw-golden shade, sparkling, refreshing, invigorating, with a delicate, pure taste. The light malt sweetness and refined pleasant hop bitterness are an excellent example of style.<br /><br />It is perfect for such simple German dishes as Weisswurst white veal sausages with sauerkraut, pretzel pretzels, potato dumplings and, of course, juicy fried pork or lamb knuckle."
+    },
+    {
+      "type": "image",
+      "src": "/blog/2024-06-13-heidegger-hell-german-traditions-in-your/01.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}

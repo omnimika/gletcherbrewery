@@ -1,0 +1,57 @@
+{
+  "id": "bar-hub-expo",
+  "locale": "ru",
+  "slug": "2025-09-08-bar-hub-expo-2025",
+  "title": "bar hub EXPO 2025",
+  "description": "Приглашаем на самое глобальное мероприятие барной индустрии России — ждём вас на стенде № НА-2 от Gletcher Brewery & SVAM Group!",
+  "publishedAt": "2025-09-08 11:13",
+  "cover": {
+    "src": "/blog/2025-09-08-bar-hub-expo-2025/cover.png",
+    "alt": ""
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "html": "С 16 по 18 сентября 2025 года в Москве на площадке Центра современного искусства «Винзавод» (4-й Сыромятнический переулок, 1/8, стр. 12) состоится <strong>bar hub EXPO 2025 | Latino Carnaval</strong> — главное событие года для профессионалов барной индустрии. Здесь вы окунётесь в атмосферу настоящего Латино-Карнавала: море рома и текилы, яркое оформление, ритмы музыки и незабываемый праздник вкуса и общения."
+    },
+    {
+      "type": "paragraph",
+      "html": "<strong>Что вас ждёт на выставке:</strong><br /><strong>2 выставочные зоны</strong>, 27 экспонентов под навесом и 111 экспонатов в БВХОбразовательная программа: <strong>4 лектория</strong>, 35 спикеров, зона Spirit Arena, дегустации и мастер-классыОгромное барное сообщество: около <strong>3000 участников из 120 городов</strong>, гест-бартендинги, конкурсы, квесты и многое другое!"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2025-09-08-bar-hub-expo-2025/01.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "html": "Gletcher Brewery &amp; SVAM Group на bar hub EXPO 2025"
+    },
+    {
+      "type": "paragraph",
+      "html": "Мы, <strong>Gletcher Brewery</strong>, вместе с нашим официальным дистрибьютером <strong>SVAM Group</strong>, приглашаем вас на <strong>наш совместный стенд № НА-2</strong> — это зона, где сливаются мастерство, вдохновение и вкусы разной интенсивности.<br /><strong>На стенде Gletcher Brewery</strong> вас встретит наш душевный бренд-менеджер <strong>Алексей Котельников</strong>. Он проведёт дегустацию, расскажет историю каждого сорта и поделится страстью к качественному пиву.<strong>На стенде SVAM Group</strong> — крепкие напитки и коктейли из свежего каталога. Идеальное дополнение к пивному разнообразию от Gletcher!"
+    },
+    {
+      "type": "paragraph",
+      "html": "<strong><a href=\"https://barhub.ru/\" target=\"_blank\" rel=\"noopener noreferrer\">barhub.ru</a></strong><br /><strong><a href=\"https://t.me/bar_hub\" target=\"_blank\" rel=\"noopener noreferrer\">t.me/bar_hub</a></strong>"
+    },
+    {
+      "type": "paragraph",
+      "html": "16-18 сентября 2025 год, МОСКВА<br /><strong>bar hub EXPO 2025 I LATINO CARNAVAL</strong><br />#barhub #бархаб #barhub_EXPO #barhub_EXPO_2025<br />#barhub_EXPO2025 #barhub_LATINOCARNAVAL"
+    },
+    {
+      "type": "image",
+      "src": "/blog/2025-09-08-bar-hub-expo-2025/02.png",
+      "alt": "",
+      "caption": "",
+      "width": 1200,
+      "height": 675,
+      "href": null
+    }
+  ]
+}
