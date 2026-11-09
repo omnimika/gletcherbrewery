@@ -11,8 +11,11 @@ import {
   type WorkflowStatus,
 } from "@/server/staff/contracts";
 import { listStaffLeads } from "@/server/staff/commands";
+import { Banner } from "@/components/ui/card";
+import { EmptyState, FormStatus } from "@/components/ui/feedback";
 import { LogoutButton } from "./logout-button";
 import { StaffLoginForm } from "./staff-login-form";
+import { WorkflowBadge } from "./workflow-badge";
 
 export const dynamic = "force-dynamic";
 
@@ -23,13 +26,18 @@ export default async function StaffHomePage({
 }) {
   if (!isStaffAuthConfigured()) {
     return (
-      <div className="rounded-lg border border-amber-800/60 bg-amber-950/30 p-6 text-sm">
-        <p className="font-medium text-amber-200">STAFF_API_TOKEN не задан</p>
-        <p className="mt-2 text-zinc-400">
-          Добавьте в <code>.env.local</code> токен ≥ 16 символов и перезапустите
-          Next.js.
+      <Banner tone="frost" className="border-gletcher-action/40">
+        <p className="font-display text-lg uppercase tracking-wide text-gletcher-action">
+          STAFF_API_TOKEN не задан
         </p>
-      </div>
+        <p className="type-body-small mt-2 text-gletcher-navy/80">
+          Добавьте токен ≥ 16 символов в{" "}
+          <code className="rounded bg-gletcher-white/80 px-1.5 py-0.5 text-xs">
+            .env.local
+          </code>{" "}
+          и перезапустите Next.js.
+        </p>
+      </Banner>
     );
   }
 
@@ -57,13 +65,21 @@ export default async function StaffHomePage({
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-xl font-semibold">Заявки</h1>
+    <div className="space-y-[var(--grid-gap)]">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="type-label text-gletcher-navy/55">Staff CRM</p>
+          <h1 className="font-display mt-1 text-[clamp(1.75rem,4vw,2.75rem)] leading-none font-extrabold tracking-wide text-gletcher-navy uppercase">
+            Заявки
+          </h1>
+        </div>
         <LogoutButton />
       </div>
 
-      <div className="flex flex-wrap gap-2 text-sm">
+      <nav
+        className="flex flex-wrap gap-2"
+        aria-label="Фильтр по статусу workflow"
+      >
         <FilterChip href="/staff" active={!workflowStatus} label="Все" />
         {(Object.keys(WORKFLOW_STATUS_LABELS_RU) as WorkflowStatus[]).map(
           (s) => (
@@ -75,68 +91,124 @@ export default async function StaffHomePage({
             />
           ),
         )}
-      </div>
+      </nav>
 
-      {error ? <p className="text-sm text-red-400">{error}</p> : null}
+      {error ? (
+        <FormStatus tone="error" role="alert">
+          {error}
+        </FormStatus>
+      ) : null}
 
-      <div className="overflow-x-auto rounded-lg border border-zinc-800">
-        <table className="min-w-full text-left text-sm">
-          <thead className="bg-zinc-900 text-xs uppercase text-zinc-500">
-            <tr>
-              <th className="px-3 py-2">Когда</th>
-              <th className="px-3 py-2">Форма</th>
-              <th className="px-3 py-2">Контакт</th>
-              <th className="px-3 py-2">Статус</th>
-              <th className="px-3 py-2">Исполнитель</th>
-            </tr>
-          </thead>
-          <tbody>
+      {!error && leads.length === 0 ? (
+        <EmptyState
+          title="Нет заявок"
+          body="Отправьте тестовую форму на сайте или снимите фильтр статуса."
+        />
+      ) : null}
+
+      {leads.length > 0 ? (
+        <>
+          {/* Mobile: stacked cards */}
+          <ul className="grid gap-3 md:hidden">
             {leads.map((lead) => (
-              <tr
-                key={lead.submissionId}
-                className="border-t border-zinc-800 hover:bg-zinc-900/50"
-              >
-                <td className="px-3 py-2 whitespace-nowrap text-zinc-400">
-                  {lead.createdAt.toISOString().slice(0, 16).replace("T", " ")}
-                </td>
-                <td className="px-3 py-2">
-                  <Link
-                    href={`/staff/leads/${lead.submissionId}`}
-                    className="text-amber-300 hover:underline"
-                  >
-                    {lead.formId}
-                  </Link>
-                  <div className="text-xs text-zinc-500">{lead.sourcePath}</div>
-                </td>
-                <td className="px-3 py-2">
-                  <div>{lead.name ?? "—"}</div>
-                  <div className="text-xs text-zinc-500">
-                    {lead.email ?? lead.phone ?? "—"}
-                  </div>
-                </td>
-                <td className="px-3 py-2">
-                  {WORKFLOW_STATUS_LABELS_RU[
-                    lead.workflowStatus as WorkflowStatus
-                  ] ?? lead.workflowStatus}
-                </td>
-                <td className="px-3 py-2 text-zinc-400">
-                  {lead.assignee ?? "—"}
-                </td>
-              </tr>
-            ))}
-            {leads.length === 0 && !error ? (
-              <tr>
-                <td
-                  colSpan={5}
-                  className="px-3 py-8 text-center text-zinc-500"
+              <li key={lead.submissionId}>
+                <Link
+                  href={`/staff/leads/${lead.submissionId}`}
+                  className="block rounded-[var(--radius-card)] border border-gletcher-navy bg-gletcher-white p-4 transition-colors hover:bg-gletcher-frost/50 focus-visible:outline focus-visible:outline-[length:var(--focus-width)] focus-visible:outline-offset-[var(--focus-offset)] focus-visible:outline-gletcher-navy"
                 >
-                  Нет заявок
-                </td>
-              </tr>
-            ) : null}
-          </tbody>
-        </table>
-      </div>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="font-semibold tracking-wide uppercase">
+                        {lead.formId}
+                      </p>
+                      <p className="type-caption mt-0.5 text-gletcher-navy/60">
+                        {lead.sourcePath}
+                      </p>
+                    </div>
+                    <WorkflowBadge status={lead.workflowStatus} />
+                  </div>
+                  <p className="mt-3 text-sm">{lead.name ?? "—"}</p>
+                  <p className="type-caption text-gletcher-navy/65">
+                    {lead.email ?? lead.phone ?? "—"}
+                  </p>
+                  <div className="type-caption mt-3 flex justify-between gap-2 text-gletcher-navy/55">
+                    <span>
+                      {lead.createdAt
+                        .toISOString()
+                        .slice(0, 16)
+                        .replace("T", " ")}
+                    </span>
+                    <span>{lead.assignee ?? "без исполнителя"}</span>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* Desktop: dense table */}
+          <div className="hidden overflow-x-auto rounded-[var(--radius-card)] border border-gletcher-navy bg-gletcher-white md:block">
+            <table className="min-w-full text-left text-sm">
+              <thead className="border-b border-gletcher-navy/15 bg-gletcher-frost/60">
+                <tr className="type-label text-gletcher-navy/70">
+                  <th scope="col" className="px-4 py-3 font-semibold">
+                    Когда
+                  </th>
+                  <th scope="col" className="px-4 py-3 font-semibold">
+                    Форма
+                  </th>
+                  <th scope="col" className="px-4 py-3 font-semibold">
+                    Контакт
+                  </th>
+                  <th scope="col" className="px-4 py-3 font-semibold">
+                    Статус
+                  </th>
+                  <th scope="col" className="px-4 py-3 font-semibold">
+                    Исполнитель
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {leads.map((lead) => (
+                  <tr
+                    key={lead.submissionId}
+                    className="border-t border-gletcher-navy/10 transition-colors hover:bg-gletcher-frost/40"
+                  >
+                    <td className="px-4 py-3 whitespace-nowrap text-gletcher-navy/65">
+                      {lead.createdAt
+                        .toISOString()
+                        .slice(0, 16)
+                        .replace("T", " ")}
+                    </td>
+                    <td className="px-4 py-3">
+                      <Link
+                        href={`/staff/leads/${lead.submissionId}`}
+                        className="font-semibold text-gletcher-navy underline decoration-gletcher-red/70 underline-offset-2 hover:decoration-gletcher-red focus-visible:outline focus-visible:outline-[length:var(--focus-width)] focus-visible:outline-offset-[var(--focus-offset)] focus-visible:outline-gletcher-navy"
+                      >
+                        {lead.formId}
+                      </Link>
+                      <div className="type-caption text-gletcher-navy/55">
+                        {lead.sourcePath}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div>{lead.name ?? "—"}</div>
+                      <div className="type-caption text-gletcher-navy/55">
+                        {lead.email ?? lead.phone ?? "—"}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">
+                      <WorkflowBadge status={lead.workflowStatus} />
+                    </td>
+                    <td className="px-4 py-3 text-gletcher-navy/70">
+                      {lead.assignee ?? "—"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }
@@ -153,11 +225,12 @@ function FilterChip({
   return (
     <Link
       href={href}
-      className={
+      aria-current={active ? "page" : undefined}
+      className={`rounded-full border px-4 py-1.5 text-xs font-semibold tracking-wider uppercase transition-colors sm:text-sm focus-visible:outline focus-visible:outline-[length:var(--focus-width)] focus-visible:outline-offset-[var(--focus-offset)] focus-visible:outline-gletcher-navy ${
         active
-          ? "rounded-full bg-amber-600 px-3 py-1 text-zinc-950"
-          : "rounded-full border border-zinc-700 px-3 py-1 text-zinc-300 hover:border-zinc-500"
-      }
+          ? "border-gletcher-navy bg-gletcher-navy text-gletcher-white"
+          : "border-gletcher-navy/40 bg-gletcher-ice text-gletcher-navy hover:border-gletcher-navy"
+      }`}
     >
       {label}
     </Link>

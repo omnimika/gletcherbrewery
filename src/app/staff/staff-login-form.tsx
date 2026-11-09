@@ -2,6 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  CardActions,
+  CardBody,
+  CardHeading,
+  CardShell,
+} from "@/components/ui/card";
+import { Field, TextInput } from "@/components/ui/field";
+import { FormStatus } from "@/components/ui/feedback";
 
 export function StaffLoginForm() {
   const router = useRouter();
@@ -26,7 +35,10 @@ export function StaffLoginForm() {
         return;
       }
       if (typeof window !== "undefined") {
-        window.sessionStorage.setItem("gletcher_staff_actor", actor.trim() || "staff");
+        window.sessionStorage.setItem(
+          "gletcher_staff_actor",
+          actor.trim() || "staff",
+        );
       }
       router.refresh();
     } catch {
@@ -37,43 +49,62 @@ export function StaffLoginForm() {
   }
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="mx-auto max-w-md space-y-4 rounded-lg border border-zinc-800 bg-zinc-900/60 p-6"
-    >
-      <h1 className="text-lg font-semibold">Вход в staff CRM</h1>
-      <p className="text-sm text-zinc-400">
-        Токен из <code className="text-zinc-300">STAFF_API_TOKEN</code> (server-only).
-        Правки идут через audited API, не через NocoDB write.
-      </p>
-      <label className="block space-y-1 text-sm">
-        <span className="text-zinc-400">Имя исполнителя (для audit)</span>
-        <input
-          className="w-full rounded border border-zinc-700 bg-zinc-950 px-3 py-2"
-          value={actor}
-          onChange={(e) => setActor(e.target.value)}
-          autoComplete="username"
-        />
-      </label>
-      <label className="block space-y-1 text-sm">
-        <span className="text-zinc-400">Staff API token</span>
-        <input
-          type="password"
-          className="w-full rounded border border-zinc-700 bg-zinc-950 px-3 py-2"
-          value={token}
-          onChange={(e) => setToken(e.target.value)}
-          autoComplete="current-password"
-          required
-        />
-      </label>
-      {error ? <p className="text-sm text-red-400">{error}</p> : null}
-      <button
-        type="submit"
-        disabled={pending}
-        className="rounded bg-amber-600 px-4 py-2 text-sm font-medium text-zinc-950 disabled:opacity-50"
-      >
-        {pending ? "…" : "Войти"}
-      </button>
-    </form>
+    <CardShell className="mx-auto max-w-md bg-gletcher-white" emphasis>
+      <CardHeading as="h2" className="font-display text-2xl uppercase tracking-wide">
+        Вход в Staff CRM
+      </CardHeading>
+      <CardBody className="space-y-4 !text-gletcher-navy">
+        <p>
+          Токен из{" "}
+          <code className="rounded bg-gletcher-frost px-1.5 py-0.5 text-xs">
+            STAFF_API_TOKEN
+          </code>
+          . Правки заявок идут через audited API, NocoDB остаётся только для
+          просмотра.
+        </p>
+        <form id="staff-login" onSubmit={onSubmit} className="space-y-4">
+          <Field
+            id="staff-actor"
+            label="Имя исполнителя"
+            help="Попадёт в audit-события"
+          >
+            <TextInput
+              id="staff-actor"
+              value={actor}
+              onChange={(e) => setActor(e.target.value)}
+              autoComplete="username"
+              required
+            />
+          </Field>
+          <Field id="staff-token" label="Staff API token" error={error ?? undefined}>
+            <TextInput
+              id="staff-token"
+              type="password"
+              value={token}
+              onChange={(e) => setToken(e.target.value)}
+              autoComplete="current-password"
+              required
+              invalid={Boolean(error)}
+            />
+          </Field>
+        </form>
+        {error ? (
+          <FormStatus tone="error" role="alert">
+            {error}
+          </FormStatus>
+        ) : null}
+      </CardBody>
+      <CardActions>
+        <Button
+          type="submit"
+          form="staff-login"
+          variant="secondary"
+          loading={pending}
+          disabled={pending}
+        >
+          Войти
+        </Button>
+      </CardActions>
+    </CardShell>
   );
 }

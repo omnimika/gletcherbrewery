@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { Container } from "@/components/layout/container";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -8,20 +9,27 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false, nocache: true },
 };
 
-/** Private staff shell — outside [locale], noindex. */
+/** Private staff shell — same brand tokens as public site, noindex. */
 export default function StaffLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ru">
-      <body className="min-h-screen bg-zinc-950 text-zinc-100 antialiased">
-        <header className="border-b border-zinc-800 px-4 py-3">
-          <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
-            <Link href="/staff" className="text-sm font-medium tracking-wide">
-              Gletcher Staff CRM
+      <body className="min-h-svh bg-gletcher-ice text-gletcher-navy antialiased">
+        <header className="sticky top-0 z-[var(--z-sticky)] border-b border-gletcher-navy/15 bg-gletcher-ice/95 backdrop-blur-sm">
+          <Container className="flex min-h-14 items-center justify-between gap-4 py-3">
+            <Link
+              href="/staff"
+              className="font-display text-sm font-extrabold tracking-[0.12em] text-gletcher-navy uppercase focus-visible:outline focus-visible:outline-[length:var(--focus-width)] focus-visible:outline-offset-[var(--focus-offset)] focus-visible:outline-gletcher-navy"
+            >
+              Gletcher · Staff
             </Link>
-            <span className="text-xs text-zinc-500">noindex · non-prod</span>
-          </div>
+            <p className="type-caption text-gletcher-navy/55">
+              CRM · noindex · non-prod
+            </p>
+          </Container>
         </header>
-        <main className="mx-auto max-w-5xl px-4 py-6">{children}</main>
+        <main className="py-[var(--section-inset-y)]">
+          <Container className="max-w-[68rem]">{children}</Container>
+        </main>
       </body>
     </html>
   );

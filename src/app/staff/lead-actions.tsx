@@ -2,6 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  CardActions,
+  CardBody,
+  CardHeading,
+  CardShell,
+} from "@/components/ui/card";
+import { Field, TextArea, TextInput } from "@/components/ui/field";
+import { Badge, FormStatus } from "@/components/ui/feedback";
 import {
   WORKFLOW_STATUSES,
   WORKFLOW_STATUS_LABELS_RU,
@@ -15,6 +24,9 @@ function actorHeader(): HeadersInit {
       : "staff";
   return { "content-type": "application/json", "x-staff-actor": actor };
 }
+
+const selectClass =
+  "data-control w-full rounded-[var(--radius-control)] border border-gletcher-navy/40 bg-gletcher-white px-3 py-2.5 text-sm text-gletcher-navy outline-none transition-colors focus-visible:border-gletcher-navy disabled:cursor-not-allowed disabled:opacity-70";
 
 export function LeadActions({
   submissionId,
@@ -40,11 +52,13 @@ export function LeadActions({
   const [assigneeValue, setAssigneeValue] = useState(assignee ?? "");
   const [note, setNote] = useState(staffNote ?? "");
   const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
   async function postAction(body: Record<string, unknown>) {
     setPending(true);
     setMessage(null);
+    setError(null);
     try {
       const res = await fetch(`/api/staff/leads/${submissionId}/actions`, {
         method: "POST",
@@ -53,13 +67,13 @@ export function LeadActions({
       });
       const json = (await res.json()) as { ok?: boolean; message?: string };
       if (!res.ok || !json.ok) {
-        setMessage(json.message ?? "Ошибка");
+        setError(json.message ?? "Ошибка");
         return;
       }
       setMessage("Сохранено");
       router.refresh();
     } catch {
-      setMessage("Сеть недоступна");
+      setError("Сеть недоступна");
     } finally {
       setPending(false);
     }
@@ -68,6 +82,7 @@ export function LeadActions({
   async function replay(jobId: string) {
     setPending(true);
     setMessage(null);
+    setError(null);
     try {
       const res = await fetch(`/api/staff/delivery-jobs/${jobId}/replay`, {
         method: "POST",
@@ -75,128 +90,157 @@ export function LeadActions({
       });
       const json = (await res.json()) as { ok?: boolean; message?: string };
       if (!res.ok || !json.ok) {
-        setMessage(json.message ?? "Replay failed");
+        setError(json.message ?? "Replay failed");
         return;
       }
-      setMessage("Job re-queued → pending");
+      setMessage("Job снова в очереди (pending)");
       router.refresh();
     } catch {
-      setMessage("Сеть недоступна");
+      setError("Сеть недоступна");
     } finally {
       setPending(false);
     }
   }
 
   return (
-    <div className="space-y-6">
-      <section className="space-y-3 rounded-lg border border-zinc-800 p-4">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-          Triage
-        </h2>
-        <div className="flex flex-wrap items-end gap-3">
-          <label className="space-y-1 text-sm">
-            <span className="text-zinc-500">Статус</span>
-            <select
-              className="block rounded border border-zinc-700 bg-zinc-950 px-3 py-2"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
+    <div className="space-y-[var(--grid-gap)]">
+      <CardShell className="bg-gletcher-white">
+        <CardHeading as="h2">Triage</CardHeading>
+        <CardBody className="space-y-5 !text-gletcher-navy">
+          <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
+            <Field id="workflow-status" label="Статус">
+              <select
+                id="workflow-status"
+                className={selectClass}
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                disabled={pending}
+              >
+                {WORKFLOW_STATUSES.map((s) => (
+                  <option key={s} value={s}>
+                    {WORKFLOW_STATUS_LABELS_RU[s as WorkflowStatus]}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Button
+              type="button"
+              variant="secondary"
+              size="md"
+              loading={pending}
+              disabled={pending}
+              onClick={() =>
+                postAction({ action: "set_status", workflowStatus: status })
+              }
             >
-              {WORKFLOW_STATUSES.map((s) => (
-                <option key={s} value={s}>
-                  {WORKFLOW_STATUS_LABELS_RU[s as WorkflowStatus]}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button
-            type="button"
-            disabled={pending}
-            className="rounded bg-zinc-100 px-3 py-2 text-sm font-medium text-zinc-950 disabled:opacity-50"
-            onClick={() =>
-              postAction({ action: "set_status", workflowStatus: status })
-            }
-          >
-            Обновить статус
-          </button>
-        </div>
-        <div className="flex flex-wrap items-end gap-3">
-          <label className="space-y-1 text-sm">
-            <span className="text-zinc-500">Исполнитель</span>
-            <input
-              className="block w-56 rounded border border-zinc-700 bg-zinc-950 px-3 py-2"
-              value={assigneeValue}
-              onChange={(e) => setAssigneeValue(e.target.value)}
+              Обновить статус
+            </Button>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
+            <Field id="assignee" label="Исполнитель">
+              <TextInput
+                id="assignee"
+                value={assigneeValue}
+                onChange={(e) => setAssigneeValue(e.target.value)}
+                disabled={pending}
+              />
+            </Field>
+            <Button
+              type="button"
+              variant="outline"
+              size="md"
+              loading={pending}
+              disabled={pending}
+              onClick={() =>
+                postAction({
+                  action: "assign",
+                  assignee: assigneeValue.trim() || null,
+                })
+              }
+            >
+              Назначить
+            </Button>
+          </div>
+
+          <Field id="staff-note" label="Заметка">
+            <TextArea
+              id="staff-note"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              disabled={pending}
             />
-          </label>
-          <button
+          </Field>
+        </CardBody>
+        <CardActions>
+          <Button
             type="button"
+            variant="outline"
+            size="md"
+            loading={pending}
             disabled={pending}
-            className="rounded border border-zinc-600 px-3 py-2 text-sm disabled:opacity-50"
-            onClick={() =>
-              postAction({
-                action: "assign",
-                assignee: assigneeValue.trim() || null,
-              })
-            }
+            onClick={() => postAction({ action: "note", note })}
           >
-            Назначить
-          </button>
-        </div>
-        <label className="block space-y-1 text-sm">
-          <span className="text-zinc-500">Заметка</span>
-          <textarea
-            className="min-h-24 w-full rounded border border-zinc-700 bg-zinc-950 px-3 py-2"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-          />
-        </label>
-        <button
-          type="button"
-          disabled={pending}
-          className="rounded border border-zinc-600 px-3 py-2 text-sm disabled:opacity-50"
-          onClick={() => postAction({ action: "note", note })}
-        >
-          Сохранить заметку
-        </button>
-      </section>
+            Сохранить заметку
+          </Button>
+        </CardActions>
+      </CardShell>
 
-      <section className="space-y-3 rounded-lg border border-zinc-800 p-4">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-400">
-          Delivery
-        </h2>
-        <ul className="space-y-2 text-sm">
-          {jobs.map((job) => (
-            <li
-              key={job.id}
-              className="flex flex-wrap items-center justify-between gap-2 rounded border border-zinc-800 px-3 py-2"
-            >
-              <div>
-                <div className="font-medium">
-                  {job.destination} · {job.status}
-                </div>
-                <div className="text-xs text-zinc-500">
-                  attempts={job.attempts}
-                  {job.lastError ? ` · ${job.lastError}` : ""}
-                </div>
-              </div>
-              {["failed", "blocked_config", "retry", "ambiguous"].includes(
-                job.status,
-              ) ? (
-                <button
-                  type="button"
-                  disabled={pending}
-                  className="rounded bg-amber-600 px-3 py-1.5 text-xs font-medium text-zinc-950 disabled:opacity-50"
-                  onClick={() => replay(job.id)}
+      <CardShell className="bg-gletcher-white">
+        <CardHeading as="h2">Delivery</CardHeading>
+        <CardBody className="!text-gletcher-navy">
+          <ul className="space-y-3">
+            {jobs.map((job) => {
+              const canReplay = [
+                "failed",
+                "blocked_config",
+                "retry",
+                "ambiguous",
+              ].includes(job.status);
+              return (
+                <li
+                  key={job.id}
+                  className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-control)] border border-gletcher-navy/15 bg-gletcher-frost/40 px-3 py-3"
                 >
-                  Replay
-                </button>
-              ) : null}
-            </li>
-          ))}
-        </ul>
-      </section>
+                  <div className="min-w-0 space-y-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="font-semibold uppercase tracking-wide">
+                        {job.destination}
+                      </span>
+                      <Badge tone={canReplay ? "red" : "muted"}>
+                        {job.status}
+                      </Badge>
+                    </div>
+                    <p className="type-caption text-gletcher-navy/65">
+                      attempts={job.attempts}
+                      {job.lastError ? ` · ${job.lastError}` : ""}
+                    </p>
+                  </div>
+                  {canReplay ? (
+                    <Button
+                      type="button"
+                      variant="primary"
+                      size="sm"
+                      loading={pending}
+                      disabled={pending}
+                      onClick={() => replay(job.id)}
+                    >
+                      Replay
+                    </Button>
+                  ) : null}
+                </li>
+              );
+            })}
+          </ul>
+        </CardBody>
+      </CardShell>
 
-      {message ? <p className="text-sm text-amber-300">{message}</p> : null}
+      {message ? <FormStatus tone="info">{message}</FormStatus> : null}
+      {error ? (
+        <FormStatus tone="error" role="alert">
+          {error}
+        </FormStatus>
+      ) : null}
     </div>
   );
 }
