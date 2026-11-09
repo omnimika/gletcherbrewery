@@ -59,8 +59,15 @@ export const FORM_DEFINITIONS: Record<string, FormDefinition> = {
   },
 };
 
-export const DELIVERY_DESTINATIONS = ["telegram", "sheets"] as const;
-export type DeliveryDestination = (typeof DELIVERY_DESTINATIONS)[number];
+/**
+ * Active outbox destinations for new submissions.
+ * Google Sheets lead export cancelled by owner 09.11.2026 (152-FZ / PII).
+ * Legacy `sheets` jobs may still exist in DB as `cancelled_policy`.
+ */
+export const DELIVERY_DESTINATIONS = ["telegram"] as const;
+export type ActiveDeliveryDestination = (typeof DELIVERY_DESTINATIONS)[number];
+/** Includes legacy cancelled destinations for typing historical rows. */
+export type DeliveryDestination = ActiveDeliveryDestination | "sheets";
 
 export type ConsentEvidence = {
   channel: "form_submit";

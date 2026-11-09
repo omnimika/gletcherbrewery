@@ -4,9 +4,8 @@
 и Tailwind CSS. Подключён next-intl; реализованы дизайн-фундамент, каталог/product,
 home/blog, B2B/legal и публичные agent/tours/map/shop. DS-1/DS-2 уже реализованы.
 Q1–Q3 и код /about реализованы; отдельные visual sign-offs Open.
-**Приоритет09.11 — B1: PostgreSQL/NocoDB и первая работающая форма**, затем
-Telegram/Google Sheets delivery и перенос legacy данных. На2095221 backend
-ещё отсутствует: это план разработки, не уже работающая интеграция.
+**B1 Done; B2 Telegram live.** Lead Google Sheets отменён (152-ФЗ). Дальше —
+остальные формы (B3) и перенос legacy данных. CRM = PostgreSQL + NocoDB.
 
 - [Инструкции агентов](AGENTS.md)
 - [Текущее задание Cursor](docs/CURSOR_NEXT_STEPS.md)

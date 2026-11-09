@@ -1,30 +1,34 @@
-# Текущее задание Cursor — B2: delivery worker (после B1 Done)
+# Текущее задание Cursor — после B2 Telegram
 
-Дата: **09.11.2026**. B1 closed на non-prod: embedded PG + NocoDB + Contacts intake.
-Evidence: [reviews/2026-11-09-b1-evidence.md](reviews/2026-11-09-b1-evidence.md),
-runbook: [backend/B1_RUNBOOK.md](backend/B1_RUNBOOK.md).
+Дата: **09.11.2026**. B1 Done; Telegram delivery live; **Google Sheets lead
+export отменён владельцем** (152-ФЗ).
 
-## B1 — Done
+## Решения
 
-- PostgreSQL 17 (embedded) `gletcher_business` / roles / versioned SQL migrations
-- Contacts RU → `POST /api/forms/submissions` → one transaction
-  (submission + consent + outbox) with idempotency
-- Private NocoDB staff source read-only on `staff_contact_leads`
-- Unit/integration/restore/smoke + lint/typecheck/build PASS
-- Telegram/Sheets **не** доставляются в B1 (adapters/contracts only)
+| Тема | Статус |
+|---|---|
+| Contacts → PostgreSQL → NocoDB | Done |
+| Worker → Telegram (группа «Заявки Gletcher Brewery») | Done |
+| Lead Google Sheets | **Cancelled** (owner 09.11, 152-ФЗ) |
+| Retail map Google Sheet | Отдельный read-only import source (не лиды) — не трогать |
 
-## Выполнить сейчас — B2
+## B2 Telegram — Done (slice)
 
-Durable worker: lease/retry, independent destination status for **test** Telegram
-bot/chat (и thread если нужен) + отдельный lead Google Sheet. Тот же
-`submissionId` должен появиться в DB, NocoDB view, test chat и Sheet.
-Reconciliation / poison / replay — часть DoD. Live credentials и Sheet schema —
-owner Open; без них подготовить worker + fault tests и точный список реквизитов.
+```sh
+npm run worker:delivery
+npm run worker:delivery -- --once
+```
 
-Не начинать M1/M2 production migration, cart/payments, Puck/CMS, Redis ради B2.
-Stage-4 A1 visual / C1 campaigns — отдельный backlog, не blocker B2.
+Новые submissions создают только `telegram` outbox job. Legacy `sheets` jobs
+→ `cancelled_policy` (migration `0003_cancel_sheets_delivery`).
+
+## Следом
+
+- B3: остальные формы / staff workflows
+- Stage-4 backlog: A1 visual accept, C1 campaigns (не blocker B-stream)
+- M1/M2 migration rehearsals по приоритету
+- Не коммитить `.env.local`; rotate Telegram token если светился в чате
 
 ## Git
 
-Commit/push только по запросу владельца. `/docs/` в `.gitignore` — локальные
-docs обновлять точечно; не unignore raw export packs.
+Commit/push по запросу. `/docs/` ignored — точечный `git add -f` при необходимости.

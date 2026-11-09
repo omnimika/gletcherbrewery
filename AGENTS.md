@@ -15,7 +15,8 @@
 
 - Frontend/full-stack: Next.js, TypeScript, Tailwind CSS.
 - Приоритет 09.11: миграция баз и работающие формы с приёмом в CRM/admin,
-  Telegram bot и Google Sheets. B1/B2 начинаются сейчас; прежний campaign/public-exit
+  Telegram bot и CRM/NocoDB. Lead Google Sheets отменён (152-ФЗ). B-stream идёт
+  сейчас; прежний campaign/public-exit
   gate не блокирует backend. Контракт: `docs/backend/FORMS_DATA_PIPELINE.md`.
 - /about обязателен вместе с анимацией и логикой source landing: Tilda page
   71867465, project 1212341. Задание/приёмка: `docs/discovery/ABOUT_PAGE_BASELINE.md`.
@@ -173,7 +174,7 @@ Bootstrap/Discovery/DS и Q1–Q3 не повторять; campaign/public-exit 
    в DB/NocoDB/chat/Sheet. Задание: `docs/CURSOR_NEXT_STEPS.md`.
 4. **B3:** остальные формы/admin; M1 retail rehearsal; M2 Airtable/loyalty.
 5. PostgreSQL — source of truth (ADR 0002 Accepted non-prod); NocoDB staff view
-   read-only. Telegram/Sheets — B2 downstream. Bidirectional sync не предполагать.
+   read-only. Telegram — B2 downstream. Lead Sheets не использовать (152-ФЗ).
 6. ADR 0003/0008 Accepted для B1; 0007 Proposed до live B2. Формулы/балансы/
    Members auth/legacy writers не переносить догадками.
 7. Production import/legacy changes/cutover, commit/push — только по запросу.

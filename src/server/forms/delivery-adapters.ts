@@ -1,6 +1,6 @@
 /**
- * B1: delivery adapter contracts + fault-test interfaces.
- * Live Telegram/Sheets delivery is B2 — mocks are not live PASS.
+ * Delivery adapter contracts + fault-test interfaces.
+ * Live Telegram is B2. Google Sheets lead export cancelled (152-FZ).
  */
 
 import type { DeliveryDestination } from "./contracts";
@@ -22,8 +22,11 @@ export type DeliveryAttemptResult =
 
 export interface DeliveryAdapter {
   destination: DeliveryDestination;
-  /** Never log secrets / full PII. */
-  deliver(job: DeliveryJobSnapshot, fieldsAllowlist: string[]): Promise<DeliveryAttemptResult>;
+  /** Never log secrets / full PII. Allowlist optional — adapters may load fields themselves. */
+  deliver(
+    job: DeliveryJobSnapshot,
+    fieldsAllowlist?: string[],
+  ): Promise<DeliveryAttemptResult>;
 }
 
 /** Test double: always succeeds with a fake reference. */
@@ -60,8 +63,5 @@ export class FakeConfigRequiredAdapter implements DeliveryAdapter {
 }
 
 export function defaultB1Adapters(): DeliveryAdapter[] {
-  return [
-    new FakeConfigRequiredAdapter("telegram"),
-    new FakeConfigRequiredAdapter("sheets"),
-  ];
+  return [new FakeConfigRequiredAdapter("telegram")];
 }

@@ -11,13 +11,14 @@
     "start": "next start --hostname 0.0.0.0 --port 3000",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
-    "test:unit": "tsx --test src/server/forms/intent-hash.test.ts src/server/forms/validate.test.ts",
+    "test:unit": "tsx --test src/server/forms/intent-hash.test.ts src/server/forms/validate.test.ts src/server/forms/telegram-message.test.ts",
     "test:integration": "tsx --test src/server/forms/submit.integration.test.ts",
     "db:bootstrap": "bash scripts/db-bootstrap.sh",
     "db:embedded": "node scripts/pg-embedded-start.mjs",
     "db:migrate": "node scripts/db-migrate.mjs",
     "db:restore-check": "node scripts/db-restore-check.mjs",
     "nocodb:dev": "bash scripts/nocodb-dev.sh",
+    "worker:delivery": "node scripts/delivery-worker.mjs",
     "b1:smoke": "node scripts/b1-smoke-submit.mjs"
   },
   "dependencies": {

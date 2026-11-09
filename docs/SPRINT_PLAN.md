@@ -8,7 +8,8 @@
 ## Приоритет владельца — Confirmed 09.11
 
 Далее концентрироваться на переносе баз и настоящем приёме/доставке форм в
-Telegram bot, CRM/admin и Google Sheets. **Backend-поток начинается сейчас**:
+Telegram bot и CRM/admin (NocoDB). **Lead Google Sheets отменён 09.11 (152-ФЗ).**
+**Backend-поток начинается сейчас**:
 старый C1/public-exit gate не блокирует B1. Stage 4 не объявляется Done,
 /about visual acceptance и campaigns остаются отдельным backlog.
 
@@ -21,7 +22,7 @@ R05/R06 были исключены из Q1 по записи Cursor — не д
 | Sprint | Проверяемый результат | Gate |
 |---|---|---|
 | **B1 — Done 09.11** | PostgreSQL + NocoDB + первая настоящая contact заявка | Durable submit, один record/outbox, private staff view, synthetic integration tests |
-| **B2 — текущий** | Worker → Telegram bot + Google Sheets | Тот же submission ID в DB/admin/test chat/test Sheet, retries/reconciliation |
+| **B2 — Done (Telegram)** | Worker → Telegram; Sheets cancelled (152-ФЗ) | submission ID в DB/NocoDB/Telegram group |
 | B3 | Остальные формы и staff workflows | Versioned schemas/consents, источники home/blog/RU/EN, права/audit/replay |
 | M1 | Репетиция переноса retail/справочников | Восстановленные sources, staging/mapping, rerunnable import и anomaly report |
 | M2 | Репетиция Airtable/loyalty + Make/Collabza перехода | Identity/history/balance reconciliation, writer inventory, backup/rollback |
@@ -38,20 +39,15 @@ intake API. Evidence [2026-11-09-b1-evidence](reviews/2026-11-09-b1-evidence.md)
 runbook [B1_RUNBOOK](backend/B1_RUNBOOK.md). ADR 0002/0003/0008 Accepted для
 этого среза. Homebrew/Docker не обязательны на машине разработчика.
 
-Живая доставка Telegram/Sheets — **B2**. Остальные формы unavailable до B3.
-Puck/CMS/Redis / Members auth migration не входили в B1.
+Живая доставка Telegram — **B2 Done**. Lead Sheets — **Cancelled**. Остальные
+формы unavailable до B3. Puck/CMS/Redis / Members auth migration не входили в B1.
 
-## B2 — доставка Telegram и Sheets
+## B2 — доставка Telegram (Sheets cancelled)
 
-Запустить durable worker с lease/retry и независимыми статусами по назначению.
-Уведомление Telegram и row Sheet с одним submission ID; CRM читает primary DB,
-не требует третьего independent write. Допустимый PII payload/recipients утверждены,
-секреты server-only. Есть pending/config/failed/ambiguous и private manual replay.
-
-Synthetic live E2E только на явно выбранных test bot/chat и test lead Sheet.
-Проверить 429/timeouts/partial delivery/revoked access/worker restart/remote ack loss.
-Sheets RAW + stable-ID reconciliation/upsert; Telegram ambiguous/duplicate policy.
-Никакого обещания exactly-once. Existing bot webhook не перенастраивать для send.
+Worker → Telegram в ту же группу заявок (own bot). CRM = PostgreSQL + NocoDB.
+Секреты server-only; at-least-once / ambiguous policy для Telegram.
+Lead Google Sheets **не реализуется** (owner Confirmed 09.11, 152-ФЗ).
+Retail map spreadsheet остаётся отдельным read-only import source, не каналом лидов.
 
 ## B3 — остальные формы / CRM workflow
 
@@ -61,8 +57,8 @@ Catalog, partnership RU/EN, russian-craft-beer, horeca, tours-request подкл
 Tours lead не означает booked/paid. Админка: triage/status/assignment/audit и
 контролируемый replay; права на outbox/ledger/schema не давать менеджеру.
 
-При необходимости входа из Telegram commands/Sheet edits определить отдельный
-auth/conflict/audit contract. Текущая цель не требует трёхсторонней sync автоматически.
+При необходимости inbound Telegram commands — отдельный auth/conflict/audit
+contract. Трёхсторонняя sync с Sheets не планируется.
 
 ## M1/M2 — перенос существующих данных
 

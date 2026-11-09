@@ -67,7 +67,8 @@ describeDb("submitForm integration", () => {
       .select()
       .from(deliveryJobs)
       .where(eq(deliveryJobs.submissionId, result.submissionId));
-    assert.equal(jobs.length, 2);
+    assert.equal(jobs.length, 1);
+    assert.equal(jobs[0]?.destination, "telegram");
     assert.ok(jobs.every((j) => j.status === "pending"));
   });
 
