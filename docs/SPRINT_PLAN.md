@@ -1,114 +1,91 @@
-# Следующая серия спринтов — надёжность и завершение публичного этапа
+# Следующие спринты — данные, CRM и действующие формы
 
-Дата: **05.11.2026**, проверен чистый **d6011d2**, ветка first-front.
-[Актуальное ревью](reviews/2026-11-05-public-integrity.md),
-[текущее задание](CURSOR_NEXT_STEPS.md), [route matrix](discovery/PUBLIC_ROUTE_MATRIX.md).
-Исторический план и его отметки сохранены в [архиве](archive/SPRINT_PLAN_pre_2026-11-05.md).
+Дата: **09.11.2026**, проверен чистый **2095221**, second-front.
+[Ревью](reviews/2026-11-09-data-and-forms.md), [текущее задание](CURSOR_NEXT_STEPS.md),
+[form pipeline](backend/FORMS_DATA_PIPELINE.md), [источники](data/SOURCE_INVENTORY.md).
+[История предыдущей очереди](archive/SPRINT_PLAN_pre_2026-11-09.md).
 
-## Статус и принцип очереди
+## Приоритет владельца — Confirmed 09.11
 
-DS-1 реализован; DS-2 pilot реализован; DS-3 широко перенесён. Эти спринты
-не начинать заново. Design/code done не равняется owner visual sign-off:
-неподтверждённые приёмки сохраняют Open, выявленные дефекты исправляются адресно.
-Stage 4 ещё не закрыт; /map frontend не равен stage-6 CRM, /agent landing —
-бонусной системе, /tours iframe — собственной брони, /shop — checkout.
+Далее концентрироваться на переносе баз и настоящем приёме/доставке форм в
+Telegram bot, CRM/admin и Google Sheets. **Backend-поток начинается сейчас**:
+старый C1/public-exit gate не блокирует B1. Stage 4 не объявляется Done,
+/about visual acceptance и campaigns остаются отдельным backlog.
 
-По записям Cursor map/shop приняты 04.11, tours/agent и предыдущие templates
-имеют прежние приёмки. /agent @320 polish уже в d6011d2, отдельный visual QA
-ещё Open. Большая часть route matrix реализована; остаются legacy URL,
-campaign/archival решения и общий public gate.
+Q1–Q3 получили код; формы без false success, но всё ещё unavailable. /about
+реализован RU-only/noindex с motion, sign-off Open. DS/home/blog заново не делать.
+R05/R06 были исключены из Q1 по записи Cursor — не добавлять их в B1.
 
-**Confirmed дополнение владельца 05.11:** /about обязателен вместе с анимацией
-и логикой Tilda landing, source page 71867465/project1212341.
-[Задание A1 и baseline](discovery/ABOUT_PAGE_BASELINE.md). Это не optional/archive scope.
+## Серия — Proposed implementation order
 
-**Proposed очередь:** Q1 → Q2 → Q3 → **A1 /about** → C1/следующие подтверждённые campaigns →
-stage-4 exit → D5-0. **Q1–Q3 + A1 code Done**; owner visual accept A1 Open; далее C1. Это результаты с
-зависимостями, не календарные обещания и не разрешение запускать всё сразу.
-
-| Спринт | Результат | Условия закрытия |
+| Sprint | Проверяемый результат | Gate |
 |---|---|---|
-| **Q1 — Done 05.11** | Честные формы, locale, shop/map lifecycle | R01/R02/R07/R08 Done; R05/R06 out of scope (owner); см. ревью |
-| **Q2 — Done 05.11** | Design/motion/reflow regression | R03/R04/R09/R10 Done; shop/CompareCard candidates Open |
-| **Q3 — Done 06.11** | Route/publication/SEO contract + remaining scope | blog-all 308; sitemap/robots gate; registry; HTTP evidence |
-| **A1 — code Done** | /about по Tilda 71867465 + animation/interaction | Code shipped; owner visual acceptance Open; see SECTION_MANIFEST |
-| C1 → Cn | Один опубликованный campaign pilot, затем одобренные остальные | Fresh source baseline, content parity, archive/publication decision |
-| Stage-4 exit | Полное согласованное публичное покрытие или явные исключения | Общая RU/EN regression, sign-offs и legacy operation paths |
-| D5-0 | Backend discovery и архитектурные решения | Подтверждённые схемы/контракты и reviewable ADR; implementation отдельно |
+| **B1 — Done 09.11** | PostgreSQL + NocoDB + первая настоящая contact заявка | Durable submit, один record/outbox, private staff view, synthetic integration tests |
+| **B2 — текущий** | Worker → Telegram bot + Google Sheets | Тот же submission ID в DB/admin/test chat/test Sheet, retries/reconciliation |
+| B3 | Остальные формы и staff workflows | Versioned schemas/consents, источники home/blog/RU/EN, права/audit/replay |
+| M1 | Репетиция переноса retail/справочников | Восстановленные sources, staging/mapping, rerunnable import и anomaly report |
+| M2 | Репетиция Airtable/loyalty + Make/Collabza перехода | Identity/history/balance reconciliation, writer inventory, backup/rollback |
+| Cutover | Согласованное production переключение по подсистемам | Проверенные restore, final sync, explicit authorization и rollback |
 
-## Q1 — Done (05.11.2026)
+Короткий B0 (sources/contracts/ORM/NocoDB spike) — первая часть B1, не отдельный
+неограниченный архитектурный проект. Schema/экспорты legacy собирать параллельно
+уже сейчас; полный разбор биркоинов не блокирует новую contact table.
 
-Закрыт по DoD (без R05/R06): пять lead forms без false success; LocaleSwitch
-peer/fallback/null; shop dialog hash/history; WebGL/geocoder lifecycle.
-R05/R06 — out of scope по решению владельца; `sales-map.module.css` без этих правок.
-Outcomes — [ревью](reviews/2026-11-05-public-integrity.md). Commit/push по запросу.
+## B1 — Done (09.11.2026)
 
-## Q2 — Done (05.11.2026)
+Закрыт по DoD на non-prod: embedded PostgreSQL 17 + NocoDB 0.301.2 + Contacts
+intake API. Evidence [2026-11-09-b1-evidence](reviews/2026-11-09-b1-evidence.md),
+runbook [B1_RUNBOOK](backend/B1_RUNBOOK.md). ADR 0002/0003/0008 Accepted для
+этого среза. Homebrew/Docker не обязательны на машине разработчика.
 
-R03 CardGrid max columns; R04 carousel scroll/autoplay-off; R09 ManagedVideo;
-R10 map accent contrast. Lint/tsc/build + targeted Playwright PASS.
-Shop address / CompareCard / CompositionGrid candidates остаются Open без
-подтверждённого browser defect. /agent @320 visual QA Open. Details —
-[ревью Q2 outcomes](reviews/2026-11-05-public-integrity.md).
+Живая доставка Telegram/Sheets — **B2**. Остальные формы unavailable до B3.
+Puck/CMS/Redis / Members auth migration не входили в B1.
 
-## Q3 — Done (06.11.2026)
+## B2 — доставка Telegram и Sheets
 
-- `/blog-all` → `/blog` и `/en/blog-all` → `/en/blog` via `permanentRedirect` (**HTTP 308**).
-- `src/app/sitemap.ts` + `robots.ts`; gate `ALLOW_SITE_INDEXING` (opt-in).
-- Code registry `src/content/seo/public-routes.ts` + updated PUBLIC_ROUTE_MATRIX.
-- Remaining campaigns/aging/restaurant/members/tours-ops documented as
-  external/deferred/archive/exclude (not closed as Done).
-- Fresh MCP settings for /about (A1 handoff). Social/structured deep parity Open.
-- HTTP localhost evidence in matrix. Preview stays noindex unless opt-in.
+Запустить durable worker с lease/retry и независимыми статусами по назначению.
+Уведомление Telegram и row Sheet с одним submission ID; CRM читает primary DB,
+не требует третьего independent write. Допустимый PII payload/recipients утверждены,
+секреты server-only. Есть pending/config/failed/ambiguous и private manual replay.
 
-## A1 — обязательный /about с animation/interaction parity
+Synthetic live E2E только на явно выбранных test bot/chat и test lead Sheet.
+Проверить 429/timeouts/partial delivery/revoked access/worker restart/remote ack loss.
+Sheets RAW + stable-ID reconciliation/upsert; Telegram ambiguous/duplicate policy.
+Никакого обещания exactly-once. Existing bot webhook не перенастраивать для send.
 
-Source указан владельцем: [Tilda page 71867465 / project1212341](https://tilda.ru/page/?pageid=71867465&projectid=1212341).
-Подробный [baseline/DoD](discovery/ABOUT_PAGE_BASELINE.md) обязателен для Cursor.
-Свежий read-only MCP: records/Zero Blocks, timelines/triggers, scroll/SBS/
-breakpoint settings, inserts и все реальные CTA/интерактивы. Не считать,
-что набор эффектов уже известен по старому public HTML.
+## B3 — остальные формы / CRM workflow
 
-Результат — полноценный landing с характером исходной анимации и логикой,
-а не статичная «О нас». Использовать общие layout/UI recipes; уникальные
-движения/взаимодействия выделять в компоненты и проверять в движении.
-Reduced-motion/mobile/keyboard и native scroll — часть приёмки. Source editor/
-published версии различать; старый Disallow не отменяет обязательность страницы,
-но и не определяет разрешение индексации. EN/publication — по подтверждённым данным.
+Catalog, partnership RU/EN, russian-craft-beer, horeca, tours-request подключать
+маленькими типизированными variants к тому же intake. Newsletter home/blog —
+отдельный marketing purpose и placement/locale, не общий B2B opt-in.
+Tours lead не означает booked/paid. Админка: triage/status/assignment/audit и
+контролируемый replay; права на outbox/ledger/schema не давать менеджеру.
 
-Stage-4 exit требует принятого /about с этими критериями. A1 code shipped
-06.11; owner visual acceptance Open. Далее C1 — без параллельного Stage5.
+При необходимости входа из Telegram commands/Sheet edits определить отдельный
+auth/conflict/audit contract. Текущая цель не требует трёхсторонней sync автоматически.
 
-## C1 → Cn — campaigns по одному, после определения scope
+## M1/M2 — перенос существующих данных
 
-Первый кандидат — /brainstorm-moto-fest-2023 (Tilda 37060088), **после свежей
-проверки публикации**. Один source baseline → один template → checks/приёмка.
-Следующий /10-years (17960662): сначала archive/current решение; старый конкурс
-не становится действующей акцией. Использовать существующие blocks/design recipes;
-Puck или новый page builder ради этих страниц не устанавливать.
+M1: retail Google Sheet/старые GeoJSON/CSV + необходимые справочники. Сначала
+источники/schema/checksums и исходные строки; Product/Adress/SKU и geography,
+assortment scope/dedup decisions сохранить. Не считать исторические 7784
+доказанным текущим входным объёмом; отсутствующие audit/data files восстановить.
 
-**Klin 36369657:** snapshot unpublished + password; не публиковать автоматически
-из доступных MCP исходников. Нужны отдельное подтверждение public статуса и
-scope; results article уже local. Это не блокирует остальные опубликованные pages.
-Другие inventory pages переносить только после уточнения статуса/приоритета.
-Если владелец оставляет campaign в legacy/archive, документировать решение
-и рабочий переход; не считать случайную ссылку закрытием public scope.
+M2: семь Airtable tables + formulas/relations/attachments/history и все
+Make/Collabza/Bipium writers. Auth — Tilda Members. Synthetic/обезличенная
+репетиция, stable legacy IDs, counts/orphans/sums, контроль ledger/opening balance,
+никакой выдуманной истории. Восстановление из backup и reconciliation отчёт
+до предложения переключить хоть одного production writer.
 
-## Stage-4 exit и D5-0
+Фактический production импорт, freeze/final sync, выключение legacy automations,
+смена auth/tilesets/DNS/credentials — конкретные отдельные разрешённые действия.
 
-Stage-4 exit: закрытые Q1/Q2/Q3, реализованный и принятый **A1 /about с анимацией
-и логикой**, resolved coverage и утверждённые исключения для остальных страниц,
-RU/EN/URL/media/keyboard/SEO regression, source parity/приёмки, честные внешние
-operations. Это gate готовности публичного слоя, не production cutover.
+## Сохранённый публичный backlog
 
-Read-only backend discovery допустим параллельно, с синтетическими примерами
-и без production PII. D5-0 собирает реальные схемы Airtable/Make/Collabza/
-retail/YCLIENTS по приоритету модулей; ADR 0002 database/NocoDB permissions,
-0003 ORM и 0008 hosting/staging. NocoDB обязателен; edition/external PostgreSQL
-mode и роли требуют проверки выбранной версии. Puck preference остаётся
-Confirmed, установка CMS отложена до CRM. Не выбирать Auth/queues вслепую.
+/about history placeholders/gallery autoplay, owner acceptance A1 и /agent320;
+campaign/legacy/SEO parity, unpublished/password Klin, новые локали. Они не
+отменены и не объявлены принятыми, но по новому решению не блокируют B1/B2.
+Без нового указания не публиковать скрытые страницы/языки и не включать checkout.
 
-После concrete ADR/контрактов — отдельный implementation sprint со средой,
-версионируемыми миграциями и synthetic vertical slice. Не начинать сразу
-ledger/booking/payments/CRM, не трогать production и не выполнять cutover.
-sr/hy/ka/de остаются planned до translation/script/font/publication gates.
+Для каждого спринта: code + meaningful tests + lint/typecheck/build + реальные
+evidence/ограничения + review. Commit/push/production не выполнять автоматически.

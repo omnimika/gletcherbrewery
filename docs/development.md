@@ -1,12 +1,9 @@
 # Локальная разработка
 
-Статус на 05.11.2026, d6011d2: DS-1/DS-2 реализованы, DS-3 широко перенесён;
-map/shop и остальные основные public templates в коде. Текущая работа — Q1:
-[функциональная надёжность](CURSOR_NEXT_STEPS.md), затем Q2/Q3 и public gate.
-RU без префикса, EN под `/en`; новые языки ещё не публикуются.
-Текущие проверки и дефекты описаны
-в [текущем задании Cursor](CURSOR_NEXT_STEPS.md) и `ROADMAP.md`.
-Серверные бизнес-интеграции относятся к последующим этапам.
+Статус 09.11: Q1–Q3 и /about code реализованы; **B1 Done** (PG + NocoDB +
+Contacts intake). Текущая работа — [B2 delivery](CURSOR_NEXT_STEPS.md).
+RU без префикса, EN под `/en`. Non-prod DB: [B1_RUNBOOK](backend/B1_RUNBOOK.md),
+[contract](backend/FORMS_DATA_PIPELINE.md), [sources](data/SOURCE_INVENTORY.md).
 
 ## Требования и запуск
 
@@ -20,21 +17,25 @@ RU без префикса, EN под `/en`; новые языки ещё не �
 
 ```sh
 npm ci
-npm run dev
+npm run db:embedded   # terminal 1 — PostgreSQL + migrate (port 54329)
+npm run nocodb:dev    # terminal 2 — http://127.0.0.1:8080
+npm run dev           # terminal 3 — http://localhost:3000
 ```
 
-Приложение доступно по адресу http://localhost:3000. Текущие dev/start scripts
-используют `--hostname 0.0.0.0 --port 3000` для локального/LAN preview;
-allowedDevOrigins задан в `next.config.ts`. Для same-origin hero переменные
-окружения не требуются. Опциональный публичный `NEXT_PUBLIC_HERO_BOTTLE_BASE`
-описан в `.env.example`; перед внешним origin проверить CORS/canvas fallback.
+Подробности и staff view: [B1_RUNBOOK](backend/B1_RUNBOOK.md). Dev/start scripts
+используют `--hostname 0.0.0.0 --port 3000`; `allowedDevOrigins` в `next.config.ts`.
+Опциональный `NEXT_PUBLIC_HERO_BOTTLE_BASE` — в `.env.example`.
 
 Проверки:
 
 ```sh
-npm run build
+npm run test:unit
+npm run test:integration
+npm run db:restore-check
+npm run b1:smoke
+npm run typecheck
 npm run lint
-npx tsc --noEmit
+npm run build
 ```
 
 `npm run typecheck` эквивалентен последней команде. Production-сервер локально:
@@ -57,7 +58,8 @@ src/
 
 Псевдоним `@/*` указывает на `src/*`. `types` пока содержит `.gitkeep`.
 Страницы и `SiteShell` — серверные компоненты; меню, age gate, фильтры,
-карусель и форма используют клиентские компоненты. Отправка формы — stub.
+карусель и форма используют клиентские компоненты. Contacts RU пишет в PostgreSQL
+через `/api/forms/submissions`; остальные формы пока unavailable.
 `product-props.ts` и listing assets объединяет `src/content/catalog.ts`:
 карточки и detail routes используют стабильный ID и published translations.
 Маршруты находятся в `src/app/[locale]`, proxy — `src/proxy.ts`, конфигурация
@@ -82,7 +84,7 @@ ABC Gravity Trial используются только для локально�
 
 `build` и `dev` создают `.next` и могут обновлять `next-env.d.ts`; эти команды
 не входят в режим строгого read-only ревью. Результаты текущего ревью:
-[d6011d2, 2026-11-05](reviews/2026-11-05-public-integrity.md).
+[2095221, 2026-11-09](reviews/2026-11-09-data-and-forms.md).
 
 Mapbox frontend использует публичный token из .env.example; его значение
 задаётся локально вне Git. Без token должна работать публичная fallback-ссылка.

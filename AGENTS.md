@@ -1,6 +1,6 @@
 # Gletcher Brewery — AGENTS.md
 
-> Версия: 0.13 (5 ноября 2026 г.)
+> Версия: 0.14 (9 ноября 2026 г.)
 > Назначение: единые постоянные инструкции для Cursor Agent и OpenAI Codex.  
 > Подробный план реализации: `docs/ROADMAP.md` (при размещении файла из поставки в проекте).  
 > **Не считать этот документ подтверждением неизвестных деталей исходной системы.**
@@ -14,6 +14,9 @@
 ### Зафиксировано владельцем проекта
 
 - Frontend/full-stack: Next.js, TypeScript, Tailwind CSS.
+- Приоритет 09.11: миграция баз и работающие формы с приёмом в CRM/admin,
+  Telegram bot и Google Sheets. B1/B2 начинаются сейчас; прежний campaign/public-exit
+  gate не блокирует backend. Контракт: `docs/backend/FORMS_DATA_PIPELINE.md`.
 - /about обязателен вместе с анимацией и логикой source landing: Tilda page
   71867465, project 1212341. Задание/приёмка: `docs/discovery/ABOUT_PAGE_BASELINE.md`.
   Статичная упрощённая страница без исходного поведения не закрывает этот scope.
@@ -32,7 +35,9 @@
 
 ### Что не подтверждено
 
-- Схема Airtable, формулы, правила начисления и списания биркоинов, структура входа/регистрации и идентификаторы участников.
+- Полная актуальная схема/экспорт Airtable, формулы, bonus rules и identity mapping.
+  Snapshot 31.10 уже фиксирует 7 таблиц/часть полей; auth — Tilda Members,
+  Collabza — transport, Make graph частичный. Реестр: `docs/data/SOURCE_INVENTORY.md`.
 - Структура и права доступа к исходной Google-таблице торговых сетей.
 - Конкретные Mapbox tileset IDs, source-layer, style-фильтры и режим публикации/обновления. В экспортированных файлах поле называется `Product` (singular); фактический формат активного tileset пока не подтверждён.
 - Текущие цены и условия всех типов экскурсий, политика возвратов, количество мест, правила сертификатов и налогово-правовая схема приёма платежей.
@@ -93,7 +98,8 @@
 - **Формулы Airtable не считать автоматически перенесёнными**: переписать и проверить расчёты явно.
 - Сохранить идентичность участников, статусы, исходные ID, историю начислений и списаний, если присутствует.
 - Баланс бонусов проектировать на основе журнала транзакций (`ledger`), с идемпотентностью, аудитом и контролируемыми корректировками; не позволять ручное изменение баланса без журналирования.
-- Способ безопасного переноса учётных данных и сессий выяснить отдельно; не предполагать, что пароли или Collabza-auth можно экспортировать.
+- Перенос учётных данных/сессий Tilda Members выяснить отдельно; не предполагать,
+  что пароли экспортируются. Collabza — data transport, не auth provider.
 - До переключения сделать сверку, резервную копию, план отката и ограниченное по времени окно синхронизации.
 
 ### 4.3. Mapbox / торговые сети / CRM
@@ -105,7 +111,10 @@
 - Для небольших/часто меняющихся данных сначала оценить серверный GeoJSON API и Mapbox GL JS `GeoJSONSource`; при большом масштабе — Mapbox Tiling Service, batch/incremental updates и учёт задержек публикации/кэша.
 - Не загружать Mapbox tileset при каждом сохранении ячейки. Нужны валидация координат, дедупликация, журнал импорта, статус публикации и откат.
 - Никаких секретных Mapbox upload/write token в клиентском JavaScript.
-- Факты о предоставленных данных: `docs/MAPBOX_DATA_AUDIT.md` — 12 разобранных GeoJSON/CSV источников, 7 784 строк, 17 уникальных `Title` и 17 токенов продукта; отдельный `.numbers` требует экспорта. Считать это snapshot, а не доказательством актуального состава действующих tilesets.
+- Исторически указаны 12 retail sources / 7 784 строки, но audit/model/data
+  files сейчас отсутствуют. Найти экспорты/provenance перед M1; не считать эти
+  числа подтверждённым входным batch. Свежие metadata и статус источников:
+  `docs/data/SOURCE_INVENTORY.md`.
 - Для импорта поддерживать исторические поля `Type`, `Title`, `City`, `Adress`, `Product`, `Packing` и `Longitude`/`Latitude` либо GeoJSON `geometry.coordinates`. При экспорте в Mapbox использовать заранее утверждённый adapter/contract; не заменять `Product` на `Products` без сверки фронтенда.
 - Не удалять дубликаты автоматически: одинаковые адреса и координаты могут относиться к разным брендам/отделам или отражать ошибки. Дедупликация только после ручной проверки с журналом решений.
 - Координаты валидировать географически, а не только по диапазону ±180/±90; отдельные исходные строки содержат геокодирование Франции и Нидерландов.
@@ -148,50 +157,47 @@
 - Для критичной логики нужны unit, integration и e2e тесты; проверять edge cases, отказ внешнего API, повторные webhooks, гонки и права доступа.
 - Не удалять старые страницы/аккаунты/таблицы и не переключать DNS без отдельного плана отката.
 - Документировать любые изменения архитектуры в `docs/adr/` как Architecture Decision Record.
+– В случае необходимости, при наличии неопределенности в дальнейших действиях, рекомендуется задавать уточняющие вопросы пользователю, предлагая варианты действий и аргументацию.
 
 ## 7. Текущий порядок работ Cursor Agent
 
-**Строго соблюдать очередность `docs/ROADMAP.md`:** (0) Bootstrap Next.js → (1) Site Discovery → (2) базовая дизайн-система → (3) одна эталонная страница → (4) остальной публичный сайт → (5+) backend, NocoDB, Mapbox, бонусы и бронирования. Преждевременная разработка CRM/Mapbox не является текущей задачей.
+**Owner Confirmed 09.11:** backend/data/forms теперь основной поток. Исторические
+Bootstrap/Discovery/DS и Q1–Q3 не повторять; campaign/public-exit gate не блокирует
+разрешённые B1/B2. Это не production cutover и не auto-accept A1.
 
-1. Bootstrap/Discovery, каталог/product, home/blog и основные public templates
-   реализованы. По записям Cursor map/shop приняты 04.11; /agent 320 polish уже
-   в d6011d2, отдельный visual QA Open. Не искать несуществующий dirty-tree gate.
-2. **DS-1/DS-2 реализованы**, DS-3 широко перенесён. Не начинать их заново;
-   конкретные grid/motion/reflow дефекты исправляются адресно. Прежние visual
-   sign-offs — regression baseline, не закрытие новых функциональных замечаний.
-3. **Q1–Q3 Done (05–06.11):** forms/locale/map/shop; design/motion; blog-all 308 +
- sitemap/robots (`ALLOW_SITE_INDEXING`). **A1 /about code Done** (Tilda 71867465
- + motion; RU-only; noindex). Manifest:
- `docs/discovery/ABOUT_SECTION_MANIFEST.md`. Owner visual accept A1 Open.
- Задание: `docs/CURSOR_NEXT_STEPS.md`.
-4. Далее C1 campaigns → stage-4 exit (нужен owner accept A1) → D5-0.
- Stage 4 ещё не Done.
-5. Mapbox frontend уже есть, CRM/публикация геоданных ещё нет; YCLIENTS и
-   production members временно сохраняются. /shop RU-only без cart/checkout.
-   Klin campaign в snapshot unpublished/password: MCP access не разрешает публикацию.
-6. ADR 0001 Accepted; RU/EN, `sr`/`hy`/`ka`/`de` planned до translation/script/font
-   gates. ADR 0010 direction Confirmed, implementation reviewable. Свежие проверки
-   обязательны; новые CMS/DB/платежи, commit/push/production — отдельные задания.
-
-Подробная архитектура CRM, data model, миграции Airtable, выбор ORM/Auth/CMS и инфраструктурные ADR — отдельные будущие задачи по этапам, а не блокеры инвентаризации сайта.
+1. Baseline 2095221 + B1 work on `second-front`. Q1–Q3 реализованы; **B1 Done
+   09.11** (embedded PG, migrations, Contacts intake, read-only NocoDB).
+2. /about code реализован (RU-only/noindex, Tilda71867465 + motion). Visual
+   acceptance Open; Stage4 не объявлять Done.
+3. **B2 текущий:** durable worker → test Telegram + lead Sheet; same submissionId
+   в DB/NocoDB/chat/Sheet. Задание: `docs/CURSOR_NEXT_STEPS.md`.
+4. **B3:** остальные формы/admin; M1 retail rehearsal; M2 Airtable/loyalty.
+5. PostgreSQL — source of truth (ADR 0002 Accepted non-prod); NocoDB staff view
+   read-only. Telegram/Sheets — B2 downstream. Bidirectional sync не предполагать.
+6. ADR 0003/0008 Accepted для B1; 0007 Proposed до live B2. Формулы/балансы/
+   Members auth/legacy writers не переносить догадками.
+7. Production import/legacy changes/cutover, commit/push — только по запросу.
 
 ## 8. Дополнительные документы
 
-- `docs/MAPBOX_DATA_AUDIT.md` — численный аудит предоставленных экспортов, аномалии и ограничения.
-- `docs/MAPBOX_DATA_MODEL.md` — схема PostgreSQL, staging, нормализация и публикация данных для карты.
+- `docs/data/SOURCE_INVENTORY.md` — sources/destinations, fresh metadata и недостающие migration inputs.
+- `docs/backend/FORMS_DATA_PIPELINE.md` — intake/CRM/Telegram/Sheets, consistency/retry/PII contract.
+- `docs/adr/0002-database.md`, `docs/adr/0003-orm-and-migrations.md`, `docs/adr/0008-hosting-dev.md` — Accepted B1 non-prod; `0007-background-jobs.md` — Proposed B2.
+- `docs/backend/B1_RUNBOOK.md`, `docs/reviews/2026-11-09-b1-evidence.md` — локальный запуск и DoD evidence.
 - `docs/ROADMAP.md` — приоритеты реализации.
 - `docs/discovery/PRODUCT_PROPS_INVENTORY.md` — props карточек пива RU/EN + контракт под будущие локали.
 - `docs/adr/0001-i18n-routing-and-content.md` — маршрутизация и модель контента для `ru`/`en`/`sr`/`hy`/`ka`/`de`.
 - `docs/CURSOR_NEXT_STEPS.md` — актуальное задание Cursor с критериями приёмки; обновлять после подтверждённых изменений.
 - `docs/design/DESIGN_SYSTEM.md` — дизайн-код, containers/grids, anchors/scroll, UI/state/motion и DoD.
 - `docs/adr/0010-design-system-and-section-layout.md` — архитектура дизайн-системы и границы rollout.
-- `docs/reviews/2026-11-05-public-integrity.md` — актуальное ревью `d6011d2`, R01–R10 и quality gates.
+- `docs/reviews/2026-11-09-data-and-forms.md` — актуальное ревью 2095221, новый data/forms приоритет.
+- `docs/reviews/2026-11-05-public-integrity.md` — историческое ревью d6011d2 и Q1–Q3 outcomes.
 - `docs/discovery/PUBLIC_ROUTE_MATRIX.md` — code/publication coverage и legacy/campaign решения до cutover.
 - `docs/discovery/ABOUT_PAGE_BASELINE.md` — обязательный /about: Tilda 71867465, animation/interaction parity и DoD A1.
 - `docs/discovery/ABOUT_SECTION_MANIFEST.md` — A1 records/ZB/animation map и adaptations.
 - `docs/reviews/2026-11-01-design-system.md` — историческое ревью `6b137e7` и follow-up DS-1/DS-2.
 - `docs/reviews/2026-11-01-home-and-sprints.md` — историческое ревью `2c1a9d0`.
-- `docs/SPRINT_PLAN.md` — Q1/Q2/Q3 → обязательный A1 /about → campaigns/public gate → D5-0; прежняя серия в docs/archive.
+- `docs/SPRINT_PLAN.md` — B1/B2/B3 + M1/M2, прежний public-gate порядок в docs/archive.
 - `docs/discovery/HOME_PAGE_BASELINE.md` — source baseline и приёмка текущей home.
 - `docs/reviews/2026-10-31-product-acceptance.md` — историческое ревью `6f84465`; A01–A03 исправлены в `0df9706`.
 - `docs/reviews/2026-10-31-product-template.md` — историческое ревью `9e0ee8e` + рабочего дерева.

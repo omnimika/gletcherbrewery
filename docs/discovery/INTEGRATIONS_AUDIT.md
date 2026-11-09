@@ -5,6 +5,10 @@
 > PII из таблиц **не копируются** в документ (только схема/объёмы).  
 > Статусы: **Confirmed** / **Observed** / **Assumed** / **Unknown**
 
+**Исторический snapshot31.10, не live-status09.11.** Сейчас data/forms — текущий
+приоритет; [SOURCE_INVENTORY](../data/SOURCE_INVENTORY.md) разделяет свежие metadata,
+старые observations и Open schema/exports. Этот аудит не заменяет полный экспорт.
+
 ## 0. Важные уточнения к предыдущим допущениям
 
 | Ранее | Сейчас |
@@ -14,7 +18,9 @@
 | Make «не инвентаризирован» | **Confirmed:** 1 активный сценарий «История заказов» (ID `334247`), ~25+ модулей |
 | Airtable схема Open | **Confirmed base:** `appq63sJgcuLGSUPC` «Gletcher Brewery – История заказов», 7 таблиц |
 
-**Критично для владельца:** в Airtable висит баннер **Payment failed** — риск потери данных. Нужно обновить оплату ASAP.
+**Observed31.10:** Airtable показывал Payment failed. Текущий billing/доступность
+09.11 не проверены; перепроверить статус и возможность защищённого экспорта,
+не считать старый баннер доказательством текущей проблемы.
 
 ## 1. Архитектура as-is (Observed)
 
@@ -172,7 +178,7 @@ Endpoints вида `transfer.collabza.ru/s3/<uuid>.js` — **не публико
 
 ## 6. Риски и next steps (этап 7, не эталон `/beer`)
 
-1. **Airtable payment failed** — срочно.  
+1. **Airtable billing/export access** — перепроверить текущее состояние; баннер наблюдался31.10.
 2. Баланс на карточке пользователя vs ledger — сверка формул обязательна.  
 3. Дублирование Airtable ↔ Bipium (2 интеграции) — зачем, актуально ли.  
 4. Make: один жирный сценарий = single point of failure; нужен blueprint export.  
@@ -182,7 +188,7 @@ Endpoints вида `transfer.collabza.ru/s3/<uuid>.js` — **не публико
 
 ## 7. Что запросить у владельца дальше
 
-1. Исправить оплату Airtable.  
+1. Проверить текущие billing/export access; действие по оплате только по актуальным фактам владельцем.
 2. Make → Export blueprint JSON сценария `334247`.  
 3. Airtable → список **формульных** полей (или доступ API read-only + schema dump).  
 4. Подтвердить роль Bipium (пилот / запас / мёртвый).  

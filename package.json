@@ -10,13 +10,26 @@
     "build": "next build",
     "start": "next start --hostname 0.0.0.0 --port 3000",
     "lint": "eslint . --max-warnings=0",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:unit": "tsx --test src/server/forms/intent-hash.test.ts src/server/forms/validate.test.ts",
+    "test:integration": "tsx --test src/server/forms/submit.integration.test.ts",
+    "db:bootstrap": "bash scripts/db-bootstrap.sh",
+    "db:embedded": "node scripts/pg-embedded-start.mjs",
+    "db:migrate": "node scripts/db-migrate.mjs",
+    "db:restore-check": "node scripts/db-restore-check.mjs",
+    "nocodb:dev": "bash scripts/nocodb-dev.sh",
+    "b1:smoke": "node scripts/b1-smoke-submit.mjs"
   },
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^5.1.3",
+    "cors": "^2.8.5",
+    "drizzle-orm": "0.44.7",
+    "express": "^4.21.2",
     "mapbox-gl": "^3.34.2",
     "next": "16.4.3",
     "next-intl": "^4.14.9",
+    "nocodb": "^0.301.2",
+    "postgres": "3.4.7",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
@@ -27,9 +40,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "0.31.7",
+    "embedded-postgres": "^17.6.0-beta.15",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.4.3",
     "tailwindcss": "^4",
+    "tsx": "4.20.6",
     "typescript": "^5"
   }
 }

@@ -1,7 +1,7 @@
 # Gletcher Brewery — Roadmap и технический план миграции
 
-> Версия: 0.13 (5 ноября 2026 г.)
-> Статус: чистый `d6011d2` проверен относительно `6b137e7`; TypeScript/ESLint PASS, build/browser Codex не запускал. DS-1/DS-2 реализованы, DS-3 широко перенесён; map/shop frontend уже в коде. Текущее — Q1 функциональной надёжности, затем Q2/Q3 и public gate. Ревью: `docs/reviews/2026-11-05-public-integrity.md`; серия: `docs/SPRINT_PLAN.md`.
+> Версия: 0.14 (9 ноября 2026 г.)
+> Статус: проверен чистый 2095221, second-front, baseline d6011d2; lint/tsc PASS, build/browser Codex не запускал. Q1–Q3 и /about code реализованы; формы ещё unavailable. Owner09.11 приоритизировал B1 — PostgreSQL/NocoDB/первая форма, затем Telegram/Sheets и миграции. Public/campaign sign-offs не блокируют этот поток.
 > Для репозитория: поместить в `docs/ROADMAP.md`.
 
 ## 1. Концепция
@@ -68,7 +68,8 @@ Production hosting target: Yandex Cloud
 | Система | Что исследовать | Результат |
 |---|---|---|
 | Tilda | MCP доступ подтверждён; сверить страницы/records/Zero Block, ассеты, SEO, формы/inserts, editor vs published | Датированный source manifest + route/asset inventory |
-| Collabza | Регистрация, вход, сессии, персонализация, ID пользователей | Identity/auth migration plan |
+| Tilda Members | Регистрация/вход/сессии, identity mapping с Airtable | Auth migration contract |
+| Collabza | Transfer schemas/writers Airtable/Bipium, IDs, Make boundaries | Data transport migration plan |
 | Airtable | Базы, таблицы, поля, связи, формулы, файлы, история, права | ERD + безопасный экспорт |
 | Make.com | Все сценарии, webhooks, расписания, ошибки, внешние токены | Event/workflow inventory |
 | YCLIENTS | Расписания, услуги, ресурсы, слоты, заполняемость, API/экспорт | Booking state machine |
@@ -77,28 +78,29 @@ Production hosting target: Yandex Cloud
 | ЮMoney/ЮKassa | Merchant, API, уведомления, чеки, возвраты, тестовая среда | Payment integration contract |
 | Yandex Cloud/DNS | Облачный каталог, сети, домен, SSL, роли, email domain | Infrastructure design |
 
-Google-таблица: https://docs.google.com/spreadsheets/d/1___r32NSbWCyvemCBmb3mVTckt549hz7zBHfcGks-6o/edit?gid=1425762822 — содержимое ещё не проверено, поля не выдумывать.
+Google retail Sheet: metadata09.11 подтверждены (Карта Gletcher / tab Карта, capacity1007×44), ячейки/headers не читались. Это источник карты, не lead destination. Реестр: [SOURCE_INVENTORY](data/SOURCE_INVENTORY.md).
 
-## 2.1. Уже проведённый аудит картографических данных — исследовательский задел, не ближайшая задача
+## 2.1. Исторические retail exports — inputs для восстановления
 
-Из 13 вложений разобраны 12 GeoJSON/CSV, всего **7 784 исходные строки**. Обнаружены 17 значений торговых `Title`, 17 строковых токенов продукции, 12 групп дубликатов `(Title, Adress)` (69 строк в этих группах), 55 групп повторяющихся координат (156 строк), 3 860 пустых или служебных значений `Packing`; нулевых или нечисловых координат нет. Две строки `Перекрёсток` помечены как Санкт-Петербург, но геокодированы во Франции и Нидерландах. Apple Numbers пока не разобран.
+**Исторические числа из прежних материалов, не свежий воспроизводимый аудит:**
+из 13 вложений были описаны 12 GeoJSON/CSV, всего **7 784 исходные строки**. Обнаружены 17 значений торговых `Title`, 17 строковых токенов продукции, 12 групп дубликатов `(Title, Adress)` (69 строк в этих группах), 55 групп повторяющихся координат (156 строк), 3 860 пустых или служебных значений `Packing`; нулевых или нечисловых координат нет. Две строки `Перекрёсток` помечены как Санкт-Петербург, но геокодированы во Франции и Нидерландах. Apple Numbers пока не разобран.
 
 **Нельзя** использовать 7 784 как количество уникальных реальных магазинов; нет подтверждения актуальности выгрузок, входящие повторы не очищены, а списки `Product` могут быть сетевыми, а не точечными. Детали: `docs/MAPBOX_DATA_AUDIT.md`.
 
-**Этот анализ сохраняем для будущего этапа карты.** Разработка staging → PostgreSQL → NocoDB → GeoJSON API → Mapbox не должна опережать инициализацию Next.js, инвентаризацию сайта, дизайн-систему и первую принятую эталонную страницу. Подключение действующих tilesets — только после изучения style.json/source-layer/tileset IDs.
+**На09.11 audit/model/data files отсутствуют**; найти exports и восстановить provenance перед M1. Старые числа не являются доступным migration batch. По новому приоритету B1/B2 уже в фокусе; retail импорт — через staging/reconciliation, без изменения production tilesets.
 
 ## 3. Этапы разработки, порядок и критерии завершения
 
 > **Правило порядка:** аналитика по отдельной подсистеме допустима заранее; её реализация — только в согласованной очереди. Публикация на действующий домен, изменения production-сервисов и миграция персональных данных запрещены без отдельного согласования.
 
-| Этап | Результат | Статус на 05.11.2026 |
+| Этап | Результат | Статус на 09.11.2026 |
 |---|---|---|
 | 0. Bootstrap | Работающий локально Next.js + TS + Tailwind и чистый Git | **Done** (проверено 31.10.2026) |
 | 1. Site Discovery | Реестр URL, UI-инвентаризация, SEO/контент и кандидат эталона | **Done** — эталон `/beer` утверждён |
 | 2. Design Foundation | Общие tokens, containers, grid, UI/state/motion | DS-1 реализован; конкретные дефекты grid/motion — Q2, не новый foundation |
 | 3. Reference Page | Одна принятая адаптивная эталонная страница | `/beer` принят 31.10; DS-2 Horeca pilot реализован, sign-offs отдельно |
-| 4. Public Migration | Публичные страницы, каталог/блог, SEO, контент | **In progress**, Q1 → Q2/Q3 → remaining coverage/public gate |
-| 5. Data & Infrastructure | PostgreSQL, NocoDB, серверные границы, staging | В очереди |
+| 4. Public Migration | Public UI/SEO/контент | Q1–Q3 и A1 code реализованы; remaining sign-offs Open, не blocker B1 |
+| 5. Data & Infrastructure | PostgreSQL/NocoDB, intake/delivery, staging | **B1 Done 09.11**; текущий **B2**; YC staging Open |
 | 6. Retail Map | CRM торговых точек и публикация данных | Backend в очереди; legacy Mapbox frontend уже реализован |
 | 7. Agent Gletcher | Миграция Airtable/Collabza и бонусная программа | Backend в очереди; public landing уже реализован |
 | 8. Tours & Certificates | Запись, оплата, PDF/email | Backend в очереди; public tours с YCLIENTS и firm shop уже реализованы |
@@ -172,39 +174,33 @@ links исправлены. A01–A03 [исторического ревью](re
 
 **Перед массовым переносом:** проверить реализацию [Accepted ADR i18n](adr/0001-i18n-routing-and-content.md): RU/EN URL, ID/slug-map, published peers, fallback и SEO. Next-intl уже установлен. Сербская письменность, шрифты и допуск остальных локалей остаются открытыми; изменение статуса ADR не заменяет проверки реализации.
 
-### Этап 4 — Постепенный перенос публичных страниц и контента
+### Этап 4 — Публичный слой и отдельный backlog
 
-**Работы:** переносить страницы **по шаблонам и общим компонентам**, а не случайным порядком URL: каталог и карточки, блог и статьи, разделы о пивоварне/партнёрах, юридические страницы, формы. Составить редакционную модель CMS и принять отдельный ADR для rich-content редактора; NocoDB не считать автоматически полноценной заменой CMS. Для интеграционно сложных страниц (карта, агент, экскурсии) сначала сохранить публичный UI, а реальные данные и операции подключить на профильных этапах.
+На2095221 DS-1/DS-2/основной rollout, Q1–Q3 и /about code реализованы.
+Q1 устранил ложные отправки: формы пока unavailable. Q3 добавил blog-all308,
+sitemap/robots/public registry. /about RU-only/noindex с motion, owner acceptance
+и отдельные history/gallery вопросы Open.
+[Review](reviews/2026-11-09-data-and-forms.md), [matrix](discovery/PUBLIC_ROUTE_MATRIX.md).
 
-**Текущий срез `d6011d2`:** catalog/product, home/blog, B2B/contacts/legal,
-agent/tours/map/shop реализованы; конкретные локали и external boundaries —
-[PUBLIC_ROUTE_MATRIX](discovery/PUBLIC_ROUTE_MATRIX.md). По записям Cursor map/shop
-приняты 04.11; отдельный /agent 320 polish ждёт visual QA, код уже committed.
-Не повторять home/blog import и DS-1/DS-2. Карта использует существующий Mapbox
-style/layers, не новую CRM; members и YCLIENTS остаются production integrations.
+**Новый приоритет владельца09.11:** начать B1/B2 данные/формы, не ждать campaigns/
+public exit. Это меняет очередь, но не принимает незавершённый визуал и не
+объявляет stage4 Done. /about остаётся обязательным; C1/legacy coverage —
+отдельный backlog. Protected/planned страницы и языки не публиковать автоматически.
 
-**Следующая очередь:** [Q1 → Q2 → Q3](SPRINT_PLAN.md): честные form outcomes,
-locale transitions и map/shop integrity → UI/motion/reflow → URL/publication/SEO.
-Затем **обязательный A1 /about с анимацией и логикой**, подтверждённые campaigns
-по одному и stage-4 exit. Владелец указал [Tilda page 71867465/project1212341](https://tilda.ru/page/?pageid=71867465&projectid=1212341);
-подробные source workflow/DoD: [ABOUT_PAGE_BASELINE](discovery/ABOUT_PAGE_BASELINE.md).
-Для /about решение «нужен ли» закрыто; publication/index/peers уточняются отдельно.
-/blog-all aliases, campaign/aging/restaurant и operation URLs ещё требуют scope-решения.
-Klin snapshot unpublished/password не публиковать автоматически из MCP.
-Публичный UI не требует установки CMS/БД; Puck preference подтверждён,
-архитектура [ADR 0005](adr/0005-cms.md) Proposed, сам editor отложен до CRM.
-`sr`/`hy`/`ka`/`de` требуют перевода/шрифтов и publication checks; fallback
-сам по себе не создаёт публичную версию.
+Public exit по-прежнему требует source parity/приёмок, согласованного coverage,
+URL/SEO/media/accessibility regression и честных legacy boundaries. Stage9/DNS
+cutover отдельно. Puck preference Confirmed, CMS не нужен для first lead pipeline.
+sr/hy/ka/de planned до translation/script/font/publication checks.
 
-**Критерий готовности:** /about реализован и принят вместе с animation/interaction
-logic; остальные пункты согласованного public scope закрыты или имеют явные
-legacy/archive/exclude решения; URL/статусы/peers, canonical/hreflang/sitemap/
-redirects и preview/production index policy реализованы и проверены. Нет
-ложных отправок/недоступных controls; media/reflow/keyboard/locale regression
-подтверждены свежими проверками. Новые sign-offs только по evidence. DNS cutover
-остаётся отдельным этапом; один build PASS не закрывает Stage 4.
+### Этап 5 — База данных, CRM и формы — текущий фокус
 
-### Этап 5 — База данных и инфраструктура приложений
+**Owner Confirmed09.11:** [B1](CURSOR_NEXT_STEPS.md) включает короткий B0 contracts/
+version/ORM spike и Contacts → PostgreSQL → private staff NocoDB view.
+Затем B2 durable worker → Telegram/lead Sheet, B3 остальные forms/admin workflows.
+[Pipeline](backend/FORMS_DATA_PIPELINE.md), [sources](data/SOURCE_INVENTORY.md).
+Новые leads не ждут полного bonus импорта; schema/export сбор идёт параллельно.
+Production data/cutover и платные ресурсы не разрешены этим review.
+
 
 **Работы:** после появления реальных потребностей модулей утвердить PostgreSQL + self-hosted NocoDB, локальную тестовую среду и Yandex Cloud staging; ADR по ORM, auth, CMS, секретам, фоновой обработке и хостингу. Отдельные роли/схемы NocoDB и бизнес-данных. Репетиции миграций только с тестовыми/обезличенными данными; настроить мониторинг, бэкапы, CI.
 
@@ -212,7 +208,7 @@ redirects и preview/production index policy реализованы и пров�
 
 ### Этап 6 — CRM торговых точек и Mapbox
 
-**Уже исследовано:** 12 GeoJSON/CSV, данные и проблемы описаны в `docs/MAPBOX_DATA_AUDIT.md` и `docs/MAPBOX_DATA_MODEL.md`. Файл Apple Numbers и живые Mapbox style/tileset IDs не разобраны.
+**Исторический задел:** ранее описаны 12 GeoJSON/CSV, но audit/model/data files сейчас отсутствуют. Восстановить provenance/exports и сверить actual style/layers до M1; не называть старые числа проверенным batch.
 
 **Работы:** утвердить контракт импорта; нормализовать сети, магазины, SKU; загрузить тестовый фрагмент в PostgreSQL; настроить редактор NocoDB с RBAC, модерацией и валидацией; создать API выдачи GeoJSON и фильтры Mapbox. Поддержать статус публикации, аудит и откат. Для MVP сравнить server-side GeoJSON API с Mapbox Tiling Service после замера нагрузки и частоты обновлений.
 
@@ -265,12 +261,12 @@ tour_types ──1:N── tour_slots ──1:N── bookings ──1:N── p
 | `0000-frontend-bootstrap.md` | Confirmed для заказанного стека |
 | `0000-site-migration-strategy.md` | Proposed; завершение эталона и порядок переноса |
 | `0001-i18n-routing-and-content.md` | **Accepted** — next-intl, published vs planned, catalog id + translations |
-| Будущий `0002-database.md` | PostgreSQL + NocoDB, роли/схемы, миграции, edition; этап 5 |
-| Будущий `0003-orm.md` | Prisma vs Drizzle и транзакции; этап 5 |
-| Будущий `0004-auth.md` | Идентичность, Collabza, MFA, восстановление; перед auth |
+| `0002-database.md` | Proposed B1: PostgreSQL/NocoDB, ownership/grants и first lead |
+| Будущий `0003-orm.md` | Выбор driver/ORM внутри B0/B1, transaction/constraint tests |
+| Будущий `0004-auth.md` | Tilda Members identity mapping, staff/member access и recovery |
 | `0005-cms.md` | Proposed; Puck preference Confirmed, установка editor на CRM-этапе |
 | Будущий `0006-map.md` | GeoJSON/MTS, контракт и публикация карты |
-| Будущий `0007-background-jobs.md` | Email/webhooks, outbox/worker, retries |
+| `0007-background-jobs.md` | Proposed B1/B2: transaction outbox/worker, Telegram/Sheets, retry/ambiguous |
 | Будущий `0008-hosting.md` | Yandex Cloud, сеть, стоимость, среды |
 | Будущий `0009-booking-payments.md` | Бронь, merchant, чеки/возвраты, идемпотентность |
 | `0010-design-system-and-section-layout.md` | Direction Confirmed; DS-1/2 реализованы, rollout reviewable; текущие defects — Q2 |
@@ -278,9 +274,9 @@ tour_types ──1:N── tour_slots ──1:N── bookings ──1:N── p
 ## 6. Технические принципы
 
 - Сначала работающий Next.js, затем доказуемый UI-аудит, затем дизайн-система и эталонная страница. Запрещено подменять этот порядок техническим энтузиазмом по одной подсистеме.
-- В этапе 4 DS-1/DS-2 уже реализованы, DS-3 широко перенесён. Текущий Q1/Q2
-  проверяет business outcomes и design contracts до новых templates;
-  исправления сохраняют native scroll, чтение/zoom и locale publication.
+- Owner09.11 приоритизировал B1/B2 перед remaining campaigns/public exit.
+  SQL commit предшествует accepted; downstream deliveries асинхронны и наблюдаемы,
+  CRM читает source of truth. Stage4 sign-offs и production cutover отдельно.
 - Одна SQL-схема, управляемая миграциями; NocoDB как рабочий табличный UI, по умолчанию без прав изменять схему.
 - Бонусы, деньги и бронирования — только атомарные операции backend с audit log.
 - У каждого импорта есть `source`, `source_id`, временная метка, checksum/версия, dry-run, статистика результатов и возможность отката.
@@ -306,39 +302,43 @@ tour_types ──1:N── tour_slots ──1:N── bookings ──1:N── p
 | SEO проседает после переноса | URL inventory, redirects, sitemap, Search Console/Метрика, мониторинг |
 | Правовые требования | Аудит 152-ФЗ, 54-ФЗ, особенностей сервиса и алкогольных ограничений |
 
-## 8. Что потребуется от владельца проекта — в правильном порядке
+## 8. Недостающие сведения — по мере нужного среза
 
-**Сейчас (quality gate этапа 4):** Cursor выполняет конкретный Q1, затем Q2/Q3.
-Не запрашивать повторное разрешение на изучение/подготовку исправлений. Владельцу
-предъявлять проверенные scenarios/diff и /agent @320 polish для visual QA.
-Далее согласовать remaining campaign/archive scope на свежем source snapshot;
-не выбирать вслепую «все campaigns» или «сразу backend» до public coverage gate.
+B1: non-prod topology, NocoDB version/edition и staff role, contact purpose/
+PII/retention и secret references. Обратимые technical choices готовить по
+коротким ADR без вопроса на каждый пакет; credentials не присылать в prompts.
 
-**Для завершения RU/EN среза этапа 4:** подтвердить UX и полноту обязательных локализованных полей; i18n ADR уже Accepted. Для будущего сербского выбрать письменность, для остальных локалей — приоритет перевода и шрифты. Юридические тексты и market-specific условия требуют отдельного подтверждения; язык сам не определяет рынок.
+B2: bot/chat/topic, отдельный lead spreadsheet/tab/schema, runtime Google
+principal/share, template/allowed fields и ответственный. Retail Sheet metadata
+доступны коннектору; это не app credential и не назначение лидов.
 
-**Перед миграцией backend (этапы 5–8):** read-only структура Airtable, Make сценарии, Collabza, фактическая Google-таблица, Mapbox style/tileset IDs, YCLIENTS, ЮKassa, доступы Yandex Cloud и домена. Не собирать всё сразу, если это не блокирует очередной этап.
+M1/M2: retail exports, актуальные Airtable schema/exports/formulas, Make blueprint,
+Collabza/Bipium writers, Tilda Members identity links. Read-only discovery и
+reconciliation предшествуют предложению production переключения. Старый billing
+snapshot не выдавать за текущее состояние.
 
 ## 9. Следующее задание Cursor Agent
 
-1. Прочитать [задание](CURSOR_NEXT_STEPS.md), [дизайн-код](design/DESIGN_SYSTEM.md),
-   [ADR 0010](adr/0010-design-system-and-section-layout.md),
-   [ревью](reviews/2026-11-05-public-integrity.md), [план](SPRINT_PLAN.md),
-   [route matrix](discovery/PUBLIC_ROUTE_MATRIX.md), Accepted i18n ADR.
-   Проверить актуальный Git state; baseline отчёта `d6011d2`.
-2. Выполнить **только Q1**: R01/R02/R05/R06/R07/R08, fresh lint/typecheck/build/
-   browser по заданию. DS-1/DS-2/agent commit повторно не делать.
-3. Затем Q2 UI/UX → Q3 URL/SEO → **A1 /about с source animation/logic** →
-   approved campaigns → public gate. /about не исключать как optional/archive.
-   Backend discovery допустим read-only; D5-0/реализация отдельными scope.
-4. Backend installation/migrations, commit/push/production — отдельные задания.
-   [Готовый промпт](CURSOR_REVIEW_PROMPT.md).
+1. Изучить [B1](CURSOR_NEXT_STEPS.md), [план](SPRINT_PLAN.md),
+   [ревью](reviews/2026-11-09-data-and-forms.md), [pipeline](backend/FORMS_DATA_PIPELINE.md),
+   [sources](data/SOURCE_INVENTORY.md), ADR0002/0007 и Accepted i18n.
+   Проверить actual Git state, baseline2095221.
+2. B0 коротко внутри B1: contracts/ORM/version/NocoDB spike; затем non-prod
+   DB/migrations/roles и Contacts → durable record/outbox → protected staff view.
+   Не подменять реальный DB результат моками.
+3. Далее B2 live sandbox delivery Telegram/Sheets, B3 остальные forms,
+   M1/M2 data rehearsal. Schema/exports собирать параллельно, не ждать campaigns.
+4. Production import/writers/auth/DNS, платные ресурсы и commit/push —
+   отдельные конкретные действия. [Промпт](CURSOR_REVIEW_PROMPT.md).
 
-## 10. Результаты аудита
+## 10. Текущие доказательства/материалы
 
-- `docs/MAPBOX_DATA_AUDIT.md` — проверка полей, объёмов, геокодирования, дублей, пропусков.
-- `docs/MAPBOX_DATA_MODEL.md` — схема и план импорта / публикации карты.
-- `data/staging/*.csv` — тестовые подготовленные staging-таблицы без удаления дублей и без переименования продуктов.
-- `data/reports/mapbox_sources_audit.json` — машинный отчёт.
+- [SOURCE_INVENTORY](data/SOURCE_INVENTORY.md): metadata и недостающие inputs.
+- [FORMS_DATA_PIPELINE](backend/FORMS_DATA_PIPELINE.md): typed intake/delivery/admin contract.
+- [INTEGRATIONS_AUDIT](discovery/INTEGRATIONS_AUDIT.md): исторический31.10 snapshot.
+- Старые MAPBOX_DATA_AUDIT.md, MAPBOX_DATA_MODEL.md и data/ отсутствуют; сначала
+  восстановить exports/provenance, не строить миграцию по старым числам.
+- [Ревью09.11](reviews/2026-11-09-data-and-forms.md): progress/checks/ограничения.
 
 ## 11. Официальные первоисточники
 

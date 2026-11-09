@@ -3,15 +3,18 @@
 Поэтапный перенос действующего сайта на Next.js App Router, TypeScript strict
 и Tailwind CSS. Подключён next-intl; реализованы дизайн-фундамент, каталог/product,
 home/blog, B2B/legal и публичные agent/tours/map/shop. DS-1/DS-2 уже реализованы.
-Текущий приоритет — **Q1: функциональная надёжность**, затем UI/UX regression,
-URL/SEO coverage, обязательный /about с анимацией/логикой и подтверждённые
-campaigns. Backend — следующий этап.
+Q1–Q3 и код /about реализованы; отдельные visual sign-offs Open.
+**Приоритет09.11 — B1: PostgreSQL/NocoDB и первая работающая форма**, затем
+Telegram/Google Sheets delivery и перенос legacy данных. На2095221 backend
+ещё отсутствует: это план разработки, не уже работающая интеграция.
 
 - [Инструкции агентов](AGENTS.md)
 - [Текущее задание Cursor](docs/CURSOR_NEXT_STEPS.md)
 - [Дизайн-код и сетка](docs/design/DESIGN_SYSTEM.md)
 - [Архитектура дизайн-системы](docs/adr/0010-design-system-and-section-layout.md)
-- [Актуальное ревью](docs/reviews/2026-11-05-public-integrity.md)
+- [Актуальное ревью](docs/reviews/2026-11-09-data-and-forms.md)
+- [Контракт форм и доставки](docs/backend/FORMS_DATA_PIPELINE.md)
+- [Источники данных и назначения](docs/data/SOURCE_INVENTORY.md)
 - [Публичные маршруты и границы](docs/discovery/PUBLIC_ROUTE_MATRIX.md)
 - [Следующая серия спринтов](docs/SPRINT_PLAN.md)
 - [Baseline главной](docs/discovery/HOME_PAGE_BASELINE.md)

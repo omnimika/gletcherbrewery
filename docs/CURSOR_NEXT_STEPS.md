@@ -1,30 +1,30 @@
-# Текущее задание Cursor Agent — после A1
+# Текущее задание Cursor — B2: delivery worker (после B1 Done)
 
-Дата: **06.11.2026**. Baseline ревью **d6011d2**; код Q1–Q3 + A1 поверх **0500789**.
-[Ревью](reviews/2026-11-05-public-integrity.md), [серия](SPRINT_PLAN.md),
-[route matrix](discovery/PUBLIC_ROUTE_MATRIX.md),
-[ABOUT baseline](discovery/ABOUT_PAGE_BASELINE.md),
-[ABOUT manifest](discovery/ABOUT_SECTION_MANIFEST.md).
+Дата: **09.11.2026**. B1 closed на non-prod: embedded PG + NocoDB + Contacts intake.
+Evidence: [reviews/2026-11-09-b1-evidence.md](reviews/2026-11-09-b1-evidence.md),
+runbook: [backend/B1_RUNBOOK.md](backend/B1_RUNBOOK.md).
 
-## Q1 / Q2 / Q3 / A1
+## B1 — Done
 
-| Sprint | Status |
-|---|---|
-| Q1 | R01/R02/R07/R08 Done; R05/R06 out of scope (owner) |
-| Q2 | R03/R04/R09/R10 Done |
-| Q3 | `/blog-all` **308** → `/blog`; sitemap/robots + `ALLOW_SITE_INDEXING` |
-| A1 | `/about` shipped: Tilda 71867465 + scroll/appear/SBS/hover; RU-only; noindex |
+- PostgreSQL 17 (embedded) `gletcher_business` / roles / versioned SQL migrations
+- Contacts RU → `POST /api/forms/submissions` → one transaction
+  (submission + consent + outbox) with idempotency
+- Private NocoDB staff source read-only on `staff_contact_leads`
+- Unit/integration/restore/smoke + lint/typecheck/build PASS
+- Telegram/Sheets **не** доставляются в B1 (adapters/contracts only)
 
-A1 code: `src/app/[locale]/about`, `src/components/about/*`, `src/content/about.ts`,
-`ZbScrollLinked` in `zb-motion.tsx`. Manifest + adaptations in
-`ABOUT_SECTION_MANIFEST.md`. Slide shell: `100svh` + **NLM129 sticky stack**
-(`#rec1144141191` → CSS sticky + rising z-index). Owner visual acceptance Open.
+## Выполнить сейчас — B2
 
-## Выполнить сейчас — C1 (после owner accept A1 при необходимости)
+Durable worker: lease/retry, independent destination status for **test** Telegram
+bot/chat (и thread если нужен) + отдельный lead Google Sheet. Тот же
+`submissionId` должен появиться в DB, NocoDB view, test chat и Sheet.
+Reconciliation / poison / replay — часть DoD. Live credentials и Sheet schema —
+owner Open; без них подготовить worker + fault tests и точный список реквизитов.
 
-Подтверждённые campaigns / legacy URL decisions из route matrix. Не трогать
-Klin unpublished/password. Не начинать Stage5 / NocoDB / cart.
+Не начинать M1/M2 production migration, cart/payments, Puck/CMS, Redis ради B2.
+Stage-4 A1 visual / C1 campaigns — отдельный backlog, не blocker B2.
 
-## Git / docs
+## Git
 
-`.gitignore:59` → `/docs/`. Commit/push по запросу.
+Commit/push только по запросу владельца. `/docs/` в `.gitignore` — локальные
+docs обновлять точечно; не unignore raw export packs.
