@@ -43,7 +43,7 @@ const IMAGE_BASE = "https://files.gletcherbrewery.com/map";
 export type MapBeer = {
   key: string;
   imageFile: string;
-  series: "classic" | "craft" | "limited";
+  series: "classic" | "craft" | "limited" | "aging";
 };
 
 /** RU panel order (Confirmed). */
@@ -75,7 +75,7 @@ export const MAP_BEERS_RU: readonly MapBeer[] = [
     imageFile: "Tour De Grapefruit.png",
     series: "limited",
   },
-  { key: "CYNIC", imageFile: "CYNIC.png", series: "limited" },
+  { key: "CYNIC", imageFile: "CYNIC.png", series: "aging" },
 ];
 
 /** EN panel omits NA Amnesia + CYNIC (Observed). */
@@ -136,6 +136,7 @@ const RU: MapCopy = {
     classic: "Classic",
     craft: "Craft",
     limited: "Limited",
+    aging: "Aging",
   },
 };
 
@@ -163,6 +164,7 @@ const EN: MapCopy = {
     classic: "Classic",
     craft: "Craft",
     limited: "Limited",
+    aging: "Aging",
   },
 };
 

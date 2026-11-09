@@ -1,12 +1,15 @@
 import {
+  boolean,
+  doublePrecision,
   index,
+  integer,
   jsonb,
   pgSchema,
+  primaryKey,
   text,
   timestamp,
   uniqueIndex,
   uuid,
-  integer,
 } from "drizzle-orm/pg-core";
 
 /** Application-owned business schema (not NocoDB metadata). */
@@ -150,6 +153,118 @@ export const staffLeadEvents = appSchema.table(
   },
   (t) => [
     index("staff_lead_events_submission_idx").on(t.submissionId, t.createdAt),
+  ],
+);
+
+/** M1 retail import staging — source rows before CRM publish. */
+export const retailImportBatches = appSchema.table(
+  "retail_import_batches",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    sourceKind: text("source_kind").notNull(),
+    sourceLabel: text("source_label").notNull(),
+    checksum: text("checksum").notNull(),
+    rowCount: integer("row_count").notNull().default(0),
+    anomalyCount: integer("anomaly_count").notNull().default(0),
+    status: text("status").notNull().default("loaded"),
+    report: jsonb("report").notNull().$type<Record<string, unknown>>(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("retail_import_batches_checksum_uidx").on(
+      t.checksum,
+      t.sourceLabel,
+    ),
+  ],
+);
+
+export const retailStagingRows = appSchema.table(
+  "retail_staging_rows",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    batchId: uuid("batch_id")
+      .notNull()
+      .references(() => retailImportBatches.id, { onDelete: "cascade" }),
+    sourceFile: text("source_file").notNull(),
+    sourceRowNumber: integer("source_row_number").notNull(),
+    rawJson: jsonb("raw_json").notNull().$type<Record<string, unknown>>(),
+    type: text("type"),
+    title: text("title"),
+    city: text("city"),
+    adress: text("adress"),
+    product: text("product"),
+    packing: text("packing"),
+    longitude: doublePrecision("longitude"),
+    latitude: doublePrecision("latitude"),
+    anomalyCodes: text("anomaly_codes").array().notNull().default([]),
+    quarantineReason: text("quarantine_reason"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("retail_staging_rows_source_uidx").on(
+      t.batchId,
+      t.sourceFile,
+      t.sourceRowNumber,
+    ),
+    index("retail_staging_rows_batch_idx").on(t.batchId),
+    index("retail_staging_rows_title_adress_idx").on(t.title, t.adress),
+  ],
+);
+
+/** Chain-level assortment (Sheet «Карта» matrix). */
+export const retailChains = appSchema.table("retail_chains", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  slug: text("slug").notNull().unique(),
+  title: text("title").notNull(),
+  legalName: text("legal_name"),
+  mapUrl: text("map_url"),
+  sortOrder: integer("sort_order").notNull().default(0),
+  active: boolean("active").notNull().default(true),
+  updatedAt: timestamp("updated_at", { withTimezone: true }),
+  updatedBy: text("updated_by"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export const retailChainProducts = appSchema.table(
+  "retail_chain_products",
+  {
+    chainId: uuid("chain_id")
+      .notNull()
+      .references(() => retailChains.id, { onDelete: "cascade" }),
+    productSlug: text("product_slug").notNull(),
+    available: boolean("available").notNull().default(false),
+    updatedAt: timestamp("updated_at", { withTimezone: true }),
+    updatedBy: text("updated_by"),
+  },
+  (t) => [
+    primaryKey({ columns: [t.chainId, t.productSlug] }),
+    index("retail_chain_products_slug_idx").on(t.productSlug),
+  ],
+);
+
+export const retailAssortmentEvents = appSchema.table(
+  "retail_assortment_events",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    chainId: uuid("chain_id")
+      .notNull()
+      .references(() => retailChains.id, { onDelete: "cascade" }),
+    productSlug: text("product_slug").notNull(),
+    action: text("action").notNull(),
+    actor: text("actor").notNull(),
+    payload: jsonb("payload").notNull().$type<Record<string, unknown>>(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    index("retail_assortment_events_chain_idx").on(t.chainId, t.createdAt),
   ],
 );
 

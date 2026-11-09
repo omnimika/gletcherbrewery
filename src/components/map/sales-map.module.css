@@ -249,6 +249,10 @@
   background: #aac3ff;
 }
 
+.seriesAging {
+  background: #c9b8a0;
+}
+
 /* Label is first child; flex-end packs [label]+[btns] to the right → label left of icons */
 .seriesLabel {
   display: inline-block;

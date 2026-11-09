@@ -1,0 +1,4 @@
+Type,Title,City,Adress,Product,Packing,Longitude,Latitude
+chain,Лента,Москва,"ул. CSV, 2","Heidegger Hell, Blue Monkey",0.5,37.62,55.75
+chain,Лента,Москва,"ул. CSV, 2",Heidegger Hell,0.5,37.62,55.75
+independent,Unknown Spot,Казань,ул. Пример,Not A Real Beer,0.33,49.12,55.79

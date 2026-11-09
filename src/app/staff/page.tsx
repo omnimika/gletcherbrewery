@@ -13,7 +13,6 @@ import {
 import { listStaffLeads } from "@/server/staff/commands";
 import { Banner } from "@/components/ui/card";
 import { EmptyState, FormStatus } from "@/components/ui/feedback";
-import { LogoutButton } from "./logout-button";
 import { StaffLoginForm } from "./staff-login-form";
 import { WorkflowBadge } from "./workflow-badge";
 
@@ -66,15 +65,9 @@ export default async function StaffHomePage({
 
   return (
     <div className="space-y-[var(--grid-gap)]">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="type-label text-gletcher-navy/55">Staff CRM</p>
-          <h1 className="font-display mt-1 text-[clamp(1.75rem,4vw,2.75rem)] leading-none font-extrabold tracking-wide text-gletcher-navy uppercase">
-            Заявки
-          </h1>
-        </div>
-        <LogoutButton />
-      </div>
+      <h1 className="font-display text-[clamp(1.75rem,4vw,2.75rem)] leading-none font-extrabold tracking-wide text-gletcher-navy uppercase">
+        Заявки
+      </h1>
 
       <nav
         className="flex flex-wrap gap-2"

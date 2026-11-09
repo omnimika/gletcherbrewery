@@ -475,10 +475,10 @@ export const ABOUT_PAGE = {
         ],
       },
       {
-        id: "aged",
-        name: "AGED",
+        id: "aging",
+        name: "AGING",
         body: "Выдержанные сорта в бочках. Глубина, сложность, раскрытая во времени.",
-        href: "/beer#aged",
+        href: "/beer#aging",
         autoplayMs: 0,
         bottles: [
           {

@@ -56,7 +56,7 @@ export function SalesMap({
 
   const seriesOrder = useMemo(
     () =>
-      (["classic", "craft", "limited"] as const).map((id) => ({
+      (["classic", "craft", "limited", "aging"] as const).map((id) => ({
         id,
         label: copy.seriesLabels[id],
         beers: copy.beers.filter((b) => b.series === id),
@@ -246,6 +246,7 @@ export function SalesMap({
     classic: styles.seriesClassic,
     craft: styles.seriesCraft,
     limited: styles.seriesLimited,
+    aging: styles.seriesAging,
   } as const;
 
   if (!accessToken) {

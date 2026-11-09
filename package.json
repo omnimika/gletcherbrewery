@@ -11,7 +11,7 @@
     "start": "next start --hostname 0.0.0.0 --port 3000",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
-    "test:unit": "tsx --test src/server/forms/intent-hash.test.ts src/server/forms/validate.test.ts src/server/forms/telegram-message.test.ts src/server/staff/commands.test.ts",
+    "test:unit": "tsx --test src/server/forms/intent-hash.test.ts src/server/forms/validate.test.ts src/server/forms/telegram-message.test.ts src/server/staff/commands.test.ts src/server/retail/parse.test.ts src/server/retail/sku-map.test.ts",
     "test:integration": "tsx --test src/server/forms/submit.integration.test.ts src/server/staff/commands.integration.test.ts",
     "db:bootstrap": "bash scripts/db-bootstrap.sh",
     "db:embedded": "node scripts/pg-embedded-start.mjs",
@@ -19,7 +19,9 @@
     "db:restore-check": "node scripts/db-restore-check.mjs",
     "nocodb:dev": "bash scripts/nocodb-dev.sh",
     "worker:delivery": "node scripts/delivery-worker.mjs",
-    "b1:smoke": "node scripts/b1-smoke-submit.mjs"
+    "b1:smoke": "node scripts/b1-smoke-submit.mjs",
+    "retail:import-rehearsal": "node scripts/retail-import-rehearsal.mjs",
+    "retail:seed-assortment": "node scripts/retail-seed-assortment.mjs"
   },
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^5.1.3",

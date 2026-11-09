@@ -1,29 +1,39 @@
 /**
- * Baseline strip order by stable product `id` (MCP artboard `left`).
+ * Catalog strip order by series, then baseline id order.
  *
- * Provenance (2026-10-31): Tilda MCP `get_zero_block`
- * project `1212341`, page `16494049`, record `802918687` (ALL carousel).
+ * Owner Confirmed (2026-11-10) ALL / staff matrix order:
+ * 1) CLASSIC → 2) CRAFT → 3) LIMITED → 4) AGING →
+ * 5) any SKU marked НЕТ В НАЛИЧИИ / OUT OF STOCK (any series).
  *
- * ALL tab presentation (owner Confirmed): NEW first, out-of-stock last;
- * within each bucket keep this baseline order.
+ * Relative order inside a bucket follows `LISTING_DISPLAY_ORDER`
+ * (MCP artboard baseline, reordered to series groups).
+ *
+ * Category label is AGING (not AGED).
  */
+import type { ProductCategory } from "@/content/products";
+
 export const LISTING_DISPLAY_ORDER = [
-  "cynic",
+  // CLASSIC
+  "ausweis",
+  "heidegger-hell",
+  "rouge-de-fleur",
+  // CRAFT (in-stock first in products fixture; OOS milk stout listed with OOS)
   "milk-of-amnesia-non-alco",
   "milk-of-amnesia-v-tropic",
+  "brainstorm",
   "blue-monkey",
   "nut-butter",
   "bowler-ipa",
+  "underground-ale",
   "friday-avenue-apa",
   "iron-woods-dry-stout",
-  "brainstorm",
   "ruby-road",
-  "underground-ale",
-  "iron-woods-milk-stout",
+  // LIMITED (in-stock)
   "tour-de-grapefruit",
-  "heidegger-hell",
-  "ausweis",
-  "rouge-de-fleur",
+  // AGING
+  "cynic",
+  // OUT OF STOCK (any series) — last bucket
+  "iron-woods-milk-stout",
   "hop-dragon",
   "brut-grapefruit",
 ] as const;
@@ -34,6 +44,14 @@ const ORDER_INDEX = new Map<string, number>(
   LISTING_DISPLAY_ORDER.map((id, index) => [id, index]),
 );
 
+/** Series rank for in-stock rows (OOS sorted separately). */
+export const CATEGORY_SERIES_RANK: Record<ProductCategory, number> = {
+  classic: 0,
+  craft: 1,
+  limited: 2,
+  aging: 3,
+};
+
 /** Stable sort key; unknown ids sort after known ones. */
 export function listingOrderIndex(id: string): number {
   return ORDER_INDEX.get(id) ?? LISTING_DISPLAY_ORDER.length + 1;
@@ -41,13 +59,10 @@ export function listingOrderIndex(id: string): number {
 
 type SortableCard = {
   id: string;
+  category?: ProductCategory;
   badges?: readonly string[];
   outOfStock?: boolean;
 };
-
-function isNew(item: SortableCard): boolean {
-  return Boolean(item.badges?.includes("new"));
-}
 
 function isOutOfStock(item: SortableCard): boolean {
   return Boolean(
@@ -55,19 +70,25 @@ function isOutOfStock(item: SortableCard): boolean {
   );
 }
 
+function seriesRank(item: SortableCard): number {
+  if (!item.category) return CATEGORY_SERIES_RANK.craft;
+  return CATEGORY_SERIES_RANK[item.category] ?? 9;
+}
+
 /**
- * ALL view: 1) NEW (in stock) → 2) remaining in stock → 3) out of stock.
+ * ALL view / staff matrix columns:
+ * CLASSIC → CRAFT → LIMITED → AGING (in stock), then OOS last.
  * Relative order inside each group follows `LISTING_DISPLAY_ORDER`.
  */
 export function sortAllViewOrder<T extends SortableCard>(items: T[]): T[] {
   return [...items].sort((a, b) => {
-    const rank = (item: SortableCard) => {
-      if (isOutOfStock(item)) return 2;
-      if (isNew(item)) return 0;
-      return 1;
-    };
-    const byRank = rank(a) - rank(b);
-    if (byRank !== 0) return byRank;
+    const aOos = isOutOfStock(a);
+    const bOos = isOutOfStock(b);
+    if (aOos !== bOos) return aOos ? 1 : -1;
+    if (!aOos) {
+      const bySeries = seriesRank(a) - seriesRank(b);
+      if (bySeries !== 0) return bySeries;
+    }
     return listingOrderIndex(a.id) - listingOrderIndex(b.id);
   });
 }
