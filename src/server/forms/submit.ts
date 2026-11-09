@@ -157,6 +157,11 @@ export async function submitForm(
           tourDate: f.date ?? null,
           guests: f.guests ?? null,
           wishes: f.wishes ?? null,
+          workflowStatus: "new",
+          assignee: null as string | null,
+          staffNote: null as string | null,
+          updatedAt: null as Date | null,
+          updatedBy: null as string | null,
         };
         await tx.insert(staffContactLeads).values(leadRow);
         const createdAtIso = createdAt.toISOString();
@@ -164,14 +169,17 @@ export async function submitForm(
           INSERT INTO public.staff_contact_leads (
             submission_id, form_id, locale, source_path, status, created_at,
             name, email, phone, city, company, comment,
-            partner_type, inn, tour_date, guests, wishes
+            partner_type, inn, tour_date, guests, wishes,
+            workflow_status, assignee, staff_note, updated_at, updated_by
           ) VALUES (
             ${leadRow.submissionId}::uuid, ${leadRow.formId}, ${leadRow.locale},
             ${leadRow.sourcePath}, ${leadRow.status}, ${createdAtIso}::timestamptz,
             ${leadRow.name}, ${leadRow.email}, ${leadRow.phone},
             ${leadRow.city}, ${leadRow.company}, ${leadRow.comment},
             ${leadRow.partnerType}, ${leadRow.inn}, ${leadRow.tourDate},
-            ${leadRow.guests}, ${leadRow.wishes}
+            ${leadRow.guests}, ${leadRow.wishes},
+            ${leadRow.workflowStatus}, ${leadRow.assignee}, ${leadRow.staffNote},
+            NULL, NULL
           )
         `);
       }

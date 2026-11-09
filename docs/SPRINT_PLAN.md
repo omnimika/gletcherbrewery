@@ -24,7 +24,7 @@ R05/R06 были исключены из Q1 по записи Cursor — не д
 | **B1 — Done 09.11** | PostgreSQL + NocoDB + первая настоящая contact заявка | Durable submit, один record/outbox, private staff view, synthetic integration tests |
 | **B2 — Done (Telegram)** | Worker → Telegram; Sheets cancelled (152-ФЗ) | submission ID в DB/NocoDB/Telegram group |
 | **B3 — Done (intake)** | Остальные публичные формы → тот же API/outbox | partnership/horeca/catalog/tours/newsletter |
-| B3 | Остальные формы и staff workflows | Versioned schemas/consents, источники home/blog/RU/EN, права/audit/replay |
+| **B3 staff — Implemented** | Triage/assign/note/replay + audit (`/staff`) | Shared `STAFF_API_TOKEN`; NocoDB остаётся read-only |
 | M1 | Репетиция переноса retail/справочников | Восстановленные sources, staging/mapping, rerunnable import и anomaly report |
 | M2 | Репетиция Airtable/loyalty + Make/Collabza перехода | Identity/history/balance reconciliation, writer inventory, backup/rollback |
 | Cutover | Согласованное production переключение по подсистемам | Проверенные restore, final sync, explicit authorization и rollback |

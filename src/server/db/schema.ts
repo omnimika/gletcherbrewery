@@ -120,8 +120,37 @@ export const staffContactLeads = appSchema.table(
     tourDate: text("tour_date"),
     guests: text("guests"),
     wishes: text("wishes"),
+    /** Staff triage — separate from intake `status` (accepted). */
+    workflowStatus: text("workflow_status").notNull().default("new"),
+    assignee: text("assignee"),
+    staffNote: text("staff_note"),
+    updatedAt: timestamp("updated_at", { withTimezone: true }),
+    updatedBy: text("updated_by"),
   },
-  (t) => [index("staff_contact_leads_created_idx").on(t.createdAt)],
+  (t) => [
+    index("staff_contact_leads_created_idx").on(t.createdAt),
+    index("staff_contact_leads_workflow_idx").on(t.workflowStatus, t.createdAt),
+  ],
+);
+
+/** Append-only staff audit trail (not editable via NocoDB). */
+export const staffLeadEvents = appSchema.table(
+  "staff_lead_events",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    submissionId: uuid("submission_id")
+      .notNull()
+      .references(() => formSubmissions.id, { onDelete: "cascade" }),
+    action: text("action").notNull(),
+    actor: text("actor").notNull(),
+    payload: jsonb("payload").notNull().$type<Record<string, unknown>>(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    index("staff_lead_events_submission_idx").on(t.submissionId, t.createdAt),
+  ],
 );
 
 export const deliveryAttempts = appSchema.table(
