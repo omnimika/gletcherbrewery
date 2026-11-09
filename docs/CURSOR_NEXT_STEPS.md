@@ -1,34 +1,32 @@
-# Текущее задание Cursor — после B2 Telegram
+# Текущее задание Cursor — после B3 forms intake
 
-Дата: **09.11.2026**. B1 Done; Telegram delivery live; **Google Sheets lead
-export отменён владельцем** (152-ФЗ).
+Дата: **09.11.2026**. B1/B2 Done; **B3 form intake wired**.
 
-## Решения
+## Done
 
-| Тема | Статус |
+| Slice | Status |
 |---|---|
-| Contacts → PostgreSQL → NocoDB | Done |
-| Worker → Telegram (группа «Заявки Gletcher Brewery») | Done |
-| Lead Google Sheets | **Cancelled** (owner 09.11, 152-ФЗ) |
-| Retail map Google Sheet | Отдельный read-only import source (не лиды) — не трогать |
+| Contacts → PG → NocoDB → Telegram | Done |
+| Lead Google Sheets | Cancelled (152-ФЗ) |
+| B3 forms → same `/api/forms/submissions` | Done |
 
-## B2 Telegram — Done (slice)
+### B3 form_id
 
-```sh
-npm run worker:delivery
-npm run worker:delivery -- --once
-```
+- `partnership` (RU/EN; `/partnership`, `/russian-craft-beer`)
+- `horeca` (RU)
+- `catalog_lead` (RU/EN `/beer`)
+- `tours_request` (RU/EN — lead only, not booking)
+- `newsletter` (RU/EN home/blog; purpose `newsletter_subscribe`)
 
-Новые submissions создают только `telegram` outbox job. Legacy `sheets` jobs
-→ `cancelled_policy` (migration `0003_cancel_sheets_delivery`).
+Staff CRM: `public.staff_contact_leads` (+ partner_type/inn/tour_date/guests/wishes).
+Worker: `npm run worker:delivery`.
 
-## Следом
+## Следом (не смешивать с intake)
 
-- B3: остальные формы / staff workflows
-- Stage-4 backlog: A1 visual accept, C1 campaigns (не blocker B-stream)
-- M1/M2 migration rehearsals по приоритету
-- Не коммитить `.env.local`; rotate Telegram token если светился в чате
+- Staff triage/assignment/replay UI (optional polish)
+- Stage-4: A1 visual accept, C1 campaigns
+- M1/M2 data migration rehearsals
 
 ## Git
 
-Commit/push по запросу. `/docs/` ignored — точечный `git add -f` при необходимости.
+Commit/push по запросу. Не коммитить `.env.local`.

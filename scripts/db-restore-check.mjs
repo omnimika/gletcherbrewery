@@ -112,11 +112,14 @@ for (const row of dump.staff_contact_leads) {
   await dst`
     INSERT INTO app.staff_contact_leads (
       submission_id, form_id, locale, source_path, status, created_at,
-      name, email, phone, city, company, comment
+      name, email, phone, city, company, comment,
+      partner_type, inn, tour_date, guests, wishes
     ) VALUES (
       ${row.submission_id}, ${row.form_id}, ${row.locale}, ${row.source_path},
       ${row.status}, ${row.created_at}, ${row.name}, ${row.email}, ${row.phone},
-      ${row.city}, ${row.company}, ${row.comment}
+      ${row.city}, ${row.company}, ${row.comment},
+      ${row.partner_type ?? null}, ${row.inn ?? null}, ${row.tour_date ?? null},
+      ${row.guests ?? null}, ${row.wishes ?? null}
     )
     ON CONFLICT (submission_id) DO NOTHING
   `;
@@ -125,11 +128,14 @@ for (const row of publicLeads) {
   await dst`
     INSERT INTO public.staff_contact_leads (
       submission_id, form_id, locale, source_path, status, created_at,
-      name, email, phone, city, company, comment
+      name, email, phone, city, company, comment,
+      partner_type, inn, tour_date, guests, wishes
     ) VALUES (
       ${row.submission_id}, ${row.form_id}, ${row.locale}, ${row.source_path},
       ${row.status}, ${row.created_at}, ${row.name}, ${row.email}, ${row.phone},
-      ${row.city}, ${row.company}, ${row.comment}
+      ${row.city}, ${row.company}, ${row.comment},
+      ${row.partner_type ?? null}, ${row.inn ?? null}, ${row.tour_date ?? null},
+      ${row.guests ?? null}, ${row.wishes ?? null}
     )
     ON CONFLICT (submission_id) DO NOTHING
   `;

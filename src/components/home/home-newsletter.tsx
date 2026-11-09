@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState, type FormEvent } from "react";
+import { useId, useRef, useState, type FormEvent } from "react";
+import { usePathname } from "@/i18n/navigation";
 import {
   CompositionGrid,
   CompositionPanel,
@@ -10,7 +11,16 @@ import {
 } from "@/components/layout";
 import { Reveal } from "@/components/motion/reveal";
 import { POLICY_PATH } from "@/content/policy";
+import {
+  NEWSLETTER_FORM_ID,
+  POLICY_SITE_VERSION,
+} from "@/content/forms/form-ids";
 import type { PublishedLocale } from "@/i18n/locales";
+import {
+  clearIdempotencyKey,
+  ensureIdempotencyKey,
+  postFormSubmission,
+} from "@/lib/forms/client-submit";
 
 type HomeNewsletterProps = {
   locale: PublishedLocale;
@@ -24,7 +34,6 @@ type HomeNewsletterProps = {
   invalidNote: string;
 };
 
-/** Minimal client check — not a backend guarantee (H04). */
 function looksLikeEmail(value: string) {
   const trimmed = value.trim();
   if (trimmed.length < 5 || trimmed.length > 254) return false;
@@ -32,12 +41,11 @@ function looksLikeEmail(value: string) {
 }
 
 /**
- * Production ZB `751210003` (footer/library peer; EN `762056776`):
- * crocodile + subscribe form on one stretch screen slide (halves-x).
- * Submit UI-only until backend exists.
+ * Production ZB `751210003` peer: crocodile + subscribe.
+ * Marketing purpose separate from B2B leads.
  */
 export function HomeNewsletter({
-  locale: _locale,
+  locale,
   title,
   lead,
   placeholder,
@@ -47,12 +55,17 @@ export function HomeNewsletter({
   pendingNote,
   invalidNote,
 }: HomeNewsletterProps) {
-  void _locale;
   const [note, setNote] = useState<string | null>(null);
   const [invalid, setInvalid] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [acceptedId, setAcceptedId] = useState<string | null>(null);
+  const pathname = usePathname();
+  const formDomId = useId();
+  const storageKey = `newsletter-idempotency:${formDomId}`;
+  const submittingRef = useRef(false);
   const policyHref = POLICY_PATH;
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const email = new FormData(form).get("email");
@@ -64,8 +77,41 @@ export function HomeNewsletter({
       return;
     }
 
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     setInvalid(false);
-    setNote(pendingNote);
+    setPending(true);
+    setNote(null);
+
+    const idempotencyKey = ensureIdempotencyKey(storageKey);
+    const placement = pathname.includes("/blog")
+      ? "blog_newsletter"
+      : "home_newsletter";
+
+    try {
+      const result = await postFormSubmission({
+        schemaVersion: "newsletter-v1",
+        formId: NEWSLETTER_FORM_ID,
+        locale,
+        sourcePath: pathname || "/",
+        placement,
+        idempotencyKey,
+        fields: { email: value.trim() },
+        consent: { accepted: true, policyVersion: POLICY_SITE_VERSION },
+      });
+
+      if (result.ok) {
+        setAcceptedId(result.submissionId);
+        setNote(null);
+        clearIdempotencyKey(storageKey);
+        form.reset();
+        return;
+      }
+      setNote(pendingNote);
+    } finally {
+      setPending(false);
+      submittingRef.current = false;
+    }
   }
 
   return (
@@ -106,6 +152,7 @@ export function HomeNewsletter({
                 onSubmit={onSubmit}
                 className="mt-6 flex w-full max-w-[300px] flex-col gap-4 sm:mt-5 sm:gap-5 lg:mt-8"
                 noValidate
+                aria-busy={pending}
               >
                 <label className="sr-only" htmlFor="home-newsletter-email">
                   {placeholder}
@@ -117,6 +164,7 @@ export function HomeNewsletter({
                   required
                   autoComplete="email"
                   placeholder={placeholder}
+                  disabled={pending || Boolean(acceptedId)}
                   aria-invalid={invalid || undefined}
                   aria-describedby={
                     invalid ? "home-newsletter-error" : undefined
@@ -124,7 +172,7 @@ export function HomeNewsletter({
                   onChange={() => {
                     if (invalid) setInvalid(false);
                   }}
-                  className="h-12 w-full min-w-0 border border-gletcher-navy bg-transparent px-4 text-base text-gletcher-navy outline-none placeholder:text-gletcher-navy/45 focus-visible:ring-2 focus-visible:ring-gletcher-navy/30 sm:h-10 sm:text-sm lg:h-[50px] lg:text-base"
+                  className="h-12 w-full min-w-0 border border-gletcher-navy bg-transparent px-4 text-base text-gletcher-navy outline-none placeholder:text-gletcher-navy/45 focus-visible:ring-2 focus-visible:ring-gletcher-navy/30 disabled:opacity-70 sm:h-10 sm:text-sm lg:h-[50px] lg:text-base"
                 />
                 {invalid ? (
                   <p
@@ -137,9 +185,10 @@ export function HomeNewsletter({
                 ) : null}
                 <button
                   type="submit"
-                  className="font-display h-12 w-full bg-gletcher-navy text-xs font-extrabold tracking-wide text-white uppercase transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.99] sm:h-8 lg:h-[50px]"
+                  disabled={pending || Boolean(acceptedId)}
+                  className="font-display h-12 w-full bg-gletcher-navy text-xs font-extrabold tracking-wide text-white uppercase transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.99] disabled:opacity-70 sm:h-8 lg:h-[50px]"
                 >
-                  {submit}
+                  {pending ? "…" : submit}
                 </button>
               </form>
 
@@ -153,6 +202,11 @@ export function HomeNewsletter({
                 </a>
               </p>
 
+              {acceptedId ? (
+                <p className="mt-3 text-xs text-gletcher-navy/60" role="status">
+                  OK · <span className="font-mono">{acceptedId}</span>
+                </p>
+              ) : null}
               {note ? (
                 <p className="mt-3 text-xs text-gletcher-navy/60" role="status">
                   {note}

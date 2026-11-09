@@ -4,7 +4,7 @@
  */
 
 import type { DeliveryAdapter, DeliveryAttemptResult, DeliveryJobSnapshot } from "./delivery-adapters";
-import { formatContactsTelegramHtml, type ContactLeadFields } from "./telegram-message";
+import { formatLeadTelegramHtml, type LeadFields } from "./telegram-message";
 
 export type TelegramConfig = {
   botToken: string;
@@ -30,18 +30,20 @@ export class TelegramDeliveryAdapter implements DeliveryAdapter {
   constructor(
     private readonly config: TelegramConfig,
     private readonly loadFields: (submissionId: string) => Promise<{
+      formId: string;
       sourcePath: string;
       locale: string;
-      fields: ContactLeadFields;
+      fields: LeadFields;
     }>,
     private readonly fetchImpl: FetchLike = fetch,
   ) {}
 
   async deliver(job: DeliveryJobSnapshot): Promise<DeliveryAttemptResult> {
     let payload: {
+      formId: string;
       sourcePath: string;
       locale: string;
-      fields: ContactLeadFields;
+      fields: LeadFields;
     };
     try {
       payload = await this.loadFields(job.submissionId);
@@ -50,7 +52,8 @@ export class TelegramDeliveryAdapter implements DeliveryAdapter {
       return { outcome: "retryable", sanitizedError: `load_fields:${msg.slice(0, 80)}` };
     }
 
-    const text = formatContactsTelegramHtml({
+    const text = formatLeadTelegramHtml({
+      formId: payload.formId,
       submissionId: job.submissionId,
       sourcePath: payload.sourcePath,
       locale: payload.locale,

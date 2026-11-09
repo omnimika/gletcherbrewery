@@ -115,6 +115,11 @@ export const staffContactLeads = appSchema.table(
     city: text("city"),
     company: text("company"),
     comment: text("comment"),
+    partnerType: text("partner_type"),
+    inn: text("inn"),
+    tourDate: text("tour_date"),
+    guests: text("guests"),
+    wishes: text("wishes"),
   },
   (t) => [index("staff_contact_leads_created_idx").on(t.createdAt)],
 );

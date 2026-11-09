@@ -135,8 +135,10 @@ export async function submitForm(
         })),
       );
 
-      if (input.def.formId === "contacts") {
+      // Staff CRM projection for all intake forms (NocoDB reads public.*).
+      {
         const createdAt = new Date();
+        const f = input.fields;
         const leadRow = {
           submissionId: submission.id,
           formId: input.def.formId,
@@ -144,26 +146,32 @@ export async function submitForm(
           sourcePath: input.sourcePath,
           status: "accepted",
           createdAt,
-          name: input.fields.name,
-          email: input.fields.email,
-          phone: input.fields.phone,
-          city: input.fields.city,
-          company: input.fields.company,
-          comment: input.fields.comment,
+          name: f.name ?? null,
+          email: f.email ?? null,
+          phone: f.phone ?? null,
+          city: f.city ?? null,
+          company: f.company ?? null,
+          comment: f.comment ?? null,
+          partnerType: f.type ?? null,
+          inn: f.inn ?? null,
+          tourDate: f.date ?? null,
+          guests: f.guests ?? null,
+          wishes: f.wishes ?? null,
         };
-        // app.* internal projection + public.* CRM surface for NocoDB sync
         await tx.insert(staffContactLeads).values(leadRow);
-        // postgres.js raw SQL needs ISO string (Date is not a bindable param)
         const createdAtIso = createdAt.toISOString();
         await tx.execute(sql`
           INSERT INTO public.staff_contact_leads (
             submission_id, form_id, locale, source_path, status, created_at,
-            name, email, phone, city, company, comment
+            name, email, phone, city, company, comment,
+            partner_type, inn, tour_date, guests, wishes
           ) VALUES (
             ${leadRow.submissionId}::uuid, ${leadRow.formId}, ${leadRow.locale},
             ${leadRow.sourcePath}, ${leadRow.status}, ${createdAtIso}::timestamptz,
             ${leadRow.name}, ${leadRow.email}, ${leadRow.phone},
-            ${leadRow.city}, ${leadRow.company}, ${leadRow.comment}
+            ${leadRow.city}, ${leadRow.company}, ${leadRow.comment},
+            ${leadRow.partnerType}, ${leadRow.inn}, ${leadRow.tourDate},
+            ${leadRow.guests}, ${leadRow.wishes}
           )
         `);
       }

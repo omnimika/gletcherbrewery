@@ -17,7 +17,7 @@ import {
   readTelegramConfigFromEnv,
   TelegramDeliveryAdapter,
 } from "./telegram-adapter";
-import type { ContactLeadFields } from "./telegram-message";
+import type { LeadFields } from "./telegram-message";
 
 const LEASE_MS = 60_000;
 const MAX_ATTEMPTS = 8;
@@ -45,6 +45,7 @@ export function buildDefaultAdapters(db: AppDb): DeliveryAdapter[] {
       new TelegramDeliveryAdapter(tg, async (submissionId) => {
         const rows = await db
           .select({
+            formId: formSubmissions.formId,
             sourcePath: formSubmissions.sourcePath,
             locale: formSubmissions.locale,
             fields: formSubmissions.fields,
@@ -55,9 +56,10 @@ export function buildDefaultAdapters(db: AppDb): DeliveryAdapter[] {
         const row = rows[0];
         if (!row) throw new Error("submission_not_found");
         return {
+          formId: row.formId,
           sourcePath: row.sourcePath,
           locale: row.locale,
-          fields: row.fields as ContactLeadFields,
+          fields: row.fields as LeadFields,
         };
       }),
     );
