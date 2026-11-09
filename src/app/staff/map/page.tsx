@@ -10,6 +10,7 @@ import { getAssortmentMatrix } from "@/server/retail/assortment";
 import { Banner } from "@/components/ui/card";
 import { EmptyState, FormStatus } from "@/components/ui/feedback";
 import { AssortmentMatrix } from "./assortment-matrix";
+import { TilesetPublishPanel } from "./tileset-publish-panel";
 
 export const dynamic = "force-dynamic";
 
@@ -40,9 +41,11 @@ export default async function StaffMapPage() {
       <Banner tone="ice" className="!px-4 !py-2.5">
         <p className="type-caption text-gletcher-navy/80">
           Чекбокс → PostgreSQL + audit. Строка сортов закреплена при скролле.
-          Публикация tileset — следующий этап.
+          Product для Mapbox собирается отдельным dry-run ниже.
         </p>
       </Banner>
+
+      <TilesetPublishPanel />
 
       {error ? (
         <FormStatus tone="error" role="alert">

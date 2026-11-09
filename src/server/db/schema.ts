@@ -268,6 +268,23 @@ export const retailAssortmentEvents = appSchema.table(
   ],
 );
 
+/** Controlled Mapbox Product publish attempts (dry-run or gated live). */
+export const retailTilesetPublishRuns = appSchema.table(
+  "retail_tileset_publish_runs",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    mode: text("mode").notNull(),
+    status: text("status").notNull(),
+    actor: text("actor").notNull(),
+    recipe: jsonb("recipe").notNull().$type<Record<string, unknown>>(),
+    result: jsonb("result").$type<Record<string, unknown>>(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [index("retail_tileset_publish_runs_created_idx").on(t.createdAt)],
+);
+
 export const deliveryAttempts = appSchema.table(
   "delivery_attempts",
   {

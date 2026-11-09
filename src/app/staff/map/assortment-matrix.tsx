@@ -87,7 +87,7 @@ export function AssortmentMatrix({
         setError(json.message ?? "Не удалось сохранить");
         return;
       }
-      setSaved("Сохранено в PostgreSQL (tileset пока не публикуется)");
+      setSaved("Сохранено в PostgreSQL (для Mapbox — Dry-run Product)");
     } catch {
       setChains(prev);
       setError("Сеть недоступна");
