@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { loadPublicMapChainTitlesFromFixture } from "./public-map-chains";
+import {
+  loadPublicMapAssortmentFromFixture,
+  loadPublicMapChainTitlesFromFixture,
+} from "./public-map-chains";
 
 describe("loadPublicMapChainTitlesFromFixture", () => {
   it("excludes empty-SKU on-map chains like SELGROS and МИРАТОРГ", () => {
@@ -14,3 +17,14 @@ describe("loadPublicMapChainTitlesFromFixture", () => {
     assert.ok(!titles.includes("ВКУСВИЛЛ"));
   });
 });
+
+describe("loadPublicMapAssortmentFromFixture", () => {
+  it("maps available beers per chain as Product tokens", () => {
+    const { beersByChain } = loadPublicMapAssortmentFromFixture();
+    const aushan = beersByChain["АШАН"];
+    assert.ok(aushan);
+    assert.ok(aushan.includes("Ausweis"));
+    assert.ok(!aushan.includes("CYNIC") || aushan.length > 0);
+  });
+});
+

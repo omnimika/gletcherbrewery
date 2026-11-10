@@ -109,6 +109,7 @@ export type MapCopy = {
   fullscreenLabel: string;
   geolocateLabel: string;
   geolocateError: string;
+  beerUnavailableInChains: string;
   assortmentLabel: string;
   missingToken: string;
   loadError: string;
@@ -136,6 +137,7 @@ const RU: MapCopy = {
   geolocateLabel: "Моё местоположение",
   geolocateError:
     "Не удалось определить местоположение. В Chrome нужен https:// или localhost, и разрешение «Геоданные» для этого сайта.",
+  beerUnavailableInChains: "нет в выбранных сетях",
   assortmentLabel: "Ассортимент:",
   missingToken:
     "Карта временно недоступна на этом сайте. Вы можете открыть рабочую карту на основном домене.",
@@ -169,6 +171,7 @@ const EN: MapCopy = {
   geolocateLabel: "My location",
   geolocateError:
     "Could not get your location. Chrome needs https:// or localhost, and location permission for this site.",
+  beerUnavailableInChains: "not in selected chains",
   assortmentLabel: "Assortment:",
   missingToken:
     "The map is temporarily unavailable on this site. You can open the live map on the main domain.",

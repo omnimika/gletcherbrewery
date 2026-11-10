@@ -16,6 +16,10 @@ import {
   listMapChainOptions,
 } from "@/components/map/map-layer-filters";
 import {
+  enabledBeerKeysForChains,
+  pruneBeerSelection,
+} from "@/components/map/chain-beer-availability";
+import {
   countUniquePointFeatures,
   GEOLOCATE_MAX_ZOOM,
   GEOLOCATE_MIN_MARKERS,
@@ -106,11 +110,14 @@ export function SalesMap({
   copy,
   accessToken,
   chainTitlesWithAssortment,
+  beersByChain,
 }: {
   copy: MapCopy;
   accessToken: string | undefined;
   /** CRM titles with available SKU count > 0 (server-loaded). */
   chainTitlesWithAssortment: readonly string[];
+  /** chain title → beer panel keys available in CRM assortment. */
+  beersByChain: Readonly<Record<string, readonly string[]>>;
 }) {
   const mapNode = useRef<HTMLDivElement | null>(null);
   const frameNode = useRef<HTMLDivElement | null>(null);
@@ -136,6 +143,28 @@ export function SalesMap({
     () => listMapChainOptions(chainTitlesWithAssortment),
     [chainTitlesWithAssortment],
   );
+
+  const enabledBeers = useMemo(
+    () => enabledBeerKeysForChains(selectedChains, beersByChain),
+    [selectedChains, beersByChain],
+  );
+
+  useEffect(() => {
+    setSelectedBeers((prev) => {
+      const next = pruneBeerSelection(prev, enabledBeers);
+      if (next.size === prev.size) {
+        let same = true;
+        for (const key of prev) {
+          if (!next.has(key)) {
+            same = false;
+            break;
+          }
+        }
+        if (same) return prev;
+      }
+      return next;
+    });
+  }, [enabledBeers]);
 
   const seriesOrder = useMemo(
     () =>
@@ -333,6 +362,7 @@ export function SalesMap({
   }, [selectedBeers, selectedChains, ready, applyFilters]);
 
   const toggleBeer = (key: string) => {
+    if (enabledBeers && !enabledBeers.has(key)) return;
     setSelectedBeers((prev) => {
       const next = new Set(prev);
       if (next.has(key)) next.delete(key);
@@ -457,13 +487,6 @@ export function SalesMap({
 
   return (
     <div className={styles.page}>
-      <header className={styles.hero}>
-        <h1 id="map-hero" className={styles.heroTitle}>
-          {copy.heroLead}{" "}
-          <span className={styles.heroAccent}>{copy.heroAccent}</span>
-        </h1>
-      </header>
-
       <section className={styles.frameWrap} aria-label={copy.title}>
         <div ref={frameNode} className={styles.frame}>
           <div ref={mapNode} className={styles.map} />
@@ -589,13 +612,22 @@ export function SalesMap({
                       <span className={styles.seriesLabel}>{series.label}</span>
                       {series.beers.map((beer) => {
                         const active = selectedBeers.has(beer.key);
+                        const disabled = Boolean(
+                          enabledBeers && !enabledBeers.has(beer.key),
+                        );
                         return (
                           <button
                             key={beer.key}
                             type="button"
-                            className={`${styles.beerBtn}${active ? ` ${styles.beerBtnActive}` : ""}`}
+                            className={`${styles.beerBtn}${active ? ` ${styles.beerBtnActive}` : ""}${disabled ? ` ${styles.beerBtnDisabled}` : ""}`}
                             aria-pressed={active}
-                            title={beer.key}
+                            aria-disabled={disabled}
+                            disabled={disabled}
+                            title={
+                              disabled
+                                ? `${beer.key} — ${copy.beerUnavailableInChains}`
+                                : beer.key
+                            }
                             onClick={() => toggleBeer(beer.key)}
                           >
                             {/* eslint-disable-next-line @next/next/no-img-element -- remote filter thumbs */}
@@ -617,6 +649,13 @@ export function SalesMap({
           </aside>
         </div>
       </section>
+
+      <header className={styles.hero}>
+        <h1 id="map-hero" className={styles.heroTitle}>
+          {copy.heroLead}{" "}
+          <span className={styles.heroAccent}>{copy.heroAccent}</span>
+        </h1>
+      </header>
     </div>
   );
 }

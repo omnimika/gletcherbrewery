@@ -13,7 +13,7 @@ import {
 import { type PublishedLocale, isPublishedLocale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
 import { getDb } from "@/server/db/client";
-import { loadPublicMapChainTitles } from "@/server/retail/public-map-chains";
+import { loadPublicMapAssortment } from "@/server/retail/public-map-chains";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -56,7 +56,7 @@ export default async function MapPage({ params }: PageProps) {
   } catch {
     db = null;
   }
-  const chainTitlesWithAssortment = await loadPublicMapChainTitles(db);
+  const publicAssortment = await loadPublicMapAssortment(db);
 
   return (
     <SiteShell
@@ -68,7 +68,8 @@ export default async function MapPage({ params }: PageProps) {
       <SalesMap
         copy={copy}
         accessToken={accessToken}
-        chainTitlesWithAssortment={chainTitlesWithAssortment}
+        chainTitlesWithAssortment={publicAssortment.chainTitles}
+        beersByChain={publicAssortment.beersByChain}
       />
     </SiteShell>
   );
