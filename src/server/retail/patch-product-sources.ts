@@ -6,6 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { ChainProductPatch } from "@/server/retail/tileset-recipe";
+import { buildLocationSourceKey } from "@/server/retail/location-key";
 import {
   CRM_TITLE_TO_SOURCE_TITLES,
   LAYER_SOURCE_FILES,
@@ -36,6 +37,7 @@ export type LayerPatchReport = {
   featureCount: number;
   updated: number;
   unchanged: number;
+  locationOverridesApplied: number;
   unmatchedTitles: string[];
   stagedPath: string | null;
 };
@@ -116,6 +118,8 @@ export function patchLocalProductSources(input: {
   patches: ChainProductPatch[];
   repoRoot: string;
   outDir?: string;
+  /** source_key → Product for locations with assortment_mode=override */
+  locationOverridesBySourceKey?: ReadonlyMap<string, string>;
 }): { reports: LayerPatchReport[]; outDir: string } {
   const outDir =
     input.outDir ??
@@ -123,12 +127,14 @@ export function patchLocalProductSources(input: {
   fs.mkdirSync(outDir, { recursive: true });
 
   const byTitle = productBySourceTitle(input.patches);
+  const locationOverrides = input.locationOverridesBySourceKey ?? new Map();
   const reports: LayerPatchReport[] = [];
 
   for (const ref of LAYER_SOURCE_FILES) {
     const fc = loadSource(ref, input.repoRoot);
     let updated = 0;
     let unchanged = 0;
+    let locationOverridesApplied = 0;
     const seenUnmatched = new Set<string>();
 
     for (const feature of fc.features) {
@@ -143,7 +149,34 @@ export function patchLocalProductSources(input: {
         unchanged += 1;
         continue;
       }
-      const next = byTitle.get(key) ?? "";
+
+      const adress = String(
+        feature.properties.Adress ??
+          feature.properties.Address ??
+          feature.properties.address ??
+          "",
+      ).trim();
+      const coords = feature.geometry?.coordinates;
+      let next = byTitle.get(key) ?? "";
+      if (
+        Array.isArray(coords) &&
+        coords.length >= 2 &&
+        Number.isFinite(Number(coords[0])) &&
+        Number.isFinite(Number(coords[1]))
+      ) {
+        const sourceKey = buildLocationSourceKey({
+          layerId: ref.layerId,
+          longitude: Number(coords[0]),
+          latitude: Number(coords[1]),
+          adress: adress || title,
+          title,
+        });
+        if (locationOverrides.has(sourceKey)) {
+          next = locationOverrides.get(sourceKey) ?? "";
+          locationOverridesApplied += 1;
+        }
+      }
+
       const prev = String(feature.properties.Product ?? "");
       if (prev === next) {
         unchanged += 1;
@@ -164,6 +197,7 @@ export function patchLocalProductSources(input: {
       featureCount: fc.features.length,
       updated,
       unchanged,
+      locationOverridesApplied,
       unmatchedTitles: [...seenUnmatched].sort(),
       stagedPath,
     });

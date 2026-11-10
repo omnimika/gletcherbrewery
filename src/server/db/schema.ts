@@ -268,6 +268,68 @@ export const retailAssortmentEvents = appSchema.table(
   ],
 );
 
+/**
+ * Store points linked to chains (Mapbox GeoJSON → CRM).
+ * Assortment for /map Product still comes from retail_chain_products unless
+ * a future override is written to retail_location_products.
+ */
+export const retailLocations = appSchema.table(
+  "retail_locations",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    chainId: uuid("chain_id").references(() => retailChains.id, {
+      onDelete: "set null",
+    }),
+    mapLayerId: text("map_layer_id"),
+    sourceKey: text("source_key").notNull().unique(),
+    sourceTitle: text("source_title").notNull(),
+    type: text("type"),
+    city: text("city"),
+    adress: text("adress"),
+    packing: text("packing"),
+    productSnapshot: text("product_snapshot"),
+    longitude: doublePrecision("longitude").notNull(),
+    latitude: doublePrecision("latitude").notNull(),
+    status: text("status").notNull().default("active"),
+    /** inherit = chain matrix; override = retail_location_products */
+    assortmentMode: text("assortment_mode").notNull().default("inherit"),
+    sourceFile: text("source_file").notNull(),
+    externalId: text("external_id"),
+    importedAt: timestamp("imported_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    index("retail_locations_chain_idx").on(t.chainId),
+    index("retail_locations_layer_idx").on(t.mapLayerId),
+    index("retail_locations_status_idx").on(t.status),
+    index("retail_locations_coords_idx").on(t.longitude, t.latitude),
+    index("retail_locations_assortment_mode_idx").on(t.assortmentMode),
+  ],
+);
+
+/** Per-store assortment when location.assortment_mode = override. */
+export const retailLocationProducts = appSchema.table(
+  "retail_location_products",
+  {
+    locationId: uuid("location_id")
+      .notNull()
+      .references(() => retailLocations.id, { onDelete: "cascade" }),
+    productSlug: text("product_slug").notNull(),
+    available: boolean("available").notNull().default(false),
+    updatedAt: timestamp("updated_at", { withTimezone: true }),
+    updatedBy: text("updated_by"),
+  },
+  (t) => [
+    primaryKey({ columns: [t.locationId, t.productSlug] }),
+    index("retail_location_products_slug_idx").on(t.productSlug),
+  ],
+);
+
 /** Controlled Mapbox Product publish attempts (dry-run or gated live). */
 export const retailTilesetPublishRuns = appSchema.table(
   "retail_tileset_publish_runs",

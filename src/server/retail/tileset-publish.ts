@@ -12,6 +12,7 @@ import type { AppDb } from "@/server/db/client";
 import { retailTilesetPublishRuns } from "@/server/db/schema";
 import { RETAIL_TILESET_IDS } from "@/server/retail/mapbox-tilesets";
 import { uploadAllStagedLayers } from "@/server/retail/mapbox-upload";
+import { loadLocationProductOverrides } from "@/server/retail/location-assortment";
 import { patchLocalProductSources } from "@/server/retail/patch-product-sources";
 import {
   buildTilesetPublishRecipe,
@@ -93,9 +94,11 @@ export async function runTilesetPublish(
   }
 
   if (input.mode === "live") {
+    const locationOverrides = await loadLocationProductOverrides(db);
     const { reports, outDir } = patchLocalProductSources({
       patches: recipe.patches,
       repoRoot,
+      locationOverridesBySourceKey: locationOverrides,
     });
 
     const uploads = await uploadAllStagedLayers({
@@ -116,10 +119,12 @@ export async function runTilesetPublish(
         recipe: recipe as unknown as Record<string, unknown>,
         result: {
           stagedDir: path.relative(repoRoot, outDir),
+          locationOverrides: locationOverrides.size,
           patchReports: reports.map((r) => ({
             layerId: r.layerId,
             updated: r.updated,
             features: r.featureCount,
+            locationOverridesApplied: r.locationOverridesApplied,
             unmatchedTitles: r.unmatchedTitles,
             quality: r.quality,
           })),
@@ -150,14 +155,21 @@ export async function runTilesetPublish(
   const sourcesDir = path.join(repoRoot, "tmp/mapbox-sources");
   if (fs.existsSync(sourcesDir)) {
     try {
+      const locationOverrides = await loadLocationProductOverrides(db);
       const { reports, outDir } = patchLocalProductSources({
         patches: recipe.patches,
         repoRoot,
+        locationOverridesBySourceKey: locationOverrides,
       });
       patchSummary = {
         stagedDir: path.relative(repoRoot, outDir),
         updated: reports.reduce((n, r) => n + r.updated, 0),
         features: reports.reduce((n, r) => n + r.featureCount, 0),
+        locationOverrides: locationOverrides.size,
+        locationOverridesApplied: reports.reduce(
+          (n, r) => n + r.locationOverridesApplied,
+          0,
+        ),
       };
     } catch (err) {
       patchSummary = {

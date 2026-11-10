@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getDb } from "@/server/db/client";
@@ -7,6 +8,7 @@ import {
   verifyStaffToken,
 } from "@/server/staff/auth";
 import { getAssortmentMatrix } from "@/server/retail/assortment";
+import { getLocationSummary } from "@/server/retail/locations";
 import { Banner } from "@/components/ui/card";
 import { EmptyState, FormStatus } from "@/components/ui/feedback";
 import { AssortmentMatrix } from "./assortment-matrix";
@@ -25,18 +27,33 @@ export default async function StaffMapPage() {
   }
 
   let matrix: Awaited<ReturnType<typeof getAssortmentMatrix>> | null = null;
+  let locationTotal = 0;
   let error: string | null = null;
   try {
-    matrix = await getAssortmentMatrix(getDb());
+    const db = getDb();
+    matrix = await getAssortmentMatrix(db);
+    try {
+      locationTotal = (await getLocationSummary(db)).total;
+    } catch {
+      locationTotal = 0;
+    }
   } catch {
     error = "База недоступна — проверьте embedded PostgreSQL и миграции.";
   }
 
   return (
     <div className="flex min-h-0 flex-col gap-3">
-      <h1 className="font-display text-2xl leading-none font-extrabold tracking-wide text-gletcher-navy uppercase sm:text-3xl">
-        Карта продаж
-      </h1>
+      <div className="flex flex-wrap items-end justify-between gap-2">
+        <h1 className="font-display text-2xl leading-none font-extrabold tracking-wide text-gletcher-navy uppercase sm:text-3xl">
+          Карта продаж
+        </h1>
+        <Link
+          href="/staff/map/locations"
+          className="rounded-full border border-gletcher-navy/20 bg-white px-3 py-1.5 text-xs font-semibold tracking-wide text-gletcher-navy uppercase"
+        >
+          Точки{locationTotal > 0 ? ` · ${locationTotal}` : ""}
+        </Link>
+      </div>
 
       <Banner tone="ice" className="!px-4 !py-2.5">
         <p className="type-caption text-gletcher-navy/80">

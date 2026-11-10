@@ -20,12 +20,18 @@
   - Patch: 7909/7914 features; unmatched only `5M Гурман` / `7М Безцен`
   - Gate returned to `MAPBOX_ALLOW_TILESET_PUBLISH=false`
 
+## Done — store points + SKU overrides (this pass)
+
+- `app.retail_locations` + `assortment_mode` + `retail_location_products`
+- Import: `npm run retail:import-locations`
+- Staff: `/staff/map/locations`, detail `/staff/map/locations/[id]` (inherit/override)
+- Product patch/publish applies per-`source_key` overrides
+
 ## Следом
 
-1. Verify `/map` beer+chain filters after Mapbox tile cache settles (несколько минут)
-2. After Studio jobs finish: confirm `yarche` style `source-layer` stays `yarche`
-   (Studio replace previously flipped it back to `Yarchefinal-2d64rg` — re-fixed)
-3. Store-level CRM / remaining CRM-only chains — отдельным этапом
+1. Verify `/map` after publish when overrides used
+2. Stale-point handling; CRM-only chains without geometry
+3. M2 Airtable/loyalty when map CRM accepted
 
 ## Explicitly deferred
 

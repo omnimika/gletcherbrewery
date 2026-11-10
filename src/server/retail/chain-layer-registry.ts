@@ -167,6 +167,34 @@ export function bindingForChainTitle(
   return BY_TITLE.get(title);
 }
 
+/** Resolve CRM chain title from a GeoJSON/CSV `Title` value (aliases). */
+export function crmTitleForSourceTitle(sourceTitle: string): string | null {
+  const key = sourceTitle
+    .trim()
+    .toLocaleUpperCase("ru-RU")
+    .replace(/ё/g, "Е")
+    .replace(/’/g, "'")
+    .replace(/\s+/g, " ");
+  if (!key) return null;
+  for (const b of CHAIN_MAP_BINDINGS) {
+    if (
+      b.title.toLocaleUpperCase("ru-RU").replace(/ё/g, "Е").replace(/\s+/g, " ") ===
+      key
+    ) {
+      return b.title;
+    }
+    for (const alias of b.sourceTitles) {
+      const a = alias
+        .toLocaleUpperCase("ru-RU")
+        .replace(/ё/g, "Е")
+        .replace(/’/g, "'")
+        .replace(/\s+/g, " ");
+      if (a === key) return b.title;
+    }
+  }
+  return null;
+}
+
 /** Title → source Title aliases for Product patch. */
 export function crmTitleToSourceTitles(): Readonly<
   Record<string, readonly string[]>
