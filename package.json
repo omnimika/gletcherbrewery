@@ -18,6 +18,7 @@
     "retail:tileset-live": "node scripts/retail-tileset-live.mjs",
     "retail:scrape-amwine": "node scripts/scrape-amwine-shops.mjs",
     "retail:scrape-maksi": "node scripts/scrape-maksi-shops.mjs",
+    "retail:scrape-hmel": "node scripts/scrape-hmel-i-solod-shops.mjs",
     "mapbox:inspect-style": "node scripts/mapbox-inspect-style.mjs",
     "db:bootstrap": "bash scripts/db-bootstrap.sh",
     "db:embedded": "node scripts/pg-embedded-start.mjs",

@@ -38,6 +38,8 @@ export const MAP_LAYERS = [
   "lenta",
   "aromatny-mir",
   "maksi",
+  "yarche",
+  "hmel-i-solod",
 ] as const;
 
 const IMAGE_BASE = "https://files.gletcherbrewery.com/map";

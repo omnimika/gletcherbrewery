@@ -31,6 +31,20 @@ describe("chain-layer-registry", () => {
     assert.equal(resolveChainMapStatus("МАКСИ", 4), "on_map");
   });
 
+  it("maps Ярче! to yarche layer", () => {
+    const b = bindingForChainTitle("Ярче!");
+    assert.equal(b?.layerId, "yarche");
+    assert.deepEqual(b?.sourceTitles, ["Ярче!", "Ярче"]);
+    assert.equal(resolveChainMapStatus("Ярче!", 3), "on_map");
+  });
+
+  it("maps ХМЕЛЬ И СОЛОД to hmel-i-solod layer", () => {
+    const b = bindingForChainTitle("ХМЕЛЬ И СОЛОД");
+    assert.equal(b?.layerId, "hmel-i-solod");
+    assert.ok(b?.sourceTitles.includes("ХМЕЛЬ И СОЛОД"));
+    assert.equal(resolveChainMapStatus("ХМЕЛЬ И СОЛОД", 5), "on_map");
+  });
+
   it("marks CRM-only chains without a layer", () => {
     assert.equal(bindingForChainTitle("ВКУСВИЛЛ")?.layerId, null);
     assert.equal(resolveChainMapStatus("ВКУСВИЛЛ", 0), "crm_only_empty");

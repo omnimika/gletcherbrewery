@@ -106,6 +106,20 @@ export const LAYER_SOURCE_FILES: readonly SourceFileRef[] = [
     quality: "ok",
     note: "Scraped 10.11 maxi.today/api/v1/shops (73 pts, 12 cities); tileset omnicoremaps.gletcher-maksi",
   },
+  {
+    layerId: "yarche",
+    relativePath: "tmp/mapbox-sources/yarche.geojson",
+    format: "geojson",
+    quality: "ok",
+    note: "Owner CSV Yarche_final_ 10.11 (296 pts, Title «Ярче!»); tileset omnicoremaps.2q5t7hvp / Yarchefinal-2d64rg",
+  },
+  {
+    layerId: "hmel-i-solod",
+    relativePath: "tmp/mapbox-sources/hmel-i-solod.geojson",
+    format: "geojson",
+    quality: "ok",
+    note: "Scraped 10.11 xmel-solod.ru/adress Tilda arMapMarkers (86 map pins; page lists ~126 addresses); tileset omnicoremaps.gletcher-hmel-i-solod",
+  },
 ] as const;
 
 /** Prefer chain-layer-registry; re-export for patch import path. */

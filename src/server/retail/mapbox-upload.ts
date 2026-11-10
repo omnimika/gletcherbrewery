@@ -9,6 +9,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import {
+  MAPBOX_STYLE_ID,
   MAPBOX_STYLE_OWNER,
   RETAIL_TILESETS,
   type RetailTilesetRef,
@@ -442,12 +443,62 @@ export async function uploadStagedLayer(input: {
   };
 }
 
+/**
+ * Studio replace sometimes rewrites style `source-layer` to a generated name
+ * (e.g. Yarchefinal-2d64rg). Re-assert registry values after uploads.
+ */
+async function syncStyleSourceLayers(
+  refs: readonly RetailTilesetRef[],
+  sk: string,
+): Promise<{ ok: boolean; patched: string[]; error?: string }> {
+  const styleUrl = `https://api.mapbox.com/styles/v1/${MAPBOX_STYLE_ID}?access_token=${encodeURIComponent(sk)}`;
+  const get = await mapboxJson(styleUrl);
+  if (get.status !== 200 || !get.body || typeof get.body !== "object") {
+    return { ok: false, patched: [], error: `style get HTTP ${get.status}` };
+  }
+  const style = get.body as {
+    version?: number;
+    layers?: Array<Record<string, unknown>>;
+    sources?: Record<string, unknown>;
+  };
+  const layers = Array.isArray(style.layers) ? style.layers : [];
+  const byId = new Map(refs.map((r) => [r.layerId, r] as const));
+  const patched: string[] = [];
+  for (const layer of layers) {
+    const id = String(layer.id ?? "");
+    const ref = byId.get(id as RetailTilesetRef["layerId"]);
+    if (!ref) continue;
+    if (layer["source-layer"] === ref.sourceLayer) continue;
+    layer["source-layer"] = ref.sourceLayer;
+    patched.push(id);
+  }
+  if (patched.length === 0) return { ok: true, patched };
+  const put = await mapboxJson(styleUrl, {
+    method: "PATCH",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      version: style.version ?? 8,
+      layers,
+      sources: style.sources,
+    }),
+  });
+  if (put.status !== 200 && put.status !== 201) {
+    return {
+      ok: false,
+      patched,
+      error: `style patch HTTP ${put.status}`,
+    };
+  }
+  return { ok: true, patched };
+}
+
 export async function uploadAllStagedLayers(input: {
   stagedDir: string;
   onlyLayerIds?: string[];
 }): Promise<LayerUploadResult[]> {
   assertLiveAllowed();
   const results: LayerUploadResult[] = [];
+  const uploadedRefs: RetailTilesetRef[] = [];
   for (const ref of RETAIL_TILESETS) {
     if (
       input.onlyLayerIds &&
@@ -468,9 +519,12 @@ export async function uploadAllStagedLayers(input: {
       continue;
     }
     try {
-      results.push(
-        await uploadStagedLayer({ ref, stagedGeoJsonPath: stagedPath }),
-      );
+      const result = await uploadStagedLayer({
+        ref,
+        stagedGeoJsonPath: stagedPath,
+      });
+      results.push(result);
+      if (result.ok) uploadedRefs.push(ref);
     } catch (err) {
       results.push({
         layerId: ref.layerId,
@@ -482,5 +536,32 @@ export async function uploadAllStagedLayers(input: {
       });
     }
   }
+
+  if (uploadedRefs.some((r) => r.kind === "studio")) {
+    try {
+      const sync = await syncStyleSourceLayers(RETAIL_TILESETS, token());
+      if (!sync.ok || sync.patched.length > 0) {
+        results.push({
+          layerId: "__style_sync__",
+          tilesetId: MAPBOX_STYLE_ID,
+          kind: "studio",
+          ok: sync.ok,
+          step: "style_source_layer_sync",
+          detail: { patched: sync.patched },
+          error: sync.error,
+        });
+      }
+    } catch (err) {
+      results.push({
+        layerId: "__style_sync__",
+        tilesetId: MAPBOX_STYLE_ID,
+        kind: "studio",
+        ok: false,
+        step: "style_source_layer_sync",
+        error: err instanceof Error ? err.message : String(err),
+      });
+    }
+  }
+
   return results;
 }

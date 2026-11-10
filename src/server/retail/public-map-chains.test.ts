@@ -7,6 +7,7 @@ describe("loadPublicMapChainTitlesFromFixture", () => {
     const titles = loadPublicMapChainTitlesFromFixture();
     assert.ok(titles.includes("АШАН"));
     assert.ok(titles.includes("МАКСИ"));
+    assert.ok(titles.includes("ХМЕЛЬ И СОЛОД"));
     assert.ok(titles.includes("Яблоко (Крым)"));
     assert.ok(!titles.includes("SELGROS"));
     assert.ok(!titles.includes("МИРАТОРГ"));

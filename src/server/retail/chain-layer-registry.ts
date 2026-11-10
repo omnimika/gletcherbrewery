@@ -138,15 +138,23 @@ export const CHAIN_MAP_BINDINGS: readonly ChainMapBinding[] = [
     layerId: "maksi",
     sourceTitles: ["Макси", "МАКСИ"],
   },
+  {
+    title: "Ярче!",
+    layerId: "yarche",
+    sourceTitles: ["Ярче!", "Ярче"],
+  },
+  {
+    title: "ХМЕЛЬ И СОЛОД",
+    layerId: "hmel-i-solod",
+    sourceTitles: ["ХМЕЛЬ И СОЛОД", "Хмель и Солод"],
+  },
   // CRM-only (no Mapbox layer yet)
   { title: "ВКУСВИЛЛ", layerId: null, sourceTitles: [] },
   { title: "ВЕРНЫЙ", layerId: null, sourceTitles: [] },
   { title: "ДА!", layerId: null, sourceTitles: [] },
   { title: "ПЯТЕРОЧКА", layerId: null, sourceTitles: [] },
-  { title: "ХМЕЛЬ И СОЛОД", layerId: null, sourceTitles: [] },
   { title: "Алкосити", layerId: null, sourceTitles: [] },
   { title: "Высшая лига", layerId: null, sourceTitles: [] },
-  { title: "Ярче!", layerId: null, sourceTitles: [] },
 ] as const;
 
 const BY_TITLE = new Map(

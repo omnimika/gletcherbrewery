@@ -20,7 +20,9 @@ export type RetailMapLayerId =
   | "magnit"
   | "lenta"
   | "aromatny-mir"
-  | "maksi";
+  | "maksi"
+  | "yarche"
+  | "hmel-i-solod";
 
 export type RetailTilesetKind = "mts" | "studio";
 
@@ -144,6 +146,23 @@ export const RETAIL_TILESETS: readonly RetailTilesetRef[] = [
     sourceLayer: "maksi",
     kind: "mts",
     tilesetSourceId: "gletcher-maksi-mwa0qbxp",
+  },
+  {
+    layerId: "yarche",
+    styleSource: "composite",
+    tilesetId: "omnicoremaps.2q5t7hvp",
+    // Studio upload layer id is `yarche` (old Yarchefinal-2d64rg must not remain in style)
+    sourceLayer: "yarche",
+    kind: "studio",
+    tilesetSourceId: null,
+  },
+  {
+    layerId: "hmel-i-solod",
+    styleSource: "mapbox://omnicoremaps.gletcher-hmel-i-solod",
+    tilesetId: "omnicoremaps.gletcher-hmel-i-solod",
+    sourceLayer: "hmel-i-solod",
+    kind: "mts",
+    tilesetSourceId: "gletcher-hmel-i-solod-mwa4pm2i",
   },
 ] as const;
 

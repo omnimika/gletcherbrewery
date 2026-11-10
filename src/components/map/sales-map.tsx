@@ -66,6 +66,25 @@ export function SalesMap({
     [copy],
   );
 
+  /** Single-beer series share a row 50/50; multi-beer series keep a full row. */
+  const seriesRows = useMemo(() => {
+    const series = seriesOrder.filter((s) => s.beers.length > 0);
+    const rows: Array<(typeof series)[number][]> = [];
+    let i = 0;
+    while (i < series.length) {
+      const cur = series[i];
+      const next = series[i + 1];
+      if (cur.beers.length === 1 && next && next.beers.length === 1) {
+        rows.push([cur, next]);
+        i += 2;
+        continue;
+      }
+      rows.push([cur]);
+      i += 1;
+    }
+    return rows;
+  }, [seriesOrder]);
+
   const applyFilters = useCallback(
     (beers: ReadonlySet<string>, chains: ReadonlySet<string>) => {
       const map = mapRef.current;
@@ -418,34 +437,43 @@ export function SalesMap({
             {error && ready ? <p className={styles.error}>{error}</p> : null}
 
             <div className={styles.seriesList}>
-              {seriesOrder.map((series) => (
+              {seriesRows.map((row) => (
                 <div
-                  key={series.id}
-                  className={`${styles.series} ${seriesClass[series.id]}`}
+                  key={row.map((s) => s.id).join("-")}
+                  className={styles.seriesRow}
                 >
-                  <span className={styles.seriesLabel}>{series.label}</span>
-                  {series.beers.map((beer) => {
-                    const active = selectedBeers.has(beer.key);
-                    return (
-                      <button
-                        key={beer.key}
-                        type="button"
-                        className={`${styles.beerBtn}${active ? ` ${styles.beerBtnActive}` : ""}`}
-                        aria-pressed={active}
-                        title={beer.key}
-                        onClick={() => toggleBeer(beer.key)}
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element -- remote filter thumbs */}
-                        <img
-                          src={mapBeerImageUrl(beer)}
-                          alt={beer.key}
-                          className={styles.beerImg}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </button>
-                    );
-                  })}
+                  {row.map((series) => (
+                    <div
+                      key={series.id}
+                      className={`${styles.series} ${seriesClass[series.id]}${
+                        row.length > 1 ? ` ${styles.seriesHalf}` : ""
+                      }`}
+                    >
+                      <span className={styles.seriesLabel}>{series.label}</span>
+                      {series.beers.map((beer) => {
+                        const active = selectedBeers.has(beer.key);
+                        return (
+                          <button
+                            key={beer.key}
+                            type="button"
+                            className={`${styles.beerBtn}${active ? ` ${styles.beerBtnActive}` : ""}`}
+                            aria-pressed={active}
+                            title={beer.key}
+                            onClick={() => toggleBeer(beer.key)}
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element -- remote filter thumbs */}
+                            <img
+                              src={mapBeerImageUrl(beer)}
+                              alt={beer.key}
+                              className={styles.beerImg}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>

@@ -136,12 +136,12 @@
   left: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: clamp(4px, 0.7vh, 8px);
   width: min(18vw, 220px);
   height: 100%;
   max-height: 100%;
-  overflow-y: auto;
-  padding: 12px;
+  overflow: hidden;
+  padding: clamp(8px, 1.2vh, 12px);
   background-color: #e6eefc;
   border-top: none;
   border-right: 3px solid #0d0f49;
@@ -151,19 +151,16 @@
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 }
 
-.panel::-webkit-scrollbar,
-.chainPanel::-webkit-scrollbar {
+.panel::-webkit-scrollbar {
   width: 8px;
 }
 
-.panel::-webkit-scrollbar-track,
-.chainPanel::-webkit-scrollbar-track {
+.panel::-webkit-scrollbar-track {
   background: #1c1c1c;
   border-radius: 4px;
 }
 
-.panel::-webkit-scrollbar-thumb,
-.chainPanel::-webkit-scrollbar-thumb {
+.panel::-webkit-scrollbar-thumb {
   background: #e5373c;
   border-radius: 4px;
 }
@@ -245,6 +242,7 @@
 
 .filterHeading {
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
@@ -276,22 +274,25 @@
 
 .chainGrid {
   display: flex;
-  flex: 1;
+  flex: 1 1 auto;
   flex-direction: column;
-  gap: 6px;
+  gap: clamp(2px, 0.45vh, 6px);
   width: 100%;
   min-height: 0;
+  overflow: hidden;
 }
 
 .chainBtn {
   position: relative;
   display: flex;
+  flex: 1 1 0;
   min-width: 0;
+  min-height: 0;
   align-items: center;
-  gap: 6px;
-  padding: 6px 8px 6px 6px;
+  gap: clamp(4px, 0.6vh, 6px);
+  padding: 0 clamp(6px, 0.8vh, 8px) 0 clamp(4px, 0.6vh, 6px);
   border: 1px solid rgb(13 15 73 / 18%);
-  border-radius: 10px;
+  border-radius: clamp(6px, 0.9vh, 10px);
   background: #fff;
   color: #0d0f49;
   cursor: pointer;
@@ -311,26 +312,26 @@
 .chainBtnActive::after {
   content: "✓";
   position: absolute;
-  top: -4px;
-  right: -4px;
+  top: -3px;
+  right: -3px;
   z-index: 2;
-  width: 16px;
-  height: 16px;
+  width: clamp(12px, 1.6vh, 16px);
+  height: clamp(12px, 1.6vh, 16px);
   border-radius: 50%;
   background: #22c55e;
   box-shadow: 0 0 0 2px #e6eefc;
   color: #fff;
-  font-size: 11px;
-  line-height: 16px;
+  font-size: clamp(9px, 1.2vh, 11px);
+  line-height: clamp(12px, 1.6vh, 16px);
   text-align: center;
   pointer-events: none;
 }
 
 .chainImg {
   flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+  width: clamp(18px, 2.6vh, 28px);
+  height: clamp(18px, 2.6vh, 28px);
+  border-radius: clamp(4px, 0.6vh, 6px);
   object-fit: contain;
   background: #e6eefc;
 }
@@ -338,23 +339,23 @@
 .chainFallback {
   display: inline-flex;
   flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
+  width: clamp(18px, 2.6vh, 28px);
+  height: clamp(18px, 2.6vh, 28px);
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: clamp(4px, 0.6vh, 6px);
   background: #e6eefc;
   color: #0d0f49;
-  font-size: 10px;
+  font-size: clamp(8px, 1.1vh, 10px);
   font-weight: 800;
   text-transform: uppercase;
 }
 
 .chainName {
   overflow: hidden;
-  font-size: 10px;
+  font-size: clamp(8px, 1.15vh, 10px);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.15;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -367,18 +368,30 @@
   width: 100%;
 }
 
+.seriesRow {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+}
+
 .series {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   gap: 4px;
   min-height: 80px;
-  margin-bottom: 4px;
   padding: 10px;
   border-radius: 16px;
   box-sizing: border-box;
+}
+
+.seriesHalf {
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .seriesClassic {
@@ -397,9 +410,10 @@
   background: #c9b8a0;
 }
 
-/* Label is first child; flex-end packs [label]+[btns] to the right → label left of icons */
+/* Label first; flex-end packs [label]+[btns] to the right */
 .seriesLabel {
   display: inline-block;
+  flex: 0 0 auto;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   min-width: 18px;
@@ -564,8 +578,9 @@
     left: 0;
     width: 100vw;
     max-width: 100vw;
-    height: auto;
+    height: 22vh;
     max-height: 22vh;
+    overflow: hidden;
     border-left: none;
     border-right: none;
     border-top: 3px solid #0d0f49;
@@ -589,16 +604,22 @@
   }
 
   .chainGrid {
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    flex: 1 1 auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 4px;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .chainBtn {
-    flex: 1 1 calc(33.333% - 6px);
-    max-width: calc(33.333% - 4px);
+    flex: unset;
+    min-height: 0;
+    padding: 2px 4px;
   }
 
   .chainName {
-    font-size: 9px;
+    font-size: 8px;
   }
 }
