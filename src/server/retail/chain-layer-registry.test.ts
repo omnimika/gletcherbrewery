@@ -24,6 +24,13 @@ describe("chain-layer-registry", () => {
     assert.ok(!aliases["EuroSPAR (Калининград)"]?.includes("EuroSPAR"));
   });
 
+  it("maps МАКСИ to maksi layer", () => {
+    const b = bindingForChainTitle("МАКСИ");
+    assert.equal(b?.layerId, "maksi");
+    assert.ok(b?.sourceTitles.includes("Макси"));
+    assert.equal(resolveChainMapStatus("МАКСИ", 4), "on_map");
+  });
+
   it("marks CRM-only chains without a layer", () => {
     assert.equal(bindingForChainTitle("ВКУСВИЛЛ")?.layerId, null);
     assert.equal(resolveChainMapStatus("ВКУСВИЛЛ", 0), "crm_only_empty");

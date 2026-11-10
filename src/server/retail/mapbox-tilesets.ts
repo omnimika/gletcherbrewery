@@ -18,7 +18,9 @@ export type RetailMapLayerId =
   | "azbuka"
   | "perekrestok"
   | "magnit"
-  | "lenta";
+  | "lenta"
+  | "aromatny-mir"
+  | "maksi";
 
 export type RetailTilesetKind = "mts" | "studio";
 
@@ -125,6 +127,23 @@ export const RETAIL_TILESETS: readonly RetailTilesetRef[] = [
     sourceLayer: "dixie",
     kind: "studio",
     tilesetSourceId: null,
+  },
+  {
+    layerId: "aromatny-mir",
+    styleSource: "mapbox://omnicoremaps.anvfhv5yjx32",
+    tilesetId: "omnicoremaps.anvfhv5yjx32",
+    sourceLayer: "lnuvqlbzpm6p33qh2h7y",
+    kind: "mts",
+    tilesetSourceId: "702a7b27d2",
+  },
+  {
+    layerId: "maksi",
+    // Studio published into composite; tileset id kept for MTS republish path.
+    styleSource: "composite",
+    tilesetId: "omnicoremaps.gletcher-maksi",
+    sourceLayer: "maksi",
+    kind: "mts",
+    tilesetSourceId: "gletcher-maksi-mwa0qbxp",
   },
 ] as const;
 

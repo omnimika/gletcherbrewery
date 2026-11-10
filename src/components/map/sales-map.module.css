@@ -127,16 +127,43 @@
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 }
 
-.panel::-webkit-scrollbar {
+.chainPanel {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(18vw, 220px);
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 12px;
+  background-color: #e6eefc;
+  border-top: none;
+  border-right: 3px solid #0d0f49;
+  border-bottom: none;
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+.panel::-webkit-scrollbar,
+.chainPanel::-webkit-scrollbar {
   width: 8px;
 }
 
-.panel::-webkit-scrollbar-track {
+.panel::-webkit-scrollbar-track,
+.chainPanel::-webkit-scrollbar-track {
   background: #1c1c1c;
   border-radius: 4px;
 }
 
-.panel::-webkit-scrollbar-thumb {
+.panel::-webkit-scrollbar-thumb,
+.chainPanel::-webkit-scrollbar-thumb {
   background: #e5373c;
   border-radius: 4px;
 }
@@ -214,6 +241,123 @@
   background-color: #fff !important;
   color: #0d0f49 !important;
   font-size: 13px !important;
+}
+
+.filterHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.filterHeadingLabel {
+  color: #0d0f49;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.clearBtn {
+  padding: 2px 8px;
+  border: 1px solid #0d0f49;
+  border-radius: 999px;
+  background: transparent;
+  color: #0d0f49;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.clearBtn:hover {
+  background: #0d0f49;
+  color: #e6eefc;
+}
+
+.chainGrid {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  min-height: 0;
+}
+
+.chainBtn {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px 6px 6px;
+  border: 1px solid rgb(13 15 73 / 18%);
+  border-radius: 10px;
+  background: #fff;
+  color: #0d0f49;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.chainBtn:hover {
+  border-color: #e5373c;
+}
+
+.chainBtnActive {
+  border-color: #e5373c;
+  background: #e5373c;
+  color: #fff;
+}
+
+.chainBtnActive::after {
+  content: "✓";
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  z-index: 2;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 2px #e6eefc;
+  color: #fff;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.chainImg {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: contain;
+  background: #e6eefc;
+}
+
+.chainFallback {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: #e6eefc;
+  color: #0d0f49;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.chainName {
+  overflow: hidden;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .seriesList {
@@ -379,6 +523,10 @@
   .panel {
     width: min(42vw, 280px);
   }
+
+  .chainPanel {
+    width: min(22vw, 200px);
+  }
 }
 
 @media (max-width: 600px) {
@@ -401,12 +549,28 @@
     left: 0;
     width: 100vw;
     max-width: 100vw;
-    max-height: 42vh;
+    max-height: 36vh;
     border-left: none;
     border-top: 3px solid #0d0f49;
     border-bottom: none;
     border-radius: 16px 16px 0 0;
     box-shadow: 0 -2px 12px rgb(0 0 0 / 15%);
+  }
+
+  .chainPanel {
+    top: auto;
+    right: 0;
+    bottom: 36vh;
+    left: 0;
+    width: 100vw;
+    max-width: 100vw;
+    height: auto;
+    max-height: 22vh;
+    border-left: none;
+    border-right: none;
+    border-top: 3px solid #0d0f49;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -2px 12px rgb(0 0 0 / 12%);
   }
 
   .beerBtn,
@@ -422,5 +586,19 @@
     height: 16px;
     font-size: 12px;
     line-height: 16px;
+  }
+
+  .chainGrid {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .chainBtn {
+    flex: 1 1 calc(33.333% - 6px);
+    max-width: calc(33.333% - 4px);
+  }
+
+  .chainName {
+    font-size: 9px;
   }
 }

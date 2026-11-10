@@ -12,6 +12,8 @@ import {
 } from "@/content/map";
 import { type PublishedLocale, isPublishedLocale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
+import { getDb } from "@/server/db/client";
+import { loadPublicMapChainTitles } from "@/server/retail/public-map-chains";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -48,6 +50,14 @@ export default async function MapPage({ params }: PageProps) {
   const copy = getMapCopy(published);
   const accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN?.trim() || undefined;
 
+  let db = null;
+  try {
+    db = getDb();
+  } catch {
+    db = null;
+  }
+  const chainTitlesWithAssortment = await loadPublicMapChainTitles(db);
+
   return (
     <SiteShell
       localeHrefs={{
@@ -55,7 +65,11 @@ export default async function MapPage({ params }: PageProps) {
         en: MAP_LOCALE_HREFS.en,
       }}
     >
-      <SalesMap copy={copy} accessToken={accessToken} />
+      <SalesMap
+        copy={copy}
+        accessToken={accessToken}
+        chainTitlesWithAssortment={chainTitlesWithAssortment}
+      />
     </SiteShell>
   );
 }

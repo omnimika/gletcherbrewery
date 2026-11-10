@@ -92,6 +92,20 @@ export const LAYER_SOURCE_FILES: readonly SourceFileRef[] = [
     quality: "provisional",
     note: "Filename marked notgood — usable schema, replace when better export exists",
   },
+  {
+    layerId: "aromatny-mir",
+    relativePath: "tmp/mapbox-sources/aromatny-mir.geojson",
+    format: "geojson",
+    quality: "ok",
+    note: "Scraped 10.11 amwine.ru all 14 regions via getStores (969 pts); tileset omnicoremaps.anvfhv5yjx32",
+  },
+  {
+    layerId: "maksi",
+    relativePath: "tmp/mapbox-sources/maksi.geojson",
+    format: "geojson",
+    quality: "ok",
+    note: "Scraped 10.11 maxi.today/api/v1/shops (73 pts, 12 cities); tileset omnicoremaps.gletcher-maksi",
+  },
 ] as const;
 
 /** Prefer chain-layer-registry; re-export for patch import path. */

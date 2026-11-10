@@ -128,12 +128,20 @@ export const CHAIN_MAP_BINDINGS: readonly ChainMapBinding[] = [
     layerId: "selgros-miratorg-yabloko-5m7m",
     sourceTitles: ["Яблоко", "Яблоко (Крым)"],
   },
+  {
+    title: "АРОМАТНЫЙ МИР",
+    layerId: "aromatny-mir",
+    sourceTitles: ["Ароматный Мир"],
+  },
+  {
+    title: "МАКСИ",
+    layerId: "maksi",
+    sourceTitles: ["Макси", "МАКСИ"],
+  },
   // CRM-only (no Mapbox layer yet)
-  { title: "АРОМАТНЫЙ МИР", layerId: null, sourceTitles: [] },
   { title: "ВКУСВИЛЛ", layerId: null, sourceTitles: [] },
   { title: "ВЕРНЫЙ", layerId: null, sourceTitles: [] },
   { title: "ДА!", layerId: null, sourceTitles: [] },
-  { title: "МАКСИ", layerId: null, sourceTitles: [] },
   { title: "ПЯТЕРОЧКА", layerId: null, sourceTitles: [] },
   { title: "ХМЕЛЬ И СОЛОД", layerId: null, sourceTitles: [] },
   { title: "Алкосити", layerId: null, sourceTitles: [] },
