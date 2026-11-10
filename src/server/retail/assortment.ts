@@ -5,6 +5,13 @@ import {
   retailChainProducts,
   retailChains,
 } from "@/server/db/schema";
+import {
+  bindingForChainTitle,
+  chainMapStatusLabel,
+  chainMapStatusSortKey,
+  resolveChainMapStatus,
+  type ChainMapStatus,
+} from "./chain-layer-registry";
 import { ASSORTMENT_COLUMNS, isAssortmentSkuOutOfStock } from "./sku-map";
 
 export type AssortmentMatrix = {
@@ -20,6 +27,10 @@ export type AssortmentMatrix = {
     legalName: string | null;
     mapUrl: string | null;
     products: Record<string, boolean>;
+    availableCount: number;
+    mapLayerId: string | null;
+    mapStatus: ChainMapStatus;
+    mapStatusLabel: string;
   }>;
 };
 
@@ -48,20 +59,41 @@ export async function getAssortmentMatrix(db: AppDb): Promise<AssortmentMatrix> 
     byChain.set(row.chainId, bag);
   }
 
+  const enriched = chains.map((c) => {
+    const products = byChain.get(c.id) ?? {};
+    const availableCount = Object.entries(products).filter(
+      ([slug, on]) => on && !isAssortmentSkuOutOfStock(slug),
+    ).length;
+    const binding = bindingForChainTitle(c.title);
+    const mapStatus = resolveChainMapStatus(c.title, availableCount);
+    return {
+      id: c.id,
+      slug: c.slug,
+      title: c.title,
+      legalName: c.legalName,
+      mapUrl: c.mapUrl,
+      products,
+      availableCount,
+      mapLayerId: binding?.layerId ?? null,
+      mapStatus,
+      mapStatusLabel: chainMapStatusLabel(mapStatus),
+    };
+  });
+
+  enriched.sort((a, b) => {
+    const byStatus =
+      chainMapStatusSortKey(a.mapStatus) - chainMapStatusSortKey(b.mapStatus);
+    if (byStatus !== 0) return byStatus;
+    return a.title.localeCompare(b.title, "ru");
+  });
+
   return {
     columns: ASSORTMENT_COLUMNS.map((c) => ({
       productSlug: c.productSlug,
       catalogName: c.catalogName,
       outOfStock: isAssortmentSkuOutOfStock(c.productSlug),
     })),
-    chains: chains.map((c) => ({
-      id: c.id,
-      slug: c.slug,
-      title: c.title,
-      legalName: c.legalName,
-      mapUrl: c.mapUrl,
-      products: byChain.get(c.id) ?? {},
-    })),
+    chains: enriched,
   };
 }
 

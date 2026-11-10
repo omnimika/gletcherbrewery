@@ -11,7 +11,7 @@
     "start": "next start --hostname 0.0.0.0 --port 3000",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
-    "test:unit": "tsx --test src/server/forms/intent-hash.test.ts src/server/forms/validate.test.ts src/server/forms/telegram-message.test.ts src/server/staff/commands.test.ts src/server/retail/parse.test.ts src/server/retail/sku-map.test.ts src/server/retail/product-tokens.test.ts",
+    "test:unit": "tsx --test src/server/forms/intent-hash.test.ts src/server/forms/validate.test.ts src/server/forms/telegram-message.test.ts src/server/staff/commands.test.ts src/server/retail/parse.test.ts src/server/retail/sku-map.test.ts src/server/retail/product-tokens.test.ts src/server/retail/chain-layer-registry.test.ts src/components/map/product-filter.test.ts",
     "test:integration": "tsx --test src/server/forms/submit.integration.test.ts src/server/staff/commands.integration.test.ts",
     "retail:tileset-dry-run": "node scripts/retail-tileset-dry-run.mjs",
     "retail:patch-product-sources": "node scripts/retail-patch-product-sources.mjs",

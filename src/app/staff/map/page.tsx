@@ -40,8 +40,9 @@ export default async function StaffMapPage() {
 
       <Banner tone="ice" className="!px-4 !py-2.5">
         <p className="type-caption text-gletcher-navy/80">
-          Чекбокс → PostgreSQL сразу. Чтобы увидеть ассортимент на публичной
-          /map — кнопка «Опубликовать в Mapbox» (dry-run карту не меняет).
+          Чекбокс → PostgreSQL сразу. Публичная /map обновляется только через
+          «Опубликовать в Mapbox». Сети с 0 SKU после publish скрываются (пустой
+          Product); «только CRM» на карту не попадают.
         </p>
       </Banner>
 

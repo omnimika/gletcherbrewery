@@ -7,6 +7,7 @@
  */
 
 import path from "node:path";
+import { crmTitleToSourceTitles } from "@/server/retail/chain-layer-registry";
 import type { RetailMapLayerId } from "@/server/retail/mapbox-tilesets";
 
 export type SourceFileRef = {
@@ -93,28 +94,10 @@ export const LAYER_SOURCE_FILES: readonly SourceFileRef[] = [
   },
 ] as const;
 
-/** CRM `/staff/map` title → Title value(s) in source files. */
-export const CRM_TITLE_TO_SOURCE_TITLES: Readonly<Record<string, string[]>> = {
-  АШАН: ["АШАН", "Ашан"],
-  АТАК: ["АТАК", "Атак"],
-  "АЗБУКА ВКУСА": ["Азбука Вкуса", "АЗБУКА ВКУСА"],
-  "Беру Выходной!": ["Беру Выходной!"],
-  ВИНЛАБ: ["Винлаб", "ВИНЛАБ"],
-  "ДВА ТОПОРА": ["Два Топора", "ДВА ТОПОРА"],
-  DRINX: ["DRINX"],
-  SELGROS: ["Selgros", "SELGROS"],
-  ЛЕНТА: ["Лента", "ЛЕНТА"],
-  ДИКСИ: ["ДИКСИ", "Дикси"],
-  "ГИПЕР МАГНИТ": ["Магнит", "МАГНИТ", "Гипер Магнит"],
-  METRO: ["МЕТРО", "METRO", "Metro"],
-  GLOBUS: ["ГЛОБУС", "GLOBUS", "Globus"],
-  ОКЕЙ: ["О’КЕЙ", "О'КЕЙ", "ОКЕЙ", "OKEY"],
-  МИРАТОРГ: ["Мираторг", "МИРАТОРГ"],
-  ПЕРЕКРЁСТОК: ["Перекрёсток", "ПЕРЕКРЁСТОК", "Перекресток"],
-  EuroSPAR: ["EuroSPAR"],
-  "EuroSPAR (Калининград)": ["EuroSPAR"],
-  "Яблоко (Крым)": ["Яблоко", "Яблоко (Крым)"],
-};
+/** Prefer chain-layer-registry; re-export for patch import path. */
+export const CRM_TITLE_TO_SOURCE_TITLES: Readonly<
+  Record<string, readonly string[]>
+> = crmTitleToSourceTitles();
 
 export function normalizeChainTitle(title: string): string {
   return title

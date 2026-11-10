@@ -11,6 +11,7 @@ import {
   mapBeerImageUrl,
   type MapCopy,
 } from "@/content/map";
+import { buildMapProductFilter } from "@/components/map/product-filter";
 import styles from "./sales-map.module.css";
 
 function escapeHtml(value: string) {
@@ -19,21 +20,6 @@ function escapeHtml(value: string) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
-}
-
-function productFilter(selected: ReadonlySet<string>): mapboxgl.FilterSpecification | null {
-  if (selected.size === 0) return null;
-  return [
-    "any",
-    ...[...selected].map(
-      (beer) =>
-        [
-          "in",
-          beer,
-          ["coalesce", ["get", "Product"], ""],
-        ] as mapboxgl.FilterSpecification,
-    ),
-  ];
 }
 
 export function SalesMap({
@@ -67,7 +53,9 @@ export function SalesMap({
   const applyFilters = useCallback((next: ReadonlySet<string>) => {
     const map = mapRef.current;
     if (!map) return;
-    const filter = productFilter(next);
+    const filter = buildMapProductFilter(
+      next,
+    ) as mapboxgl.FilterSpecification;
     for (const layerId of MAP_LAYERS) {
       if (!map.getLayer(layerId)) continue;
       map.setFilter(layerId, filter);
