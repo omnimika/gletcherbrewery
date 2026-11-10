@@ -18,11 +18,13 @@ Proposed до live B2 delivery. `Confirmed` — только явно утвер
 | [0008-hosting-dev.md](0008-hosting-dev.md) | Local non-prod topology | **Accepted** (B1); YC staging Open |
 | [0005-cms.md](0005-cms.md) | Rich-content / Puck / Tilda block map | **Proposed** (editor preference Confirmed) |
 | [0010-design-system-and-section-layout.md](0010-design-system-and-section-layout.md) | Design tokens, секции/сетка/anchors/UI/state/motion | **Direction Confirmed**; DS-1/DS-2 implemented, rollout reviewable |
+| [0011-loyalty-ledger.md](0011-loyalty-ledger.md) | «Агент Глетчер» ledger, QR-verify, legacy→ДА | **Proposed** (policies Confirmed 10.11; rehearsal Open) |
 
 Два исторических файла с префиксом `0000` сохранены по существующим путям.
 В ссылках использовать полное имя файла.
 `0001` — i18n; `0002` — Database; `0003` — ORM; `0005` — CMS; `0007` — jobs;
-`0008` — hosting/dev; `0010` — design system. Не использовать эти номера повторно.
+`0008` — hosting/dev; `0010` — design system; `0011` — loyalty ledger.
+Не использовать эти номера повторно.
 
 Backend/hosting ADR оформляются при приближении соответствующего этапа.
 Установка Puck/CMS отложена до CRM-этапа; публичный рендерер блоков — раньше.

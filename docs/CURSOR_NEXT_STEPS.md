@@ -1,43 +1,31 @@
-# Текущее задание Cursor — M1 Mapbox CRM follow-up
+# Текущее задание Cursor — M2 Airtable / «Агент Глетчер»
 
 Дата: **10.11.2026**.
 
-## Приоритет владельца
+## Confirmed
 
-Довести **карту + Mapbox CRM** до конца. **M2 Airtable/loyalty не начинать**,
-пока retail map/CRM не закрыт.
+Loyalty rules, free path (QR+OCR+manual), P1, FNS application parallel.
+Staff queue `/staff/loyalty/receipts` works (manual → approve → ledger 5%).
 
-## Done (10.11)
+## M2-1 progress
 
-- B1–B3 forms + staff triage
-- M1-0/M1-1 assortment matrix
-- M1-2a Product adapter + dry-run
-- **Live Product publish** run `e3f969c2-c493-404d-9e55-60523636ee94`
-  - MTS: twoaxes, metro-globus-okey, azbuka, auchan-atak, winelab, eurospar,
-    aromatny-mir, maksi, hmel-i-solod → `published`
-  - Studio: perekrestok, lenta, selgros-miratorg-yabloko-5m7m, magnit, dixie,
-    yarche → `upload_started` (async processing)
-  - Patch: 7909/7914 features; unmatched only `5M Гурман` / `7М Безцен`
-  - Gate returned to `MAPBOX_ALLOW_TILESET_PUBLISH=false`
+Done:
+- Ledger + staff receipts + QR/OCR + aliases seed
+- P1 magic-link (server GET verify → cookie → cabinet; DEBUG UI honest)
+- Member upload `/agent/cabinet` + `POST /api/loyalty/receipts`
+- GTIN plumbing: `src/content/product-gtins.ts`, OCR extract, staff `POST /api/staff/loyalty/aliases`
+- SMTP sender via nodemailer (activates when `SMTP_*` set and DEBUG off)
 
-## Done — store points + SKU overrides (this pass)
+Next:
+1. **Owner (позже):** список штрихкодов EAN/GTIN по сортам — пока нет; matcher работает на алиасах + ручной сумме. Когда будет — в `product-gtins.ts` или staff upsert.
+2. **Owner (позже):** SMTP/Postbox кредов пока нет — оставляем `LOYALTY_MAGIC_LINK_DEBUG=1` (ссылка в UI).
+3. FNS Open API application (parallel; draft in `docs/discovery/FNS_OPEN_API_APPLICATION_DRAFT.md`)
+4. ~~Visual polish LK~~ — login/cabinet на DS tokens (10.11). Дальше: Postbox / FNS / GTIN when ready
 
-- `app.retail_locations` + `assortment_mode` + `retail_location_products`
-- Import: `npm run retail:import-locations`
-- Staff: `/staff/map/locations`, detail `/staff/map/locations/[id]` (inherit/override)
-- Product patch/publish applies per-`source_key` overrides
+## Local login
 
-## Следом
-
-1. Verify `/map` after publish when overrides used
-2. Stale-point handling; CRM-only chains without geometry
-3. M2 Airtable/loyalty when map CRM accepted
-
-## Explicitly deferred
-
-- M2 Airtable / «Агент Глетчер»
-- Production tileset mutate without allow flag
+`LOYALTY_MAGIC_LINK_DEBUG=1` → ссылка на странице `/agent/login`, без письма.
 
 ## Git
 
-Commit/push по запросу. Не коммитить `.env.local` / tokens.
+Commit/push по запросу. Без secrets / PII / чеков.

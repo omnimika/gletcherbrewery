@@ -1,9 +1,11 @@
 import {
   boolean,
+  date,
   doublePrecision,
   index,
   integer,
   jsonb,
+  numeric,
   pgSchema,
   primaryKey,
   text,
@@ -365,4 +367,172 @@ export const deliveryAttempts = appSchema.table(
     finishedAt: timestamp("finished_at", { withTimezone: true }),
   },
   (t) => [index("delivery_attempts_job_idx").on(t.jobId)],
+);
+
+/** M2 loyalty member — identity key = email_normalized. */
+export const loyaltyMembers = appSchema.table(
+  "loyalty_members",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    emailNormalized: text("email_normalized").notNull(),
+    displayName: text("display_name"),
+    phone: text("phone"),
+    city: text("city"),
+    airtableRecordId: text("airtable_record_id"),
+    onboardedAt: timestamp("onboarded_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex("loyalty_members_email_uidx").on(t.emailNormalized),
+    uniqueIndex("loyalty_members_airtable_uidx").on(t.airtableRecordId),
+  ],
+);
+
+/**
+ * Receipt / check submission FSM.
+ * source: qr | ocr | manual | legacy_airtable | staff
+ */
+export const loyaltyReceipts = appSchema.table(
+  "loyalty_receipts",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    memberId: uuid("member_id")
+      .notNull()
+      .references(() => loyaltyMembers.id, { onDelete: "restrict" }),
+    status: text("status").notNull().default("pending_upload"),
+    source: text("source").notNull(),
+    photoObjectKey: text("photo_object_key"),
+    qrPayload: text("qr_payload"),
+    fiscalFn: text("fiscal_fn"),
+    fiscalFd: text("fiscal_fd"),
+    fiscalFp: text("fiscal_fp"),
+    fiscalOperation: text("fiscal_operation"),
+    receiptFingerprint: text("receipt_fingerprint"),
+    purchaseAt: date("purchase_at"),
+    city: text("city"),
+    venueNetwork: text("venue_network"),
+    venueName: text("venue_name"),
+    gletcherSumRub: numeric("gletcher_sum_rub", { precision: 12, scale: 2 }),
+    proposedEarn: integer("proposed_earn"),
+    ocrText: text("ocr_text"),
+    ocrLines: jsonb("ocr_lines").notNull().$type<unknown[]>().default([]),
+    staffNote: text("staff_note"),
+    reviewedBy: text("reviewed_by"),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    airtableCheckId: text("airtable_check_id"),
+    legacyPaidFlag: text("legacy_paid_flag"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex("loyalty_receipts_fingerprint_uidx").on(t.receiptFingerprint),
+    uniqueIndex("loyalty_receipts_airtable_uidx").on(t.airtableCheckId),
+    index("loyalty_receipts_member_idx").on(t.memberId, t.createdAt),
+    index("loyalty_receipts_status_idx").on(t.status, t.createdAt),
+  ],
+);
+
+/** Append-only bonus journal. amount signed; spendable uses posted check_earn etc. */
+export const loyaltyLedgerEntries = appSchema.table(
+  "loyalty_ledger_entries",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    memberId: uuid("member_id")
+      .notNull()
+      .references(() => loyaltyMembers.id, { onDelete: "restrict" }),
+    entryKind: text("entry_kind").notNull(),
+    amount: integer("amount").notNull(),
+    status: text("status").notNull().default("posted"),
+    sourceSystem: text("source_system").notNull(),
+    sourceRecordId: text("source_record_id").notNull(),
+    receiptId: uuid("receipt_id").references(() => loyaltyReceipts.id, {
+      onDelete: "set null",
+    }),
+    eligibleSumRub: numeric("eligible_sum_rub", { precision: 12, scale: 2 }),
+    rewardRate: numeric("reward_rate", { precision: 8, scale: 6 }),
+    metadata: jsonb("metadata").notNull().$type<Record<string, unknown>>().default({}),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("loyalty_ledger_idempotency_uidx").on(
+      t.sourceSystem,
+      t.sourceRecordId,
+      t.entryKind,
+    ),
+    index("loyalty_ledger_member_idx").on(t.memberId, t.createdAt),
+    index("loyalty_ledger_receipt_idx").on(t.receiptId),
+  ],
+);
+
+/** Receipt line ↔ Gletcher product aliases (кир/лат + optional GTIN). */
+export const productReceiptAliases = appSchema.table(
+  "product_receipt_aliases",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    aliasNormalized: text("alias_normalized").notNull(),
+    productSlug: text("product_slug"),
+    brand: text("brand").notNull().default("gletcher"),
+    gtin: text("gtin"),
+    active: boolean("active").notNull().default(true),
+    validFrom: date("valid_from"),
+    validTo: date("valid_to"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("product_receipt_aliases_alias_uidx").on(t.aliasNormalized),
+    index("product_receipt_aliases_gtin_idx").on(t.gtin),
+    index("product_receipt_aliases_slug_idx").on(t.productSlug),
+  ],
+);
+
+/** P1 magic-link one-time tokens (sha256 hash only). */
+export const loyaltyMagicLinkTokens = appSchema.table(
+  "loyalty_magic_link_tokens",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    emailNormalized: text("email_normalized").notNull(),
+    tokenHash: text("token_hash").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    consumedAt: timestamp("consumed_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    requestIp: text("request_ip"),
+    userAgent: text("user_agent"),
+  },
+  (t) => [
+    uniqueIndex("loyalty_magic_link_token_hash_uidx").on(t.tokenHash),
+    index("loyalty_magic_link_email_idx").on(t.emailNormalized, t.createdAt),
+  ],
+);
+
+/** P1 member browser sessions (sha256 of opaque cookie). */
+export const loyaltyMemberSessions = appSchema.table(
+  "loyalty_member_sessions",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    memberId: uuid("member_id")
+      .notNull()
+      .references(() => loyaltyMembers.id, { onDelete: "cascade" }),
+    sessionHash: text("session_hash").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+    lastSeenAt: timestamp("last_seen_at", { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex("loyalty_member_sessions_hash_uidx").on(t.sessionHash),
+    index("loyalty_member_sessions_member_idx").on(t.memberId, t.expiresAt),
+  ],
 );

@@ -170,18 +170,28 @@ Bootstrap/Discovery/DS и Q1–Q3 не повторять; campaign/public-exit 
    09.11** (embedded PG, migrations, Contacts intake, read-only NocoDB).
 2. /about code реализован (RU-only/noindex, Tilda71867465 + motion). Visual
    acceptance Open; Stage4 не объявлять Done.
-3. **B2 текущий:** durable worker → test Telegram + lead Sheet; same submissionId
-   в DB/NocoDB/chat/Sheet. Задание: `docs/CURSOR_NEXT_STEPS.md`.
-4. **B3:** остальные формы/admin; M1 retail rehearsal; M2 Airtable/loyalty.
+3. B1–B3 Done; **M1 map/Mapbox CRM Accepted 10.11**.
+4. **M2 текущий:** M2-0 Done 10.11; M2-1 spike Done 10.11 (ledger, staff queue,
+ QR/OCR/aliases, P1 magic-link, member upload `/agent/cabinet`). ADR 0011
+ Proposed. Дальше: Postbox email, GTIN aliases, FNS app (parallel). Задание:
+ `docs/CURSOR_NEXT_STEPS.md`. Формулы/legacy writers не переносить догадками.
 5. PostgreSQL — source of truth (ADR 0002 Accepted non-prod); NocoDB staff view
-   read-only. Telegram — B2 downstream. Lead Sheets не использовать (152-ФЗ).
-6. ADR 0003/0008 Accepted для B1; 0007 Proposed до live B2. Формулы/балансы/
-   Members auth/legacy writers не переносить догадками.
+ read-only. Lead Sheets не использовать (152-ФЗ).
+6. ADR 0003/0008 Accepted для B1; 0007 Accepted (Telegram worker);
+ `0011-loyalty-ledger` Proposed. Make module field map ещё Open.
 7. Production import/legacy changes/cutover, commit/push — только по запросу.
 
 ## 8. Дополнительные документы
 
 - `docs/data/SOURCE_INVENTORY.md` — sources/destinations, fresh metadata и недостающие migration inputs.
+- `docs/data/AIRTABLE_LOYALTY_SCHEMA.md`, `docs/data/LOYALTY_WRITERS_MAP.md` — M2-0 loyalty inventory.
+- `docs/data/PRODUCT_GTIN_CATALOG.md`, `src/content/product-gtins.ts` — EAN/GTIN ↔ SKU (Open until owner export).
+- `docs/discovery/RECEIPT_QR_VERIFICATION.md` — ЛК чеки: QR→ФНС→Gletcher 5%→Оплачено=ДА.
+- `docs/discovery/RECEIPT_FREE_PATH.md` — чеки без платных API: QR+OCR+manual (Confirmed).
+- `docs/discovery/FNS_OPEN_API_APPLICATION_DRAFT.md` — черновик параллельной заявки ФНС.
+- `docs/discovery/RECEIPT_FNS_PROVIDER_RESEARCH.md` — справочно (платные отклонены).
+- `docs/discovery/LOYALTY_OWNER_QUESTIONS.md` — ответы владельца.
+- `docs/adr/0011-loyalty-ledger.md` — Proposed ledger + opening-balance / spendable policy.
 - `docs/backend/FORMS_DATA_PIPELINE.md` — intake/CRM/Telegram/Sheets, consistency/retry/PII contract.
 - `docs/adr/0002-database.md`, `docs/adr/0003-orm-and-migrations.md`, `docs/adr/0008-hosting-dev.md` — Accepted B1 non-prod; `0007-background-jobs.md` — Proposed B2.
 - `docs/backend/B1_RUNBOOK.md`, `docs/reviews/2026-11-09-b1-evidence.md` — локальный запуск и DoD evidence.
