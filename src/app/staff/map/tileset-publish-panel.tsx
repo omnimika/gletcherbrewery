@@ -32,64 +32,111 @@ function actorHeader(): HeadersInit {
 
 export function TilesetPublishPanel() {
   const [runs, setRuns] = useState<PublishRun[]>([]);
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState<"dry" | "live" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [info, setInfo] = useState<string | null>(null);
   const [lastRecipe, setLastRecipe] = useState<PublishRun["recipe"] | null>(
     null,
   );
 
-  async function runDry() {
-    setBusy(true);
+  async function runPublish(mode: "dry_run" | "live") {
+    setBusy(mode === "live" ? "live" : "dry");
     setError(null);
     setInfo(null);
     try {
       const res = await fetch("/api/staff/retail/tileset-publish", {
         method: "POST",
         headers: actorHeader(),
-        body: JSON.stringify({ mode: "dry_run" }),
+        body: JSON.stringify({ mode }),
       });
       const json = (await res.json()) as {
         ok?: boolean;
         message?: string;
         run?: PublishRun;
       };
-      if (!res.ok || !json.ok || !json.run) {
-        setError(json.message ?? "Dry-run не выполнен");
+      if (!json.run && (!res.ok || !json.ok)) {
+        setError(json.message ?? "Запрос не выполнен");
         return;
       }
-      setLastRecipe(json.run.recipe);
-      setRuns((prev) => [json.run!, ...prev].slice(0, 8));
-      const n = json.run.recipe.patches.filter((p) => p.product).length;
+      if (json.run) {
+        setLastRecipe(json.run.recipe);
+        setRuns((prev) => [json.run!, ...prev].slice(0, 8));
+      }
+      if (mode === "dry_run") {
+        if (!res.ok || !json.ok || !json.run) {
+          setError(json.message ?? "Dry-run не выполнен");
+          return;
+        }
+        const n = json.run.recipe.patches.filter((p) => p.product).length;
+        setInfo(
+          `Dry-run: recipe для ${n} сетей сохранён в PG. Карта /map НЕ меняется — нужен «Опубликовать в Mapbox».`,
+        );
+        return;
+      }
+      // live may return partial/failed with run payload
+      const uploads =
+        (json.run?.result?.uploads as Array<{ ok?: boolean }> | undefined) ??
+        [];
+      const okCount = uploads.filter((u) => u.ok).length;
+      if (!res.ok || !json.ok) {
+        setError(
+          json.message ??
+            `Live: частично/ошибка (${okCount}/${uploads.length || "?"}).`,
+        );
+        return;
+      }
       setInfo(
-        `Dry-run сохранён: ${n} сетей с Product. Live upload пока не включён.`,
+        `Live publish: ${okCount}/${uploads.length} слоёв отправлены в Mapbox. Тайлы могут обновиться с задержкой 1–5 мин — обновите /map с cache-bypass.`,
       );
     } catch {
       setError("Сеть недоступна");
     } finally {
-      setBusy(false);
+      setBusy(null);
     }
   }
 
   return (
     <Banner tone="frost" className="!px-4 !py-3 space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
           <p className="type-label text-gletcher-navy/55">Mapbox Product</p>
           <p className="type-body-small text-gletcher-navy/85">
-            Собрать строку <code className="text-xs">Product</code> из матрицы
-            (dry-run). Публикация tileset — только после подтверждённых ID
-            источников.
+            Чекбоксы → PostgreSQL сразу.{" "}
+            <strong className="font-semibold">Dry-run</strong> только собирает
+            строки <code className="text-xs">Product</code> (превью).{" "}
+            <strong className="font-semibold">Опубликовать</strong> патчит
+            источники и заливает tileset — без этого{" "}
+            <code className="text-xs">/map</code> не изменится.
           </p>
         </div>
-        <Button
-          type="button"
-          size="sm"
-          disabled={busy}
-          onClick={() => void runDry()}
-        >
-          {busy ? "Считаем…" : "Dry-run Product"}
-        </Button>
+        <div className="flex shrink-0 flex-wrap gap-2">
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            disabled={busy !== null}
+            onClick={() => void runPublish("dry_run")}
+          >
+            {busy === "dry" ? "Считаем…" : "Dry-run"}
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            disabled={busy !== null}
+            onClick={() => {
+              if (
+                !window.confirm(
+                  "Опубликовать Product в Mapbox tileset?\nЭто меняет боевую карту /map.",
+                )
+              ) {
+                return;
+              }
+              void runPublish("live");
+            }}
+          >
+            {busy === "live" ? "Публикуем…" : "Опубликовать в Mapbox"}
+          </Button>
+        </div>
       </div>
 
       {error ? (

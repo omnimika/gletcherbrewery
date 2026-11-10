@@ -2,13 +2,17 @@
  * Controlled Mapbox tileset Product publish.
  *
  * Default: dry-run — recipe + audit only.
- * Live: requires MAPBOX_ALLOW_TILESET_PUBLISH=true and confirmed username/tileset IDs.
- * Production tilesets are never mutated without that gate.
+ * Live: MAPBOX_ALLOW_TILESET_PUBLISH=true + staged GeoJSON → Mapbox upload.
  */
 
+import fs from "node:fs";
+import path from "node:path";
 import { desc } from "drizzle-orm";
 import type { AppDb } from "@/server/db/client";
 import { retailTilesetPublishRuns } from "@/server/db/schema";
+import { RETAIL_TILESET_IDS } from "@/server/retail/mapbox-tilesets";
+import { uploadAllStagedLayers } from "@/server/retail/mapbox-upload";
+import { patchLocalProductSources } from "@/server/retail/patch-product-sources";
 import {
   buildTilesetPublishRecipe,
   type TilesetPublishRecipe,
@@ -17,7 +21,7 @@ import {
 export type PublishRunSummary = {
   id: string;
   mode: "dry_run" | "live";
-  status: "prepared" | "blocked" | "published" | "failed";
+  status: "prepared" | "blocked" | "published" | "failed" | "partial";
   recipe: TilesetPublishRecipe;
   result: Record<string, unknown> | null;
   createdAt: string;
@@ -27,14 +31,46 @@ function secretToken(): string | undefined {
   return process.env.MAPBOX_SECRET_TOKEN || process.env.MAPBOX_TOKEN || undefined;
 }
 
+function enrichBlockers(recipe: TilesetPublishRecipe): TilesetPublishRecipe {
+  const hasIds =
+    Boolean(process.env.MAPBOX_TILESET_IDS?.trim()) ||
+    RETAIL_TILESET_IDS.length > 0;
+  const next: string[] = [];
+  if (!secretToken()?.startsWith("sk.")) {
+    next.push("MAPBOX_SECRET_TOKEN / MAPBOX_TOKEN (sk.…) missing");
+  }
+  if (!process.env.MAPBOX_USERNAME?.trim()) {
+    next.push("MAPBOX_USERNAME missing");
+  }
+  if (!hasIds) {
+    next.push("MAPBOX_TILESET_IDS missing");
+  }
+  if (process.env.MAPBOX_ALLOW_TILESET_PUBLISH !== "true") {
+    next.push("MAPBOX_ALLOW_TILESET_PUBLISH is not true");
+  }
+  return {
+    ...recipe,
+    blockers: next,
+    livePublishReady: next.length === 0,
+  };
+}
+
 export async function runTilesetPublish(
   db: AppDb,
-  input: { mode: "dry_run" | "live"; actor: string },
+  input: {
+    mode: "dry_run" | "live";
+    actor: string;
+    repoRoot?: string;
+    onlyLayerIds?: string[];
+  },
 ): Promise<
   | { ok: true; run: PublishRunSummary }
   | { ok: false; code: string; message: string; run?: PublishRunSummary }
 > {
-  const recipe = await buildTilesetPublishRecipe(db, { mode: input.mode });
+  const recipe = enrichBlockers(
+    await buildTilesetPublishRecipe(db, { mode: input.mode }),
+  );
+  const repoRoot = input.repoRoot ?? process.cwd();
 
   if (input.mode === "live" && !recipe.livePublishReady) {
     const [row] = await db
@@ -57,40 +93,77 @@ export async function runTilesetPublish(
   }
 
   if (input.mode === "live") {
-    // Live path reserved: upload/replace requires Confirmed tileset source workflow.
-    // Do not call Mapbox Uploads until MAPBOX_TILESET_IDS + source format Confirmed.
-    const token = secretToken();
-    const username = process.env.MAPBOX_USERNAME!;
-    const tilesetIds = process.env.MAPBOX_TILESET_IDS!.split(",")
-      .map((s) => s.trim())
-      .filter(Boolean);
+    const { reports, outDir } = patchLocalProductSources({
+      patches: recipe.patches,
+      repoRoot,
+    });
+
+    const uploads = await uploadAllStagedLayers({
+      stagedDir: outDir,
+      onlyLayerIds: input.onlyLayerIds,
+    });
+    const okCount = uploads.filter((u) => u.ok).length;
+    const failCount = uploads.length - okCount;
+    const status =
+      failCount === 0 ? "published" : okCount === 0 ? "failed" : "partial";
 
     const [row] = await db
       .insert(retailTilesetPublishRuns)
       .values({
         mode: "live",
-        status: "failed",
+        status,
         actor: input.actor,
         recipe: recipe as unknown as Record<string, unknown>,
         result: {
-          reason: "live_uploader_not_wired",
-          message:
-            "Recipe ready, but Mapbox upload/replace adapter is not enabled until tileset source format is Confirmed.",
-          username,
-          tilesetIds,
-          tokenPresent: Boolean(token),
-          patchCount: recipe.patches.length,
+          stagedDir: path.relative(repoRoot, outDir),
+          patchReports: reports.map((r) => ({
+            layerId: r.layerId,
+            updated: r.updated,
+            features: r.featureCount,
+            unmatchedTitles: r.unmatchedTitles,
+            quality: r.quality,
+          })),
+          uploads,
+          okCount,
+          failCount,
         },
       })
       .returning();
 
+    if (status === "failed") {
+      return {
+        ok: false,
+        code: "upload_failed",
+        message: `All ${failCount} layer uploads failed`,
+        run: toSummary(row!),
+      };
+    }
+
     return {
-      ok: false,
-      code: "uploader_pending",
-      message:
-        "Live uploader not wired yet — dry-run recipe is ready; confirm tileset source IDs/format next.",
+      ok: true,
       run: toSummary(row!),
     };
+  }
+
+  // dry-run: recipe + optional local patch stats if sources exist
+  let patchSummary: Record<string, unknown> | null = null;
+  const sourcesDir = path.join(repoRoot, "tmp/mapbox-sources");
+  if (fs.existsSync(sourcesDir)) {
+    try {
+      const { reports, outDir } = patchLocalProductSources({
+        patches: recipe.patches,
+        repoRoot,
+      });
+      patchSummary = {
+        stagedDir: path.relative(repoRoot, outDir),
+        updated: reports.reduce((n, r) => n + r.updated, 0),
+        features: reports.reduce((n, r) => n + r.featureCount, 0),
+      };
+    } catch (err) {
+      patchSummary = {
+        error: err instanceof Error ? err.message : String(err),
+      };
+    }
   }
 
   const [row] = await db
@@ -105,6 +178,7 @@ export async function runTilesetPublish(
         nonEmptyProducts: recipe.patches.filter((p) => p.product).length,
         livePublishReady: recipe.livePublishReady,
         blockers: recipe.blockers,
+        localPatch: patchSummary,
       },
     })
     .returning();

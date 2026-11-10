@@ -106,10 +106,13 @@ export function SalesMap({
 
     mapRef.current = map;
 
+    // Same as production map: track location via Mapbox control + panel button.
+    // showUserHeading must stay false — Mapbox touches bare DeviceOrientationEvent
+    // and throws ReferenceError in Safari builds where that binding is missing.
     const geolocate = new mapboxgl.GeolocateControl({
       positionOptions: { enableHighAccuracy: true },
       trackUserLocation: true,
-      showUserHeading: true,
+      showUserHeading: false,
     });
     geolocateRef.current = geolocate;
     map.addControl(geolocate);

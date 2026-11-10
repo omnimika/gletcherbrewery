@@ -44,13 +44,16 @@ npm run retail:patch-product-sources
 Live Mapbox upload всё ещё gated. Позже (Proposed): скрипт обхода сайтов сетей
 для актуальных геометок магазинов — не блокирует текущий Product patch.
 
+## Live publish (10.11, owner allowed)
+
+`npm run retail:tileset-live` — MTS replace+publish + Studio Uploads API.
+Mapbox processing is async (tiles may lag a few minutes). After success, set
+`MAPBOX_ALLOW_TILESET_PUBLISH=false` again until the next intentional publish.
+
 ## Следом (карта / Mapbox CRM)
 
-1. Проверить staged GeoJSON + unmatched Titles; поправить aliases при необходимости
-2. Gated live republish (MTS replace / studio upload) после явного «можно live»
-3. Store points CRM; scraper геометок сетей — отдельным этапом
-
-`MAPBOX_ALLOW_TILESET_PUBLISH` = `false` до явного разрешения.
+1. Verify `/map` filters against new Product strings after tile cache settles
+2. Store points CRM; scraper геометок сетей — отдельным этапом
 
 ## Explicitly deferred
 

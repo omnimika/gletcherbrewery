@@ -40,8 +40,8 @@ export default async function StaffMapPage() {
 
       <Banner tone="ice" className="!px-4 !py-2.5">
         <p className="type-caption text-gletcher-navy/80">
-          Чекбокс → PostgreSQL + audit. Строка сортов закреплена при скролле.
-          Product для Mapbox собирается отдельным dry-run ниже.
+          Чекбокс → PostgreSQL сразу. Чтобы увидеть ассортимент на публичной
+          /map — кнопка «Опубликовать в Mapbox» (dry-run карту не меняет).
         </p>
       </Banner>
 

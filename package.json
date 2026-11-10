@@ -15,6 +15,7 @@
     "test:integration": "tsx --test src/server/forms/submit.integration.test.ts src/server/staff/commands.integration.test.ts",
     "retail:tileset-dry-run": "node scripts/retail-tileset-dry-run.mjs",
     "retail:patch-product-sources": "node scripts/retail-patch-product-sources.mjs",
+    "retail:tileset-live": "node scripts/retail-tileset-live.mjs",
     "mapbox:inspect-style": "node scripts/mapbox-inspect-style.mjs",
     "db:bootstrap": "bash scripts/db-bootstrap.sh",
     "db:embedded": "node scripts/pg-embedded-start.mjs",
