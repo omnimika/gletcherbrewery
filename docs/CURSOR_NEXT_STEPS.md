@@ -1,31 +1,26 @@
-# Текущее задание Cursor — M2 Airtable / «Агент Глетчер»
+# Текущее задание Cursor — M2 / ЛК
 
 Дата: **10.11.2026**.
 
-## Confirmed
+## Done (LK shell)
 
-Loyalty rules, free path (QR+OCR+manual), P1, FNS application parallel.
-Staff queue `/staff/loyalty/receipts` works (manual → approve → ledger 5%).
+- Canonical URL: `/members/lk` (Tilda parity path)
+- `/agent/cabinet` → redirect на `/members/lk`
+- Меню: Инфо / Загрузить чек / Агент / Покупки / Магазин / Статусы
+- Инфо: профиль, баланс, provisional уровень (1000₿), рефералка, copy
+- Чек: форма ближе к Tilda (сети + 5%, не 3%)
+- Покупки: список загруженных чеков
+- Агент / Магазин / Статусы: заглушки до формул/spend
 
-## M2-1 progress
+Вход по-прежнему `/agent/login` (magic-link DEBUG).
 
-Done:
-- Ledger + staff receipts + QR/OCR + aliases seed
-- P1 magic-link (server GET verify → cookie → cabinet; DEBUG UI honest)
-- Member upload `/agent/cabinet` + `POST /api/loyalty/receipts`
-- GTIN plumbing: `src/content/product-gtins.ts`, OCR extract, staff `POST /api/staff/loyalty/aliases`
-- SMTP sender via nodemailer (activates when `SMTP_*` set and DEBUG off)
+## Next
 
-Next:
-1. **Owner (позже):** список штрихкодов EAN/GTIN по сортам — пока нет; matcher работает на алиасах + ручной сумме. Когда будет — в `product-gtins.ts` или staff upsert.
-2. **Owner (позже):** SMTP/Postbox кредов пока нет — оставляем `LOYALTY_MAGIC_LINK_DEBUG=1` (ссылка в UI).
-3. FNS Open API application (parallel; draft in `docs/discovery/FNS_OPEN_API_APPLICATION_DRAFT.md`)
-4. ~~Visual polish LK~~ — login/cabinet на DS tokens (10.11). Дальше: Postbox / FNS / GTIN when ready
-
-## Local login
-
-`LOYALTY_MAGIC_LINK_DEBUG=1` → ссылка на странице `/agent/login`, без письма.
+1. Visual QA vs published `/members/lk` (нужен Members test login)
+2. Статус/приз/лестница — после сверки Airtable formulas
+3. Агент-заявка + магазин spend
+4. Owner позже: GTIN, SMTP/Postbox
 
 ## Git
 
-Commit/push по запросу. Без secrets / PII / чеков.
+Commit/push по запросу.

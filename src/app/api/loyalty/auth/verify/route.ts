@@ -33,7 +33,7 @@ function requestOrigin(request: Request): string {
 }
 
 function cabinetUrl(request: Request): URL {
-  return new URL("/agent/cabinet", requestOrigin(request));
+  return new URL("/members/lk", requestOrigin(request));
 }
 
 function loginErrorUrl(request: Request, code: string): URL {

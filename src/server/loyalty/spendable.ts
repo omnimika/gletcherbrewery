@@ -32,11 +32,11 @@ export function spendableBalance(entries: LedgerEntryLike[]): number {
     }, 0);
 }
 
-export async function spendableBalanceForMember(
+export async function loadMemberLedger(
   db: AppDb,
   memberId: string,
-): Promise<number> {
-  const rows = await db
+): Promise<LedgerEntryLike[]> {
+  return db
     .select({
       entryKind: loyaltyLedgerEntries.entryKind,
       amount: loyaltyLedgerEntries.amount,
@@ -44,5 +44,25 @@ export async function spendableBalanceForMember(
     })
     .from(loyaltyLedgerEntries)
     .where(eq(loyaltyLedgerEntries.memberId, memberId));
-  return spendableBalance(rows);
+}
+
+export async function spendableBalanceForMember(
+  db: AppDb,
+  memberId: string,
+): Promise<number> {
+  return spendableBalance(await loadMemberLedger(db, memberId));
+}
+
+/** Posted positive earns only (for provisional level UI). */
+export function lifetimeEarnBircoins(entries: LedgerEntryLike[]): number {
+  return entries
+    .filter((e) => e.status === "posted" && EARN_KINDS.has(e.entryKind))
+    .reduce((acc, e) => acc + Math.max(0, e.amount), 0);
+}
+
+export async function lifetimeEarnForMember(
+  db: AppDb,
+  memberId: string,
+): Promise<number> {
+  return lifetimeEarnBircoins(await loadMemberLedger(db, memberId));
 }
