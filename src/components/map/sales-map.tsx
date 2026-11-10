@@ -15,6 +15,13 @@ import {
   buildMapLayerFilter,
   listMapChainOptions,
 } from "@/components/map/map-layer-filters";
+import {
+  countUniquePointFeatures,
+  GEOLOCATE_MAX_ZOOM,
+  GEOLOCATE_MIN_MARKERS,
+  GEOLOCATE_MIN_ZOOM,
+  GEOLOCATE_ZOOM_STEP,
+} from "@/components/map/geolocate-zoom";
 import styles from "./sales-map.module.css";
 
 function escapeHtml(value: string) {
@@ -23,6 +30,76 @@ function escapeHtml(value: string) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
+}
+
+function waitForMapIdle(map: mapboxgl.Map, timeoutMs = 2500): Promise<void> {
+  return new Promise((resolve) => {
+    if (!map.isMoving() && !map.isZooming() && map.areTilesLoaded()) {
+      resolve();
+      return;
+    }
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      map.off("idle", onIdle);
+      resolve();
+    };
+    const onIdle = () => finish();
+    map.once("idle", onIdle);
+    window.setTimeout(finish, timeoutMs);
+  });
+}
+
+async function resolveGeolocateZoom(
+  map: mapboxgl.Map,
+  center: [number, number],
+  layerIds: readonly string[],
+): Promise<number> {
+  const layers = layerIds.filter((id) => map.getLayer(id));
+  if (layers.length === 0) return Math.min(12, GEOLOCATE_MAX_ZOOM);
+
+  const countNow = () => {
+    const el = map.getCanvasContainer();
+    const features = map.queryRenderedFeatures(
+      [
+        [0, 0],
+        [el.clientWidth, el.clientHeight],
+      ],
+      { layers: [...layers] },
+    );
+    return countUniquePointFeatures(features);
+  };
+
+  // Fallback when the area has <2 filtered markers — still move in (geocoder-like).
+  const FALLBACK_ZOOM = 11;
+
+  // Wide first so the region’s tiles load; binary-search the tightest zoom
+  // that still shows ≥2 filtered markers (current beer/chain filters).
+  map.jumpTo({ center, zoom: GEOLOCATE_MIN_ZOOM });
+  await waitForMapIdle(map);
+  if (countNow() < GEOLOCATE_MIN_MARKERS) {
+    map.jumpTo({ center, zoom: FALLBACK_ZOOM });
+    return FALLBACK_ZOOM;
+  }
+
+  let lo = GEOLOCATE_MIN_ZOOM;
+  let hi = GEOLOCATE_MAX_ZOOM;
+  let best = GEOLOCATE_MIN_ZOOM;
+  while (hi - lo > GEOLOCATE_ZOOM_STEP) {
+    const mid = Math.round(((lo + hi) / 2) * 100) / 100;
+    map.jumpTo({ center, zoom: mid });
+    await waitForMapIdle(map, 1800);
+    if (countNow() >= GEOLOCATE_MIN_MARKERS) {
+      best = mid;
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+
+  map.jumpTo({ center, zoom: best });
+  return best;
 }
 
 export function SalesMap({
@@ -39,8 +116,12 @@ export function SalesMap({
   const frameNode = useRef<HTMLDivElement | null>(null);
   const geocoderNode = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
-  const geolocateRef = useRef<mapboxgl.GeolocateControl | null>(null);
   const geocoderRef = useRef<MapboxGeocoder | null>(null);
+  const popupRef = useRef<mapboxgl.Popup | null>(null);
+  const userMarkerRef = useRef<mapboxgl.Marker | null>(null);
+  const geolocateAdjustingRef = useRef(false);
+  const copyRef = useRef(copy);
+  copyRef.current = copy;
   const [selectedBeers, setSelectedBeers] = useState<Set<string>>(
     () => new Set(),
   );
@@ -138,16 +219,8 @@ export function SalesMap({
 
     mapRef.current = map;
 
-    // Same as production map: track location via Mapbox control + panel button.
-    // showUserHeading must stay false — Mapbox touches bare DeviceOrientationEvent
-    // and throws ReferenceError in Safari builds where that binding is missing.
-    const geolocate = new mapboxgl.GeolocateControl({
-      positionOptions: { enableHighAccuracy: true },
-      trackUserLocation: true,
-      showUserHeading: false,
-    });
-    geolocateRef.current = geolocate;
-    map.addControl(geolocate);
+    // Geolocate puck/camera: driven by navigator.geolocation in the panel button
+    // (Mapbox GeolocateControl was unreliable in Chrome with a hidden control).
 
     const onLoad = () => {
       if (cancelled) return;
@@ -185,22 +258,30 @@ export function SalesMap({
         layers: [...MAP_LAYERS],
       });
       if (!features.length) return;
+      e.originalEvent?.stopPropagation?.();
       const feature = features[0];
       const props = feature.properties ?? {};
       const title = String(props.Title ?? "");
       const address = String(props.Adress ?? props.Address ?? "");
       const product = String(props.Product ?? "");
-      const coords = (feature.geometry as GeoJSON.Point).coordinates as [
-        number,
-        number,
-      ];
+      const geom = feature.geometry;
+      if (!geom || geom.type !== "Point") return;
+      const coords = geom.coordinates as [number, number];
 
-      new mapboxgl.Popup({ offset: [0, -15] })
+      popupRef.current?.remove();
+      // Markup matches production page__map.html; chrome styled in CSS module.
+      popupRef.current = new mapboxgl.Popup({
+        offset: [0, -15],
+        maxWidth: "280px",
+        closeButton: true,
+        closeOnClick: true,
+        className: styles.storePopup,
+      })
         .setLngLat(coords)
         .setHTML(
-          `<h2 style="color:#ff8462;font-size:1.1rem;margin:0 0 0.35rem">${escapeHtml(title)}</h2>` +
-            `<p style="margin:0 0 0.5rem">${escapeHtml(address)}</p>` +
-            `<p style="margin:0"><u>${escapeHtml(copy.assortmentLabel)}</u><br>${escapeHtml(product)}</p>`,
+          `<h2>${escapeHtml(title)}</h2>` +
+            `<p>${escapeHtml(address)}</p>` +
+            `<p><u>${escapeHtml(copy.assortmentLabel)}</u><br>${escapeHtml(product)}</p>`,
         )
         .addTo(map);
     });
@@ -227,9 +308,12 @@ export function SalesMap({
         geocoderRef.current = null;
       }
       geocoderHost?.replaceChildren();
+      popupRef.current?.remove();
+      popupRef.current = null;
+      userMarkerRef.current?.remove();
+      userMarkerRef.current = null;
       map.remove();
       mapRef.current = null;
-      geolocateRef.current = null;
       setReady(false);
     };
     // selectedBeers/chains intentionally omitted — filters via applyFilters effect
@@ -282,7 +366,60 @@ export function SalesMap({
   };
 
   const triggerGeolocate = () => {
-    geolocateRef.current?.trigger();
+    const map = mapRef.current;
+    if (!map || geolocateAdjustingRef.current) return;
+
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      setError(copyRef.current.geolocateError);
+      return;
+    }
+    if (!window.isSecureContext) {
+      setError(copyRef.current.geolocateError);
+      return;
+    }
+
+    geolocateAdjustingRef.current = true;
+    setError(null);
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const center: [number, number] = [
+          pos.coords.longitude,
+          pos.coords.latitude,
+        ];
+
+        userMarkerRef.current?.remove();
+        const puck = document.createElement("div");
+        puck.className = styles.userPuck;
+        puck.setAttribute("aria-hidden", "true");
+        userMarkerRef.current = new mapboxgl.Marker({ element: puck })
+          .setLngLat(center)
+          .addTo(map);
+
+        // Immediate feedback (geocoder-like), then refine to ≥2 markers.
+        map.easeTo({ center, zoom: Math.max(map.getZoom(), 10), duration: 500 });
+
+        void resolveGeolocateZoom(map, center, MAP_LAYERS)
+          .then((zoom) => {
+            map.easeTo({ center, zoom, duration: 900 });
+          })
+          .catch(() => {
+            map.easeTo({ center, zoom: 11, duration: 900 });
+          })
+          .finally(() => {
+            geolocateAdjustingRef.current = false;
+          });
+      },
+      () => {
+        geolocateAdjustingRef.current = false;
+        setError(copyRef.current.geolocateError);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 30_000,
+      },
+    );
   };
 
   const retryMap = () => {

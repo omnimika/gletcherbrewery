@@ -103,6 +103,93 @@
   pointer-events: none;
 }
 
+/* Mapbox Popup className hook (styles below target .map descendants). */
+.storePopup {
+  z-index: 20;
+}
+
+.userPuck {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #1da1f2;
+  box-shadow:
+    0 0 0 2px rgb(29 161 242 / 40%),
+    0 2px 6px rgb(0 0 0 / 30%);
+  pointer-events: none;
+}
+
+/* Popup — production page__map.html «стиль попапа» */
+.map :global(.mapboxgl-popup-content) {
+  max-width: 280px;
+  padding: 14px 16px 12px;
+  border: 3px solid #0d0f49;
+  border-radius: 15px !important;
+  background: #fff;
+  color: #0d0f49;
+  font-size: 15px;
+  line-height: 1.35;
+  box-shadow: none;
+}
+
+.map :global(.mapboxgl-popup-content h2) {
+  margin: 0 0 0.4rem;
+  color: #ff8462;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.map :global(.mapboxgl-popup-content p) {
+  margin: 0 0 0.5rem;
+  color: #0d0f49;
+  font-size: 15px;
+}
+
+.map :global(.mapboxgl-popup-content p:last-child) {
+  margin-bottom: 0;
+}
+
+.map :global(.mapboxgl-popup-tip) {
+  border-top-color: #0d0f49 !important;
+}
+
+.map :global(.mapboxgl-popup-close-button) {
+  top: 4px;
+  right: 6px;
+  width: 28px;
+  height: 28px;
+  color: #0d0f49;
+  font-size: 25px;
+  line-height: 24px;
+}
+
+.map :global(.mapboxgl-popup-close-button:hover) {
+  background: transparent;
+  color: #e5373c;
+}
+
+@media (max-width: 600px) {
+  .map :global(.mapboxgl-popup-content) {
+    max-width: 90vw !important;
+    padding: 12px !important;
+    border-radius: 12px !important;
+    font-size: 15px !important;
+  }
+
+  .map :global(.mapboxgl-popup-close-button) {
+    top: 8px !important;
+    right: 8px !important;
+    font-size: 28px !important;
+  }
+
+  .map :global(.mapboxgl-popup-tip) {
+    display: none !important;
+  }
+}
+
 .panel {
   /* Production uses content-box: max-width 320 + padding 15*2 ≈ 350 outer */
   box-sizing: content-box;
