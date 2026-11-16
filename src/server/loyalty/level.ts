@@ -5,10 +5,10 @@
  * Процент fldXKiZ2TVoWwi3zc — all keyed off Биркоины всего накоплено.
  */
 
-export const LK_LEVEL_STEP_BIRCOINS = 1000 as const;
+export const CABINET_LEVEL_STEP_BIRCOINS = 1000 as const;
 
 /** Legend progress denominator from formula `(lifetime * 100) / 12000`. */
-export const LK_LEGEND_TARGET_BIRCOINS = 12_000 as const;
+export const CABINET_LEGEND_TARGET_BIRCOINS = 12_000 as const;
 
 type StatusBand = {
   /** Inclusive upper bound of lifetime earn for this status. */
@@ -101,7 +101,7 @@ export function loyaltyProgressFromLifetime(
   lifetimeEarn: number,
 ): LoyaltyProgress {
   const earn = Math.max(0, Math.floor(lifetimeEarn));
-  const step = LK_LEVEL_STEP_BIRCOINS;
+  const step = CABINET_LEVEL_STEP_BIRCOINS;
   const level = Math.floor(earn / step);
   const intoLevel = earn % step;
   // Airtable: 1000 - MOD(x,1000); when MOD=0 → 1000.
@@ -111,7 +111,7 @@ export function loyaltyProgressFromLifetime(
   const band = bandForLifetime(earn);
   const legendProgressPct = Math.min(
     100,
-    Math.max(0, Math.round((earn * 100) / LK_LEGEND_TARGET_BIRCOINS)),
+    Math.max(0, Math.round((earn * 100) / CABINET_LEGEND_TARGET_BIRCOINS)),
   );
 
   return {

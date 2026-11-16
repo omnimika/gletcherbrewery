@@ -5,22 +5,29 @@ import { useState, useTransition, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Field, TextInput } from "@/components/ui/field";
 import { FormStatus } from "@/components/ui/feedback";
-import { LK_BUY_PLACES } from "@/content/members-lk";
+import { CABINET_BUY_PLACE_OTHER } from "@/content/cabinet";
 import { PhotoDropzone } from "./photo-dropzone";
 import styles from "./upload-form.module.css";
 
-export function LkUploadForm({ defaultCity }: { defaultCity?: string }) {
+export function CabinetUploadForm({
+  defaultCity,
+  buyPlaces,
+}: {
+  defaultCity?: string;
+  buyPlaces: readonly string[];
+}) {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [message, setMessage] = useState<string | null>(null);
   const [ok, setOk] = useState(false);
   const [photoVersion, setPhotoVersion] = useState(0);
+  const [place, setPlace] = useState("");
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
-    const place = String(data.get("venueNetwork") || "");
+    const selected = String(data.get("venueNetwork") || "");
     const other = String(data.get("venueName") || "").trim();
     const photo = data.get("photo");
     const hasPhoto =
@@ -33,8 +40,8 @@ export function LkUploadForm({ defaultCity }: { defaultCity?: string }) {
       setOk(false);
       return;
     }
-    if (place && place !== "Другой") {
-      data.set("venueName", place);
+    if (selected && selected !== CABINET_BUY_PLACE_OTHER) {
+      data.set("venueName", selected);
     } else if (!other) {
       setMessage("Укажите название места для «Другой»");
       setOk(false);
@@ -70,6 +77,7 @@ export function LkUploadForm({ defaultCity }: { defaultCity?: string }) {
             : ""),
       );
       form.reset();
+      setPlace("");
       setPhotoVersion((v) => v + 1);
       router.refresh();
     });
@@ -78,15 +86,15 @@ export function LkUploadForm({ defaultCity }: { defaultCity?: string }) {
   return (
     <form onSubmit={onSubmit} className={styles.form}>
       <Field
-        id="lk-photo"
+        id="cabinet-photo"
         label="Фото чека"
         help="Желательно с читаемым QR — клик или перетащите в область"
       >
         <PhotoDropzone key={photoVersion} name="photo" />
       </Field>
-      <Field id="lk-sum" label="Сумма только Gletcher, ₽">
+      <Field id="cabinet-sum" label="Сумма только Gletcher, ₽">
         <TextInput
-          id="lk-sum"
+          id="cabinet-sum"
           name="gletcherSumRub"
           type="number"
           min={0}
@@ -95,46 +103,55 @@ export function LkUploadForm({ defaultCity }: { defaultCity?: string }) {
         />
       </Field>
       <div className={styles.grid2}>
-        <Field id="lk-city" label="Город">
+        <Field id="cabinet-city" label="Город">
           <TextInput
-            id="lk-city"
+            id="cabinet-city"
             name="city"
             required
             defaultValue={defaultCity ?? ""}
           />
         </Field>
-        <Field id="lk-date" label="Дата покупки">
-          <TextInput id="lk-date" name="purchaseAt" type="date" required />
+        <Field id="cabinet-date" label="Дата покупки">
+          <TextInput id="cabinet-date" name="purchaseAt" type="date" required />
         </Field>
       </div>
-      <Field id="lk-place" label="Сеть / место">
+      <Field
+        id="cabinet-place"
+        label="Сеть / место"
+        help="Сети с карты продаж, фирменные магазины или «Другой»"
+      >
         <select
-          id="lk-place"
+          id="cabinet-place"
           name="venueNetwork"
           required
           className={styles.select}
-          defaultValue=""
+          value={place}
+          onChange={(e) => setPlace(e.target.value)}
         >
           <option value="" disabled>
             Выбрать…
           </option>
-          {LK_BUY_PLACES.map((p) => (
+          {buyPlaces.map((p) => (
             <option key={p} value={p}>
               {p}
             </option>
           ))}
         </select>
       </Field>
-      <Field id="lk-venue-other" label="Если «Другой» — название">
-        <TextInput id="lk-venue-other" name="venueName" />
-      </Field>
+      {place === CABINET_BUY_PLACE_OTHER ? (
+        <Field id="cabinet-venue-other" label="Название места">
+          <TextInput id="cabinet-venue-other" name="venueName" required />
+        </Field>
+      ) : (
+        <input type="hidden" name="venueName" value="" />
+      )}
       <Field
-        id="lk-qr"
+        id="cabinet-qr"
         label="QR-строка"
         help="Необязательно — с фото попробуем прочитать сами"
       >
         <TextInput
-          id="lk-qr"
+          id="cabinet-qr"
           name="qrPayload"
           className="font-mono text-xs"
           placeholder="t=…&fn=…&i=…&fp=…"

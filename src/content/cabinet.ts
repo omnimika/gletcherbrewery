@@ -1,43 +1,22 @@
 /**
- * Member LK — product IA for `/agent/cabinet`.
+ * Agent cabinet — product IA for `/agent/cabinet`.
  * Legacy Tilda `/members/lk` is handled only via next.config redirects (no page).
  * Layout: DESIGN_SYSTEM + task-first UX (balance → upload → history).
  */
 
 /** Canonical cabinet URL (owner Confirmed). */
 export const AGENT_CABINET_PATH = "/agent/cabinet" as const;
-/** @deprecated Prefer AGENT_CABINET_PATH — same value. */
-export const MEMBERS_LK_PATH = AGENT_CABINET_PATH;
-export const MEMBERS_LOGIN_PATH = "/agent/login" as const;
+export const AGENT_LOGIN_PATH = "/agent/login" as const;
 
-/** Venue options kept from legacy check form (useful data, not UI). */
-export const LK_BUY_PLACES = [
-  "Ашан",
-  "Атак",
-  "Беру Выходной",
-  "Бирхаус",
-  "Винлаб",
-  "ВкусВилл",
-  "Глобус",
-  "Дикси",
-  "Лента",
-  "Магнит",
-  "ОКЕЙ",
-  "Перекрёсток",
-  "Пятёрочка",
-  "Хмель и Солод",
-  "Яблоко",
-  "Ярче!",
-  "SPAR",
-  "Gletcher Brewery",
-  "SVAM Group",
-  "Другой",
+/** Own retail points (not Mapbox retail layers). */
+export const CABINET_BRANDED_BUY_PLACES = [
+  "Gletcher Brewery (Клин)",
+  "SVAM Group (Москва)",
 ] as const;
 
-/** Confirmed Airtable: +1 level / 1000₿ lifetime earn. */
-export const LK_LEVEL_STEP_BIRCOINS = 1000;
+export const CABINET_BUY_PLACE_OTHER = "Другой" as const;
 
-export const LK_COPY = {
+export const CABINET_COPY = {
   kicker: "Агент Глетчер",
   title: "Кабинет",
   balanceHint: "Можно тратить на призы и спецпредложения",
@@ -79,7 +58,7 @@ export const LK_COPY = {
 } as const;
 
 /** Observed Make/Tilda agent form — useful enums, not UI chrome. */
-export const LK_AGENT_VENUE_TYPES = [
+export const CABINET_AGENT_VENUE_TYPES = [
   "Бар",
   "Ресторан",
   "Кафе",

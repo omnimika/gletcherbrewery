@@ -5,19 +5,19 @@ import { useState, useTransition, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Field, TextInput } from "@/components/ui/field";
 import { FormStatus } from "@/components/ui/feedback";
-import { LK_AGENT_VENUE_TYPES, LK_COPY } from "@/content/members-lk";
+import { CABINET_AGENT_VENUE_TYPES, CABINET_COPY } from "@/content/cabinet";
 import { MAX_OPEN_AGENT_APPLICATIONS } from "@/lib/loyalty/agent-application-status";
-import type { LkAgentApplicationRow } from "./types";
+import type { CabinetAgentApplicationRow } from "./types";
 import styles from "./agent-form.module.css";
 
-export function LkAgentForm({
+export function CabinetAgentForm({
   defaultCity,
   defaultPhone,
   applications,
 }: {
   defaultCity?: string;
   defaultPhone?: string;
-  applications: LkAgentApplicationRow[];
+  applications: CabinetAgentApplicationRow[];
 }) {
   const router = useRouter();
   const [busy, start] = useTransition();
@@ -54,13 +54,13 @@ export function LkAgentForm({
       if (!res.ok || !json.ok) {
         setMessage(
           json.code === "open_limit_reached"
-            ? LK_COPY.agentOpenLimit
+            ? CABINET_COPY.agentOpenLimit
             : (json.code ?? `Ошибка ${res.status}`),
         );
         return;
       }
       setOk(true);
-      setMessage(LK_COPY.agentSuccess);
+      setMessage(CABINET_COPY.agentSuccess);
       form.reset();
       router.refresh();
     });
@@ -70,18 +70,18 @@ export function LkAgentForm({
     <div className={styles.wrap}>
       {applications.length > 0 ? (
         <div className={styles.listBlock}>
-          <h3 className={styles.listTitle}>{LK_COPY.agentListTitle}</h3>
+          <h3 className={styles.listTitle}>{CABINET_COPY.agentListTitle}</h3>
           <ul className={styles.list}>
             {applications.map((app) => (
               <li key={app.id} className={styles.listItem}>
                 <p>
-                  {LK_COPY.agentPending
+                  {CABINET_COPY.agentPending
                     .replace("{venue}", app.venueName)
                     .replace("{status}", app.statusLabel || app.status)}
                 </p>
                 {app.publicNote ? (
                   <p className={styles.note}>
-                    {LK_COPY.agentPublicNote.replace("{note}", app.publicNote)}
+                    {CABINET_COPY.agentPublicNote.replace("{note}", app.publicNote)}
                   </p>
                 ) : null}
               </li>
@@ -89,7 +89,7 @@ export function LkAgentForm({
           </ul>
         </div>
       ) : (
-        <p className={styles.listEmpty}>{LK_COPY.agentListEmpty}</p>
+        <p className={styles.listEmpty}>{CABINET_COPY.agentListEmpty}</p>
       )}
 
       {canSubmit ? (
@@ -128,7 +128,7 @@ export function LkAgentForm({
                 <option value="" disabled>
                   Выбрать…
                 </option>
-                {LK_AGENT_VENUE_TYPES.map((t) => (
+                {CABINET_AGENT_VENUE_TYPES.map((t) => (
                   <option key={t} value={t}>
                     {t}
                   </option>
@@ -146,14 +146,14 @@ export function LkAgentForm({
             <TextInput id="ag-comment" name="comment" />
           </Field>
           <Button type="submit" loading={busy}>
-            {busy ? "Отправка…" : LK_COPY.agentSubmit}
+            {busy ? "Отправка…" : CABINET_COPY.agentSubmit}
           </Button>
           {message ? (
             <FormStatus tone={ok ? "info" : "error"}>{message}</FormStatus>
           ) : null}
         </form>
       ) : (
-        <p className={styles.pending}>{LK_COPY.agentOpenLimit}</p>
+        <p className={styles.pending}>{CABINET_COPY.agentOpenLimit}</p>
       )}
     </div>
   );

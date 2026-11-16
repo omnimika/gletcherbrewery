@@ -3,13 +3,13 @@ import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { MembersLkClient } from "@/components/members-lk/lk-client";
+import { CabinetClient } from "@/components/cabinet/cabinet-client";
 import { SiteShell } from "@/components/site-shell";
-import type { LkAgentApplicationRow } from "@/components/members-lk/types";
+import type { CabinetAgentApplicationRow } from "@/components/cabinet/types";
 import {
   AGENT_CABINET_PATH,
-  MEMBERS_LOGIN_PATH,
-} from "@/content/members-lk";
+  AGENT_LOGIN_PATH,
+} from "@/content/cabinet";
 import { DEFAULT_LOCALE, isPublishedLocale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
 import { getDb } from "@/server/db/client";
@@ -19,6 +19,7 @@ import {
   MEMBER_SESSION_COOKIE,
   resolveMemberSession,
 } from "@/server/loyalty/magic-link";
+import { loadCabinetBuyPlaces } from "@/server/loyalty/buy-places";
 import { listReceiptsForMember } from "@/server/loyalty/receipts";
 import {
   lifetimeEarnForMember,
@@ -63,7 +64,7 @@ export default async function AgentCabinetPage({ params }: PageProps) {
   let spendable = 0;
   let lifetimeEarn = 0;
   let receipts: Awaited<ReturnType<typeof listReceiptsForMember>> = [];
-  let agentApplications: LkAgentApplicationRow[] = [];
+  let agentApplications: CabinetAgentApplicationRow[] = [];
   try {
     member = await resolveMemberSession(getDb(), token);
     if (member) {
@@ -84,11 +85,18 @@ export default async function AgentCabinetPage({ params }: PageProps) {
   } catch {
     member = null;
   }
-  if (!member) redirect(MEMBERS_LOGIN_PATH);
+  if (!member) redirect(AGENT_LOGIN_PATH);
 
   const progress = loyaltyProgressFromLifetime(lifetimeEarn);
   const origin = siteOriginFromHeaders(await headers());
   const referralUrl = `${origin}${AGENT_CABINET_PATH}?utm_source=${encodeURIComponent(member.id)}&utm_medium=referral&utm_campaign=friends`;
+
+  let buyPlaces: readonly string[] = [];
+  try {
+    buyPlaces = await loadCabinetBuyPlaces(getDb());
+  } catch {
+    buyPlaces = await loadCabinetBuyPlaces(null);
+  }
 
   return (
     <SiteShell
@@ -99,9 +107,10 @@ export default async function AgentCabinetPage({ params }: PageProps) {
       }}
     >
       <div className="px-[var(--page-gutter)] pt-3 pb-8 md:pt-6 md:pb-12">
-        <MembersLkClient
+        <CabinetClient
           defaultCity={member.city ?? undefined}
           defaultPhone={member.phone ?? undefined}
+          buyPlaces={buyPlaces}
           agentApplications={agentApplications}
           info={{
             email: member.emailNormalized,
@@ -116,15 +125,25 @@ export default async function AgentCabinetPage({ params }: PageProps) {
             prize: progress.prize,
             referralUrl,
           }}
-          receipts={receipts.map((r) => ({
-            id: r.id,
-            purchaseAt: r.purchaseAt,
-            city: r.city,
-            venue: r.venueNetwork || r.venueName,
-            sum: r.gletcherSumRub,
-            proposedEarn: r.proposedEarn,
-            status: r.status,
-          }))}
+          receipts={receipts.map((r) => {
+            const legacy = r.legacyPhotoUrl?.trim() || null;
+            const hasObject = Boolean(r.photoObjectKey?.trim());
+            return {
+              id: r.id,
+              purchaseAt: r.purchaseAt,
+              city: r.city,
+              venue: r.venueNetwork || r.venueName,
+              sum: r.gletcherSumRub,
+              proposedEarn: r.proposedEarn,
+              status: r.status,
+              photoHref: legacy
+                ? legacy
+                : hasObject
+                  ? `/api/loyalty/receipts/${r.id}/photo`
+                  : null,
+              photoExternal: Boolean(legacy),
+            };
+          })}
         />
       </div>
     </SiteShell>

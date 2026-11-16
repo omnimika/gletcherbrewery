@@ -1,6 +1,6 @@
 import { Badge, EmptyState } from "@/components/ui/feedback";
-import { LK_COPY } from "@/content/members-lk";
-import type { LkReceiptRow } from "./types";
+import { CABINET_COPY } from "@/content/cabinet";
+import type { CabinetReceiptRow } from "./types";
 import styles from "./receipt-list.module.css";
 
 const STATUS_LABEL: Record<string, string> = {
@@ -10,9 +10,9 @@ const STATUS_LABEL: Record<string, string> = {
   rejected: "Отклонён",
 };
 
-export function LkReceiptList({ receipts }: { receipts: LkReceiptRow[] }) {
+export function CabinetReceiptList({ receipts }: { receipts: CabinetReceiptRow[] }) {
   if (receipts.length === 0) {
-    return <EmptyState title={LK_COPY.historyEmpty} />;
+    return <EmptyState title={CABINET_COPY.historyEmpty} />;
   }
 
   return (
@@ -27,6 +27,19 @@ export function LkReceiptList({ receipts }: { receipts: LkReceiptRow[] }) {
             <p className={styles.meta}>
               {[r.city, r.venue].filter(Boolean).join(" · ") || "—"}
             </p>
+            {r.photoHref ? (
+              <p className={styles.meta}>
+                <a
+                  href={r.photoHref}
+                  className={styles.photoLink}
+                  {...(r.photoExternal
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                >
+                  Фото чека
+                </a>
+              </p>
+            ) : null}
           </div>
           <Badge
             tone={

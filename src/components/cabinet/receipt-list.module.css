@@ -31,3 +31,13 @@
   font-size: 0.75rem;
   color: color-mix(in srgb, var(--color-gletcher-navy) 55%, transparent);
 }
+
+.photoLink {
+  font-weight: 600;
+  color: var(--color-gletcher-navy);
+  text-underline-offset: 0.15em;
+}
+
+.photoLink:hover {
+  text-decoration: underline;
+}

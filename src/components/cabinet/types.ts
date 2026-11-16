@@ -1,4 +1,4 @@
-export type LkInfoModel = {
+export type CabinetInfoModel = {
   email: string;
   displayName: string | null;
   city: string | null;
@@ -12,7 +12,7 @@ export type LkInfoModel = {
   referralUrl: string;
 };
 
-export type LkReceiptRow = {
+export type CabinetReceiptRow = {
   id: string;
   purchaseAt: string | null;
   city: string | null;
@@ -20,9 +20,13 @@ export type LkReceiptRow = {
   sum: string | null;
   proposedEarn: number | null;
   status: string;
+  /** Local object key or legacy external URL for viewing. */
+  photoHref: string | null;
+  /** Open in new tab (legacy external hosts). */
+  photoExternal: boolean;
 };
 
-export type LkAgentApplicationRow = {
+export type CabinetAgentApplicationRow = {
   id: string;
   status: string;
   statusLabel: string;
