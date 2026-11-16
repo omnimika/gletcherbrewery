@@ -15,14 +15,26 @@ export type MagicLinkDelivery =
   | { mode: "smtp"; from: string }
   | { mode: "none"; reason: "smtp_unconfigured" };
 
+/** Strip accidental wrapping quotes from .env values. */
+function envVal(key: string): string {
+  const raw = process.env[key]?.trim() ?? "";
+  if (
+    (raw.startsWith('"') && raw.endsWith('"')) ||
+    (raw.startsWith("'") && raw.endsWith("'"))
+  ) {
+    return raw.slice(1, -1).trim();
+  }
+  return raw;
+}
+
 export function getMagicLinkDelivery(): MagicLinkDelivery {
-  if ((process.env.LOYALTY_MAGIC_LINK_DEBUG || "").trim() === "1") {
+  if (envVal("LOYALTY_MAGIC_LINK_DEBUG") === "1") {
     return { mode: "debug" };
   }
-  const host = process.env.SMTP_HOST?.trim();
-  const user = process.env.SMTP_USER?.trim();
-  const pass = process.env.SMTP_PASS?.trim();
-  const from = process.env.SMTP_FROM?.trim();
+  const host = envVal("SMTP_HOST");
+  const user = envVal("SMTP_USER");
+  const pass = envVal("SMTP_PASS");
+  const from = envVal("SMTP_FROM");
   if (host && user && pass && from) {
     return { mode: "smtp", from };
   }
@@ -30,7 +42,7 @@ export function getMagicLinkDelivery(): MagicLinkDelivery {
 }
 
 function smtpPort(): number {
-  const n = Number(process.env.SMTP_PORT || "465");
+  const n = Number(envVal("SMTP_PORT") || "465");
   return Number.isFinite(n) && n > 0 ? n : 465;
 }
 
@@ -61,14 +73,14 @@ export async function deliverMagicLinkEmail(input: {
   }
 
   try {
+    const host = envVal("SMTP_HOST");
+    const user = envVal("SMTP_USER");
+    const pass = envVal("SMTP_PASS");
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST!.trim(),
+      host,
       port: smtpPort(),
       secure: smtpPort() === 465,
-      auth: {
-        user: process.env.SMTP_USER!.trim(),
-        pass: process.env.SMTP_PASS!.trim(),
-      },
+      auth: { user, pass },
     });
 
     const expiresLocal = input.expiresAt.toLocaleString("ru-RU", {

@@ -494,6 +494,41 @@ export const productReceiptAliases = appSchema.table(
   ],
 );
 
+/**
+ * «Стать агентом» — mirrors Make mod 50 → Airtable Агенты writes.
+ * status values: under_review | approved | rejected | … (staff may extend).
+ */
+export const loyaltyAgentApplications = appSchema.table(
+  "loyalty_agent_applications",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    memberId: uuid("member_id")
+      .notNull()
+      .references(() => loyaltyMembers.id, { onDelete: "restrict" }),
+    status: text("status").notNull().default("under_review"),
+    phone: text("phone").notNull(),
+    city: text("city").notNull(),
+    venueName: text("venue_name").notNull(),
+    venueType: text("venue_type").notNull(),
+    venueAddress: text("venue_address").notNull(),
+    venueBoss: text("venue_boss"),
+    comment: text("comment"),
+    legacyOrderId: text("legacy_order_id"),
+    airtableAgentId: text("airtable_agent_id"),
+    reviewedBy: text("reviewed_by"),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex("loyalty_agent_applications_airtable_uidx").on(t.airtableAgentId),
+    index("loyalty_agent_applications_member_idx").on(t.memberId, t.createdAt),
+    index("loyalty_agent_applications_status_idx").on(t.status, t.createdAt),
+  ],
+);
+
 /** P1 magic-link one-time tokens (sha256 hash only). */
 export const loyaltyMagicLinkTokens = appSchema.table(
   "loyalty_magic_link_tokens",

@@ -3,7 +3,13 @@ import { describe, it } from "node:test";
 import {
   buildMapProductFilter,
   HAS_PRODUCT_FILTER,
+  type MapFilterSpec,
 } from "./product-filter";
+
+function asFilterArray(filter: MapFilterSpec): MapFilterSpec[] {
+  assert.ok(Array.isArray(filter), "expected Mapbox filter array");
+  return filter;
+}
 
 describe("buildMapProductFilter", () => {
   it("hides empty Product when no beer selected", () => {
@@ -11,7 +17,9 @@ describe("buildMapProductFilter", () => {
   });
 
   it("requires Product and matches any selected beer", () => {
-    const filter = buildMapProductFilter(new Set(["Ausweis", "CYNIC"]));
+    const filter = asFilterArray(
+      buildMapProductFilter(new Set(["Ausweis", "CYNIC"])),
+    );
     assert.equal(filter[0], "all");
     assert.deepEqual(filter[1], HAS_PRODUCT_FILTER);
     assert.deepEqual(filter[2], [

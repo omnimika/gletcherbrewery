@@ -12,6 +12,21 @@ const nextConfig: NextConfig = {
     // Local media under /public (catalog, about, blog, …)
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    // Legacy Tilda Members URL → canonical agent cabinet (no App Router page).
+    return [
+      {
+        source: "/members/lk",
+        destination: "/agent/cabinet",
+        permanent: true,
+      },
+      {
+        source: "/:locale(en)/members/lk",
+        destination: "/agent/cabinet",
+        permanent: true,
+      },
+    ];
+  },
   turbopack: {
     rules: {
       // Only global entry goes through Tailwind; CSS modules stay as modules.

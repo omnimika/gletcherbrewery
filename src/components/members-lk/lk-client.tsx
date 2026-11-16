@@ -3,13 +3,18 @@
 import { useRouter } from "next/navigation";
 import { MEMBERS_LOGIN_PATH } from "@/content/members-lk";
 import { MembersLkShell } from "./lk-shell";
-import type { LkInfoModel } from "./panels/info-panel";
-import type { LkReceiptRow } from "./panels/purchases-panel";
+import type {
+  LkAgentApplicationRow,
+  LkInfoModel,
+  LkReceiptRow,
+} from "./types";
 
 export function MembersLkClient(props: {
   info: LkInfoModel;
   receipts: LkReceiptRow[];
+  pendingAgent: LkAgentApplicationRow | null;
   defaultCity?: string;
+  defaultPhone?: string;
 }) {
   const router = useRouter();
   return (

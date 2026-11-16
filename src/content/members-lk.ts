@@ -1,29 +1,16 @@
 /**
- * Member LK — Tilda `/members/lk` (page 44958479) shell contract.
- * Visual/IA: docs/discovery/MEMBERS_LK_BASELINE.md
+ * Member LK — product IA for `/agent/cabinet`.
+ * Legacy Tilda `/members/lk` is handled only via next.config redirects (no page).
+ * Layout: DESIGN_SYSTEM + task-first UX (balance → upload → history).
  */
 
-export const MEMBERS_LK_PATH = "/members/lk" as const;
-export const MEMBERS_LOGIN_PATH = "/agent/login" as const; // magic-link until Postbox + /members/login
+/** Canonical cabinet URL (owner Confirmed). */
+export const AGENT_CABINET_PATH = "/agent/cabinet" as const;
+/** @deprecated Prefer AGENT_CABINET_PATH — same value. */
+export const MEMBERS_LK_PATH = AGENT_CABINET_PATH;
+export const MEMBERS_LOGIN_PATH = "/agent/login" as const;
 
-export type LkPanelId =
-  | "info"
-  | "check"
-  | "agent"
-  | "purchases"
-  | "shop"
-  | "statuses";
-
-export const LK_NAV: { id: LkPanelId; label: string }[] = [
-  { id: "info", label: "Инфо" },
-  { id: "check", label: "Загрузить чек" },
-  { id: "agent", label: "Агент" },
-  { id: "purchases", label: "Покупки" },
-  { id: "shop", label: "Магазин" },
-  { id: "statuses", label: "Статусы" },
-];
-
-/** Venue select from Tilda checkupload form (ZB 716215408). */
+/** Venue options kept from legacy check form (useful data, not UI). */
 export const LK_BUY_PLACES = [
   "Ашан",
   "Атак",
@@ -47,27 +34,52 @@ export const LK_BUY_PLACES = [
   "Другой",
 ] as const;
 
-/**
- * Observed Tilda copy: +1 level per 1000 earned bircoins.
- * Prize/status ladder formulas remain Open — show level only as provisional.
- */
+/** Confirmed Airtable: +1 level / 1000₿ lifetime earn. */
 export const LK_LEVEL_STEP_BIRCOINS = 1000;
 
-export const LK_INFO_COPY = {
-  levelsIntro:
-    "За каждый новый уровень — ценные призы от нашей пивоварни!",
-  levelsBody:
-    "Повышайте свой уровень на +1 за каждую новую 1000 заработанных биркоинов. Каждый пятый (юбилейный) уровень повышает ваш статус и вы получаете ценные призы от нашей пивоварни. Главный приз — годовое снабжение пивом.",
-  friendsTitle: "С друзьями выгоднее!",
-  friendsBody:
-    "Для каждого Агента Gletcher генерируется уникальная реферальная ссылка. Приглашённые по ней и зарегистрировавшиеся друзья, при покупках Gletcher, начисляют 1% от суммы своих покупок на счёт пригласившего.",
-  bircoinTitle: "1 ₿ = 1 ₽",
-  bircoinBody:
-    "Биркоин — виртуальная валюта: покупки в магазине, экскурсии, гастро-туры Brewer's House и спецпредложения партнёров.",
-  checkTitle: "Зарегистрировать офлайн покупку",
-  checkBody:
-    "Загружайте чеки офлайн-покупок пива Gletcher и получайте 5% от суммы товаров Gletcher на биркоин-кошелёк. Засчитываются чеки с QR-кодом.",
-  prizesContactName: "Алексей Котельников",
-  prizesContactPhone: "+7 (963) 921 10 51",
-  prizesContactNote: "По поводу получения призов и другим вопросам",
+export const LK_COPY = {
+  kicker: "Агент Глетчер",
+  title: "Кабинет",
+  balanceHint: "Можно тратить на призы и спецпредложения",
+  lifetimeHint: "всего начислено",
+  uploadCta: "Загрузить чек",
+  uploadTitle: "Новый чек",
+  uploadLead:
+    "5% биркоинами от суммы товаров Gletcher. Лучше фото с QR — так быстрее проверка.",
+  historyTitle: "Недавние чеки",
+  historyEmpty: "Пока пусто — загрузите первый чек выше.",
+  progressTitle: "Статус",
+  progressLead: "Растёт с накопленными ₿. Приз — за текущий статус.",
+  statusLabel: "Статус",
+  prizeLabel: "Приз",
+  levelLabel: "Уровень",
+  toNextLabel: "до следующего уровня",
+  inviteTitle: "Пригласить друзей",
+  inviteLead:
+    "По вашей ссылке друзья регистрируются в программе; с их покупок Gletcher вам идёт 1%.",
+  inviteCta: "Скопировать ссылку",
+  inviteCopied: "Ссылка скопирована",
+  agentTitle: "Стать агентом",
+  agentLead:
+    "Если представляете заведение — оставьте заявку. Статус «На рассмотрении» до ответа менеджера.",
+  agentSubmit: "Отправить заявку",
+  agentSuccess: "Заявка принята — на рассмотрении",
+  agentAlreadyPending: "У вас уже есть заявка на рассмотрении",
+  agentPending: "Заявка по «{venue}» уже на рассмотрении.",
+  moreTitle: "Скоро",
+  moreShop: "Магазин призов и списание ₿",
+  helpTitle: "Вопросы по призам",
+  helpName: "Алексей Котельников",
+  helpPhone: "+7 (963) 921 10 51",
+  logout: "Выйти",
 } as const;
+
+/** Observed Make/Tilda agent form — useful enums, not UI chrome. */
+export const LK_AGENT_VENUE_TYPES = [
+  "Бар",
+  "Ресторан",
+  "Кафе",
+  "Магазин",
+  "Дистрибьютор",
+  "Другое",
+] as const;

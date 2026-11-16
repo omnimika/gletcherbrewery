@@ -1,6 +1,6 @@
 # Gletcher Brewery — AGENTS.md
 
-> Версия: 0.14 (9 ноября 2026 г.)
+> Версия: 0.15 (12 ноября 2026 г.)
 > Назначение: единые постоянные инструкции для Cursor Agent и OpenAI Codex.  
 > Подробный план реализации: `docs/ROADMAP.md` (при размещении файла из поставки в проекте).  
 > **Не считать этот документ подтверждением неизвестных деталей исходной системы.**
@@ -14,10 +14,13 @@
 ### Зафиксировано владельцем проекта
 
 - Frontend/full-stack: Next.js, TypeScript, Tailwind CSS.
-- Приоритет 09.11: миграция баз и работающие формы с приёмом в CRM/admin,
-  Telegram bot и CRM/NocoDB. Lead Google Sheets отменён (152-ФЗ). B-stream идёт
-  сейчас; прежний campaign/public-exit
-  gate не блокирует backend. Контракт: `docs/backend/FORMS_DATA_PIPELINE.md`.
+- Приоритет подтверждён 12.11: перенос баз, работающий обмен данными,
+  личный кабинет «Агент», CRM/admin и формы → PostgreSQL/NocoDB/Telegram.
+  Lead Google Sheets отменён ранее владельцем; не возвращать его в план.
+  Public/campaign gate не блокирует data stream. Контракты:
+  `docs/backend/FORMS_DATA_PIPELINE.md`, `docs/backend/AGENT_CRM_WORKFLOWS.md`.
+- Owner deferrals из задания 11.11 сохраняются: Postbox/SMTP и GTIN export —
+  позже; shop/spend UI отложен. Они не блокируют CRM, manual review и importer.
 - /about обязателен вместе с анимацией и логикой source landing: Tilda page
   71867465, project 1212341. Задание/приёмка: `docs/discovery/ABOUT_PAGE_BASELINE.md`.
   Статичная упрощённая страница без исходного поведения не закрывает этот scope.
@@ -36,14 +39,19 @@
 
 ### Что не подтверждено
 
-- Полная актуальная схема/экспорт Airtable, формулы, bonus rules и identity mapping.
-  Snapshot 31.10 уже фиксирует 7 таблиц/часть полей; auth — Tilda Members,
-  Collabza — transport, Make graph частичный. Реестр: `docs/data/SOURCE_INVENTORY.md`.
-- Структура и права доступа к исходной Google-таблице торговых сетей.
-- Конкретные Mapbox tileset IDs, source-layer, style-фильтры и режим публикации/обновления. В экспортированных файлах поле называется `Product` (singular); фактический формат активного tileset пока не подтверждён.
+- Полный свежий row-level export Airtable, все legacy writers и аномалии identity.
+  Schema/aggregates 10.11 и status/level/prize formulas 11.11 уже исследованы;
+  5%, email identity, legacy verification и P1 onboarding — Confirmed.
+  Не переоткрывать принятые owner policies. Реестр: `docs/data/SOURCE_INVENTORY.md`.
+- Актуальность и полнота production retail inputs, права/частота обновления.
+  M1 map/CRM принят 10.11; старые отсутствующие файлы не блокируют его повторно.
+- Полнота production Mapbox configuration и provenance legacy exports;
+  текущие registry/import/publish adapters уже реализованы. Поле `Product`
+  (singular) сохранять по действующему контракту.
 - Текущие цены и условия всех типов экскурсий, политика возвратов, количество мест, правила сертификатов и налогово-правовая схема приёма платежей.
 - Полнота экспорта Tilda, совпадение editor/published, права на экспорт и медиа, настройки домена, сценарии Make.com, данные YCLIENTS и Collabza. Подключённый MCP сам по себе этого не подтверждает.
-- Выбранные ORM, авторизация, CMS, фоновые задачи, конкретная конфигурация деплоя, CI/CD.
+- Production staff/member auth, CMS, YC staging/deploy/CI/CD. Drizzle/postgres.js,
+  local PG/NocoDB и outbox ADR уже Accepted; magic-link пока spike.
 
 **Не подменять неизвестные бизнес-правила предположениями.** Помечать решения как `Confirmed`, `Proposed`, `Open` в технической документации.
 
@@ -78,7 +86,9 @@
 - NocoDB допускается для управления справочниками/редакционными данными, но **не для обхода** проверки платежей, бронирований, начисления/списания бонусов и контроля доступа.
 - Mapbox GL JS — карта на frontend; PostgreSQL хранит торговые сети, точки, продукты и отношения ассортимента.
 - Yandex Cloud: Managed PostgreSQL (production-кандидат), Compute Cloud/контейнеры для веб-приложения и NocoDB, Object Storage для файлов и PDF, Postbox для транзакционных писем. Окончательные параметры — после оценки нагрузки и стоимости.
-- ORM (Prisma/Drizzle), Auth, CMS, система очередей и фоновых работ: выбрать после аудита с оформлением ADR.
+- Drizzle + postgres.js/SQL migrations (ADR 0003), local topology (0008) и
+  transactional outbox (0007) Accepted для существующего среза. Auth staff/member
+  production и CMS — дальнейшие ADR; не выбирать ORM повторно.
 
 ## 4. Подсистемы
 
@@ -112,9 +122,9 @@
 - Для небольших/часто меняющихся данных сначала оценить серверный GeoJSON API и Mapbox GL JS `GeoJSONSource`; при большом масштабе — Mapbox Tiling Service, batch/incremental updates и учёт задержек публикации/кэша.
 - Не загружать Mapbox tileset при каждом сохранении ячейки. Нужны валидация координат, дедупликация, журнал импорта, статус публикации и откат.
 - Никаких секретных Mapbox upload/write token в клиентском JavaScript.
-- Исторически указаны 12 retail sources / 7 784 строки, но audit/model/data
-  files сейчас отсутствуют. Найти экспорты/provenance перед M1; не считать эти
-  числа подтверждённым входным batch. Свежие metadata и статус источников:
+- Исторические 12 retail sources / 7 784 строки не являются свежим batch.
+  M1 принят 10.11; provenance старых отсутствующих exports сохраняется как
+  отдельное ограничение, не повод повторять M1. Текущие sources/status:
   `docs/data/SOURCE_INVENTORY.md`.
 - Для импорта поддерживать исторические поля `Type`, `Title`, `City`, `Adress`, `Product`, `Packing` и `Longitude`/`Latitude` либо GeoJSON `geometry.coordinates`. При экспорте в Mapbox использовать заранее утверждённый adapter/contract; не заменять `Product` на `Products` без сверки фронтенда.
 - Не удалять дубликаты автоматически: одинаковые адреса и координаты могут относиться к разным брендам/отделам или отражать ошибки. Дедупликация только после ручной проверки с журналом решений.
@@ -162,24 +172,30 @@
 
 ## 7. Текущий порядок работ Cursor Agent
 
-**Owner Confirmed 09.11:** backend/data/forms теперь основной поток. Исторические
-Bootstrap/Discovery/DS и Q1–Q3 не повторять; campaign/public-exit gate не блокирует
-разрешённые B1/B2. Это не production cutover и не auto-accept A1.
+**Owner Confirmed 12.11:** data/forms, кабинет Agent и CRM — главный поток.
+Public acceptance и production cutover остаются отдельными решениями.
 
-1. Baseline 2095221 + B1 work on `second-front`. Q1–Q3 реализованы; **B1 Done
-   09.11** (embedded PG, migrations, Contacts intake, read-only NocoDB).
-2. /about code реализован (RU-only/noindex, Tilda71867465 + motion). Visual
-   acceptance Open; Stage4 не объявлять Done.
-3. B1–B3 Done; **M1 map/Mapbox CRM Accepted 10.11**.
-4. **M2 текущий:** M2-0 Done 10.11; M2-1 spike Done 10.11 (ledger, staff queue,
- QR/OCR/aliases, P1 magic-link, member upload `/agent/cabinet`). ADR 0011
- Proposed. Дальше: Postbox email, GTIN aliases, FNS app (parallel). Задание:
- `docs/CURSOR_NEXT_STEPS.md`. Формулы/legacy writers не переносить догадками.
-5. PostgreSQL — source of truth (ADR 0002 Accepted non-prod); NocoDB staff view
- read-only. Lead Sheets не использовать (152-ФЗ).
-6. ADR 0003/0008 Accepted для B1; 0007 Accepted (Telegram worker);
- `0011-loyalty-ledger` Proposed. Make module field map ещё Open.
-7. Production import/legacy changes/cutover, commit/push — только по запросу.
+1. Ревью: HEAD `4a4eb01`, `second-front` + существующий незакоммиченный diff.
+   Сохранять task-first `/agent/cabinet` (не `/members/lk`), agent application API/0012/schema/level.
+   B1–B3 реализованы; M1 map/CRM Owner Accepted 10.11. Их не повторять.
+2. M2-0 inventory/policies и M2-1 ledger/QR/OCR/manual/auth spike реализованы.
+   **Row-level migration и full restore ещё Open**; ADR0011 Proposed.
+3. **M2-2 сейчас:** вернуть lint/tsc PASS; worker recovery/fencing, узкие роли,
+   magic-link atomic consume/debug guard, receipt verdict+ledger+audit,
+   CRM concurrency/replay. Точные R01–R12 и evidence:
+   `docs/reviews/2026-11-12-agent-crm-and-migration.md`.
+4. **M2-3:** agent application → staff queue/audit → member result; private
+   receipt photo → decision → ledger → кабинет. Потом **M2-4**: persisted
+   importer/reconciliation/restore. Manifest/fixtures готовить уже параллельно.
+5. `/agent/cabinet` — canonical RU кабинет; `/members/lk` только 301 → cabinet; `/agent/login` для входа.
+   Postbox/GTIN/shop отложены; не обещать email delivery/referral earn без backend.
+6. PostgreSQL source of truth; NocoDB read-only. Изменения бизнес-данных —
+   серверные audited commands, не прямое редактирование ledger/баланса.
+   ADR0002/0003/0007/0008 Accepted в указанном non-prod scope, не production readiness.
+7. /about RU-only/noindex реализован с source motion; owner visual acceptance
+   Open. Stage4 не закрывать автоматически.
+8. Production import, legacy writers/auth/DNS/cutover, рассылки, commit/push —
+   только отдельным разрешённым действием. Задание: `docs/CURSOR_NEXT_STEPS.md`.
 
 ## 8. Дополнительные документы
 
@@ -192,8 +208,11 @@ Bootstrap/Discovery/DS и Q1–Q3 не повторять; campaign/public-exit 
 - `docs/discovery/RECEIPT_FNS_PROVIDER_RESEARCH.md` — справочно (платные отклонены).
 - `docs/discovery/LOYALTY_OWNER_QUESTIONS.md` — ответы владельца.
 - `docs/adr/0011-loyalty-ledger.md` — Proposed ledger + opening-balance / spendable policy.
-- `docs/backend/FORMS_DATA_PIPELINE.md` — intake/CRM/Telegram/Sheets, consistency/retry/PII contract.
-- `docs/adr/0002-database.md`, `docs/adr/0003-orm-and-migrations.md`, `docs/adr/0008-hosting-dev.md` — Accepted B1 non-prod; `0007-background-jobs.md` — Proposed B2.
+- `docs/backend/FORMS_DATA_PIPELINE.md` — intake/CRM/Telegram, consistency/retry/PII; lead Sheets Cancelled.
+- `docs/backend/AGENT_CRM_WORKFLOWS.md` — member↔staff сценарии чеков/agent applications.
+- `docs/data/LOYALTY_MIGRATION_PLAN.md` — row-level import, reconciliation, full restore.
+- `docs/reviews/2026-11-12-agent-crm-and-migration.md` — актуальное ревью и R01–R12.
+- `docs/adr/0002-database.md`, `docs/adr/0003-orm-and-migrations.md`, `docs/adr/0008-hosting-dev.md` — Accepted B1 non-prod; `0007-background-jobs.md` — Accepted Telegram slice.
 - `docs/backend/B1_RUNBOOK.md`, `docs/reviews/2026-11-09-b1-evidence.md` — локальный запуск и DoD evidence.
 - `docs/ROADMAP.md` — приоритеты реализации.
 - `docs/discovery/PRODUCT_PROPS_INVENTORY.md` — props карточек пива RU/EN + контракт под будущие локали.
@@ -201,7 +220,7 @@ Bootstrap/Discovery/DS и Q1–Q3 не повторять; campaign/public-exit 
 - `docs/CURSOR_NEXT_STEPS.md` — актуальное задание Cursor с критериями приёмки; обновлять после подтверждённых изменений.
 - `docs/design/DESIGN_SYSTEM.md` — дизайн-код, containers/grids, anchors/scroll, UI/state/motion и DoD.
 - `docs/adr/0010-design-system-and-section-layout.md` — архитектура дизайн-системы и границы rollout.
-- `docs/reviews/2026-11-09-data-and-forms.md` — актуальное ревью 2095221, новый data/forms приоритет.
+- `docs/reviews/2026-11-09-data-and-forms.md` — историческое ревью 2095221, начало data/forms потока.
 - `docs/reviews/2026-11-05-public-integrity.md` — историческое ревью d6011d2 и Q1–Q3 outcomes.
 - `docs/discovery/PUBLIC_ROUTE_MATRIX.md` — code/publication coverage и legacy/campaign решения до cutover.
 - `docs/discovery/ABOUT_PAGE_BASELINE.md` — обязательный /about: Tilda 71867465, animation/interaction parity и DoD A1.

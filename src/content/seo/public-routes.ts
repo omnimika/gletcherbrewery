@@ -235,7 +235,8 @@ export const STATIC_PUBLIC_ROUTES: readonly PublicRouteEntry[] = [
     indexable: false,
     disposition: "external",
     decision: "Confirmed",
-    notes: "Legacy auth/LK on production; stage 7",
+    notes:
+      "Legacy Tilda /members/* on production; local cabinet is /agent/cabinet; /members/lk → 301 in next.config",
   },
   {
     id: "tours-operations",

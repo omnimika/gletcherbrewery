@@ -1,0 +1,33 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-gletcher-navy) 12%, transparent);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.primary {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-gletcher-navy);
+}
+
+.meta {
+  margin: 0.2rem 0 0;
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--color-gletcher-navy) 55%, transparent);
+}
