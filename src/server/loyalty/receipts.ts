@@ -20,13 +20,63 @@ import {
 import { upsertMemberByEmail } from "./members";
 import { enqueueLoyaltyTelegramJob } from "./notify-outbox";
 
-const PENDING_STATUSES = [
+export const RECEIPT_PENDING_STATUSES = [
   "pending_upload",
   "pending_qr",
   "pending_ocr",
   "pending_manual",
   "pending_staff",
 ] as const;
+
+/** Staff list filter buckets (not raw DB status). Default = queue. */
+export const STAFF_RECEIPT_STATUS_FILTERS = [
+  "pending",
+  "verified",
+  "rejected",
+  "all",
+] as const;
+export type StaffReceiptStatusFilter =
+  (typeof STAFF_RECEIPT_STATUS_FILTERS)[number];
+
+export const STAFF_RECEIPT_STATUS_LABELS_RU: Record<
+  StaffReceiptStatusFilter,
+  string
+> = {
+  pending: "Очередь",
+  verified: "Одобренные",
+  rejected: "Отклонённые",
+  all: "Все",
+};
+
+export function isStaffReceiptStatusFilter(
+  value: string,
+): value is StaffReceiptStatusFilter {
+  return (STAFF_RECEIPT_STATUS_FILTERS as readonly string[]).includes(value);
+}
+
+export function parseStaffReceiptStatusFilter(
+  raw: string | null | undefined,
+): StaffReceiptStatusFilter {
+  return raw && isStaffReceiptStatusFilter(raw) ? raw : "pending";
+}
+
+export function isPendingReceiptStatus(status: string): boolean {
+  return (RECEIPT_PENDING_STATUSES as readonly string[]).includes(status);
+}
+
+const RECEIPT_STATUS_LABELS_RU: Record<string, string> = {
+  pending_upload: "Черновик",
+  pending_qr: "QR",
+  pending_ocr: "OCR",
+  pending_manual: "Ручная проверка",
+  pending_staff: "На проверке",
+  verified: "Одобрен",
+  rejected: "Отклонён",
+};
+
+export function receiptStatusLabelRu(status: string): string {
+  return RECEIPT_STATUS_LABELS_RU[status] ?? status;
+}
 
 export type ManualReceiptInput = {
   email: string;
@@ -168,25 +218,38 @@ export async function createManualReceipt(db: AppDb, input: ManualReceiptInput) 
   return { ok: true as const, receipt: row };
 }
 
-export type PendingReceiptListRow = {
+export type StaffReceiptListRow = {
   receipt: typeof loyaltyReceipts.$inferSelect;
   email: string;
   displayName: string | null;
+  statusLabel: string;
 };
+
+/** @deprecated use StaffReceiptListRow */
+export type PendingReceiptListRow = StaffReceiptListRow;
 
 export const STAFF_RECEIPT_SORT_FIELDS = ["createdAt", "purchaseAt"] as const;
 export type StaffReceiptSortField = (typeof STAFF_RECEIPT_SORT_FIELDS)[number];
 
-export async function listPendingReceipts(
+function receiptStatusWhere(filter: StaffReceiptStatusFilter) {
+  if (filter === "all") return undefined;
+  if (filter === "verified") return eq(loyaltyReceipts.status, "verified");
+  if (filter === "rejected") return eq(loyaltyReceipts.status, "rejected");
+  return inArray(loyaltyReceipts.status, [...RECEIPT_PENDING_STATUSES]);
+}
+
+export async function listReceiptsForStaff(
   db: AppDb,
   opts: {
+    status?: string | null;
     page?: number | string;
     pageSize?: number | string;
     limit?: number;
     sort?: string | null;
     dir?: string | null;
   } = {},
-): Promise<PageResult<PendingReceiptListRow>> {
+): Promise<PageResult<StaffReceiptListRow>> {
+  const statusFilter = parseStaffReceiptStatusFilter(opts.status);
   const initial = clampPageParams({
     page: opts.page,
     pageSize: opts.pageSize ?? opts.limit ?? 50,
@@ -199,7 +262,7 @@ export async function listPendingReceipts(
     "createdAt",
     "desc",
   );
-  const where = inArray(loyaltyReceipts.status, [...PENDING_STATUSES]);
+  const where = receiptStatusWhere(statusFilter);
   const [totalRow] = await db
     .select({ c: count() })
     .from(loyaltyReceipts)
@@ -233,7 +296,31 @@ export async function listPendingReceipts(
     .limit(pageSize)
     .offset(offset);
 
-  return toPageResult(rows, total, page, pageSize);
+  return toPageResult(
+    rows.map(({ receipt, email, displayName }) => ({
+      receipt,
+      email,
+      displayName,
+      statusLabel: receiptStatusLabelRu(receipt.status),
+    })),
+    total,
+    page,
+    pageSize,
+  );
+}
+
+/** Queue-only alias — same as listReceiptsForStaff({ status: "pending" }). */
+export async function listPendingReceipts(
+  db: AppDb,
+  opts: {
+    page?: number | string;
+    pageSize?: number | string;
+    limit?: number;
+    sort?: string | null;
+    dir?: string | null;
+  } = {},
+): Promise<PageResult<StaffReceiptListRow>> {
+  return listReceiptsForStaff(db, { ...opts, status: "pending" });
 }
 
 export async function listReceiptsForMember(
@@ -252,7 +339,7 @@ export async function listReceiptsForMember(
 function pendingWhere(receiptId: string) {
   return and(
     eq(loyaltyReceipts.id, receiptId),
-    inArray(loyaltyReceipts.status, [...PENDING_STATUSES]),
+    inArray(loyaltyReceipts.status, [...RECEIPT_PENDING_STATUSES]),
   );
 }
 

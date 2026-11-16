@@ -7,7 +7,8 @@ import { storeReceiptPhotoLocal } from "@/server/loyalty/photo-store";
 import { decodeFiscalQrFromImage } from "@/server/loyalty/qr-decode";
 import {
   createManualReceipt,
-  listPendingReceipts,
+  listReceiptsForStaff,
+  parseStaffReceiptStatusFilter,
 } from "@/server/loyalty/receipts";
 import { requireStaffAuth } from "@/server/staff/request-auth";
 
@@ -28,7 +29,9 @@ export async function GET(request: Request) {
 
   try {
     const url = new URL(request.url);
-    const result = await listPendingReceipts(getDb(), {
+    const status = parseStaffReceiptStatusFilter(url.searchParams.get("status"));
+    const result = await listReceiptsForStaff(getDb(), {
+      status,
       page: url.searchParams.get("page") ?? undefined,
       pageSize: url.searchParams.get("pageSize") ?? 50,
       sort: url.searchParams.get("sort"),
@@ -36,8 +39,10 @@ export async function GET(request: Request) {
     });
     return NextResponse.json({
       ok: true,
+      status,
       receipts: result.rows.map((r) => ({
         ...r.receipt,
+        statusLabel: r.statusLabel,
         memberEmail: r.email,
         memberName: r.displayName,
       })),
