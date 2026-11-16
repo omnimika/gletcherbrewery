@@ -1,0 +1,41 @@
+{
+  "records": [
+    {
+      "id": "recUserBalance",
+      "fields": {
+        "email": "balance@synthetic.test",
+        "displayName": "Balance Fixture",
+        "city": "Москва"
+      }
+    },
+    {
+      "id": "recUserCollisionA",
+      "fields": {
+        "email": "collide@synthetic.test",
+        "displayName": "Collision A"
+      }
+    },
+    {
+      "id": "recUserCollisionB",
+      "fields": {
+        "email": "Collide@synthetic.test",
+        "displayName": "Collision B"
+      }
+    },
+    {
+      "id": "recUserAgent",
+      "fields": {
+        "email": "agent@synthetic.test",
+        "displayName": "Agent Fixture",
+        "phone": "+70000000001"
+      }
+    },
+    {
+      "id": "recUserPending",
+      "fields": {
+        "email": "pending@synthetic.test",
+        "displayName": "Pending Fixture"
+      }
+    }
+  ]
+}

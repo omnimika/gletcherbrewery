@@ -51,7 +51,8 @@ npm run build
 использовать отдельную synthetic test DB, не production или существующую
 локальную базу с пользовательскими данными. `db:restore-check` покрывает
 текущий `app.*` schema (loyalty/retail/outbox) и гасит restored delivery jobs;
-private files — отдельно; row-level Airtable import — M2-4.
+private files — отдельно; synthetic loyalty import —
+`npm run loyalty:import-rehearsal` (M2-4 foundation); production snapshot — Open.
 Production-сервер локально:
 
 ```sh

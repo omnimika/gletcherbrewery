@@ -199,14 +199,13 @@ Public acceptance и production cutover остаются отдельными р
    Сохранять task-first `/agent/cabinet` (не `/members/lk`), agent application API/0012/schema/level.
    B1–B3 реализованы; M1 map/CRM Owner Accepted 10.11. Их не повторять.
 2. M2-0 inventory/policies и M2-1 ledger/QR/OCR/manual/auth spike реализованы.
-   **Row-level migration и full restore ещё Open**; ADR0011 Proposed.
+   **Production row-level snapshot / ADR0011 Accepted ещё Open.**
 3. **M2-2 Done 16.11:** R01–R07 + quality baseline + public boundary. R01–R12:
    `docs/reviews/2026-11-12-agent-crm-and-migration.md`.
-4. **M2-3 Done 16.11:** R08 agent apps (multi-open ≤10, `0016`); R09 photo
-   preview; R12 referral +1% убран; `telegram_agent` / `TELEGRAM_AGENT_CHAT_ID`.
-   Pre-M2-4 tails Done: R11 legacy/lifetime, full `db:restore-check`, staff
-   pagination. Дальше **M2-4**: persisted importer/reconciliation/restore.
-   Manifest/fixtures готовить параллельно.
+4. **M2-3 Done 16.11** + Pre-M2-4 tails. **M2-4 foundation Done 16.11**
+   (synthetic staging/import/reconcile, `0017`, `loyalty:import-rehearsal`).
+   Production batch + ADR0011 Accepted — Open. Дальше protected snapshot /
+   M2-4B sign-off, затем M2-5.
 5. `/agent/cabinet` — canonical RU кабинет; `/members/lk` только 301 → cabinet; `/agent/login` для входа.
    Postbox/GTIN/shop отложены; не обещать email delivery/referral earn без backend.
 6. PostgreSQL source of truth; NocoDB read-only. Изменения бизнес-данных —

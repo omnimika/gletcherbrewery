@@ -1,0 +1,11 @@
+{
+  "records": [
+    {
+      "id": "recProductFriday",
+      "fields": {
+        "sku": "friday-avenue",
+        "title": "Friday Avenue"
+      }
+    }
+  ]
+}

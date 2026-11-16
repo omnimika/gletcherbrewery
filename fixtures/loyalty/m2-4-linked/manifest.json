@@ -1,0 +1,46 @@
+{
+  "sourceLabel": "m2-4-foundation-synthetic",
+  "source": {
+    "system": "airtable",
+    "baseId": "appSYNTHETIC0001",
+    "schemaRevision": "m2-0-confirmed",
+    "owner": "gletcher-dev",
+    "exportedAt": "2026-11-16T00:00:00.000Z"
+  },
+  "files": [
+    { "tableId": "tblCN54pm2SwmTlsv", "fileName": "users.json", "rowCount": 5 },
+    { "tableId": "tblymazDxC3rJeect", "fileName": "checks.json", "rowCount": 5 },
+    { "tableId": "tblBBDgXoGBspoIQE", "fileName": "agents.json", "rowCount": 2 },
+    { "tableId": "tblVEEISkwlXY6o3u", "fileName": "orders.json", "rowCount": 1 },
+    { "tableId": "tbl0PtMPIwBTmPjG5", "fileName": "purchases.json", "rowCount": 1 },
+    { "tableId": "tbltQbwlpvGbLvF1t", "fileName": "products.json", "rowCount": 1 },
+    { "tableId": "tblTQUAXmJnGDkXx9", "fileName": "promos.json", "rowCount": 1 }
+  ],
+  "snapshotBoundary": "synthetic-linked-2026-11-16",
+  "policy": {
+    "version": "r11-2026-11-16",
+    "mappingVersion": "m24-foundation-2026-11-16",
+    "legacyEligibility": {
+      "mode": "approved_set",
+      "recordIds": ["recCheckEarn1", "recCheckEarn2"],
+      "reason": "foundation fixture approved legacy set"
+    }
+  },
+  "dataHandling": {
+    "pii": "synthetic",
+    "notes": "No production PII; emails are .test domain"
+  },
+  "rehearsal": {
+    "targetDb": "local-embedded",
+    "runId": "m24-foundation"
+  },
+  "expectations": {
+    "members": [
+      {
+        "email": "balance@synthetic.test",
+        "available": 200,
+        "lifetime": 9000
+      }
+    ]
+  }
+}

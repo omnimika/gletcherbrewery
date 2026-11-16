@@ -1,0 +1,12 @@
+{
+  "records": [
+    {
+      "id": "recOrderSpend",
+      "fields": {
+        "buyer": ["recUserBalance"],
+        "spendAmount": 8800,
+        "earnAmount": 0
+      }
+    }
+  ]
+}

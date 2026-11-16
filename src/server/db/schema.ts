@@ -567,6 +567,89 @@ export const loyaltyAgentApplicationEvents = appSchema.table(
   ],
 );
 
+/** M2-4 loyalty Airtable import batches (staging → apply). */
+export const loyaltyImportBatches = appSchema.table(
+  "loyalty_import_batches",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    sourceLabel: text("source_label").notNull(),
+    checksum: text("checksum").notNull(),
+    policyVersion: text("policy_version").notNull(),
+    mappingVersion: text("mapping_version").notNull(),
+    status: text("status").notNull().default("loaded"),
+    manifest: jsonb("manifest").notNull().$type<Record<string, unknown>>().default({}),
+    report: jsonb("report").notNull().$type<Record<string, unknown>>().default({}),
+    rowCount: integer("row_count").notNull().default(0),
+    quarantineCount: integer("quarantine_count").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex("loyalty_import_batches_checksum_uidx").on(
+      t.checksum,
+      t.sourceLabel,
+    ),
+  ],
+);
+
+export const loyaltyStagingRows = appSchema.table(
+  "loyalty_staging_rows",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    batchId: uuid("batch_id")
+      .notNull()
+      .references(() => loyaltyImportBatches.id, { onDelete: "cascade" }),
+    sourceTableId: text("source_table_id").notNull(),
+    sourceRecordId: text("source_record_id").notNull(),
+    sourceFile: text("source_file").notNull(),
+    rawJson: jsonb("raw_json").notNull().$type<Record<string, unknown>>(),
+    parseStatus: text("parse_status").notNull().default("ok"),
+    anomalyCodes: text("anomaly_codes").array().notNull().default([]),
+    quarantineReason: text("quarantine_reason"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("loyalty_staging_rows_source_uidx").on(
+      t.batchId,
+      t.sourceTableId,
+      t.sourceRecordId,
+    ),
+    index("loyalty_staging_rows_batch_idx").on(t.batchId),
+    index("loyalty_staging_rows_table_idx").on(t.batchId, t.sourceTableId),
+  ],
+);
+
+export const loyaltyImportIdentityMap = appSchema.table(
+  "loyalty_import_identity_map",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    batchId: uuid("batch_id")
+      .notNull()
+      .references(() => loyaltyImportBatches.id, { onDelete: "cascade" }),
+    sourceSystem: text("source_system").notNull().default("airtable"),
+    tableId: text("table_id").notNull(),
+    recordId: text("record_id").notNull(),
+    entityKind: text("entity_kind").notNull(),
+    targetUuid: uuid("target_uuid").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("loyalty_import_identity_source_uidx").on(
+      t.sourceSystem,
+      t.tableId,
+      t.recordId,
+    ),
+    index("loyalty_import_identity_batch_idx").on(t.batchId),
+    index("loyalty_import_identity_target_idx").on(t.targetUuid),
+  ],
+);
+
 /** P1 magic-link one-time tokens (sha256 hash only). */
 export const loyaltyMagicLinkTokens = appSchema.table(
   "loyalty_magic_link_tokens",

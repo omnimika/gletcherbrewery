@@ -49,8 +49,10 @@ function setHas(
   ids: ReadonlySet<string> | readonly string[],
   recordId: string,
 ): boolean {
-  if (ids instanceof Set) return ids.has(recordId);
-  return ids.includes(recordId);
+  for (const id of ids) {
+    if (id === recordId) return true;
+  }
+  return false;
 }
 
 export function isLegacyEligible(
