@@ -14,6 +14,21 @@ export function isSafePhotoObjectKey(objectKey: string): boolean {
   return /^[a-f0-9-]{36}\.(jpg|jpeg|png|webp)$/i.test(objectKey.trim());
 }
 
+/** Airtable/Tilda `check` URL until Object Storage migration. */
+export function sanitizeLegacyPhotoUrl(
+  raw: string | null | undefined,
+): string | null {
+  const s = raw?.trim();
+  if (!s || s.length > 2000) return null;
+  try {
+    const u = new URL(s);
+    if (u.protocol !== "http:" && u.protocol !== "https:") return null;
+    return u.toString();
+  } catch {
+    return null;
+  }
+}
+
 export function localPhotoAbsolutePath(objectKey: string): string | null {
   if (!isSafePhotoObjectKey(objectKey)) return null;
   const abs = path.join(ROOT, objectKey.trim());

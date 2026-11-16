@@ -6,6 +6,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { normalizeMemberEmail } from "@/server/loyalty/normalize-alias";
+import { sanitizeLegacyPhotoUrl } from "@/server/loyalty/photo-store";
 import {
   AIRTABLE_LOYALTY_TABLES,
   LOYALTY_IMPORT_MAPPING_VERSION,
@@ -265,6 +266,7 @@ export function loadAirtableCsvDir(
         createdAt: parseAirtableCsvDate(cell(row, "Дата создания")),
         venueName: cell(row, "Название") || null,
         buyplace: cell(row, "buyplace") || null,
+        legacyPhotoUrl: sanitizeLegacyPhotoUrl(cell(row, "check")),
       },
     };
   });

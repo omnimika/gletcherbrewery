@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from "node:crypto";
-import { and, asc, count, desc, eq, notInArray, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, like, notInArray, sql } from "drizzle-orm";
 import {
   agentAppStatusLabel,
   AGENT_APP_CLOSED_STATUSES,
@@ -11,6 +11,10 @@ import {
   MAX_OPEN_AGENT_APPLICATIONS,
   type AgentAppStatus,
 } from "@/lib/loyalty/agent-application-status";
+import {
+  escapeLikePattern,
+  parseStaffEmailFilter,
+} from "@/lib/staff-email-filter";
 import {
   clampPageParams,
   clampPageToTotal,
@@ -415,10 +419,22 @@ export type StaffAgentApplicationListRow = {
 export const STAFF_AGENT_SORT_FIELDS = ["createdAt", "city"] as const;
 export type StaffAgentSortField = (typeof STAFF_AGENT_SORT_FIELDS)[number];
 
+function memberEmailWhere(emailQ: string | null) {
+  if (!emailQ) return undefined;
+  if (emailQ.includes("@")) {
+    return eq(loyaltyMembers.emailNormalized, emailQ);
+  }
+  return like(
+    loyaltyMembers.emailNormalized,
+    `%${escapeLikePattern(emailQ)}%`,
+  );
+}
+
 export async function listAgentApplicationsForStaff(
   db: AppDb,
   opts: {
     status?: string | null;
+    email?: string | null;
     page?: number | string;
     pageSize?: number | string;
     limit?: number;
@@ -440,13 +456,23 @@ export async function listAgentApplicationsForStaff(
   );
   const statusFilter =
     opts.status && isAgentAppStatus(opts.status) ? opts.status : null;
-  const where = statusFilter
+  const emailQ = parseStaffEmailFilter(opts.email);
+  const statusWhere = statusFilter
     ? eq(loyaltyAgentApplications.status, statusFilter)
     : undefined;
+  const emailWhere = memberEmailWhere(emailQ);
+  const where =
+    statusWhere && emailWhere
+      ? and(statusWhere, emailWhere)
+      : (statusWhere ?? emailWhere);
 
   const [totalRow] = await db
     .select({ c: count() })
     .from(loyaltyAgentApplications)
+    .innerJoin(
+      loyaltyMembers,
+      eq(loyaltyMembers.id, loyaltyAgentApplications.memberId),
+    )
     .where(where);
   const total = Number(totalRow?.c ?? 0);
   const { page, pageSize, offset } = clampPageToTotal(

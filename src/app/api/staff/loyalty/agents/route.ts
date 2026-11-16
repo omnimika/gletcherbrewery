@@ -12,6 +12,7 @@ export async function GET(request: Request) {
 
   const url = new URL(request.url);
   const status = url.searchParams.get("status");
+  const email = url.searchParams.get("email");
   const page = url.searchParams.get("page");
   const pageSize = url.searchParams.get("pageSize");
   const sort = url.searchParams.get("sort");
@@ -20,6 +21,7 @@ export async function GET(request: Request) {
   try {
     const result = await listAgentApplicationsForStaff(getDb(), {
       status,
+      email,
       page: page ?? undefined,
       pageSize: pageSize ?? 50,
       sort,

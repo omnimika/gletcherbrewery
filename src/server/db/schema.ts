@@ -412,6 +412,8 @@ export const loyaltyReceipts = appSchema.table(
     status: text("status").notNull().default("pending_upload"),
     source: text("source").notNull(),
     photoObjectKey: text("photo_object_key"),
+    /** External legacy image URL (Airtable/Tilda `check`) until Object Storage. */
+    legacyPhotoUrl: text("legacy_photo_url"),
     qrPayload: text("qr_payload"),
     fiscalFn: text("fiscal_fn"),
     fiscalFd: text("fiscal_fd"),

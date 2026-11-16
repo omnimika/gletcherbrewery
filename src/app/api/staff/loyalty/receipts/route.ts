@@ -30,8 +30,10 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const status = parseStaffReceiptStatusFilter(url.searchParams.get("status"));
+    const email = url.searchParams.get("email");
     const result = await listReceiptsForStaff(getDb(), {
       status,
+      email,
       page: url.searchParams.get("page") ?? undefined,
       pageSize: url.searchParams.get("pageSize") ?? 50,
       sort: url.searchParams.get("sort"),
@@ -40,6 +42,7 @@ export async function GET(request: Request) {
     return NextResponse.json({
       ok: true,
       status,
+      email: email ?? null,
       receipts: result.rows.map((r) => ({
         ...r.receipt,
         statusLabel: r.statusLabel,

@@ -12,6 +12,7 @@ import {
   LEGACY_CHECK_POLICY_VERSION,
 } from "@/server/loyalty/legacy-policy";
 import { normalizeMemberEmail } from "@/server/loyalty/normalize-alias";
+import { sanitizeLegacyPhotoUrl } from "@/server/loyalty/photo-store";
 import {
   bulkUpsertIdentityMaps,
   resolveMemberIdentities,
@@ -218,6 +219,7 @@ export async function applyLoyaltyStaging(
       reviewedBy: string | null;
       reviewedAt: Date | null;
       createdAt: Date;
+      legacyPhotoUrl: string | null;
     }> = [];
     const identityRows: Array<{
       tableId: string;
@@ -268,6 +270,11 @@ export async function applyLoyaltyStaging(
         sourceAt && !Number.isNaN(sourceAt.getTime())
           ? sourceAt.toISOString().slice(0, 10)
           : null;
+      const legacyPhotoUrl = sanitizeLegacyPhotoUrl(
+        asString(
+          fields.legacyPhotoUrl ?? fields.check ?? fields.Check ?? fields.фото,
+        ),
+      );
 
       let receiptId = receiptByAirtable.get(d.sourceRecordId);
       if (!receiptId) {
@@ -293,6 +300,7 @@ export async function applyLoyaltyStaging(
             sourceAt && !Number.isNaN(sourceAt.getTime())
               ? sourceAt
               : new Date(),
+          legacyPhotoUrl,
         });
       }
 

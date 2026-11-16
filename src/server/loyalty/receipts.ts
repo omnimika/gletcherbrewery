@@ -1,4 +1,8 @@
-import { and, asc, count, desc, eq, inArray } from "drizzle-orm";
+import { and, asc, count, desc, eq, inArray, like } from "drizzle-orm";
+import {
+  escapeLikePattern,
+  parseStaffEmailFilter,
+} from "@/lib/staff-email-filter";
 import {
   clampPageParams,
   clampPageToTotal,
@@ -19,6 +23,17 @@ import {
 } from "./fingerprint";
 import { upsertMemberByEmail } from "./members";
 import { enqueueLoyaltyTelegramJob } from "./notify-outbox";
+
+function memberEmailWhere(emailQ: string | null) {
+  if (!emailQ) return undefined;
+  if (emailQ.includes("@")) {
+    return eq(loyaltyMembers.emailNormalized, emailQ);
+  }
+  return like(
+    loyaltyMembers.emailNormalized,
+    `%${escapeLikePattern(emailQ)}%`,
+  );
+}
 
 export const RECEIPT_PENDING_STATUSES = [
   "pending_upload",
@@ -242,6 +257,7 @@ export async function listReceiptsForStaff(
   db: AppDb,
   opts: {
     status?: string | null;
+    email?: string | null;
     page?: number | string;
     pageSize?: number | string;
     limit?: number;
@@ -250,6 +266,7 @@ export async function listReceiptsForStaff(
   } = {},
 ): Promise<PageResult<StaffReceiptListRow>> {
   const statusFilter = parseStaffReceiptStatusFilter(opts.status);
+  const emailQ = parseStaffEmailFilter(opts.email);
   const initial = clampPageParams({
     page: opts.page,
     pageSize: opts.pageSize ?? opts.limit ?? 50,
@@ -262,10 +279,20 @@ export async function listReceiptsForStaff(
     "createdAt",
     "desc",
   );
-  const where = receiptStatusWhere(statusFilter);
+  const statusWhere = receiptStatusWhere(statusFilter);
+  const emailWhere = memberEmailWhere(emailQ);
+  const where =
+    statusWhere && emailWhere
+      ? and(statusWhere, emailWhere)
+      : (statusWhere ?? emailWhere);
+
   const [totalRow] = await db
     .select({ c: count() })
     .from(loyaltyReceipts)
+    .innerJoin(
+      loyaltyMembers,
+      eq(loyaltyReceipts.memberId, loyaltyMembers.id),
+    )
     .where(where);
   const total = Number(totalRow?.c ?? 0);
   const { page, pageSize, offset } = clampPageToTotal(

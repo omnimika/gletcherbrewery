@@ -7,6 +7,7 @@ import {
   AGENT_APP_STATUS_LABELS_RU,
   isAgentAppStatus,
 } from "@/lib/loyalty/agent-application-status";
+import { parseStaffEmailFilter } from "@/lib/staff-email-filter";
 import { parseStaffSort } from "@/lib/staff-sort";
 import {
   listAgentApplicationEvents,
@@ -36,6 +37,7 @@ export default async function StaffLoyaltyAgentsPage({
     page?: string;
     sort?: string;
     dir?: string;
+    email?: string;
   }>;
 }) {
   if (!isStaffAuthConfigured()) {
@@ -54,6 +56,7 @@ export default async function StaffLoyaltyAgentsPage({
   const sp = await searchParams;
   const statusFilter =
     sp.status && isAgentAppStatus(sp.status) ? sp.status : null;
+  const emailFilter = parseStaffEmailFilter(sp.email);
   const { sort, dir } = parseStaffSort(
     sp,
     STAFF_AGENT_SORT_FIELDS,
@@ -68,6 +71,7 @@ export default async function StaffLoyaltyAgentsPage({
   try {
     pageResult = await listAgentApplicationsForStaff(getDb(), {
       status: statusFilter,
+      email: emailFilter,
       page: sp.page,
       pageSize: 50,
       sort,
@@ -96,13 +100,20 @@ export default async function StaffLoyaltyAgentsPage({
 
   const filterQs = [
     statusFilter ? `status=${statusFilter}` : null,
+    emailFilter ? `email=${encodeURIComponent(emailFilter)}` : null,
     `sort=${sort}`,
     `dir=${dir}`,
   ]
     .filter(Boolean)
     .join("&");
   const qsPrefix = filterQs ? `${filterQs}&` : "";
-  const statusBaseQs = `sort=${sort}&dir=${dir}`;
+  const statusBaseQs = [
+    emailFilter ? `email=${encodeURIComponent(emailFilter)}` : null,
+    `sort=${sort}`,
+    `dir=${dir}`,
+  ]
+    .filter(Boolean)
+    .join("&");
 
   return (
     <div className="space-y-[var(--grid-gap)]">
@@ -154,6 +165,7 @@ export default async function StaffLoyaltyAgentsPage({
           buildSortHref={(s, d) =>
             `/staff/loyalty/agents?${[
               statusFilter ? `status=${statusFilter}` : null,
+              emailFilter ? `email=${encodeURIComponent(emailFilter)}` : null,
               `sort=${s}`,
               `dir=${d}`,
             ]
@@ -165,6 +177,15 @@ export default async function StaffLoyaltyAgentsPage({
           total={pageResult.total}
           pageSize={pageResult.pageSize}
           buildPageHref={(p) => `/staff/loyalty/agents?${qsPrefix}page=${p}`}
+          emailFilter={{
+            action: "/staff/loyalty/agents",
+            email: emailFilter,
+            hiddenFields: {
+              status: statusFilter,
+              sort,
+              dir,
+            },
+          }}
         />
       ) : null}
 

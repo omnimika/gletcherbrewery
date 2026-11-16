@@ -3,6 +3,7 @@ import { StaffListToolbar } from "@/components/staff/list-toolbar";
 import { Banner } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/feedback";
 import { getDb } from "@/server/db/client";
+import { parseStaffEmailFilter } from "@/lib/staff-email-filter";
 import { parseStaffSort } from "@/lib/staff-sort";
 import {
   isPendingReceiptStatus,
@@ -37,6 +38,7 @@ export default async function StaffLoyaltyReceiptsPage({
     sort?: string;
     dir?: string;
     status?: string;
+    email?: string;
   }>;
 }) {
   if (!isStaffAuthConfigured()) {
@@ -54,6 +56,7 @@ export default async function StaffLoyaltyReceiptsPage({
 
   const sp = await searchParams;
   const statusFilter = parseStaffReceiptStatusFilter(sp.status);
+  const emailFilter = parseStaffEmailFilter(sp.email);
   const { sort, dir } = parseStaffSort(
     sp,
     STAFF_RECEIPT_SORT_FIELDS,
@@ -66,6 +69,7 @@ export default async function StaffLoyaltyReceiptsPage({
   try {
     pageResult = await listReceiptsForStaff(getDb(), {
       status: statusFilter,
+      email: emailFilter,
       page: sp.page,
       pageSize: 50,
       sort,
@@ -76,11 +80,22 @@ export default async function StaffLoyaltyReceiptsPage({
   }
 
   const rows = pageResult?.rows ?? [];
-  const filterQs = [`status=${statusFilter}`, `sort=${sort}`, `dir=${dir}`].join(
-    "&",
-  );
+  const filterQs = [
+    `status=${statusFilter}`,
+    emailFilter ? `email=${encodeURIComponent(emailFilter)}` : null,
+    `sort=${sort}`,
+    `dir=${dir}`,
+  ]
+    .filter(Boolean)
+    .join("&");
   const qsPrefix = `${filterQs}&`;
-  const statusBaseQs = `sort=${sort}&dir=${dir}`;
+  const statusBaseQs = [
+    emailFilter ? `email=${encodeURIComponent(emailFilter)}` : null,
+    `sort=${sort}`,
+    `dir=${dir}`,
+  ]
+    .filter(Boolean)
+    .join("&");
 
   return (
     <div className="space-y-[var(--grid-gap)]">
@@ -120,13 +135,29 @@ export default async function StaffLoyaltyReceiptsPage({
           sort={sort}
           dir={dir}
           buildSortHref={(s, d) =>
-            `/staff/loyalty/receipts?status=${statusFilter}&sort=${s}&dir=${d}`
+            `/staff/loyalty/receipts?${[
+              `status=${statusFilter}`,
+              emailFilter ? `email=${encodeURIComponent(emailFilter)}` : null,
+              `sort=${s}`,
+              `dir=${d}`,
+            ]
+              .filter(Boolean)
+              .join("&")}`
           }
           page={pageResult.page}
           totalPages={pageResult.totalPages}
           total={pageResult.total}
           pageSize={pageResult.pageSize}
           buildPageHref={(p) => `/staff/loyalty/receipts?${qsPrefix}page=${p}`}
+          emailFilter={{
+            action: "/staff/loyalty/receipts",
+            email: emailFilter,
+            hiddenFields: {
+              status: statusFilter,
+              sort,
+              dir,
+            },
+          }}
         />
       ) : null}
 
@@ -196,6 +227,17 @@ export default async function StaffLoyaltyReceiptsPage({
                         receiptId={receipt.id}
                         objectKey={receipt.photoObjectKey}
                       />
+                    ) : receipt.legacyPhotoUrl ? (
+                      <p className="type-caption mt-2">
+                        <a
+                          href={receipt.legacyPhotoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-semibold text-gletcher-navy underline-offset-2 hover:underline"
+                        >
+                          Фото (legacy URL)
+                        </a>
+                      </p>
                     ) : (
                       <p className="type-caption mt-2 text-gletcher-navy/50">
                         Без фото
