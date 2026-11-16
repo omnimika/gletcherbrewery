@@ -29,4 +29,14 @@
   font-size: 0.9rem;
   line-height: 1.4;
   color: var(--color-gletcher-navy);
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pending p {
+  margin: 0;
+}
+
+.note {
+  color: color-mix(in srgb, var(--color-gletcher-navy) 75%, transparent);
 }

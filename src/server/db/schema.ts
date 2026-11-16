@@ -496,7 +496,7 @@ export const productReceiptAliases = appSchema.table(
 
 /**
  * «Стать агентом» — mirrors Make mod 50 → Airtable Агенты writes.
- * status values: under_review | approved | rejected | … (staff may extend).
+ * Nine Airtable statuses (snake_case). See AGENT_APP_STATUSES.
  */
 export const loyaltyAgentApplications = appSchema.table(
   "loyalty_agent_applications",
@@ -513,6 +513,10 @@ export const loyaltyAgentApplications = appSchema.table(
     venueAddress: text("venue_address").notNull(),
     venueBoss: text("venue_boss"),
     comment: text("comment"),
+    /** Idempotent create key (member + normalized payload hash). */
+    intentKey: text("intent_key").notNull(),
+    /** Staff→member note (safe to show in cabinet). */
+    publicNote: text("public_note"),
     legacyOrderId: text("legacy_order_id"),
     airtableAgentId: text("airtable_agent_id"),
     reviewedBy: text("reviewed_by"),
@@ -524,8 +528,35 @@ export const loyaltyAgentApplications = appSchema.table(
   },
   (t) => [
     uniqueIndex("loyalty_agent_applications_airtable_uidx").on(t.airtableAgentId),
+    uniqueIndex("loyalty_agent_applications_member_intent_uidx").on(
+      t.memberId,
+      t.intentKey,
+    ),
     index("loyalty_agent_applications_member_idx").on(t.memberId, t.createdAt),
     index("loyalty_agent_applications_status_idx").on(t.status, t.createdAt),
+  ],
+);
+
+/** Append-only staff audit for agent application transitions. */
+export const loyaltyAgentApplicationEvents = appSchema.table(
+  "loyalty_agent_application_events",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    applicationId: uuid("application_id")
+      .notNull()
+      .references(() => loyaltyAgentApplications.id, { onDelete: "cascade" }),
+    action: text("action").notNull(),
+    actor: text("actor").notNull(),
+    payload: jsonb("payload").notNull().$type<Record<string, unknown>>(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    index("loyalty_agent_application_events_app_idx").on(
+      t.applicationId,
+      t.createdAt,
+    ),
   ],
 );
 

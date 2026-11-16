@@ -25,9 +25,21 @@ export function LkAgentForm({
 
   if (pending) {
     return (
-      <p className={styles.pending}>
-        {LK_COPY.agentPending.replace("{venue}", pending.venueName)}
-      </p>
+      <div className={styles.pending}>
+        <p>
+          {LK_COPY.agentPending
+            .replace("{venue}", pending.venueName)
+            .replace(
+              "{status}",
+              pending.statusLabel || pending.status,
+            )}
+        </p>
+        {pending.publicNote ? (
+          <p className={styles.note}>
+            {LK_COPY.agentPublicNote.replace("{note}", pending.publicNote)}
+          </p>
+        ) : null}
+      </div>
     );
   }
 

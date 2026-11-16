@@ -200,12 +200,12 @@ Public acceptance и production cutover остаются отдельными р
    B1–B3 реализованы; M1 map/CRM Owner Accepted 10.11. Их не повторять.
 2. M2-0 inventory/policies и M2-1 ledger/QR/OCR/manual/auth spike реализованы.
    **Row-level migration и full restore ещё Open**; ADR0011 Proposed.
-3. **M2-2 Done 16.11:** R01–R07 + quality baseline + public boundary. Дальше
-   **M2-3** (agent application staff loop, R08/R09/R12). R01–R12:
+3. **M2-2 Done 16.11:** R01–R07 + quality baseline + public boundary. R01–R12:
    `docs/reviews/2026-11-12-agent-crm-and-migration.md`.
-4. **M2-3:** agent application → staff queue/audit → member result; private
-   receipt photo → decision → ledger → кабинет. Потом **M2-4**: persisted
-   importer/reconciliation/restore. Manifest/fixtures готовить уже параллельно.
+4. **M2-3 Done 16.11:** R08 agent app staff loop/audit/9 statuses; R09 photo
+   preview already present; R12 referral +1% убран из cabinet copy. Дальше
+   **M2-4**: persisted importer/reconciliation/restore. Manifest/fixtures
+   готовить параллельно.
 5. `/agent/cabinet` — canonical RU кабинет; `/members/lk` только 301 → cabinet; `/agent/login` для входа.
    Postbox/GTIN/shop отложены; не обещать email delivery/referral earn без backend.
 6. PostgreSQL source of truth; NocoDB read-only. Изменения бизнес-данных —

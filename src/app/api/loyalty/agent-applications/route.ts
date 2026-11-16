@@ -80,19 +80,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const open = await latestOpenAgentApplication(getDb(), auth.member.id);
-    if (open) {
-      return NextResponse.json(
-        {
-          ok: false,
-          code: "already_pending",
-          application: open,
-        },
-        { status: 409 },
-      );
-    }
-
-    const application = await createAgentApplication(getDb(), {
+    const result = await createAgentApplication(getDb(), {
       memberId: auth.member.id,
       phone,
       city,
@@ -103,26 +91,40 @@ export async function POST(request: Request) {
       comment,
     });
 
-    return NextResponse.json(
-      {
-        ok: true,
-        application: {
-          id: application.id,
-          status: application.status,
-          venueName: application.venueName,
-          createdAt: application.createdAt,
-        },
-      },
-      { status: 201 },
-    );
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    if (msg === "invalid_agent_application") {
+    if (!result.ok) {
+      if (result.code === "already_pending") {
+        return NextResponse.json(
+          {
+            ok: false,
+            code: "already_pending",
+            application: result.application,
+          },
+          { status: 409 },
+        );
+      }
       return NextResponse.json(
         { ok: false, code: "invalid_fields" },
         { status: 400 },
       );
     }
+
+    return NextResponse.json(
+      {
+        ok: true,
+        replay: result.replay,
+        application: {
+          id: result.application.id,
+          status: result.application.status,
+          statusLabel: result.application.statusLabel,
+          venueName: result.application.venueName,
+          publicNote: result.application.publicNote,
+          createdAt: result.application.createdAt,
+        },
+      },
+      { status: result.replay ? 200 : 201 },
+    );
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
     console.error("[loyalty/agent-applications POST]", msg);
     return NextResponse.json(
       { ok: false, code: "db_error" },

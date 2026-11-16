@@ -18,7 +18,12 @@ const LINKS = [
   {
     href: "/staff/loyalty/receipts",
     label: "Чеки",
-    match: (path: string) => path.startsWith("/staff/loyalty"),
+    match: (path: string) => path.startsWith("/staff/loyalty/receipts"),
+  },
+  {
+    href: "/staff/loyalty/agents",
+    label: "Агенты",
+    match: (path: string) => path.startsWith("/staff/loyalty/agents"),
   },
 ] as const;
 

@@ -25,6 +25,8 @@ export type LkReceiptRow = {
 export type LkAgentApplicationRow = {
   id: string;
   status: string;
+  statusLabel: string;
   venueName: string;
+  publicNote: string | null;
   createdAt: string | Date;
 };
