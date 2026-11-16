@@ -55,6 +55,43 @@ next-env.d.ts
 /assets/brand/fonts/**/*Trial*
 /public/fonts/*Trial*
 
-AGENTS.md
-/docs/
-/docs/discovery/
+# Local agent design skills (Impeccable / Taste / Animation) — reinstall via
+# docs/design/AGENT_DESIGN_SKILLS.md; not part of the product tree.
+.agents/
+.claude/agents/
+.claude/skills/
+.claude/settings.local.json
+.cursor/agents/
+.cursor/skills/
+.cursor/hooks.json
+.codex/
+skills-lock.json
+.taste-skill/
+**/.taste-skill/
+
+# docs partial ignore — policy: docs/README.md
+# Keep public: adr/, design/, backend/, development.md, discovery baselines.
+# Local-only: sprint queue, reviews, archive, raw dumps, brand PDF, sensitive
+# inventory/migration/loyalty research, blog batch manifests, fixtures.
+/docs/reviews/
+/docs/archive/
+/docs/discovery/_raw/
+/docs/brand/**/*.pdf
+/docs/CURSOR_NEXT_STEPS.md
+/docs/CURSOR_REVIEW_PROMPT.md
+/docs/SPRINT_PLAN.md
+/docs/ROADMAP.md
+/docs/discovery/BLOG_BATCH*_MANIFEST.md
+/docs/data/fixtures/
+/docs/data/SOURCE_INVENTORY.md
+/docs/data/AIRTABLE_LOYALTY_SCHEMA.md
+/docs/data/LOYALTY_WRITERS_MAP.md
+/docs/data/LOYALTY_MIGRATION_PLAN.md
+/docs/data/PRODUCT_GTIN_CATALOG.md
+/docs/discovery/LOYALTY_OWNER_QUESTIONS.md
+/docs/discovery/FNS_OPEN_API_APPLICATION_DRAFT.md
+/docs/discovery/RECEIPT_FNS_PROVIDER_RESEARCH.md
+/docs/discovery/INTEGRATIONS_AUDIT.md
+/docs/discovery/MEMBERS_LK_INVENTORY.md
+/docs/discovery/SITE_INVENTORY.md
+/docs/discovery/CONTENT_SEO_INVENTORY.md

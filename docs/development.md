@@ -18,6 +18,11 @@ RU без префикса, EN под `/en`. Non-prod DB: [B1_RUNBOOK](backend/B
 проверки12.11 выполнены установленным Node 22.23.4. Перед npm-командами активировать
 совместимую установленную версию; это не повод обновлять зависимости проекта.
 
+Опциональные локальные design skills (Impeccable / Taste / Emil Animation)
+требуют отдельный Node ≥22.20 для `npx skills`; каталоги gitignored.
+Политика: [AGENT_DESIGN_SKILLS](design/AGENT_DESIGN_SKILLS.md). Не смешивать
+их установку с обязательным DoD data-stream спринтов.
+
 ```sh
 npm ci
 npm run db:embedded   # terminal 1 — PostgreSQL + migrate (port 54329)

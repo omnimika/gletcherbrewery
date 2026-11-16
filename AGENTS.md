@@ -1,8 +1,8 @@
 # Gletcher Brewery — AGENTS.md
 
-> Версия: 0.15 (12 ноября 2026 г.)
+> Версия: 0.16 (16 ноября 2026 г.)
 > Назначение: единые постоянные инструкции для Cursor Agent и OpenAI Codex.  
-> Подробный план реализации: `docs/ROADMAP.md` (при размещении файла из поставки в проекте).  
+> Подробный план реализации: `docs/ROADMAP.md` (локальный; см. `docs/README.md`).  
 > **Не считать этот документ подтверждением неизвестных деталей исходной системы.**
 
 ## 1. Цель проекта
@@ -169,6 +169,26 @@
 - Не удалять старые страницы/аккаунты/таблицы и не переключать DNS без отдельного плана отката.
 - Документировать любые изменения архитектуры в `docs/adr/` как Architecture Decision Record.
 – В случае необходимости, при наличии неопределенности в дальнейших действиях, рекомендуется задавать уточняющие вопросы пользователю, предлагая варианты действий и аргументацию.
+- Локальные design skills (Impeccable, Taste, Emil Animation) и их hooks/lockfile —
+  **gitignored**; не коммитить `.agents/`, `.cursor/skills|agents|hooks`,
+  `.claude/skills|agents`, `.codex/`, `skills-lock.json`. Политика вызова:
+  `docs/design/AGENT_DESIGN_SKILLS.md`. Они не входят в DoD data-stream и не
+  перекрывают `DESIGN_SYSTEM` / Tilda baselines / текущий спринт M2.
+- Partial ignore для `docs/`: публичны `adr/`, `design/`, `backend/`,
+  `development.md`, discovery baselines; локальны ROADMAP/SPRINT/CURSOR_*,
+  `reviews/`, `archive/`, `discovery/_raw/`, loyalty/FNS inventory и brand PDF.
+  Карта: `docs/README.md`. Не коммитить локальные docs после untrack.
+
+### 6.1. Design skills — когда читать
+
+- **Не** подключать на M2 data/CRM/backend задачах по умолчанию.
+- На явной UI/motion задаче: сначала `docs/design/DESIGN_SYSTEM.md` + baseline
+  страницы; затем узкий skill (`animate` / `review-animations` / impeccable
+  critique|polish|harden). Taste — только anti-slop review, не greenfield.
+- Запрещено без запроса владельца: new-work redesign identity, смена палитры/
+  сетки, scroll-hijack, whole-UI scale, установка альтернативного UI kit.
+- CLI skills требует Node ≥22.20; для обычных npm-скриптов проекта см.
+  `docs/development.md` (`engines.node`).
 
 ## 7. Текущий порядок работ Cursor Agent
 
@@ -219,6 +239,7 @@ Public acceptance и production cutover остаются отдельными р
 - `docs/adr/0001-i18n-routing-and-content.md` — маршрутизация и модель контента для `ru`/`en`/`sr`/`hy`/`ka`/`de`.
 - `docs/CURSOR_NEXT_STEPS.md` — актуальное задание Cursor с критериями приёмки; обновлять после подтверждённых изменений.
 - `docs/design/DESIGN_SYSTEM.md` — дизайн-код, containers/grids, anchors/scroll, UI/state/motion и DoD.
+- `docs/design/AGENT_DESIGN_SKILLS.md` — локальные Impeccable/Taste/Animation skills: ignore, reinstall, precedence.
 - `docs/adr/0010-design-system-and-section-layout.md` — архитектура дизайн-системы и границы rollout.
 - `docs/reviews/2026-11-09-data-and-forms.md` — историческое ревью 2095221, начало data/forms потока.
 - `docs/reviews/2026-11-05-public-integrity.md` — историческое ревью d6011d2 и Q1–Q3 outcomes.
