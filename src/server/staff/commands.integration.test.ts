@@ -121,4 +121,48 @@ describeDb("staff commands integration", () => {
       .where(eq(deliveryJobs.id, job!.id));
     assert.equal(refreshed[0]?.status, "pending");
   });
+
+  it("R06 concurrent status+assign+note keep all three changes", async () => {
+    const id = await createLead();
+
+    const [status, assign, note] = await Promise.all([
+      applyStaffCommand(db, id, { id: "actor-status" }, {
+        action: "set_status",
+        workflowStatus: "waiting",
+      }),
+      applyStaffCommand(db, id, { id: "actor-assign" }, {
+        action: "assign",
+        assignee: "mika",
+      }),
+      applyStaffCommand(db, id, { id: "actor-note" }, {
+        action: "note",
+        note: "parallel note",
+      }),
+    ]);
+
+    assert.equal(status.ok, true);
+    assert.equal(assign.ok, true);
+    assert.equal(note.ok, true);
+
+    const publicRows = await sql`
+      SELECT workflow_status, assignee, staff_note
+      FROM public.staff_contact_leads
+      WHERE submission_id = ${id}::uuid
+    `;
+    assert.equal(publicRows[0]?.workflow_status, "waiting");
+    assert.equal(publicRows[0]?.assignee, "mika");
+    assert.equal(publicRows[0]?.staff_note, "parallel note");
+
+    const events = await db
+      .select()
+      .from(staffLeadEvents)
+      .where(eq(staffLeadEvents.submissionId, id));
+    const byAction = Object.fromEntries(
+      events.map((e) => [e.action, e] as const),
+    );
+    assert.equal(byAction.set_status?.payload?.to, "waiting");
+    assert.equal(byAction.set_status?.payload?.from, "new");
+    assert.equal(byAction.assign?.payload?.to, "mika");
+    assert.equal(byAction.note?.payload?.to, "parallel note");
+  });
 });

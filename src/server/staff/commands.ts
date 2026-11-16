@@ -149,74 +149,97 @@ export type StaffCommandResult =
   | { ok: true; lead: typeof staffContactLeads.$inferSelect }
   | { ok: false; code: string; message: string };
 
+/**
+ * R06: row lock + patch only the commanded field so parallel status/assign/note
+ * do not overwrite each other. Audit payload uses locked before/after values.
+ */
 export async function applyStaffCommand(
   db: AppDb,
   submissionId: string,
   actor: StaffActor,
   input: StaffCommandInput,
 ): Promise<StaffCommandResult> {
-  const existing = await db
-    .select()
-    .from(staffContactLeads)
-    .where(eq(staffContactLeads.submissionId, submissionId))
-    .limit(1);
-  const lead = existing[0];
-  if (!lead) {
-    return { ok: false, code: "not_found", message: "Lead not found" };
-  }
-
-  const now = new Date();
-  let nextWorkflow = lead.workflowStatus;
-  let nextAssignee = lead.assignee;
-  let nextNote = lead.staffNote;
-  const action: StaffAction = input.action;
-  let eventPayload: Record<string, unknown> = {};
-
-  if (input.action === "set_status") {
-    if (!isWorkflowStatus(input.workflowStatus)) {
-      return {
-        ok: false,
-        code: "invalid_status",
-        message: "Unknown workflow status",
-      };
-    }
-    nextWorkflow = input.workflowStatus;
-    eventPayload = {
-      from: lead.workflowStatus,
-      to: input.workflowStatus,
+  // Validate shape before taking a lock.
+  if (input.action === "set_status" && !isWorkflowStatus(input.workflowStatus)) {
+    return {
+      ok: false,
+      code: "invalid_status",
+      message: "Unknown workflow status",
     };
-  } else if (input.action === "assign") {
-    const trimmed =
-      input.assignee === null || input.assignee === undefined
-        ? null
-        : input.assignee.trim().slice(0, 120) || null;
-    nextAssignee = trimmed;
-    eventPayload = { from: lead.assignee, to: trimmed };
-  } else if (input.action === "note") {
+  }
+  if (input.action === "note") {
     const note = input.note.trim().slice(0, 4000);
     if (!note) {
       return { ok: false, code: "invalid_note", message: "Note is empty" };
     }
-    nextNote = note;
-    eventPayload = { note };
-  } else {
+  }
+  if (
+    input.action !== "set_status" &&
+    input.action !== "assign" &&
+    input.action !== "note"
+  ) {
     return { ok: false, code: "invalid_action", message: "Unknown action" };
   }
 
-  const updated = await db.transaction(async (tx) => {
+  const now = new Date();
+  const action: StaffAction = input.action;
+
+  return db.transaction(async (tx) => {
+    const locked = await tx
+      .select()
+      .from(staffContactLeads)
+      .where(eq(staffContactLeads.submissionId, submissionId))
+      .limit(1)
+      .for("update");
+    const lead = locked[0];
+    if (!lead) {
+      return { ok: false, code: "not_found", message: "Lead not found" };
+    }
+
+    const patch: {
+      workflowStatus?: string;
+      assignee?: string | null;
+      staffNote?: string | null;
+      updatedAt: Date;
+      updatedBy: string;
+    } = {
+      updatedAt: now,
+      updatedBy: actor.id,
+    };
+    let eventPayload: Record<string, unknown> = {};
+
+    if (input.action === "set_status") {
+      patch.workflowStatus = input.workflowStatus;
+      eventPayload = {
+        from: lead.workflowStatus,
+        to: input.workflowStatus,
+      };
+    } else if (input.action === "assign") {
+      const trimmed =
+        input.assignee === null || input.assignee === undefined
+          ? null
+          : input.assignee.trim().slice(0, 120) || null;
+      patch.assignee = trimmed;
+      eventPayload = { from: lead.assignee, to: trimmed };
+    } else {
+      const note = input.note.trim().slice(0, 4000);
+      patch.staffNote = note;
+      eventPayload = { from: lead.staffNote, to: note };
+    }
+
     const [row] = await tx
       .update(staffContactLeads)
-      .set({
-        workflowStatus: nextWorkflow,
-        assignee: nextAssignee,
-        staffNote: nextNote,
-        updatedAt: now,
-        updatedBy: actor.id,
-      })
+      .set(patch)
       .where(eq(staffContactLeads.submissionId, submissionId))
       .returning();
 
-    if (!row) throw new Error("staff lead update returned no row");
+    if (!row) {
+      return {
+        ok: false,
+        code: "conflict",
+        message: "Lead disappeared during update",
+      };
+    }
 
     await tx.insert(staffLeadEvents).values({
       submissionId,
@@ -226,18 +249,17 @@ export async function applyStaffCommand(
       createdAt: now,
     });
 
+    // Public mirror follows the merged row after the field-only patch.
     await syncPublicLead(tx, submissionId, {
-      workflowStatus: nextWorkflow,
-      assignee: nextAssignee,
-      staffNote: nextNote,
+      workflowStatus: row.workflowStatus,
+      assignee: row.assignee,
+      staffNote: row.staffNote,
       updatedAt: now,
       updatedBy: actor.id,
     });
 
-    return row;
+    return { ok: true, lead: row };
   });
-
-  return { ok: true, lead: updated };
 }
 
 export type ReplayResult =
