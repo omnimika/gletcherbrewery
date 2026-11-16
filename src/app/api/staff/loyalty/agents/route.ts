@@ -12,33 +12,40 @@ export async function GET(request: Request) {
 
   const url = new URL(request.url);
   const status = url.searchParams.get("status");
-  const limitRaw = Number(url.searchParams.get("limit") ?? "100");
-  const limit = Number.isFinite(limitRaw) ? limitRaw : 100;
+  const page = url.searchParams.get("page");
+  const pageSize = url.searchParams.get("pageSize");
 
   try {
-    const rows = await listAgentApplicationsForStaff(getDb(), {
+    const result = await listAgentApplicationsForStaff(getDb(), {
       status,
-      limit,
+      page: page ?? undefined,
+      pageSize: pageSize ?? 50,
     });
     return NextResponse.json({
       ok: true,
-      applications: rows.map(({ application, email, displayName, statusLabel }) => ({
-        id: application.id,
-        status: application.status,
-        statusLabel,
-        phone: application.phone,
-        city: application.city,
-        venueName: application.venueName,
-        venueType: application.venueType,
-        venueAddress: application.venueAddress,
-        venueBoss: application.venueBoss,
-        comment: application.comment,
-        publicNote: application.publicNote,
-        reviewedBy: application.reviewedBy,
-        reviewedAt: application.reviewedAt,
-        createdAt: application.createdAt,
-        member: { email, displayName },
-      })),
+      applications: result.rows.map(
+        ({ application, email, displayName, statusLabel }) => ({
+          id: application.id,
+          status: application.status,
+          statusLabel,
+          phone: application.phone,
+          city: application.city,
+          venueName: application.venueName,
+          venueType: application.venueType,
+          venueAddress: application.venueAddress,
+          venueBoss: application.venueBoss,
+          comment: application.comment,
+          publicNote: application.publicNote,
+          reviewedBy: application.reviewedBy,
+          reviewedAt: application.reviewedAt,
+          createdAt: application.createdAt,
+          member: { email, displayName },
+        }),
+      ),
+      total: result.total,
+      page: result.page,
+      pageSize: result.pageSize,
+      totalPages: result.totalPages,
     });
   } catch (err) {
     console.error(

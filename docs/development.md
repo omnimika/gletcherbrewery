@@ -49,8 +49,9 @@ npm run build
 `npm run typecheck` запускает `tsc --noEmit`; при строгом read-only ревью
 добавлять `--incremental false`. Integration tests пишут в DATABASE_URL:
 использовать отдельную synthetic test DB, не production или существующую
-локальную базу с пользовательскими данными. `db:restore-check` пока B1-only,
-не доказательство восстановления всей схемы; см. M2 migration plan.
+локальную базу с пользовательскими данными. `db:restore-check` покрывает
+текущий `app.*` schema (loyalty/retail/outbox) и гасит restored delivery jobs;
+private files — отдельно; row-level Airtable import — M2-4.
 Production-сервер локально:
 
 ```sh

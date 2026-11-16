@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { StaffPaginationNav } from "@/components/staff/pagination-nav";
 import { Banner } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/feedback";
 import { getDb } from "@/server/db/client";
@@ -23,7 +24,7 @@ export const dynamic = "force-dynamic";
 export default async function StaffLoyaltyAgentsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string }>;
+  searchParams: Promise<{ status?: string; page?: string }>;
 }) {
   if (!isStaffAuthConfigured()) {
     return (
@@ -42,19 +43,23 @@ export default async function StaffLoyaltyAgentsPage({
   const statusFilter =
     sp.status && isAgentAppStatus(sp.status) ? sp.status : null;
 
-  let rows: Awaited<ReturnType<typeof listAgentApplicationsForStaff>> = [];
+  let pageResult: Awaited<
+    ReturnType<typeof listAgentApplicationsForStaff>
+  > | null = null;
   let error: string | null = null;
   try {
-    rows = await listAgentApplicationsForStaff(getDb(), {
+    pageResult = await listAgentApplicationsForStaff(getDb(), {
       status: statusFilter,
-      limit: 100,
+      page: sp.page,
+      pageSize: 50,
     });
   } catch {
     error = "База недоступна — проверьте embedded PostgreSQL.";
   }
 
+  const rows = pageResult?.rows ?? [];
   const withEvents = await Promise.all(
-    rows.slice(0, 20).map(async (row) => {
+    rows.map(async (row) => {
       let events: Awaited<ReturnType<typeof listAgentApplicationEvents>> = [];
       try {
         events = await listAgentApplicationEvents(
@@ -68,6 +73,8 @@ export default async function StaffLoyaltyAgentsPage({
       return { ...row, events };
     }),
   );
+
+  const filterQs = statusFilter ? `status=${statusFilter}&` : "";
 
   return (
     <div className="space-y-[var(--grid-gap)]">
@@ -106,6 +113,16 @@ export default async function StaffLoyaltyAgentsPage({
         <Banner tone="frost">
           <p>{error}</p>
         </Banner>
+      ) : null}
+
+      {!error && pageResult ? (
+        <StaffPaginationNav
+          page={pageResult.page}
+          totalPages={pageResult.totalPages}
+          total={pageResult.total}
+          pageSize={pageResult.pageSize}
+          buildHref={(p) => `/staff/loyalty/agents?${filterQs}page=${p}`}
+        />
       ) : null}
 
       {withEvents.length === 0 && !error ? (

@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
+import { StaffPaginationNav } from "@/components/staff/pagination-nav";
 import { getDb } from "@/server/db/client";
 import {
   isStaffAuthConfigured,
@@ -21,7 +22,7 @@ export const dynamic = "force-dynamic";
 export default async function StaffHomePage({
   searchParams,
 }: {
-  searchParams: Promise<{ workflowStatus?: string }>;
+  searchParams: Promise<{ workflowStatus?: string; page?: string }>;
 }) {
   if (!isStaffAuthConfigured()) {
     return (
@@ -55,13 +56,22 @@ export default async function StaffHomePage({
       ? (params.workflowStatus as WorkflowStatus)
       : undefined;
 
-  let leads: Awaited<ReturnType<typeof listStaffLeads>> = [];
+  let pageResult: Awaited<ReturnType<typeof listStaffLeads>> | null = null;
   let error: string | null = null;
   try {
-    leads = await listStaffLeads(getDb(), { workflowStatus, limit: 100 });
+    pageResult = await listStaffLeads(getDb(), {
+      workflowStatus,
+      page: params.page,
+      pageSize: 50,
+    });
   } catch {
     error = "База недоступна — проверьте embedded PostgreSQL.";
   }
+
+  const leads = pageResult?.rows ?? [];
+  const filterQs = workflowStatus
+    ? `workflowStatus=${workflowStatus}&`
+    : "";
 
   return (
     <div className="space-y-[var(--grid-gap)]">
@@ -92,6 +102,16 @@ export default async function StaffHomePage({
         </FormStatus>
       ) : null}
 
+      {!error && pageResult ? (
+        <StaffPaginationNav
+          page={pageResult.page}
+          totalPages={pageResult.totalPages}
+          total={pageResult.total}
+          pageSize={pageResult.pageSize}
+          buildHref={(p) => `/staff?${filterQs}page=${p}`}
+        />
+      ) : null}
+
       {!error && leads.length === 0 ? (
         <EmptyState
           title="Нет заявок"
@@ -101,7 +121,6 @@ export default async function StaffHomePage({
 
       {leads.length > 0 ? (
         <>
-          {/* Mobile: stacked cards */}
           <ul className="grid gap-3 md:hidden">
             {leads.map((lead) => (
               <li key={lead.submissionId}>
@@ -138,7 +157,6 @@ export default async function StaffHomePage({
             ))}
           </ul>
 
-          {/* Desktop: dense table */}
           <div className="hidden overflow-x-auto rounded-[var(--radius-card)] border border-gletcher-navy bg-gletcher-white md:block">
             <table className="min-w-full text-left text-sm">
               <thead className="border-b border-gletcher-navy/15 bg-gletcher-frost/60">

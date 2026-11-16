@@ -1,4 +1,10 @@
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, count, desc, eq, inArray } from "drizzle-orm";
+import {
+  clampPageParams,
+  clampPageToTotal,
+  toPageResult,
+  type PageResult,
+} from "@/lib/pagination";
 import type { AppDb } from "@/server/db/client";
 import {
   loyaltyLedgerEntries,
@@ -161,8 +167,39 @@ export async function createManualReceipt(db: AppDb, input: ManualReceiptInput) 
   return { ok: true as const, receipt: row };
 }
 
-export async function listPendingReceipts(db: AppDb, limit = 50) {
-  return db
+export type PendingReceiptListRow = {
+  receipt: typeof loyaltyReceipts.$inferSelect;
+  email: string;
+  displayName: string | null;
+};
+
+export async function listPendingReceipts(
+  db: AppDb,
+  opts: {
+    page?: number | string;
+    pageSize?: number | string;
+    limit?: number;
+  } = {},
+): Promise<PageResult<PendingReceiptListRow>> {
+  const initial = clampPageParams({
+    page: opts.page,
+    pageSize: opts.pageSize ?? opts.limit ?? 50,
+    defaultPageSize: 50,
+    maxPageSize: 100,
+  });
+  const where = inArray(loyaltyReceipts.status, [...PENDING_STATUSES]);
+  const [totalRow] = await db
+    .select({ c: count() })
+    .from(loyaltyReceipts)
+    .where(where);
+  const total = Number(totalRow?.c ?? 0);
+  const { page, pageSize, offset } = clampPageToTotal(
+    initial.page,
+    initial.pageSize,
+    total,
+  );
+
+  const rows = await db
     .select({
       receipt: loyaltyReceipts,
       email: loyaltyMembers.emailNormalized,
@@ -173,9 +210,12 @@ export async function listPendingReceipts(db: AppDb, limit = 50) {
       loyaltyMembers,
       eq(loyaltyReceipts.memberId, loyaltyMembers.id),
     )
-    .where(inArray(loyaltyReceipts.status, [...PENDING_STATUSES]))
+    .where(where)
     .orderBy(desc(loyaltyReceipts.createdAt))
-    .limit(limit);
+    .limit(pageSize)
+    .offset(offset);
+
+  return toPageResult(rows, total, page, pageSize);
 }
 
 export async function listReceiptsForMember(

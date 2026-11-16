@@ -13,6 +13,7 @@ import { submitForm } from "@/server/forms/submit";
 import { CONTACTS_FORM_ID } from "@/content/forms/contacts-contract";
 import {
   applyStaffCommand,
+  listStaffLeads,
   replayDeliveryJob,
 } from "./commands";
 import type postgres from "postgres";
@@ -164,5 +165,30 @@ describeDb("staff commands integration", () => {
     assert.equal(byAction.set_status?.payload?.from, "new");
     assert.equal(byAction.assign?.payload?.to, "mika");
     assert.equal(byAction.note?.payload?.to, "parallel note");
+  });
+
+  it("listStaffLeads paginates when total > pageSize", async () => {
+    const ids = await Promise.all([
+      createLead(),
+      createLead(),
+      createLead(),
+    ]);
+    assert.equal(ids.length, 3);
+
+    const page1 = await listStaffLeads(db, { page: 1, pageSize: 2 });
+    assert.ok(page1.total >= 3);
+    assert.equal(page1.page, 1);
+    assert.equal(page1.pageSize, 2);
+    assert.equal(page1.rows.length, 2);
+    assert.ok(page1.totalPages >= 2);
+
+    const page2 = await listStaffLeads(db, { page: 2, pageSize: 2 });
+    assert.equal(page2.page, 2);
+    assert.equal(page2.pageSize, 2);
+    assert.ok(page2.rows.length >= 1);
+    assert.notEqual(
+      page1.rows[0]?.submissionId,
+      page2.rows[0]?.submissionId,
+    );
   });
 });

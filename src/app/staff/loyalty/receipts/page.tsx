@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { StaffPaginationNav } from "@/components/staff/pagination-nav";
 import { Banner } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/feedback";
 import { getDb } from "@/server/db/client";
@@ -15,7 +16,11 @@ import { ReceiptPhotoPreview } from "./receipt-photo";
 
 export const dynamic = "force-dynamic";
 
-export default async function StaffLoyaltyReceiptsPage() {
+export default async function StaffLoyaltyReceiptsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) {
   if (!isStaffAuthConfigured()) {
     return (
       <Banner tone="frost">
@@ -29,13 +34,20 @@ export default async function StaffLoyaltyReceiptsPage() {
     return <StaffLoginForm />;
   }
 
-  let rows: Awaited<ReturnType<typeof listPendingReceipts>> = [];
+  const sp = await searchParams;
+  let pageResult: Awaited<ReturnType<typeof listPendingReceipts>> | null =
+    null;
   let error: string | null = null;
   try {
-    rows = await listPendingReceipts(getDb(), 100);
+    pageResult = await listPendingReceipts(getDb(), {
+      page: sp.page,
+      pageSize: 50,
+    });
   } catch {
     error = "База недоступна — проверьте embedded PostgreSQL.";
   }
+
+  const rows = pageResult?.rows ?? [];
 
   return (
     <div className="space-y-[var(--grid-gap)]">
@@ -53,6 +65,16 @@ export default async function StaffLoyaltyReceiptsPage() {
         <Banner tone="frost">
           <p>{error}</p>
         </Banner>
+      ) : null}
+
+      {!error && pageResult ? (
+        <StaffPaginationNav
+          page={pageResult.page}
+          totalPages={pageResult.totalPages}
+          total={pageResult.total}
+          pageSize={pageResult.pageSize}
+          buildHref={(p) => `/staff/loyalty/receipts?page=${p}`}
+        />
       ) : null}
 
       {rows.length === 0 && !error ? (

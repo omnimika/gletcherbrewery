@@ -13,8 +13,9 @@ runbook. Все публичные form variants/staff leads уже подклю
 Не запускать db:embedded/restore/integration автоматически в рабочей среде
 пользователя: bootstrap меняет локальные env/DB; integration пишет в DATABASE_URL.
 Для новых тестов — отдельная synthetic test DB и credentials, без live delivery.
-db:restore-check сейчас копирует только B1 таблицы; PASS не доказывает сохранность
-loyalty/retail/audit/private photos. Worker: `WORKER_DATABASE_URL` (R02 Done 16.11).
+`db:restore-check` (16.11) восстанавливает текущий `app.*` (+ public staff leads),
+гасит deliverable outbox jobs; private photo files пока skipped. Worker:
+`WORKER_DATABASE_URL` (R02 Done 16.11).
 
 ## Topology (verified B1)
 

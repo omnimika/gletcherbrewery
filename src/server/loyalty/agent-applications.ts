@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from "node:crypto";
-import { and, desc, eq, notInArray, sql } from "drizzle-orm";
+import { and, count, desc, eq, notInArray, sql } from "drizzle-orm";
 import {
   agentAppStatusLabel,
   AGENT_APP_CLOSED_STATUSES,
@@ -11,6 +11,12 @@ import {
   MAX_OPEN_AGENT_APPLICATIONS,
   type AgentAppStatus,
 } from "@/lib/loyalty/agent-application-status";
+import {
+  clampPageParams,
+  clampPageToTotal,
+  toPageResult,
+  type PageResult,
+} from "@/lib/pagination";
 import type { AppDb } from "@/server/db/client";
 import {
   loyaltyAgentApplicationEvents,
@@ -398,13 +404,44 @@ export async function latestOpenAgentApplication(
   return row ?? null;
 }
 
+export type StaffAgentApplicationListRow = {
+  application: typeof loyaltyAgentApplications.$inferSelect;
+  email: string;
+  displayName: string | null;
+  statusLabel: string;
+};
+
 export async function listAgentApplicationsForStaff(
   db: AppDb,
-  opts: { status?: string | null; limit?: number } = {},
-) {
-  const limit = Math.min(Math.max(opts.limit ?? 100, 1), 200);
+  opts: {
+    status?: string | null;
+    page?: number | string;
+    pageSize?: number | string;
+    limit?: number;
+  } = {},
+): Promise<PageResult<StaffAgentApplicationListRow>> {
+  const initial = clampPageParams({
+    page: opts.page,
+    pageSize: opts.pageSize ?? opts.limit ?? 50,
+    defaultPageSize: 50,
+    maxPageSize: 100,
+  });
   const statusFilter =
     opts.status && isAgentAppStatus(opts.status) ? opts.status : null;
+  const where = statusFilter
+    ? eq(loyaltyAgentApplications.status, statusFilter)
+    : undefined;
+
+  const [totalRow] = await db
+    .select({ c: count() })
+    .from(loyaltyAgentApplications)
+    .where(where);
+  const total = Number(totalRow?.c ?? 0);
+  const { page, pageSize, offset } = clampPageToTotal(
+    initial.page,
+    initial.pageSize,
+    total,
+  );
 
   const rows = await db
     .select({
@@ -417,20 +454,22 @@ export async function listAgentApplicationsForStaff(
       loyaltyMembers,
       eq(loyaltyMembers.id, loyaltyAgentApplications.memberId),
     )
-    .where(
-      statusFilter
-        ? eq(loyaltyAgentApplications.status, statusFilter)
-        : undefined,
-    )
+    .where(where)
     .orderBy(desc(loyaltyAgentApplications.createdAt))
-    .limit(limit);
+    .limit(pageSize)
+    .offset(offset);
 
-  return rows.map(({ application, email, displayName }) => ({
-    application,
-    email,
-    displayName,
-    statusLabel: agentAppStatusLabel(application.status),
-  }));
+  return toPageResult(
+    rows.map(({ application, email, displayName }) => ({
+      application,
+      email,
+      displayName,
+      statusLabel: agentAppStatusLabel(application.status),
+    })),
+    total,
+    page,
+    pageSize,
+  );
 }
 
 export async function listAgentApplicationEvents(

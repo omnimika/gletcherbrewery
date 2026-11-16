@@ -1,4 +1,10 @@
-import { and, desc, eq, inArray, or, sql } from "drizzle-orm";
+import { and, count, desc, eq, inArray, or, sql } from "drizzle-orm";
+import {
+  clampPageParams,
+  clampPageToTotal,
+  toPageResult,
+  type PageResult,
+} from "@/lib/pagination";
 import type { AppDb } from "@/server/db/client";
 import {
   deliveryJobs,
@@ -21,8 +27,31 @@ export type StaffActor = {
 export type LeadListFilter = {
   workflowStatus?: WorkflowStatus;
   formId?: string;
+  /** @deprecated use page/pageSize */
   limit?: number;
+  /** @deprecated use page/pageSize */
   offset?: number;
+  page?: number | string;
+  pageSize?: number | string;
+};
+
+export type StaffLeadListRow = {
+  submissionId: string;
+  formId: string;
+  locale: string;
+  sourcePath: string;
+  intakeStatus: string;
+  workflowStatus: string;
+  createdAt: Date;
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  company: string | null;
+  city: string | null;
+  assignee: string | null;
+  staffNote: string | null;
+  updatedAt: Date | null;
+  updatedBy: string | null;
 };
 
 export type StaffCommandInput =
@@ -58,9 +87,23 @@ async function syncPublicLead(
   `);
 }
 
-export async function listStaffLeads(db: AppDb, filter: LeadListFilter = {}) {
-  const limit = Math.min(Math.max(filter.limit ?? 50, 1), 200);
-  const offset = Math.max(filter.offset ?? 0, 0);
+export async function listStaffLeads(
+  db: AppDb,
+  filter: LeadListFilter = {},
+): Promise<PageResult<StaffLeadListRow>> {
+  const initial =
+    filter.page != null || filter.pageSize != null
+      ? clampPageParams({
+          page: filter.page,
+          pageSize: filter.pageSize,
+          defaultPageSize: 50,
+          maxPageSize: 100,
+        })
+      : {
+          page: Math.floor((filter.offset ?? 0) / Math.max(filter.limit ?? 50, 1)) + 1,
+          pageSize: Math.min(Math.max(filter.limit ?? 50, 1), 100),
+          offset: Math.max(filter.offset ?? 0, 0),
+        };
 
   const conditions = [];
   if (filter.workflowStatus) {
@@ -76,6 +119,17 @@ export async function listStaffLeads(db: AppDb, filter: LeadListFilter = {}) {
       : conditions.length === 1
         ? conditions[0]
         : and(...conditions);
+
+  const [totalRow] = await db
+    .select({ c: count() })
+    .from(staffContactLeads)
+    .where(where);
+  const total = Number(totalRow?.c ?? 0);
+  const { page, pageSize, offset } = clampPageToTotal(
+    initial.page,
+    initial.pageSize,
+    total,
+  );
 
   const rows = await db
     .select({
@@ -99,10 +153,10 @@ export async function listStaffLeads(db: AppDb, filter: LeadListFilter = {}) {
     .from(staffContactLeads)
     .where(where)
     .orderBy(desc(staffContactLeads.createdAt))
-    .limit(limit)
+    .limit(pageSize)
     .offset(offset);
 
-  return rows;
+  return toPageResult(rows, total, page, pageSize);
 }
 
 export async function getStaffLeadDetail(db: AppDb, submissionId: string) {

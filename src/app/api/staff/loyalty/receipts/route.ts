@@ -27,14 +27,22 @@ export async function GET(request: Request) {
   if (!auth.ok) return auth.response;
 
   try {
-    const rows = await listPendingReceipts(getDb(), 100);
+    const url = new URL(request.url);
+    const result = await listPendingReceipts(getDb(), {
+      page: url.searchParams.get("page") ?? undefined,
+      pageSize: url.searchParams.get("pageSize") ?? 50,
+    });
     return NextResponse.json({
       ok: true,
-      receipts: rows.map((r) => ({
+      receipts: result.rows.map((r) => ({
         ...r.receipt,
         memberEmail: r.email,
         memberName: r.displayName,
       })),
+      total: result.total,
+      page: result.page,
+      pageSize: result.pageSize,
+      totalPages: result.totalPages,
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : "unknown";
