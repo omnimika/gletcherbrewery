@@ -42,7 +42,12 @@ export async function POST(request: Request, { params }: RouteParams) {
         note,
       });
       if (!result.ok) {
-        const status = result.code === "not_found" ? 404 : 400;
+        const status =
+          result.code === "not_found"
+            ? 404
+            : result.code === "conflict"
+              ? 409
+              : 400;
         return NextResponse.json(
           { ok: false, code: result.code },
           { status },
@@ -61,13 +66,22 @@ export async function POST(request: Request, { params }: RouteParams) {
         note,
       });
       if (!result.ok) {
-        const status = result.code === "not_found" ? 404 : 400;
+        const status =
+          result.code === "not_found"
+            ? 404
+            : result.code === "conflict" || result.code === "already_verified"
+              ? 409
+              : 400;
         return NextResponse.json(
           { ok: false, code: result.code },
           { status },
         );
       }
-      return NextResponse.json({ ok: true, receipt: result.receipt });
+      return NextResponse.json({
+        ok: true,
+        receipt: result.receipt,
+        already: result.already ?? false,
+      });
     }
     return NextResponse.json(
       { ok: false, code: "invalid_action", message: "approve|reject" },
