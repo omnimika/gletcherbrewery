@@ -16,6 +16,8 @@ export async function GET(request: Request) {
   const formId = url.searchParams.get("formId") ?? undefined;
   const page = url.searchParams.get("page");
   const pageSize = url.searchParams.get("pageSize");
+  const sort = url.searchParams.get("sort");
+  const dir = url.searchParams.get("dir");
   const limit = Number(url.searchParams.get("limit") ?? "50");
   const offset = Number(url.searchParams.get("offset") ?? "0");
 
@@ -31,6 +33,8 @@ export async function GET(request: Request) {
       formId,
       page: page ?? undefined,
       pageSize: pageSize ?? undefined,
+      sort,
+      dir,
       limit: Number.isFinite(limit) ? limit : 50,
       offset: Number.isFinite(offset) ? offset : 0,
     });

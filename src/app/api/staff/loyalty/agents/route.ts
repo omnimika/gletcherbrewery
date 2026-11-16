@@ -14,12 +14,16 @@ export async function GET(request: Request) {
   const status = url.searchParams.get("status");
   const page = url.searchParams.get("page");
   const pageSize = url.searchParams.get("pageSize");
+  const sort = url.searchParams.get("sort");
+  const dir = url.searchParams.get("dir");
 
   try {
     const result = await listAgentApplicationsForStaff(getDb(), {
       status,
       page: page ?? undefined,
       pageSize: pageSize ?? 50,
+      sort,
+      dir,
     });
     return NextResponse.json({
       ok: true,

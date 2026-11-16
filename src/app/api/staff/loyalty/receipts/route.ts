@@ -31,6 +31,8 @@ export async function GET(request: Request) {
     const result = await listPendingReceipts(getDb(), {
       page: url.searchParams.get("page") ?? undefined,
       pageSize: url.searchParams.get("pageSize") ?? 50,
+      sort: url.searchParams.get("sort"),
+      dir: url.searchParams.get("dir"),
     });
     return NextResponse.json({
       ok: true,

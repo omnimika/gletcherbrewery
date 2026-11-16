@@ -1,10 +1,11 @@
-import { and, count, desc, eq, inArray } from "drizzle-orm";
+import { and, asc, count, desc, eq, inArray } from "drizzle-orm";
 import {
   clampPageParams,
   clampPageToTotal,
   toPageResult,
   type PageResult,
 } from "@/lib/pagination";
+import { parseStaffSort } from "@/lib/staff-sort";
 import type { AppDb } from "@/server/db/client";
 import {
   loyaltyLedgerEntries,
@@ -173,12 +174,17 @@ export type PendingReceiptListRow = {
   displayName: string | null;
 };
 
+export const STAFF_RECEIPT_SORT_FIELDS = ["createdAt", "purchaseAt"] as const;
+export type StaffReceiptSortField = (typeof STAFF_RECEIPT_SORT_FIELDS)[number];
+
 export async function listPendingReceipts(
   db: AppDb,
   opts: {
     page?: number | string;
     pageSize?: number | string;
     limit?: number;
+    sort?: string | null;
+    dir?: string | null;
   } = {},
 ): Promise<PageResult<PendingReceiptListRow>> {
   const initial = clampPageParams({
@@ -187,6 +193,12 @@ export async function listPendingReceipts(
     defaultPageSize: 50,
     maxPageSize: 100,
   });
+  const { sort, dir } = parseStaffSort(
+    opts,
+    STAFF_RECEIPT_SORT_FIELDS,
+    "createdAt",
+    "desc",
+  );
   const where = inArray(loyaltyReceipts.status, [...PENDING_STATUSES]);
   const [totalRow] = await db
     .select({ c: count() })
@@ -198,6 +210,12 @@ export async function listPendingReceipts(
     initial.pageSize,
     total,
   );
+
+  const sortCol =
+    sort === "purchaseAt"
+      ? loyaltyReceipts.purchaseAt
+      : loyaltyReceipts.createdAt;
+  const order = dir === "asc" ? asc(sortCol) : desc(sortCol);
 
   const rows = await db
     .select({
@@ -211,7 +229,7 @@ export async function listPendingReceipts(
       eq(loyaltyReceipts.memberId, loyaltyMembers.id),
     )
     .where(where)
-    .orderBy(desc(loyaltyReceipts.createdAt))
+    .orderBy(order, desc(loyaltyReceipts.id))
     .limit(pageSize)
     .offset(offset);
 

@@ -96,18 +96,20 @@ export async function stageLoyaltyBatch(
     if (!batch) throw new Error("loyalty import batch insert failed");
 
     if (input.drafts.length) {
-      await tx.insert(loyaltyStagingRows).values(
-        input.drafts.map((d) => ({
-          batchId: batch.id,
-          sourceTableId: d.sourceTableId,
-          sourceRecordId: d.sourceRecordId,
-          sourceFile: d.sourceFile,
-          rawJson: d.rawJson,
-          parseStatus: d.parseStatus,
-          anomalyCodes: d.anomalyCodes,
-          quarantineReason: d.quarantineReason,
-        })),
-      );
+      const chunk = 200;
+      const values = input.drafts.map((d) => ({
+        batchId: batch.id,
+        sourceTableId: d.sourceTableId,
+        sourceRecordId: d.sourceRecordId,
+        sourceFile: d.sourceFile,
+        rawJson: d.rawJson,
+        parseStatus: d.parseStatus,
+        anomalyCodes: d.anomalyCodes,
+        quarantineReason: d.quarantineReason,
+      }));
+      for (let i = 0; i < values.length; i += chunk) {
+        await tx.insert(loyaltyStagingRows).values(values.slice(i, i + chunk));
+      }
     }
 
     return batch.id;

@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from "node:crypto";
-import { and, count, desc, eq, notInArray, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, notInArray, sql } from "drizzle-orm";
 import {
   agentAppStatusLabel,
   AGENT_APP_CLOSED_STATUSES,
@@ -17,6 +17,7 @@ import {
   toPageResult,
   type PageResult,
 } from "@/lib/pagination";
+import { parseStaffSort } from "@/lib/staff-sort";
 import type { AppDb } from "@/server/db/client";
 import {
   loyaltyAgentApplicationEvents,
@@ -411,6 +412,9 @@ export type StaffAgentApplicationListRow = {
   statusLabel: string;
 };
 
+export const STAFF_AGENT_SORT_FIELDS = ["createdAt", "city"] as const;
+export type StaffAgentSortField = (typeof STAFF_AGENT_SORT_FIELDS)[number];
+
 export async function listAgentApplicationsForStaff(
   db: AppDb,
   opts: {
@@ -418,6 +422,8 @@ export async function listAgentApplicationsForStaff(
     page?: number | string;
     pageSize?: number | string;
     limit?: number;
+    sort?: string | null;
+    dir?: string | null;
   } = {},
 ): Promise<PageResult<StaffAgentApplicationListRow>> {
   const initial = clampPageParams({
@@ -426,6 +432,12 @@ export async function listAgentApplicationsForStaff(
     defaultPageSize: 50,
     maxPageSize: 100,
   });
+  const { sort, dir } = parseStaffSort(
+    opts,
+    STAFF_AGENT_SORT_FIELDS,
+    "createdAt",
+    "desc",
+  );
   const statusFilter =
     opts.status && isAgentAppStatus(opts.status) ? opts.status : null;
   const where = statusFilter
@@ -443,6 +455,12 @@ export async function listAgentApplicationsForStaff(
     total,
   );
 
+  const sortCol =
+    sort === "city"
+      ? loyaltyAgentApplications.city
+      : loyaltyAgentApplications.createdAt;
+  const order = dir === "asc" ? asc(sortCol) : desc(sortCol);
+
   const rows = await db
     .select({
       application: loyaltyAgentApplications,
@@ -455,7 +473,7 @@ export async function listAgentApplicationsForStaff(
       eq(loyaltyMembers.id, loyaltyAgentApplications.memberId),
     )
     .where(where)
-    .orderBy(desc(loyaltyAgentApplications.createdAt))
+    .orderBy(order, desc(loyaltyAgentApplications.id))
     .limit(pageSize)
     .offset(offset);
 

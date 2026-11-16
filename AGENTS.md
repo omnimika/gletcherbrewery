@@ -202,10 +202,10 @@ Public acceptance и production cutover остаются отдельными р
    **Production row-level snapshot / ADR0011 Accepted ещё Open.**
 3. **M2-2 Done 16.11:** R01–R07 + quality baseline + public boundary. R01–R12:
    `docs/reviews/2026-11-12-agent-crm-and-migration.md`.
-4. **M2-3 Done 16.11** + Pre-M2-4 tails. **M2-4 foundation Done 16.11**
-   (synthetic staging/import/reconcile, `0017`, `loyalty:import-rehearsal`).
-   Production batch + ADR0011 Accepted — Open. Дальше protected snapshot /
-   M2-4B sign-off, затем M2-5.
+4. **M2-3 Done 16.11** + Pre-M2-4 tails. **M2-4 foundation Done 16.11**;
+   **protected CSV batch Done 17.11** (`tmp/Airtable`, `Чеки-xls.csv`,
+   cutoff=today, reconcile available/lifetime **212338** PASS). ADR0011 →
+   Accepted после owner review. Дальше **M2-5** / cutover proposal.
 5. `/agent/cabinet` — canonical RU кабинет; `/members/lk` только 301 → cabinet; `/agent/login` для входа.
    Postbox/GTIN/shop отложены; не обещать email delivery/referral earn без backend.
 6. PostgreSQL source of truth; NocoDB read-only. Изменения бизнес-данных —

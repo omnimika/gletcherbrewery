@@ -1,10 +1,11 @@
-import { and, count, desc, eq, inArray, or, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, inArray, or, sql } from "drizzle-orm";
 import {
   clampPageParams,
   clampPageToTotal,
   toPageResult,
   type PageResult,
 } from "@/lib/pagination";
+import { parseStaffSort } from "@/lib/staff-sort";
 import type { AppDb } from "@/server/db/client";
 import {
   deliveryJobs,
@@ -24,6 +25,9 @@ export type StaffActor = {
   id: string;
 };
 
+export const STAFF_LEAD_SORT_FIELDS = ["createdAt", "updatedAt"] as const;
+export type StaffLeadSortField = (typeof STAFF_LEAD_SORT_FIELDS)[number];
+
 export type LeadListFilter = {
   workflowStatus?: WorkflowStatus;
   formId?: string;
@@ -33,6 +37,8 @@ export type LeadListFilter = {
   offset?: number;
   page?: number | string;
   pageSize?: number | string;
+  sort?: string | null;
+  dir?: string | null;
 };
 
 export type StaffLeadListRow = {
@@ -131,6 +137,18 @@ export async function listStaffLeads(
     total,
   );
 
+  const { sort, dir } = parseStaffSort(
+    filter,
+    STAFF_LEAD_SORT_FIELDS,
+    "createdAt",
+    "desc",
+  );
+  const sortCol =
+    sort === "updatedAt"
+      ? staffContactLeads.updatedAt
+      : staffContactLeads.createdAt;
+  const order = dir === "asc" ? asc(sortCol) : desc(sortCol);
+
   const rows = await db
     .select({
       submissionId: staffContactLeads.submissionId,
@@ -152,7 +170,7 @@ export async function listStaffLeads(
     })
     .from(staffContactLeads)
     .where(where)
-    .orderBy(desc(staffContactLeads.createdAt))
+    .orderBy(order, desc(staffContactLeads.submissionId))
     .limit(pageSize)
     .offset(offset);
 

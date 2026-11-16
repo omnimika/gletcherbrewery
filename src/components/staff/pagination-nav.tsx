@@ -6,12 +6,15 @@ export function StaffPaginationNav({
   total,
   pageSize,
   buildHref,
+  compact = false,
 }: {
   page: number;
   totalPages: number;
   total: number;
   pageSize: number;
   buildHref: (page: number) => string;
+  /** Inline with sort toolbar — no full-width justify. */
+  compact?: boolean;
 }) {
   if (total === 0) return null;
   const from = (page - 1) * pageSize + 1;
@@ -19,7 +22,11 @@ export function StaffPaginationNav({
 
   return (
     <nav
-      className="flex flex-wrap items-center justify-between gap-3"
+      className={
+        compact
+          ? "flex flex-wrap items-center gap-3"
+          : "flex flex-wrap items-center justify-between gap-3"
+      }
       aria-label="Страницы"
     >
       <p className="type-caption text-gletcher-navy/65">

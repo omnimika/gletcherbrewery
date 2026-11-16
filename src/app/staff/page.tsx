@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
-import { StaffPaginationNav } from "@/components/staff/pagination-nav";
+import { StaffListToolbar } from "@/components/staff/list-toolbar";
 import { getDb } from "@/server/db/client";
+import { parseStaffSort } from "@/lib/staff-sort";
 import {
   isStaffAuthConfigured,
   STAFF_COOKIE_NAME,
@@ -11,7 +12,10 @@ import {
   WORKFLOW_STATUS_LABELS_RU,
   type WorkflowStatus,
 } from "@/server/staff/contracts";
-import { listStaffLeads } from "@/server/staff/commands";
+import {
+  listStaffLeads,
+  STAFF_LEAD_SORT_FIELDS,
+} from "@/server/staff/commands";
 import { Banner } from "@/components/ui/card";
 import { EmptyState, FormStatus } from "@/components/ui/feedback";
 import { StaffLoginForm } from "./staff-login-form";
@@ -19,10 +23,20 @@ import { WorkflowBadge } from "./workflow-badge";
 
 export const dynamic = "force-dynamic";
 
+const LEAD_SORT_OPTIONS = [
+  { key: "createdAt", label: "Дата" },
+  { key: "updatedAt", label: "Обновлено" },
+] as const;
+
 export default async function StaffHomePage({
   searchParams,
 }: {
-  searchParams: Promise<{ workflowStatus?: string; page?: string }>;
+  searchParams: Promise<{
+    workflowStatus?: string;
+    page?: string;
+    sort?: string;
+    dir?: string;
+  }>;
 }) {
   if (!isStaffAuthConfigured()) {
     return (
@@ -55,6 +69,12 @@ export default async function StaffHomePage({
     )
       ? (params.workflowStatus as WorkflowStatus)
       : undefined;
+  const { sort, dir } = parseStaffSort(
+    params,
+    STAFF_LEAD_SORT_FIELDS,
+    "createdAt",
+    "desc",
+  );
 
   let pageResult: Awaited<ReturnType<typeof listStaffLeads>> | null = null;
   let error: string | null = null;
@@ -63,15 +83,23 @@ export default async function StaffHomePage({
       workflowStatus,
       page: params.page,
       pageSize: 50,
+      sort,
+      dir,
     });
   } catch {
     error = "База недоступна — проверьте embedded PostgreSQL.";
   }
 
   const leads = pageResult?.rows ?? [];
-  const filterQs = workflowStatus
-    ? `workflowStatus=${workflowStatus}&`
-    : "";
+  const filterQs = [
+    workflowStatus ? `workflowStatus=${workflowStatus}` : null,
+    `sort=${sort}`,
+    `dir=${dir}`,
+  ]
+    .filter(Boolean)
+    .join("&");
+  const qsPrefix = filterQs ? `${filterQs}&` : "";
+  const statusBaseQs = `sort=${sort}&dir=${dir}`;
 
   return (
     <div className="space-y-[var(--grid-gap)]">
@@ -83,12 +111,16 @@ export default async function StaffHomePage({
         className="flex flex-wrap gap-2"
         aria-label="Фильтр по статусу workflow"
       >
-        <FilterChip href="/staff" active={!workflowStatus} label="Все" />
+        <FilterChip
+          href={`/staff?${statusBaseQs}`}
+          active={!workflowStatus}
+          label="Все"
+        />
         {(Object.keys(WORKFLOW_STATUS_LABELS_RU) as WorkflowStatus[]).map(
           (s) => (
             <FilterChip
               key={s}
-              href={`/staff?workflowStatus=${s}`}
+              href={`/staff?workflowStatus=${s}&${statusBaseQs}`}
               active={workflowStatus === s}
               label={WORKFLOW_STATUS_LABELS_RU[s]}
             />
@@ -103,12 +135,24 @@ export default async function StaffHomePage({
       ) : null}
 
       {!error && pageResult ? (
-        <StaffPaginationNav
+        <StaffListToolbar
+          options={LEAD_SORT_OPTIONS}
+          sort={sort}
+          dir={dir}
+          buildSortHref={(s, d) =>
+            `/staff?${[
+              workflowStatus ? `workflowStatus=${workflowStatus}` : null,
+              `sort=${s}`,
+              `dir=${d}`,
+            ]
+              .filter(Boolean)
+              .join("&")}`
+          }
           page={pageResult.page}
           totalPages={pageResult.totalPages}
           total={pageResult.total}
           pageSize={pageResult.pageSize}
-          buildHref={(p) => `/staff?${filterQs}page=${p}`}
+          buildPageHref={(p) => `/staff?${qsPrefix}page=${p}`}
         />
       ) : null}
 

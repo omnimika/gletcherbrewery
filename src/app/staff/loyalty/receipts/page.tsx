@@ -1,9 +1,13 @@
 import { cookies } from "next/headers";
-import { StaffPaginationNav } from "@/components/staff/pagination-nav";
+import { StaffListToolbar } from "@/components/staff/list-toolbar";
 import { Banner } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/feedback";
 import { getDb } from "@/server/db/client";
-import { listPendingReceipts } from "@/server/loyalty/receipts";
+import { parseStaffSort } from "@/lib/staff-sort";
+import {
+  listPendingReceipts,
+  STAFF_RECEIPT_SORT_FIELDS,
+} from "@/server/loyalty/receipts";
 import {
   isStaffAuthConfigured,
   STAFF_COOKIE_NAME,
@@ -16,10 +20,15 @@ import { ReceiptPhotoPreview } from "./receipt-photo";
 
 export const dynamic = "force-dynamic";
 
+const RECEIPT_SORT_OPTIONS = [
+  { key: "createdAt", label: "Дата" },
+  { key: "purchaseAt", label: "Покупка" },
+] as const;
+
 export default async function StaffLoyaltyReceiptsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{ page?: string; sort?: string; dir?: string }>;
 }) {
   if (!isStaffAuthConfigured()) {
     return (
@@ -35,6 +44,12 @@ export default async function StaffLoyaltyReceiptsPage({
   }
 
   const sp = await searchParams;
+  const { sort, dir } = parseStaffSort(
+    sp,
+    STAFF_RECEIPT_SORT_FIELDS,
+    "createdAt",
+    "desc",
+  );
   let pageResult: Awaited<ReturnType<typeof listPendingReceipts>> | null =
     null;
   let error: string | null = null;
@@ -42,12 +57,15 @@ export default async function StaffLoyaltyReceiptsPage({
     pageResult = await listPendingReceipts(getDb(), {
       page: sp.page,
       pageSize: 50,
+      sort,
+      dir,
     });
   } catch {
     error = "База недоступна — проверьте embedded PostgreSQL.";
   }
 
   const rows = pageResult?.rows ?? [];
+  const sortQs = `sort=${sort}&dir=${dir}`;
 
   return (
     <div className="space-y-[var(--grid-gap)]">
@@ -56,7 +74,8 @@ export default async function StaffLoyaltyReceiptsPage({
       </h1>
       <p className="type-body-small max-w-2xl text-gletcher-navy/70">
         Очередь staff: ручной fallback и будущие QR/OCR. Одобрение пишет{" "}
-        <code className="text-xs">check_earn</code> в ledger (5%).
+        <code className="text-xs">check_earn</code> в ledger (5%). По умолчанию —
+        от новых к старым.
       </p>
 
       <ManualReceiptForm />
@@ -68,12 +87,18 @@ export default async function StaffLoyaltyReceiptsPage({
       ) : null}
 
       {!error && pageResult ? (
-        <StaffPaginationNav
+        <StaffListToolbar
+          options={RECEIPT_SORT_OPTIONS}
+          sort={sort}
+          dir={dir}
+          buildSortHref={(s, d) =>
+            `/staff/loyalty/receipts?sort=${s}&dir=${d}`
+          }
           page={pageResult.page}
           totalPages={pageResult.totalPages}
           total={pageResult.total}
           pageSize={pageResult.pageSize}
-          buildHref={(p) => `/staff/loyalty/receipts?page=${p}`}
+          buildPageHref={(p) => `/staff/loyalty/receipts?${sortQs}&page=${p}`}
         />
       ) : null}
 

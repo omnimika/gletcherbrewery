@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { StaffPaginationNav } from "@/components/staff/pagination-nav";
+import { StaffListToolbar } from "@/components/staff/list-toolbar";
 import { Banner } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/feedback";
 import { getDb } from "@/server/db/client";
@@ -7,9 +7,11 @@ import {
   AGENT_APP_STATUS_LABELS_RU,
   isAgentAppStatus,
 } from "@/lib/loyalty/agent-application-status";
+import { parseStaffSort } from "@/lib/staff-sort";
 import {
   listAgentApplicationEvents,
   listAgentApplicationsForStaff,
+  STAFF_AGENT_SORT_FIELDS,
 } from "@/server/loyalty/agent-applications";
 import {
   isStaffAuthConfigured,
@@ -21,10 +23,20 @@ import { AgentActions } from "./agent-actions";
 
 export const dynamic = "force-dynamic";
 
+const AGENT_SORT_OPTIONS = [
+  { key: "createdAt", label: "Дата" },
+  { key: "city", label: "Город" },
+] as const;
+
 export default async function StaffLoyaltyAgentsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ status?: string; page?: string }>;
+  searchParams: Promise<{
+    status?: string;
+    page?: string;
+    sort?: string;
+    dir?: string;
+  }>;
 }) {
   if (!isStaffAuthConfigured()) {
     return (
@@ -42,6 +54,12 @@ export default async function StaffLoyaltyAgentsPage({
   const sp = await searchParams;
   const statusFilter =
     sp.status && isAgentAppStatus(sp.status) ? sp.status : null;
+  const { sort, dir } = parseStaffSort(
+    sp,
+    STAFF_AGENT_SORT_FIELDS,
+    "createdAt",
+    "desc",
+  );
 
   let pageResult: Awaited<
     ReturnType<typeof listAgentApplicationsForStaff>
@@ -52,6 +70,8 @@ export default async function StaffLoyaltyAgentsPage({
       status: statusFilter,
       page: sp.page,
       pageSize: 50,
+      sort,
+      dir,
     });
   } catch {
     error = "База недоступна — проверьте embedded PostgreSQL.";
@@ -74,7 +94,15 @@ export default async function StaffLoyaltyAgentsPage({
     }),
   );
 
-  const filterQs = statusFilter ? `status=${statusFilter}&` : "";
+  const filterQs = [
+    statusFilter ? `status=${statusFilter}` : null,
+    `sort=${sort}`,
+    `dir=${dir}`,
+  ]
+    .filter(Boolean)
+    .join("&");
+  const qsPrefix = filterQs ? `${filterQs}&` : "";
+  const statusBaseQs = `sort=${sort}&dir=${dir}`;
 
   return (
     <div className="space-y-[var(--grid-gap)]">
@@ -83,11 +111,14 @@ export default async function StaffLoyaltyAgentsPage({
       </h1>
       <p className="type-body-small max-w-2xl text-gletcher-navy/70">
         Очередь «Стать агентом»: девять статусов Airtable, audit событий. Решение
-        не начисляет баллы автоматически.
+        не начисляет баллы автоматически. По умолчанию — от новых к старым.
       </p>
 
       <div className="flex flex-wrap gap-2">
-        <FilterChip href="/staff/loyalty/agents" active={!statusFilter}>
+        <FilterChip
+          href={`/staff/loyalty/agents?${statusBaseQs}`}
+          active={!statusFilter}
+        >
           Все
         </FilterChip>
         {(
@@ -101,7 +132,7 @@ export default async function StaffLoyaltyAgentsPage({
         ).map((s) => (
           <FilterChip
             key={s}
-            href={`/staff/loyalty/agents?status=${s}`}
+            href={`/staff/loyalty/agents?status=${s}&${statusBaseQs}`}
             active={statusFilter === s}
           >
             {AGENT_APP_STATUS_LABELS_RU[s]}
@@ -116,12 +147,24 @@ export default async function StaffLoyaltyAgentsPage({
       ) : null}
 
       {!error && pageResult ? (
-        <StaffPaginationNav
+        <StaffListToolbar
+          options={AGENT_SORT_OPTIONS}
+          sort={sort}
+          dir={dir}
+          buildSortHref={(s, d) =>
+            `/staff/loyalty/agents?${[
+              statusFilter ? `status=${statusFilter}` : null,
+              `sort=${s}`,
+              `dir=${d}`,
+            ]
+              .filter(Boolean)
+              .join("&")}`
+          }
           page={pageResult.page}
           totalPages={pageResult.totalPages}
           total={pageResult.total}
           pageSize={pageResult.pageSize}
-          buildHref={(p) => `/staff/loyalty/agents?${filterQs}page=${p}`}
+          buildPageHref={(p) => `/staff/loyalty/agents?${qsPrefix}page=${p}`}
         />
       ) : null}
 
@@ -144,7 +187,11 @@ export default async function StaffLoyaltyAgentsPage({
                       </span>
                     </p>
                     <p className="type-caption mt-1 text-gletcher-navy/65">
-                      {application.city} · {application.venueType} ·{" "}
+                      {application.createdAt
+                        .toISOString()
+                        .replace("T", " ")
+                        .slice(0, 16)}{" "}
+                      · {application.city} · {application.venueType} ·{" "}
                       {application.phone}
                     </p>
                     <p className="mt-2 text-sm">

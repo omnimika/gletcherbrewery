@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { randomUUID } from "node:crypto";
 import type { AppDb } from "@/server/db/client";
 import {
@@ -13,15 +13,12 @@ import {
 import type { StagingRowDraft } from "./types";
 
 export type IdentityResolution = {
-  /** source record id → target uuid for users that will be/were applied */
   userTargets: Map<string, string>;
-  /** emails already claimed in this batch (normalized) */
   claimedEmails: Map<string, string>;
 };
 
 /**
- * Resolve member identities for apply: reuse existing airtable/email rows,
- * allocate new UUIDs for new members. Quarantined user rows are skipped.
+ * Resolve member identities for apply (batched; OK for thousands of users).
  */
 export async function resolveMemberIdentities(
   db: AppDb,
@@ -36,60 +33,103 @@ export async function resolveMemberIdentities(
       d.sourceTableId === AIRTABLE_LOYALTY_TABLES.users &&
       d.parseStatus === "ok",
   );
+  if (!userDrafts.length) return { userTargets, claimedEmails };
 
-  for (const d of userDrafts) {
+  const recordIds = userDrafts.map((d) => d.sourceRecordId);
+  const emails = userDrafts.map((d) => {
     const fields = (d.rawJson.fields ?? {}) as Record<string, unknown>;
-    const emailRaw = String(fields.email ?? "");
-    const email = normalizeMemberEmail(emailRaw);
+    return normalizeMemberEmail(String(fields.email ?? ""));
+  });
 
-    const existingMap = await db
+  async function chunkedInArray<T>(
+    ids: string[],
+    run: (slice: string[]) => Promise<T[]>,
+  ): Promise<T[]> {
+    const out: T[] = [];
+    const size = 400;
+    for (let i = 0; i < ids.length; i += size) {
+      const slice = ids.slice(i, i + size);
+      if (!slice.length) continue;
+      out.push(...(await run(slice)));
+    }
+    return out;
+  }
+
+  const existingMaps = await chunkedInArray(recordIds, (slice) =>
+    db
       .select()
       .from(loyaltyImportIdentityMap)
       .where(
         and(
-          eq(loyaltyImportIdentityMap.sourceSystem, LOYALTY_IMPORT_SOURCE_SYSTEM),
+          eq(
+            loyaltyImportIdentityMap.sourceSystem,
+            LOYALTY_IMPORT_SOURCE_SYSTEM,
+          ),
           eq(loyaltyImportIdentityMap.tableId, AIRTABLE_LOYALTY_TABLES.users),
-          eq(loyaltyImportIdentityMap.recordId, d.sourceRecordId),
+          inArray(loyaltyImportIdentityMap.recordId, slice),
         ),
-      )
-      .limit(1);
-    if (existingMap[0]) {
-      userTargets.set(d.sourceRecordId, existingMap[0].targetUuid);
-      claimedEmails.set(email, d.sourceRecordId);
-      continue;
-    }
+      ),
+  );
+  const mapByRecord = new Map(
+    existingMaps.map((r) => [r.recordId, r.targetUuid] as const),
+  );
 
-    const byAirtable = await db
-      .select({ id: loyaltyMembers.id })
-      .from(loyaltyMembers)
-      .where(eq(loyaltyMembers.airtableRecordId, d.sourceRecordId))
-      .limit(1);
-    if (byAirtable[0]) {
-      userTargets.set(d.sourceRecordId, byAirtable[0].id);
-      claimedEmails.set(email, d.sourceRecordId);
-      continue;
-    }
-
-    const byEmail = await db
+  const byAirtable = await chunkedInArray(recordIds, (slice) =>
+    db
       .select({
         id: loyaltyMembers.id,
         airtableRecordId: loyaltyMembers.airtableRecordId,
       })
       .from(loyaltyMembers)
-      .where(eq(loyaltyMembers.emailNormalized, email))
-      .limit(1);
-    if (byEmail[0]) {
-      userTargets.set(d.sourceRecordId, byEmail[0].id);
+      .where(inArray(loyaltyMembers.airtableRecordId, slice)),
+  );
+  const memberByAirtable = new Map(
+    byAirtable
+      .filter((r) => r.airtableRecordId)
+      .map((r) => [r.airtableRecordId!, r.id] as const),
+  );
+
+  const byEmail = await chunkedInArray(emails, (slice) =>
+    db
+      .select({
+        id: loyaltyMembers.id,
+        emailNormalized: loyaltyMembers.emailNormalized,
+      })
+      .from(loyaltyMembers)
+      .where(inArray(loyaltyMembers.emailNormalized, slice)),
+  );
+  const memberByEmail = new Map(
+    byEmail.map((r) => [r.emailNormalized, r.id] as const),
+  );
+
+  for (const d of userDrafts) {
+    const fields = (d.rawJson.fields ?? {}) as Record<string, unknown>;
+    const email = normalizeMemberEmail(String(fields.email ?? ""));
+
+    const fromMap = mapByRecord.get(d.sourceRecordId);
+    if (fromMap) {
+      userTargets.set(d.sourceRecordId, fromMap);
       claimedEmails.set(email, d.sourceRecordId);
       continue;
     }
-
+    const fromAirtable = memberByAirtable.get(d.sourceRecordId);
+    if (fromAirtable) {
+      userTargets.set(d.sourceRecordId, fromAirtable);
+      claimedEmails.set(email, d.sourceRecordId);
+      continue;
+    }
+    const fromEmail = memberByEmail.get(email);
+    if (fromEmail) {
+      userTargets.set(d.sourceRecordId, fromEmail);
+      claimedEmails.set(email, d.sourceRecordId);
+      continue;
+    }
     const id = randomUUID();
     userTargets.set(d.sourceRecordId, id);
     claimedEmails.set(email, d.sourceRecordId);
-    void batchId;
   }
 
+  void batchId;
   return { userTargets, claimedEmails };
 }
 
@@ -125,4 +165,48 @@ export async function upsertIdentityMap(
     targetUuid: input.targetUuid,
   });
   return input.targetUuid;
+}
+
+export async function bulkUpsertIdentityMaps(
+  db: AppDb,
+  batchId: string,
+  rows: Array<{
+    tableId: string;
+    recordId: string;
+    entityKind: string;
+    targetUuid: string;
+  }>,
+) {
+  if (!rows.length) return 0;
+  const recordIds = rows.map((r) => r.recordId);
+  const existing = await db
+    .select()
+    .from(loyaltyImportIdentityMap)
+    .where(
+      and(
+        eq(loyaltyImportIdentityMap.sourceSystem, LOYALTY_IMPORT_SOURCE_SYSTEM),
+        inArray(loyaltyImportIdentityMap.recordId, recordIds),
+      ),
+    );
+  const have = new Set(
+    existing
+      .filter((e) => rows.some((r) => r.tableId === e.tableId && r.recordId === e.recordId))
+      .map((e) => `${e.tableId}:${e.recordId}`),
+  );
+  const toInsert = rows.filter((r) => !have.has(`${r.tableId}:${r.recordId}`));
+  const chunk = 200;
+  for (let i = 0; i < toInsert.length; i += chunk) {
+    const slice = toInsert.slice(i, i + chunk);
+    await db.insert(loyaltyImportIdentityMap).values(
+      slice.map((r) => ({
+        batchId,
+        sourceSystem: LOYALTY_IMPORT_SOURCE_SYSTEM,
+        tableId: r.tableId,
+        recordId: r.recordId,
+        entityKind: r.entityKind,
+        targetUuid: r.targetUuid,
+      })),
+    );
+  }
+  return toInsert.length;
 }
