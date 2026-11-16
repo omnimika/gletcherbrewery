@@ -12,6 +12,13 @@ import {
   type MapCopy,
 } from "@/content/map";
 import {
+  brandedStoresGeoJson,
+  MAP_BRANDED_LAYER_ID,
+  MAP_BRANDED_SOURCE_ID,
+  MAP_BRANDED_STORE_OPTIONS,
+  type MapBrandedStorePoint,
+} from "@/content/map-branded-stores";
+import {
   buildMapLayerFilter,
   listMapChainOptions,
 } from "@/components/map/map-layer-filters";
@@ -26,6 +33,7 @@ import {
   GEOLOCATE_MIN_ZOOM,
   GEOLOCATE_ZOOM_STEP,
 } from "@/components/map/geolocate-zoom";
+import { ensureRetailPointLayersVisible } from "@/components/map/ensure-retail-point-layers";
 import styles from "./sales-map.module.css";
 
 function escapeHtml(value: string) {
@@ -111,6 +119,7 @@ export function SalesMap({
   accessToken,
   chainTitlesWithAssortment,
   beersByChain,
+  brandedStorePoints,
 }: {
   copy: MapCopy;
   accessToken: string | undefined;
@@ -118,6 +127,8 @@ export function SalesMap({
   chainTitlesWithAssortment: readonly string[];
   /** chain title → beer panel keys available in CRM assortment. */
   beersByChain: Readonly<Record<string, readonly string[]>>;
+  /** CRM (or fallback) pins for фирменные магазины / locals-abroad. */
+  brandedStorePoints: readonly MapBrandedStorePoint[];
 }) {
   const mapNode = useRef<HTMLDivElement | null>(null);
   const frameNode = useRef<HTMLDivElement | null>(null);
@@ -135,6 +146,9 @@ export function SalesMap({
     () => new Set(),
   );
   const [selectedChains, setSelectedChains] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [selectedBranded, setSelectedBranded] = useState<Set<string>>(
     () => new Set(),
   );
   const [ready, setReady] = useState(false);
@@ -187,11 +201,22 @@ export function SalesMap({
   }, [seriesOrder]);
 
   const applyFilters = useCallback(
-    (beers: ReadonlySet<string>, chains: ReadonlySet<string>) => {
+    (
+      beers: ReadonlySet<string>,
+      chains: ReadonlySet<string>,
+      branded: ReadonlySet<string>,
+    ) => {
       const map = mapRef.current;
       if (!map) return;
+
+      // Branded-only selection hides retail layers; empty = show all retail.
+      const hideRetail = branded.size > 0 && chains.size === 0;
       for (const layerId of MAP_LAYERS) {
         if (!map.getLayer(layerId)) continue;
+        if (hideRetail) {
+          map.setLayoutProperty(layerId, "visibility", "none");
+          continue;
+        }
         const { filter, visible } = buildMapLayerFilter(
           layerId,
           beers,
@@ -203,6 +228,21 @@ export function SalesMap({
           "visibility",
           visible ? "visible" : "none",
         );
+      }
+
+      if (!map.getLayer(MAP_BRANDED_LAYER_ID)) return;
+      if (branded.size === 0 && chains.size === 0) {
+        map.setFilter(MAP_BRANDED_LAYER_ID, null);
+        map.setLayoutProperty(MAP_BRANDED_LAYER_ID, "visibility", "visible");
+      } else if (branded.size === 0) {
+        map.setLayoutProperty(MAP_BRANDED_LAYER_ID, "visibility", "none");
+      } else {
+        map.setFilter(MAP_BRANDED_LAYER_ID, [
+          "in",
+          ["get", "id"],
+          ["literal", [...branded]],
+        ] as mapboxgl.FilterSpecification);
+        map.setLayoutProperty(MAP_BRANDED_LAYER_ID, "visibility", "visible");
       }
     },
     [],
@@ -244,9 +284,37 @@ export function SalesMap({
 
     const onLoad = () => {
       if (cancelled) return;
+
+      // Studio may leave layers as symbol without sprite icons (hmel-i-solod).
+      try {
+        ensureRetailPointLayersVisible(map, MAP_LAYERS);
+      } catch {
+        // Keep map usable even if a style layer cannot be rebuilt.
+      }
+
+      if (!map.getSource(MAP_BRANDED_SOURCE_ID)) {
+        map.addSource(MAP_BRANDED_SOURCE_ID, {
+          type: "geojson",
+          data: brandedStoresGeoJson(brandedStorePoints),
+        });
+      }
+      if (!map.getLayer(MAP_BRANDED_LAYER_ID)) {
+        map.addLayer({
+          id: MAP_BRANDED_LAYER_ID,
+          type: "circle",
+          source: MAP_BRANDED_SOURCE_ID,
+          paint: {
+            "circle-radius": 9,
+            "circle-color": "#e5373c",
+            "circle-stroke-width": 2,
+            "circle-stroke-color": "#ffffff",
+          },
+        });
+      }
+
       setReady(true);
       setError(null);
-      applyFilters(activeBeers, selectedChains);
+      applyFilters(activeBeers, selectedChains, selectedBranded);
       map.resize();
 
       if (geocoderHost) {
@@ -274,8 +342,12 @@ export function SalesMap({
     map.on("error", onError);
 
     map.on("click", (e) => {
+      const queryLayers = [
+        ...MAP_LAYERS,
+        ...(map.getLayer(MAP_BRANDED_LAYER_ID) ? [MAP_BRANDED_LAYER_ID] : []),
+      ];
       const features = map.queryRenderedFeatures(e.point, {
-        layers: [...MAP_LAYERS],
+        layers: queryLayers,
       });
       if (!features.length) return;
       e.originalEvent?.stopPropagation?.();
@@ -307,12 +379,17 @@ export function SalesMap({
     });
 
     map.on("dblclick", (e) => {
+      const queryLayers = [
+        ...MAP_LAYERS,
+        ...(map.getLayer(MAP_BRANDED_LAYER_ID) ? [MAP_BRANDED_LAYER_ID] : []),
+      ];
       const features = map.queryRenderedFeatures(e.point, {
-        layers: [...MAP_LAYERS],
+        layers: queryLayers,
       });
       if (features.length === 0) {
         setSelectedBeers(new Set());
         setSelectedChains(new Set());
+        setSelectedBranded(new Set());
       }
     });
 
@@ -341,6 +418,7 @@ export function SalesMap({
   }, [
     accessToken,
     applyFilters,
+    brandedStorePoints,
     copy.assortmentLabel,
     copy.geocoderPlaceholder,
     copy.loadError,
@@ -349,8 +427,8 @@ export function SalesMap({
 
   useEffect(() => {
     if (!ready) return;
-    applyFilters(activeBeers, selectedChains);
-  }, [activeBeers, selectedChains, ready, applyFilters]);
+    applyFilters(activeBeers, selectedChains, selectedBranded);
+  }, [activeBeers, selectedChains, selectedBranded, ready, applyFilters]);
 
   const toggleBeer = (key: string) => {
     if (enabledBeers && !enabledBeers.has(key)) return;
@@ -371,8 +449,18 @@ export function SalesMap({
     });
   };
 
-  const clearChainFilters = () => {
+  const toggleBranded = (id: string) => {
+    setSelectedBranded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const clearLeftFilters = () => {
     setSelectedChains(new Set());
+    setSelectedBranded(new Set());
   };
 
   const requestFullscreen = () => {
@@ -420,7 +508,10 @@ export function SalesMap({
         // Immediate feedback (geocoder-like), then refine to ≥2 markers.
         map.easeTo({ center, zoom: Math.max(map.getZoom(), 10), duration: 500 });
 
-        void resolveGeolocateZoom(map, center, MAP_LAYERS)
+        void resolveGeolocateZoom(map, center, [
+          ...MAP_LAYERS,
+          ...(map.getLayer(MAP_BRANDED_LAYER_ID) ? [MAP_BRANDED_LAYER_ID] : []),
+        ])
           .then((zoom) => {
             map.easeTo({ center, zoom, duration: 900 });
           })
@@ -506,56 +597,105 @@ export function SalesMap({
 
           <aside
             className={styles.chainPanel}
-            aria-label={copy.chainFilterTitle}
+            aria-label={copy.filterTitle}
           >
             <div className={styles.filterHeading}>
               <span className={styles.filterHeadingLabel}>
-                {copy.chainFilterTitle}
+                {copy.filterTitle}
               </span>
-              {selectedChains.size > 0 ? (
+              {selectedChains.size > 0 || selectedBranded.size > 0 ? (
                 <button
                   type="button"
                   className={styles.clearBtn}
-                  onClick={clearChainFilters}
+                  onClick={clearLeftFilters}
                 >
                   {copy.clearFiltersLabel}
                 </button>
               ) : null}
             </div>
-            <div
-              className={styles.chainGrid}
-              role="group"
-              aria-label={copy.chainFilterTitle}
-            >
-              {chainOptions.map((chain) => {
-                const active = selectedChains.has(chain.id);
-                return (
-                  <button
-                    key={chain.id}
-                    type="button"
-                    className={`${styles.chainBtn}${active ? ` ${styles.chainBtnActive}` : ""}`}
-                    aria-pressed={active}
-                    title={chain.label}
-                    onClick={() => toggleChain(chain.id)}
-                  >
-                    {chain.logoSrc ? (
-                      // eslint-disable-next-line @next/next/no-img-element -- local filter thumbs
-                      <img
-                        src={chain.logoSrc}
-                        alt=""
-                        className={styles.chainImg}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : (
-                      <span className={styles.chainFallback}>
-                        {chain.label.slice(0, 2)}
+
+            <div className={styles.filterSection}>
+              <span className={styles.filterSectionLabel}>
+                {copy.brandedFilterTitle}
+              </span>
+              <div
+                className={styles.brandedGrid}
+                role="group"
+                aria-label={copy.brandedFilterTitle}
+              >
+                {MAP_BRANDED_STORE_OPTIONS.map((store) => {
+                  const active = selectedBranded.has(store.id);
+                  return (
+                    <button
+                      key={store.id}
+                      type="button"
+                      className={`${styles.chainBtn}${active ? ` ${styles.chainBtnActive}` : ""}`}
+                      aria-pressed={active}
+                      title={store.filterLabel}
+                      onClick={() => toggleBranded(store.id)}
+                    >
+                      {store.logoSrc ? (
+                        // eslint-disable-next-line @next/next/no-img-element -- local filter thumbs
+                        <img
+                          src={store.logoSrc}
+                          alt=""
+                          className={styles.chainImg}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <span className={styles.chainFallback}>
+                          {store.filterLabel.slice(0, 2)}
+                        </span>
+                      )}
+                      <span className={styles.chainName}>
+                        {store.filterLabel}
                       </span>
-                    )}
-                    <span className={styles.chainName}>{chain.label}</span>
-                  </button>
-                );
-              })}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className={styles.filterSectionGrow}>
+              <span className={styles.filterSectionLabel}>
+                {copy.chainFilterTitle}
+              </span>
+              <div
+                className={styles.chainGrid}
+                role="group"
+                aria-label={copy.chainFilterTitle}
+              >
+                {chainOptions.map((chain) => {
+                  const active = selectedChains.has(chain.id);
+                  return (
+                    <button
+                      key={chain.id}
+                      type="button"
+                      className={`${styles.chainBtn}${active ? ` ${styles.chainBtnActive}` : ""}`}
+                      aria-pressed={active}
+                      title={chain.label}
+                      onClick={() => toggleChain(chain.id)}
+                    >
+                      {chain.logoSrc ? (
+                        // eslint-disable-next-line @next/next/no-img-element -- local filter thumbs
+                        <img
+                          src={chain.logoSrc}
+                          alt=""
+                          className={styles.chainImg}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <span className={styles.chainFallback}>
+                          {chain.label.slice(0, 2)}
+                        </span>
+                      )}
+                      <span className={styles.chainName}>{chain.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </aside>
 

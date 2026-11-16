@@ -120,6 +120,13 @@ export const LAYER_SOURCE_FILES: readonly SourceFileRef[] = [
     quality: "ok",
     note: "Scraped 10.11 xmel-solod.ru/adress Tilda arMapMarkers (86 map pins; page lists ~126 addresses); tileset omnicoremaps.gletcher-hmel-i-solod",
   },
+  {
+    layerId: "locals-abroad",
+    relativePath: "tmp/mapbox-sources/locals-abroad.geojson",
+    format: "geojson",
+    quality: "provisional",
+    note: "Own branded stores (Gletcher/SVAM). Mapbox tileset empty + style layer not in Studio yet — public /map uses CRM GeoJSON overlay until publish.",
+  },
 ] as const;
 
 /** Prefer chain-layer-registry; re-export for patch import path. */

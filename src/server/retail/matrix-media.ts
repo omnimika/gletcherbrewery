@@ -36,6 +36,7 @@ const CHAIN_LOGO_BY_TITLE: Record<string, string> = {
   "EuroSPAR (Калининград)": `${LOGO_BASE}/spar-sm.svg`,
   "Яблоко (Крым)": `${LOGO_BASE}/yabloko-sm.svg`,
   "Ярче!": `${LOGO_BASE}/yarche-sm.svg`,
+  "Gletcher Brewery": "/staff/gletcher-logo-simple.svg",
 };
 
 /** Catalog product slug → bierdeckel PNG (best available match). */

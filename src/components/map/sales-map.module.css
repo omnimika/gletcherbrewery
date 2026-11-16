@@ -331,6 +331,44 @@
   text-transform: uppercase;
 }
 
+.filterSection {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: clamp(2px, 0.45vh, 6px);
+  min-height: 0;
+}
+
+.filterSectionGrow {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: clamp(2px, 0.45vh, 6px);
+  min-height: 0;
+}
+
+.filterSectionLabel {
+  color: #0d0f49;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.brandedGrid {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: clamp(2px, 0.45vh, 6px);
+  width: 100%;
+}
+
+.brandedGrid .chainBtn {
+  flex: 0 0 auto;
+  min-height: clamp(28px, 3.6vh, 36px);
+}
+
 .clearBtn {
   padding: 2px 8px;
   border: 1px solid #0d0f49;

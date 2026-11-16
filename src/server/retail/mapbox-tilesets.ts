@@ -22,7 +22,9 @@ export type RetailMapLayerId =
   | "aromatny-mir"
   | "maksi"
   | "yarche"
-  | "hmel-i-solod";
+  | "hmel-i-solod"
+  /** Own stores / abroad — tileset+Studio style still empty (CRM GeoJSON overlay). */
+  | "locals-abroad";
 
 export type RetailTilesetKind = "mts" | "studio";
 

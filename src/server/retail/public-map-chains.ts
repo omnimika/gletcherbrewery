@@ -11,6 +11,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { AppDb } from "@/server/db/client";
 import { getAssortmentMatrix } from "@/server/retail/assortment";
+import { MAP_BRANDED_MAPBOX_LAYER_ID } from "@/content/map-branded-stores";
 import { bindingForChainTitle } from "@/server/retail/chain-layer-registry";
 import { productTokenForSlug } from "@/server/retail/product-tokens";
 import {
@@ -45,6 +46,8 @@ export async function loadPublicMapAssortment(
 
       for (const c of matrix.chains) {
         if (c.availableCount <= 0 || c.mapLayerId == null) continue;
+        // Branded / own stores use the separate «Фирменные магазины» panel.
+        if (c.mapLayerId === MAP_BRANDED_MAPBOX_LAYER_ID) continue;
         const tokens: string[] = [];
         for (const [slug, on] of Object.entries(c.products)) {
           if (!on || isAssortmentSkuOutOfStock(slug)) continue;
@@ -97,7 +100,9 @@ export function loadPublicMapAssortmentFromFixture(
     const cols = line.split(",");
     const title = (cols[0] ?? "").trim();
     if (!title) continue;
-    if (!bindingForChainTitle(title)?.layerId) continue;
+    const binding = bindingForChainTitle(title);
+    if (!binding?.layerId) continue;
+    if (binding.layerId === MAP_BRANDED_MAPBOX_LAYER_ID) continue;
 
     const tokens: string[] = [];
     for (let i = 0; i < ASSORTMENT_COLUMNS.length; i += 1) {

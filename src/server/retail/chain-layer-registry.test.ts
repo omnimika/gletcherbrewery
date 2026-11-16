@@ -45,6 +45,12 @@ describe("chain-layer-registry", () => {
     assert.equal(resolveChainMapStatus("ХМЕЛЬ И СОЛОД", 5), "on_map");
   });
 
+  it("maps branded stores to locals-abroad", () => {
+    assert.equal(bindingForChainTitle("Gletcher Brewery")?.layerId, "locals-abroad");
+    assert.equal(bindingForChainTitle("SVAM Group")?.layerId, "locals-abroad");
+    assert.equal(resolveChainMapStatus("Gletcher Brewery", 1), "on_map");
+  });
+
   it("marks CRM-only chains without a layer", () => {
     assert.equal(bindingForChainTitle("ВКУСВИЛЛ")?.layerId, null);
     assert.equal(resolveChainMapStatus("ВКУСВИЛЛ", 0), "crm_only_empty");
