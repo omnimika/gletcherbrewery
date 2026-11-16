@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/server/db/client";
-import { issueMagicLink } from "@/server/loyalty/magic-link";
+import {
+  isMagicLinkDebugEnabled,
+  issueMagicLink,
+} from "@/server/loyalty/magic-link";
 import {
   deliverMagicLinkEmail,
   getMagicLinkDelivery,
@@ -11,8 +14,8 @@ export const dynamic = "force-dynamic";
 
 /**
  * Request a P1 magic link for member LK.
- * Local spike: LOYALTY_MAGIC_LINK_DEBUG=1 returns verifyUrl (no email).
- * Production email = Yandex Postbox/SMTP — not wired until credentials Confirmed.
+ * Local-only debug (R04): verifyUrl in response when isMagicLinkDebugEnabled().
+ * Production email = SMTP now / Postbox later — never debug on deployment-like hosts.
  */
 export async function POST(request: Request) {
   let email = "";
@@ -41,6 +44,7 @@ export async function POST(request: Request) {
     }
 
     const deliveryMeta = getMagicLinkDelivery();
+    const debugOk = isMagicLinkDebugEnabled();
     const delivered = await deliverMagicLinkEmail({
       to: issued.emailNormalized,
       verifyUrl: issued.verifyUrl,
@@ -52,12 +56,12 @@ export async function POST(request: Request) {
       delivery: deliveryMeta.mode,
       emailSent: delivered.ok && delivered.mode === "smtp",
       expiresAt: issued.expiresAt.toISOString(),
-      ...(deliveryMeta.mode === "debug"
+      ...(debugOk && deliveryMeta.mode === "debug"
         ? {
             verifyUrl: issued.verifyUrl,
             debug: true,
             message:
-              "Письмо не отправляется: включён LOYALTY_MAGIC_LINK_DEBUG. Откройте ссылку ниже.",
+              "Письмо не отправляется: локальный debug. Откройте ссылку ниже.",
           }
         : deliveryMeta.mode === "none"
           ? {

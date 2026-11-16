@@ -3,12 +3,13 @@
  *
  * Env (server-only):
  *   SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM
- *   LOYALTY_MAGIC_LINK_DEBUG=1 → no send; return link in API for local spike
+ *   LOYALTY_MAGIC_LINK_DEBUG=1 → local-only; never on deployment-like hosts (R04)
  *
  * Yandex Postbox typical: host postbox.cloud.yandex.net, port 465.
  */
 
 import nodemailer from "nodemailer";
+import { isMagicLinkDebugEnabled } from "./magic-link";
 
 export type MagicLinkDelivery =
   | { mode: "debug" }
@@ -16,8 +17,8 @@ export type MagicLinkDelivery =
   | { mode: "none"; reason: "smtp_unconfigured" };
 
 /** Strip accidental wrapping quotes from .env values. */
-function envVal(key: string): string {
-  const raw = process.env[key]?.trim() ?? "";
+function envVal(key: string, env: NodeJS.ProcessEnv = process.env): string {
+  const raw = env[key]?.trim() ?? "";
   if (
     (raw.startsWith('"') && raw.endsWith('"')) ||
     (raw.startsWith("'") && raw.endsWith("'"))
@@ -27,14 +28,16 @@ function envVal(key: string): string {
   return raw;
 }
 
-export function getMagicLinkDelivery(): MagicLinkDelivery {
-  if (envVal("LOYALTY_MAGIC_LINK_DEBUG") === "1") {
+export function getMagicLinkDelivery(
+  env: NodeJS.ProcessEnv = process.env,
+): MagicLinkDelivery {
+  if (isMagicLinkDebugEnabled(env)) {
     return { mode: "debug" };
   }
-  const host = envVal("SMTP_HOST");
-  const user = envVal("SMTP_USER");
-  const pass = envVal("SMTP_PASS");
-  const from = envVal("SMTP_FROM");
+  const host = envVal("SMTP_HOST", env);
+  const user = envVal("SMTP_USER", env);
+  const pass = envVal("SMTP_PASS", env);
+  const from = envVal("SMTP_FROM", env);
   if (host && user && pass && from) {
     return { mode: "smtp", from };
   }
@@ -57,9 +60,9 @@ export async function deliverMagicLinkEmail(input: {
   const delivery = getMagicLinkDelivery();
 
   if (delivery.mode === "debug") {
+    // R04: never log the bearer URL.
     console.info(
-      "[loyalty/mail] debug delivery — link not emailed:",
-      input.verifyUrl,
+      "[loyalty/mail] debug delivery — link returned to client only, not emailed",
     );
     return { ok: true, mode: "debug" };
   }

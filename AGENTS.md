@@ -200,9 +200,9 @@ Public acceptance и production cutover остаются отдельными р
    B1–B3 реализованы; M1 map/CRM Owner Accepted 10.11. Их не повторять.
 2. M2-0 inventory/policies и M2-1 ledger/QR/OCR/manual/auth spike реализованы.
    **Row-level migration и full restore ещё Open**; ADR0011 Proposed.
-3. **M2-2 сейчас:** R01/R06/R07 worker/Telegram Done 16.11; **R02 roles Done
-   16.11** (0013 least privilege, WORKER_DATABASE_URL, negative grants). Дальше:
-   lint/tsc baseline, R03–R05 magic-link/receipts, CRM patch concurrency. R01–R12:
+3. **M2-2 сейчас:** R01/R06/R07 + R02 Done 16.11; **R03/R04 magic-link Done
+   16.11** (atomic consume, debug fail-closed). Дальше: lint/tsc baseline, R05
+   receipts, CRM patch concurrency. R01–R12:
    `docs/reviews/2026-11-12-agent-crm-and-migration.md`.
 4. **M2-3:** agent application → staff queue/audit → member result; private
    receipt photo → decision → ledger → кабинет. Потом **M2-4**: persisted
