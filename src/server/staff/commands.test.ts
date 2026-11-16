@@ -18,7 +18,11 @@ describe("staff contracts", () => {
 
   it("limits replayable delivery statuses", () => {
     assert.equal(isReplayableJobStatus("failed"), true);
+    assert.equal(isReplayableJobStatus("blocked_config"), true);
+    assert.equal(isReplayableJobStatus("retry"), true);
+    assert.equal(isReplayableJobStatus("ambiguous"), true);
     assert.equal(isReplayableJobStatus("delivered"), false);
+    assert.equal(isReplayableJobStatus("leased"), false);
     assert.equal(isReplayableJobStatus("cancelled_policy"), false);
     assert.equal(isReplayableJobStatus("pending"), false);
   });

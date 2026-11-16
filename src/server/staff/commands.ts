@@ -1,4 +1,4 @@
-import { and, desc, eq, sql } from "drizzle-orm";
+import { and, desc, eq, inArray, or, sql } from "drizzle-orm";
 import type { AppDb } from "@/server/db/client";
 import {
   deliveryJobs,
@@ -7,6 +7,7 @@ import {
 } from "@/server/db/schema";
 import {
   isReplayableJobStatus,
+  REPLAYABLE_JOB_STATUSES,
   isWorkflowStatus,
   type StaffAction,
   type WorkflowStatus,
@@ -246,42 +247,73 @@ export type ReplayResult =
 /**
  * Controlled manual replay: re-queue a terminal/stuck delivery job.
  * Does not touch Sheets (cancelled_policy) or already-delivered jobs.
+ * R06: conditional UPDATE — active lease / delivered cannot be reset by race.
  */
 export async function replayDeliveryJob(
   db: AppDb,
   jobId: string,
   actor: StaffActor,
 ): Promise<ReplayResult> {
-  const rows = await db
-    .select()
-    .from(deliveryJobs)
-    .where(eq(deliveryJobs.id, jobId))
-    .limit(1);
-  const job = rows[0];
-  if (!job) {
-    return { ok: false, code: "not_found", message: "Delivery job not found" };
-  }
-
-  if (job.destination === "sheets" || job.status === "cancelled_policy") {
-    return {
-      ok: false,
-      code: "not_replayable",
-      message: "Sheets destination is cancelled (152-FZ)",
-    };
-  }
-
-  if (!isReplayableJobStatus(job.status)) {
-    return {
-      ok: false,
-      code: "not_replayable",
-      message: `Job status '${job.status}' cannot be replayed`,
-    };
-  }
-
   const now = new Date();
+  const nowIso = now.toISOString();
 
-  await db.transaction(async (tx) => {
-    await tx
+  return db.transaction(async (tx) => {
+    const rows = await tx
+      .select()
+      .from(deliveryJobs)
+      .where(eq(deliveryJobs.id, jobId))
+      .limit(1)
+      .for("update");
+    const job = rows[0];
+    if (!job) {
+      return { ok: false, code: "not_found", message: "Delivery job not found" };
+    }
+
+    if (job.destination === "sheets" || job.status === "cancelled_policy") {
+      return {
+        ok: false,
+        code: "not_replayable",
+        message: "Sheets destination is cancelled (152-FZ)",
+      };
+    }
+
+    if (job.status === "delivered") {
+      return {
+        ok: false,
+        code: "not_replayable",
+        message: "Job status 'delivered' cannot be replayed",
+      };
+    }
+
+    const leaseActive =
+      job.status === "leased" &&
+      job.leaseExpiresAt != null &&
+      job.leaseExpiresAt.getTime() > now.getTime();
+    if (leaseActive) {
+      return {
+        ok: false,
+        code: "active_lease",
+        message: "Job has an active worker lease; wait for expiry or completion",
+      };
+    }
+
+    const expiredLeased =
+      job.status === "leased" &&
+      job.leaseExpiresAt != null &&
+      job.leaseExpiresAt.getTime() <= now.getTime();
+
+    if (!isReplayableJobStatus(job.status) && !expiredLeased) {
+      return {
+        ok: false,
+        code: "not_replayable",
+        message: `Job status '${job.status}' cannot be replayed`,
+      };
+    }
+
+    const previousStatus = job.status;
+
+    // Atomic fence: status must still be replayable (or expired leased).
+    const updated = await tx
       .update(deliveryJobs)
       .set({
         status: "pending",
@@ -292,7 +324,28 @@ export async function replayDeliveryJob(
         lastError: null,
         updatedAt: now,
       })
-      .where(eq(deliveryJobs.id, jobId));
+      .where(
+        and(
+          eq(deliveryJobs.id, jobId),
+          or(
+            inArray(deliveryJobs.status, [...REPLAYABLE_JOB_STATUSES]),
+            and(
+              eq(deliveryJobs.status, "leased"),
+              sql`${deliveryJobs.leaseExpiresAt} IS NOT NULL`,
+              sql`${deliveryJobs.leaseExpiresAt} <= ${nowIso}::timestamptz`,
+            ),
+          ),
+        ),
+      )
+      .returning();
+
+    if (!updated[0]) {
+      return {
+        ok: false,
+        code: "conflict",
+        message: "Job changed concurrently; refresh and retry",
+      };
+    }
 
     await tx.insert(staffLeadEvents).values({
       submissionId: job.submissionId,
@@ -301,14 +354,14 @@ export async function replayDeliveryJob(
       payload: {
         jobId,
         destination: job.destination,
-        fromStatus: job.status,
+        fromStatus: previousStatus,
         attempts: job.attempts,
       },
       createdAt: now,
     });
-  });
 
-  return { ok: true, jobId, previousStatus: job.status };
+    return { ok: true, jobId, previousStatus };
+  });
 }
 
 export function parseStaffCommandBody(

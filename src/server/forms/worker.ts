@@ -37,6 +37,33 @@ function backoffMs(attempts: number, retryAfterMs?: number): number {
   return base + jitter;
 }
 
+/** Pure claim eligibility (unit-tested). Expired leased are reclaimable. */
+export function isJobClaimableAt(
+  job: {
+    status: string;
+    nextAttemptAt: Date | string;
+    leaseExpiresAt: Date | string | null;
+  },
+  now: Date,
+): boolean {
+  const nextAt = new Date(job.nextAttemptAt).getTime();
+  const leaseExp = job.leaseExpiresAt
+    ? new Date(job.leaseExpiresAt).getTime()
+    : null;
+
+  if (job.status === "pending" || job.status === "retry") {
+    if (nextAt > now.getTime()) return false;
+    if (leaseExp != null && leaseExp >= now.getTime()) return false;
+    return true;
+  }
+
+  if (job.status === "leased") {
+    return leaseExp != null && leaseExp < now.getTime();
+  }
+
+  return false;
+}
+
 export function buildDefaultAdapters(db: AppDb): DeliveryAdapter[] {
   const tg = readTelegramConfigFromEnv();
   const adapters: DeliveryAdapter[] = [];
@@ -81,14 +108,24 @@ async function claimJobs(
   const nowIso = now.toISOString();
 
   return db.transaction(async (tx) => {
+    // R01: reclaim expired leased alongside due pending/retry.
     const candidates = await tx.execute(sql`
       SELECT id::text AS id
       FROM app.delivery_jobs
-      WHERE status IN ('pending', 'retry')
-        AND next_attempt_at <= ${nowIso}::timestamptz
-        AND (
-          lease_expires_at IS NULL
-          OR lease_expires_at < ${nowIso}::timestamptz
+      WHERE (
+          (
+            status IN ('pending', 'retry')
+            AND next_attempt_at <= ${nowIso}::timestamptz
+            AND (
+              lease_expires_at IS NULL
+              OR lease_expires_at < ${nowIso}::timestamptz
+            )
+          )
+          OR (
+            status = 'leased'
+            AND lease_expires_at IS NOT NULL
+            AND lease_expires_at < ${nowIso}::timestamptz
+          )
         )
       ORDER BY next_attempt_at ASC
       LIMIT ${batchSize}
@@ -116,6 +153,10 @@ async function claimJobs(
             or(
               eq(deliveryJobs.status, "pending"),
               eq(deliveryJobs.status, "retry"),
+              and(
+                eq(deliveryJobs.status, "leased"),
+                sql`${deliveryJobs.leaseExpiresAt} < ${nowIso}::timestamptz`,
+              ),
             ),
           ),
         )
@@ -126,6 +167,14 @@ async function claimJobs(
   });
 }
 
+const leaseFence = (jobId: string, leaseToken: string, owner: string) =>
+  and(
+    eq(deliveryJobs.id, jobId),
+    eq(deliveryJobs.leaseToken, leaseToken),
+    eq(deliveryJobs.leaseOwner, owner),
+    eq(deliveryJobs.status, "leased"),
+  );
+
 /** Owner decision 09.11.2026: no lead PII to Google Sheets (152-FZ). */
 async function cancelSheetsJob(
   db: AppDb,
@@ -135,30 +184,7 @@ async function cancelSheetsJob(
   now: Date,
 ): Promise<void> {
   await db.transaction(async (tx) => {
-    const current = await tx
-      .select()
-      .from(deliveryJobs)
-      .where(
-        and(
-          eq(deliveryJobs.id, job.id),
-          eq(deliveryJobs.leaseToken, leaseToken),
-          eq(deliveryJobs.leaseOwner, owner),
-        ),
-      )
-      .limit(1);
-    if (!current[0]) return;
-
-    await tx.insert(deliveryAttempts).values({
-      jobId: job.id,
-      attemptNo: job.attempts + 1,
-      outcome: "cancelled_policy",
-      sanitizedError: "sheets_cancelled_152fz",
-      leaseToken,
-      startedAt: now,
-      finishedAt: new Date(),
-    });
-
-    await tx
+    const fenced = await tx
       .update(deliveryJobs)
       .set({
         status: "cancelled_policy",
@@ -169,36 +195,95 @@ async function cancelSheetsJob(
         leaseExpiresAt: null,
         updatedAt: new Date(),
       })
-      .where(eq(deliveryJobs.id, job.id));
+      .where(leaseFence(job.id, leaseToken, owner))
+      .returning();
+
+    if (!fenced[0]) return; // stale lease — drop
+
+    await tx.insert(deliveryAttempts).values({
+      jobId: job.id,
+      attemptNo: job.attempts + 1,
+      outcome: "cancelled_policy",
+      sanitizedError: "sheets_cancelled_152fz",
+      leaseToken,
+      startedAt: now,
+      finishedAt: new Date(),
+    });
   });
 }
 
-async function finishAttempt(
+/** Exported for fencing tests (stale lease must not finalize). */
+export async function finishAttempt(
   db: AppDb,
   job: typeof deliveryJobs.$inferSelect,
   leaseToken: string,
   owner: string,
   result: DeliveryAttemptResult,
   now: Date,
-): Promise<void> {
+): Promise<{ applied: boolean }> {
   const attemptNo = job.attempts + 1;
+  const fence = leaseFence(job.id, leaseToken, owner);
 
-  await db.transaction(async (tx) => {
-    // Fencing: only the lease holder may finalize.
-    const current = await tx
-      .select()
-      .from(deliveryJobs)
-      .where(
-        and(
-          eq(deliveryJobs.id, job.id),
-          eq(deliveryJobs.leaseToken, leaseToken),
-          eq(deliveryJobs.leaseOwner, owner),
-        ),
-      )
-      .limit(1);
+  return db.transaction(async (tx) => {
+    // R01 fencing: atomic UPDATE WHERE lease — stale ack cannot finalize.
+    let patch: Partial<typeof deliveryJobs.$inferInsert>;
 
-    if (!current[0]) {
-      return; // stale worker — drop
+    if (result.outcome === "delivered") {
+      patch = {
+        status: "delivered",
+        attempts: attemptNo,
+        remoteReference: result.remoteReference,
+        lastError: null,
+        leaseOwner: null,
+        leaseToken: null,
+        leaseExpiresAt: null,
+        updatedAt: new Date(),
+      };
+    } else if (result.outcome === "config_required") {
+      patch = {
+        status: "blocked_config",
+        attempts: attemptNo,
+        lastError: result.sanitizedError,
+        leaseOwner: null,
+        leaseToken: null,
+        leaseExpiresAt: null,
+        updatedAt: new Date(),
+      };
+    } else if (result.outcome === "failed" || attemptNo >= MAX_ATTEMPTS) {
+      patch = {
+        status: "failed",
+        attempts: attemptNo,
+        lastError: result.sanitizedError,
+        leaseOwner: null,
+        leaseToken: null,
+        leaseExpiresAt: null,
+        updatedAt: new Date(),
+      };
+    } else {
+      const delay = backoffMs(
+        attemptNo,
+        result.outcome === "retryable" ? result.retryAfterMs : undefined,
+      );
+      patch = {
+        status: "retry",
+        attempts: attemptNo,
+        nextAttemptAt: new Date(Date.now() + delay),
+        lastError: result.sanitizedError,
+        leaseOwner: null,
+        leaseToken: null,
+        leaseExpiresAt: null,
+        updatedAt: new Date(),
+      };
+    }
+
+    const fenced = await tx
+      .update(deliveryJobs)
+      .set(patch)
+      .where(fence)
+      .returning();
+
+    if (!fenced[0]) {
+      return { applied: false };
     }
 
     await tx.insert(deliveryAttempts).values({
@@ -216,79 +301,13 @@ async function finishAttempt(
       finishedAt: new Date(),
     });
 
-    if (result.outcome === "delivered") {
-      await tx
-        .update(deliveryJobs)
-        .set({
-          status: "delivered",
-          attempts: attemptNo,
-          remoteReference: result.remoteReference,
-          lastError: null,
-          leaseOwner: null,
-          leaseToken: null,
-          leaseExpiresAt: null,
-          updatedAt: new Date(),
-        })
-        .where(eq(deliveryJobs.id, job.id));
-      return;
-    }
-
-    if (result.outcome === "config_required") {
-      await tx
-        .update(deliveryJobs)
-        .set({
-          status: "blocked_config",
-          attempts: attemptNo,
-          lastError: result.sanitizedError,
-          leaseOwner: null,
-          leaseToken: null,
-          leaseExpiresAt: null,
-          updatedAt: new Date(),
-        })
-        .where(eq(deliveryJobs.id, job.id));
-      return;
-    }
-
-    if (result.outcome === "failed" || attemptNo >= MAX_ATTEMPTS) {
-      await tx
-        .update(deliveryJobs)
-        .set({
-          status: "failed",
-          attempts: attemptNo,
-          lastError: result.sanitizedError,
-          leaseOwner: null,
-          leaseToken: null,
-          leaseExpiresAt: null,
-          updatedAt: new Date(),
-        })
-        .where(eq(deliveryJobs.id, job.id));
-      return;
-    }
-
-    // retryable or ambiguous → retry with backoff (at-least-once)
-    const delay = backoffMs(
-      attemptNo,
-      result.outcome === "retryable" ? result.retryAfterMs : undefined,
-    );
-    await tx
-      .update(deliveryJobs)
-      .set({
-        status: "retry",
-        attempts: attemptNo,
-        nextAttemptAt: new Date(Date.now() + delay),
-        lastError: result.sanitizedError,
-        leaseOwner: null,
-        leaseToken: null,
-        leaseExpiresAt: null,
-        updatedAt: new Date(),
-      })
-      .where(eq(deliveryJobs.id, job.id));
+    return { applied: true };
   });
 }
 
 export async function processDeliveryBatch(
   options: WorkerLoopOptions,
-): Promise<{ processed: number; results: { jobId: string; outcome: string }[] }> {
+): Promise<{ processed: number; results: { jobId: string; outcome: string; applied?: boolean }[] }> {
   const owner = options.owner ?? `worker-${process.pid}`;
   const leaseToken = randomUUID();
   const now = options.now?.() ?? new Date();
@@ -305,7 +324,7 @@ export async function processDeliveryBatch(
     now,
   );
 
-  const results: { jobId: string; outcome: string }[] = [];
+  const results: { jobId: string; outcome: string; applied?: boolean }[] = [];
 
   for (const job of claimed) {
     if (job.destination === "sheets") {
@@ -330,8 +349,19 @@ export async function processDeliveryBatch(
         attempts: job.attempts,
       });
     }
-    await finishAttempt(options.db, job, leaseToken, owner, result, now);
-    results.push({ jobId: job.id, outcome: result.outcome });
+    const { applied } = await finishAttempt(
+      options.db,
+      job,
+      leaseToken,
+      owner,
+      result,
+      now,
+    );
+    results.push({
+      jobId: job.id,
+      outcome: applied ? result.outcome : "stale_lease_dropped",
+      applied,
+    });
   }
 
   return { processed: claimed.length, results };

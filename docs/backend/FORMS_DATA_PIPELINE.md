@@ -110,10 +110,11 @@ migration не нужна для анонимной contact формы и staff 
 
 ## Worker и external semantics
 
-Ниже целевой контракт. **Implementation gap12.11:** expired leased сейчас не
-восстанавливаются; finalize/replay имеют check-then-write races. Accepted ADR0007
-не закрывает эти дефекты. M2-2 должен доказать recovery/fencing на PostgreSQL,
-прежде чем расширять worker на member events.
+Ниже целевой контракт. **R01/R06/R07 closed 16.11 (non-prod):** claim reclaim
+expired `leased`; finalize/cancel — atomic UPDATE WHERE lease owner+token+status;
+replay — row lock + conditional status (active lease/delivered blocked); Telegram
+HTML fit ≤4096 with stable ID+CRM link, `retry_after`, request+body deadline.
+Remaining M2-2: R02 roles, R03–R05 loyalty races, CRM patch concurrency.
 
 
 - Outbox lives в PostgreSQL, не в process memory/Promise после HTTP response.

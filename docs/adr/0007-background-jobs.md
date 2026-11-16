@@ -34,13 +34,12 @@ remote side effect. После accepted-but-timeout возможна повто�
 Telegram — явно выбранная duplicate/ambiguous policy. Не маркировать job
 delivered только потому, что запрос начал отправляться.
 
-## Implementation gaps12.11
+## Implementation status 16.11
 
-Accepted ADR фиксирует архитектуру, но не отменяет дефекты реализации.
-Expired leased jobs сейчас не подбираются; finalize/replay check-then-write
-не обеспечивает нужный fencing. Отдельные worker credentials пока не выбраны
-runner (он берёт DATABASE_URL app). M2-2 закрывает это recovery/atomic transitions/
-role boundary tests. [Ревью R01/R02/R06/R07](../reviews/2026-11-12-agent-crm-and-migration.md).
+R01/R06/R07 closed in non-prod code: expired leased reclaim, atomic lease fence
+on finalize, conditional replay, Telegram length/retry_after/body deadline.
+**Still open (R02):** separate worker credentials — runner still uses app
+`DATABASE_URL`. Role boundary tests remain M2-2. [Ревью](../reviews/2026-11-12-agent-crm-and-migration.md).
 
 Member notifications/email пока не поддержаны этим worker автоматически:
 loader читает form_submissions. Расширение event types/durable mail после
