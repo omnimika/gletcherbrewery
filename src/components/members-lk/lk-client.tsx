@@ -12,7 +12,7 @@ import type {
 export function MembersLkClient(props: {
   info: LkInfoModel;
   receipts: LkReceiptRow[];
-  pendingAgent: LkAgentApplicationRow | null;
+  agentApplications: LkAgentApplicationRow[];
   defaultCity?: string;
   defaultPhone?: string;
 }) {

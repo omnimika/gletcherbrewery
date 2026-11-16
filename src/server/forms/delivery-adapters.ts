@@ -7,7 +7,10 @@ import type { DeliveryDestination } from "./contracts";
 
 export type DeliveryJobSnapshot = {
   id: string;
-  submissionId: string;
+  /** Form jobs only; null for loyalty cabinet jobs. */
+  submissionId: string | null;
+  sourceKind: string;
+  sourceId: string;
   destination: DeliveryDestination;
   status: string;
   attempts: number;
@@ -35,7 +38,7 @@ export class FakeSuccessAdapter implements DeliveryAdapter {
   async deliver(job: DeliveryJobSnapshot): Promise<DeliveryAttemptResult> {
     return {
       outcome: "delivered",
-      remoteReference: `fake:${this.destination}:${job.submissionId}`,
+      remoteReference: `fake:${this.destination}:${job.sourceId}`,
     };
   }
 }

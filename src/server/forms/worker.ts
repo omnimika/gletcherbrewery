@@ -18,6 +18,10 @@ import {
   TelegramDeliveryAdapter,
 } from "./telegram-adapter";
 import type { LeadFields } from "./telegram-message";
+import {
+  readTelegramAgentConfigFromEnv,
+  TelegramAgentDeliveryAdapter,
+} from "@/server/loyalty/telegram-agent-adapter";
 
 const LEASE_MS = 60_000;
 const MAX_ATTEMPTS = 8;
@@ -65,8 +69,9 @@ export function isJobClaimableAt(
 }
 
 export function buildDefaultAdapters(db: AppDb): DeliveryAdapter[] {
-  const tg = readTelegramConfigFromEnv();
   const adapters: DeliveryAdapter[] = [];
+
+  const tg = readTelegramConfigFromEnv();
   if (tg) {
     adapters.push(
       new TelegramDeliveryAdapter(tg, async (submissionId) => {
@@ -93,6 +98,14 @@ export function buildDefaultAdapters(db: AppDb): DeliveryAdapter[] {
   } else {
     adapters.push(new FakeConfigRequiredAdapter("telegram"));
   }
+
+  const tgAgent = readTelegramAgentConfigFromEnv();
+  if (tgAgent) {
+    adapters.push(new TelegramAgentDeliveryAdapter(tgAgent, db));
+  } else {
+    adapters.push(new FakeConfigRequiredAdapter("telegram_agent"));
+  }
+
   // Google Sheets lead export: cancelled (owner 09.11, 152-FZ). No adapter.
   return adapters;
 }
@@ -333,7 +346,9 @@ export async function processDeliveryBatch(
       continue;
     }
 
-    const adapter = byDest.get(job.destination as "telegram");
+    const adapter = byDest.get(
+      job.destination as "telegram" | "telegram_agent",
+    );
     let result: DeliveryAttemptResult;
     if (!adapter) {
       result = {
@@ -344,7 +359,9 @@ export async function processDeliveryBatch(
       result = await adapter.deliver({
         id: job.id,
         submissionId: job.submissionId,
-        destination: job.destination as "telegram",
+        sourceKind: job.sourceKind,
+        sourceId: job.sourceId,
+        destination: job.destination as "telegram" | "telegram_agent",
         status: job.status,
         attempts: job.attempts,
       });

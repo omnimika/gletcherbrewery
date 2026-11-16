@@ -53,6 +53,8 @@ describe("TelegramDeliveryAdapter", () => {
     const result = await adapter.deliver({
       id: "j1",
       submissionId: "s1",
+      sourceKind: "form_submission",
+      sourceId: "s1",
       destination: "telegram",
       status: "leased",
       attempts: 0,
@@ -83,6 +85,8 @@ describe("TelegramDeliveryAdapter", () => {
     const result = await adapter.deliver({
       id: "j1",
       submissionId: "s1",
+      sourceKind: "form_submission",
+      sourceId: "s1",
       destination: "telegram",
       status: "leased",
       attempts: 0,

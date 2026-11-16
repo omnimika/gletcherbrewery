@@ -64,13 +64,19 @@ export const submissionConsents = appSchema.table(
   (t) => [index("submission_consents_submission_idx").on(t.submissionId)],
 );
 
+/**
+ * Outbox jobs. Forms: source_kind=form_submission, submission_id=source_id.
+ * Loyalty cabinet: submission_id NULL; source_kind receipt|agent_application.
+ */
 export const deliveryJobs = appSchema.table(
   "delivery_jobs",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    submissionId: uuid("submission_id")
-      .notNull()
-      .references(() => formSubmissions.id, { onDelete: "cascade" }),
+    submissionId: uuid("submission_id").references(() => formSubmissions.id, {
+      onDelete: "cascade",
+    }),
+    sourceKind: text("source_kind").notNull().default("form_submission"),
+    sourceId: uuid("source_id").notNull(),
     destination: text("destination").notNull(),
     eventType: text("event_type").notNull().default("submission_accepted"),
     schemaVersion: text("schema_version").notNull().default("1"),
@@ -93,7 +99,8 @@ export const deliveryJobs = appSchema.table(
   },
   (t) => [
     uniqueIndex("delivery_jobs_unique_uidx").on(
-      t.submissionId,
+      t.sourceKind,
+      t.sourceId,
       t.destination,
       t.eventType,
       t.schemaVersion,

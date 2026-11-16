@@ -369,18 +369,23 @@ export async function replayDeliveryJob(
       };
     }
 
-    await tx.insert(staffLeadEvents).values({
-      submissionId: job.submissionId,
-      action: "replay_delivery",
-      actor: actor.id,
-      payload: {
-        jobId,
-        destination: job.destination,
-        fromStatus: previousStatus,
-        attempts: job.attempts,
-      },
-      createdAt: now,
-    });
+    // Form leads only — loyalty outbox jobs have no form submission_id.
+    if (job.submissionId) {
+      await tx.insert(staffLeadEvents).values({
+        submissionId: job.submissionId,
+        action: "replay_delivery",
+        actor: actor.id,
+        payload: {
+          jobId,
+          destination: job.destination,
+          fromStatus: previousStatus,
+          attempts: job.attempts,
+          sourceKind: job.sourceKind,
+          sourceId: job.sourceId,
+        },
+        createdAt: now,
+      });
+    }
 
     return { ok: true, jobId, previousStatus };
   });

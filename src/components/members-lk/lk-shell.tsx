@@ -17,7 +17,7 @@ import styles from "./lk-shell.module.css";
 type Props = {
   info: LkInfoModel;
   receipts: LkReceiptRow[];
-  pendingAgent: LkAgentApplicationRow | null;
+  agentApplications: LkAgentApplicationRow[];
   defaultCity?: string;
   defaultPhone?: string;
   onLogout: () => void;
@@ -26,7 +26,7 @@ type Props = {
 export function MembersLkShell({
   info,
   receipts,
-  pendingAgent,
+  agentApplications,
   defaultCity,
   defaultPhone,
   onLogout,
@@ -159,7 +159,7 @@ export function MembersLkShell({
           <LkAgentForm
             defaultCity={defaultCity}
             defaultPhone={defaultPhone}
-            pending={pendingAgent}
+            applications={agentApplications}
           />
         </div>
       </section>

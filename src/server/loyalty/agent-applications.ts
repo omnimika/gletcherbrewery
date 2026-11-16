@@ -1,11 +1,14 @@
 import { createHash, randomUUID } from "node:crypto";
-import { and, desc, eq, ne, sql } from "drizzle-orm";
+import { and, desc, eq, notInArray, sql } from "drizzle-orm";
 import {
   agentAppStatusLabel,
+  AGENT_APP_CLOSED_STATUSES,
   AGENT_APP_STATUS_LABELS_RU,
   AGENT_APP_STATUSES,
   isAgentAppStatus,
   isActiveAgentStatus,
+  isOpenAgentStatus,
+  MAX_OPEN_AGENT_APPLICATIONS,
   type AgentAppStatus,
 } from "@/lib/loyalty/agent-application-status";
 import type { AppDb } from "@/server/db/client";
@@ -14,14 +17,23 @@ import {
   loyaltyAgentApplications,
   loyaltyMembers,
 } from "@/server/db/schema";
+import { enqueueLoyaltyTelegramJob } from "./notify-outbox";
 
 export {
   AGENT_APP_STATUSES,
   AGENT_APP_STATUS_LABELS_RU,
+  AGENT_APP_CLOSED_STATUSES,
+  MAX_OPEN_AGENT_APPLICATIONS,
   isAgentAppStatus,
   isActiveAgentStatus,
+  isOpenAgentStatus,
   type AgentAppStatus,
 };
+
+const OPEN_STATUS_FILTER = notInArray(
+  loyaltyAgentApplications.status,
+  [...AGENT_APP_CLOSED_STATUSES],
+);
 
 /** @deprecated use AGENT_APP_STATUSES / under_review literal */
 export const AGENT_APP_STATUS = {
@@ -70,7 +82,8 @@ export type CreateAgentApplicationResult =
     }
   | {
       ok: false;
-      code: "invalid_agent_application" | "already_pending";
+      code: "invalid_agent_application" | "open_limit_reached";
+      openCount?: number;
       application?: OpenAgentApplication;
     };
 
@@ -147,7 +160,7 @@ function isUniqueViolation(err: unknown): boolean {
 }
 
 /**
- * Atomic create: same intent → replay same row; other active app → conflict;
+ * Atomic create: same intent → replay; up to MAX_OPEN open apps (≠ approved/rejected);
  * never auto-earns. Does not accept client status/reviewer.
  */
 export async function createAgentApplication(
@@ -202,7 +215,8 @@ export async function createAgentApplication(
       };
     }
 
-    const [open] = await tx
+    // Lock open rows for this member so concurrent creates respect the cap.
+    const openRows = await tx
       .select({
         id: loyaltyAgentApplications.id,
         status: loyaltyAgentApplications.status,
@@ -214,17 +228,18 @@ export async function createAgentApplication(
       .where(
         and(
           eq(loyaltyAgentApplications.memberId, input.memberId),
-          ne(loyaltyAgentApplications.status, "rejected"),
+          OPEN_STATUS_FILTER,
         ),
       )
       .orderBy(desc(loyaltyAgentApplications.createdAt))
-      .limit(1);
+      .for("update");
 
-    if (open) {
+    if (openRows.length >= MAX_OPEN_AGENT_APPLICATIONS) {
       return {
         ok: false as const,
-        code: "already_pending" as const,
-        application: toOpenView(open),
+        code: "open_limit_reached" as const,
+        openCount: openRows.length,
+        application: openRows[0] ? toOpenView(openRows[0]) : undefined,
       };
     }
 
@@ -256,6 +271,12 @@ export async function createAgentApplication(
           venueName,
           correlationId: randomUUID(),
         },
+      });
+
+      await enqueueLoyaltyTelegramJob(tx, {
+        sourceKind: "loyalty_agent_application",
+        sourceId: row!.id,
+        eventType: "agent_application_submitted",
       });
 
       return {
@@ -291,28 +312,10 @@ export async function createAgentApplication(
         };
       }
 
-      const [raceOpen] = await tx
-        .select({
-          id: loyaltyAgentApplications.id,
-          status: loyaltyAgentApplications.status,
-          venueName: loyaltyAgentApplications.venueName,
-          publicNote: loyaltyAgentApplications.publicNote,
-          createdAt: loyaltyAgentApplications.createdAt,
-        })
-        .from(loyaltyAgentApplications)
-        .where(
-          and(
-            eq(loyaltyAgentApplications.memberId, input.memberId),
-            ne(loyaltyAgentApplications.status, "rejected"),
-          ),
-        )
-        .orderBy(desc(loyaltyAgentApplications.createdAt))
-        .limit(1);
-
       return {
         ok: false as const,
-        code: "already_pending" as const,
-        application: raceOpen ? toOpenView(raceOpen) : undefined,
+        code: "open_limit_reached" as const,
+        openCount: openRows.length,
       };
     }
   });
@@ -321,7 +324,7 @@ export async function createAgentApplication(
 export async function listAgentApplicationsForMember(
   db: AppDb,
   memberId: string,
-  limit = 5,
+  limit = 20,
 ): Promise<MemberAgentApplicationView[]> {
   const rows = await db
     .select({
@@ -345,11 +348,13 @@ export async function listAgentApplicationsForMember(
   }));
 }
 
-export async function latestOpenAgentApplication(
+/** Open applications (≠ approved|rejected), newest first. */
+export async function listOpenAgentApplications(
   db: AppDb,
   memberId: string,
-): Promise<OpenAgentApplication | null> {
-  const [row] = await db
+  limit = MAX_OPEN_AGENT_APPLICATIONS,
+): Promise<OpenAgentApplication[]> {
+  const rows = await db
     .select({
       id: loyaltyAgentApplications.id,
       status: loyaltyAgentApplications.status,
@@ -361,12 +366,36 @@ export async function latestOpenAgentApplication(
     .where(
       and(
         eq(loyaltyAgentApplications.memberId, memberId),
-        ne(loyaltyAgentApplications.status, "rejected"),
+        OPEN_STATUS_FILTER,
       ),
     )
     .orderBy(desc(loyaltyAgentApplications.createdAt))
-    .limit(1);
-  return row ? toOpenView(row) : null;
+    .limit(limit);
+  return rows.map(toOpenView);
+}
+
+export async function countOpenAgentApplications(
+  db: AppDb,
+  memberId: string,
+): Promise<number> {
+  const rows = await db
+    .select({ id: loyaltyAgentApplications.id })
+    .from(loyaltyAgentApplications)
+    .where(
+      and(
+        eq(loyaltyAgentApplications.memberId, memberId),
+        OPEN_STATUS_FILTER,
+      ),
+    );
+  return rows.length;
+}
+
+export async function latestOpenAgentApplication(
+  db: AppDb,
+  memberId: string,
+): Promise<OpenAgentApplication | null> {
+  const [row] = await listOpenAgentApplications(db, memberId, 1);
+  return row ?? null;
 }
 
 export async function listAgentApplicationsForStaff(

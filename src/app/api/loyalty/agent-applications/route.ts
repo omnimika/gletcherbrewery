@@ -92,11 +92,12 @@ export async function POST(request: Request) {
     });
 
     if (!result.ok) {
-      if (result.code === "already_pending") {
+      if (result.code === "open_limit_reached") {
         return NextResponse.json(
           {
             ok: false,
-            code: "already_pending",
+            code: "open_limit_reached",
+            openCount: result.openCount,
             application: result.application,
           },
           { status: 409 },

@@ -18,8 +18,11 @@ async function main() {
   const tg = Boolean(
     process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID,
   );
+  const tgAgent = Boolean(
+    process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_AGENT_CHAT_ID,
+  );
   console.log(
-    `[delivery-worker] start once=${once} telegram_configured=${tg} sheets=cancelled_152fz role=gletcher_worker`,
+    `[delivery-worker] start once=${once} telegram_configured=${tg} telegram_agent_configured=${tgAgent} sheets=cancelled_152fz role=gletcher_worker`,
   );
 
   const { db, sql } = createDb(workerUrl);

@@ -3,8 +3,9 @@ import { describe, it } from "node:test";
 import {
   AGENT_APP_STATUSES,
   agentAppStatusLabel,
-  isActiveAgentStatus,
+  isOpenAgentStatus,
   isAgentAppStatus,
+  MAX_OPEN_AGENT_APPLICATIONS,
 } from "./agent-application-status";
 
 describe("agent application statuses", () => {
@@ -15,11 +16,13 @@ describe("agent application statuses", () => {
     assert.equal(isAgentAppStatus("pending"), false);
   });
 
-  it("treats only rejected as inactive for new applications", () => {
-    assert.equal(isActiveAgentStatus("under_review"), true);
-    assert.equal(isActiveAgentStatus("approved"), true);
-    assert.equal(isActiveAgentStatus("active_client"), true);
-    assert.equal(isActiveAgentStatus("rejected"), false);
+  it("open = anything except approved|rejected; cap is 10", () => {
+    assert.equal(MAX_OPEN_AGENT_APPLICATIONS, 10);
+    assert.equal(isOpenAgentStatus("under_review"), true);
+    assert.equal(isOpenAgentStatus("active_client"), true);
+    assert.equal(isOpenAgentStatus("no_contact"), true);
+    assert.equal(isOpenAgentStatus("approved"), false);
+    assert.equal(isOpenAgentStatus("rejected"), false);
   });
 
   it("labels known statuses in RU", () => {

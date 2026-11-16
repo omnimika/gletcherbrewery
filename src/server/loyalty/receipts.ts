@@ -11,6 +11,7 @@ import {
   receiptFingerprint,
 } from "./fingerprint";
 import { upsertMemberByEmail } from "./members";
+import { enqueueLoyaltyTelegramJob } from "./notify-outbox";
 
 const PENDING_STATUSES = [
   "pending_upload",
@@ -123,31 +124,41 @@ export async function createManualReceipt(db: AppDb, input: ManualReceiptInput) 
         : "manual");
   const status = "pending_staff";
 
-  const [row] = await db
-    .insert(loyaltyReceipts)
-    .values({
-      memberId: member.id,
-      status,
-      source,
-      photoObjectKey: input.photoObjectKey ?? null,
-      qrPayload: input.qrPayload?.trim() || null,
-      fiscalFn,
-      fiscalFd,
-      fiscalFp,
-      fiscalOperation,
-      receiptFingerprint: fingerprint,
-      purchaseAt: input.purchaseAt,
-      city: input.city.trim(),
-      venueNetwork: input.venueNetwork?.trim() || null,
-      venueName: input.venueName?.trim() || null,
-      gletcherSumRub: String(gletcherSumRub),
-      proposedEarn,
-      ocrText: input.ocrText ?? null,
-      ocrLines: input.ocrLines ?? [],
-    })
-    .returning();
+  const row = await db.transaction(async (tx) => {
+    const [inserted] = await tx
+      .insert(loyaltyReceipts)
+      .values({
+        memberId: member.id,
+        status,
+        source,
+        photoObjectKey: input.photoObjectKey ?? null,
+        qrPayload: input.qrPayload?.trim() || null,
+        fiscalFn,
+        fiscalFd,
+        fiscalFp,
+        fiscalOperation,
+        receiptFingerprint: fingerprint,
+        purchaseAt: input.purchaseAt,
+        city: input.city.trim(),
+        venueNetwork: input.venueNetwork?.trim() || null,
+        venueName: input.venueName?.trim() || null,
+        gletcherSumRub: String(gletcherSumRub),
+        proposedEarn,
+        ocrText: input.ocrText ?? null,
+        ocrLines: input.ocrLines ?? [],
+      })
+      .returning();
 
-  return { ok: true as const, receipt: row! };
+    await enqueueLoyaltyTelegramJob(tx, {
+      sourceKind: "loyalty_receipt",
+      sourceId: inserted!.id,
+      eventType: "receipt_submitted",
+    });
+
+    return inserted!;
+  });
+
+  return { ok: true as const, receipt: row };
 }
 
 export async function listPendingReceipts(db: AppDb, limit = 50) {

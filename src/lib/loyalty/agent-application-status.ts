@@ -25,13 +25,27 @@ export const AGENT_APP_STATUS_LABELS_RU: Record<AgentAppStatus, string> = {
   no_contact: "Нет контакта",
 };
 
+/** Closed for the open-slot counter (owner: cabinet multi-submit). */
+export const AGENT_APP_CLOSED_STATUSES = ["approved", "rejected"] as const;
+
+/** Max simultaneous open applications per member. */
+export const MAX_OPEN_AGENT_APPLICATIONS = 10;
+
 export function isAgentAppStatus(value: string): value is AgentAppStatus {
   return (AGENT_APP_STATUSES as readonly string[]).includes(value);
 }
 
-/** Active = blocks a new application (any status except rejected). */
+/**
+ * Open slot = counts toward the 10-cap and stays visible as in-flight.
+ * Closed: Одобрена | Отказано.
+ */
+export function isOpenAgentStatus(status: string): boolean {
+  return status !== "approved" && status !== "rejected";
+}
+
+/** @deprecated use isOpenAgentStatus */
 export function isActiveAgentStatus(status: string): boolean {
-  return status !== "rejected";
+  return isOpenAgentStatus(status);
 }
 
 export function agentAppStatusLabel(status: string): string {

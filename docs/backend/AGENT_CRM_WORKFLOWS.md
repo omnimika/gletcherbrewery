@@ -45,10 +45,11 @@
 6. Решение по заявке **не начисляет agent_earn автоматически**: Make mod50 его
    не пишет, правило начисления не установлено. Нужен отдельный подтверждённый
    financial command/contract, когда появится требование.
-7. Telegram notification для agent application опционален в этом спринте:
-   если включён — transactional outbox + отдельный event kind. Текущий worker
-   привязан к form_submissions; не создавать фиктивный публичный lead и не
-   отправлять из handler до/после commit ненадёжным fire-and-forget.
+7. Telegram для чеков и agent applications: destination `telegram_agent` →
+   `TELEGRAM_AGENT_CHAT_ID` (группа «Агент Gletcher»). Тот же worker/outbox,
+   polymorphic `source_kind`/`source_id` на `delivery_jobs`; **без** фиктивных
+   form_submissions. Form leads остаются в `TELEGRAM_CHAT_ID`. Не fire-and-forget
+   из Next handler.
 
 Приёмка: member A создаёт заявку → она в staff queue → менеджер меняет состояние
 с audit → member A видит итог; B не читает/меняет её. Двойной submit/двойное

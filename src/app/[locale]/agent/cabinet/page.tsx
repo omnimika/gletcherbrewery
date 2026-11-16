@@ -13,7 +13,7 @@ import {
 import { DEFAULT_LOCALE, isPublishedLocale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
 import { getDb } from "@/server/db/client";
-import { latestOpenAgentApplication } from "@/server/loyalty/agent-applications";
+import { listAgentApplicationsForMember } from "@/server/loyalty/agent-applications";
 import { loyaltyProgressFromLifetime } from "@/server/loyalty/level";
 import {
   MEMBER_SESSION_COOKIE,
@@ -63,14 +63,23 @@ export default async function AgentCabinetPage({ params }: PageProps) {
   let spendable = 0;
   let lifetimeEarn = 0;
   let receipts: Awaited<ReturnType<typeof listReceiptsForMember>> = [];
-  let pendingAgent: LkAgentApplicationRow | null = null;
+  let agentApplications: LkAgentApplicationRow[] = [];
   try {
     member = await resolveMemberSession(getDb(), token);
     if (member) {
       spendable = await spendableBalanceForMember(getDb(), member.id);
       lifetimeEarn = await lifetimeEarnForMember(getDb(), member.id);
       receipts = await listReceiptsForMember(getDb(), member.id, 30);
-      pendingAgent = await latestOpenAgentApplication(getDb(), member.id);
+      agentApplications = (
+        await listAgentApplicationsForMember(getDb(), member.id, 20)
+      ).map((a) => ({
+        id: a.id,
+        status: a.status,
+        statusLabel: a.statusLabel,
+        venueName: a.venueName,
+        publicNote: a.publicNote,
+        createdAt: a.createdAt,
+      }));
     }
   } catch {
     member = null;
@@ -93,7 +102,7 @@ export default async function AgentCabinetPage({ params }: PageProps) {
         <MembersLkClient
           defaultCity={member.city ?? undefined}
           defaultPhone={member.phone ?? undefined}
-          pendingAgent={pendingAgent}
+          agentApplications={agentApplications}
           info={{
             email: member.emailNormalized,
             displayName: member.displayName,
