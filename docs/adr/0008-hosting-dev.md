@@ -18,19 +18,19 @@ ROADMAP; платные ресурсы и cutover не входят в B1.
 | Role | Назначение | Grants (минимум) |
 |---|---|---|
 | `gletcher_migrator` | DDL / migrations | OWN schema `app`, CREATE |
-| `gletcher_app` | Next.js intake | DML на submissions/consents/outbox insert |
-| `gletcher_nocodb` | NocoDB external source | **SELECT** на staff view / lead columns only |
-| `gletcher_worker` | B2 delivery worker | DML на `delivery_jobs` / `delivery_attempts` |
+| `gletcher_app` | Next.js (`DATABASE_URL`) | DML forms/CRM/retail/loyalty; ledger **INSERT only** |
+| `gletcher_nocodb` | NocoDB (`NOCODB_DATABASE_URL`) | **SELECT** staff leads (+ retail SELECT); no outbox/loyalty |
+| `gletcher_worker` | Worker (`WORKER_DATABASE_URL`) | jobs/attempts + column SELECT form payload only |
 
 Schema edit из NocoDB UI — выключен. Staff account — private, первый view
 read-only. Public frontend не получает PG/NocoDB service tokens.
 
-## Проверка границ M2 (12.11)
+## Проверка границ M2 (16.11)
 
-Матрица выше — требуемая ответственность. Runtime runner worker пока использует
-DATABASE_URL приложения, default grants чрезмерно широки. До расширения доступа
-реализовать R02: отдельное connection config, explicit grants/revokes для текущих
-и будущих таблиц, реальные negative tests; не считать имя роли доказанной изоляцией.
+R02 closed in non-prod: `WORKER_DATABASE_URL` → `gletcher_worker`; bootstrap
+без broad default table grants; forward `drizzle/0013_role_least_privilege.sql`;
+ledger append-only (app INSERT, no UPDATE/DELETE); worker column SELECT on
+delivery payload; negative tests in `roles.integration.test.ts`.
 [Ревью](../reviews/2026-11-12-agent-crm-and-migration.md).
 Local receipt storage .tmp требует отдельного backup; production private
 Object Storage/staff auth/worker supervision — staging шаг, не выполненный B1.

@@ -38,8 +38,8 @@ delivered только потому, что запрос начал отправ
 
 R01/R06/R07 closed in non-prod code: expired leased reclaim, atomic lease fence
 on finalize, conditional replay, Telegram length/retry_after/body deadline.
-**Still open (R02):** separate worker credentials — runner still uses app
-`DATABASE_URL`. Role boundary tests remain M2-2. [Ревью](../reviews/2026-11-12-agent-crm-and-migration.md).
+**R02 closed 16.11:** `WORKER_DATABASE_URL` / `gletcher_worker`, migration 0013,
+negative grant tests. [Ревью](../reviews/2026-11-12-agent-crm-and-migration.md).
 
 Member notifications/email пока не поддержаны этим worker автоматически:
 loader читает form_submissions. Расширение event types/durable mail после

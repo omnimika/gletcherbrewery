@@ -14,8 +14,7 @@ runbook. Все публичные form variants/staff leads уже подклю
 пользователя: bootstrap меняет локальные env/DB; integration пишет в DATABASE_URL.
 Для новых тестов — отдельная synthetic test DB и credentials, без live delivery.
 db:restore-check сейчас копирует только B1 таблицы; PASS не доказывает сохранность
-loyalty/retail/audit/private photos. Worker runner ещё использует app DATABASE_URL,
-изоляция worker role — задача R02, не выполненный факт этой инструкции.
+loyalty/retail/audit/private photos. Worker: `WORKER_DATABASE_URL` (R02 Done 16.11).
 
 ## Topology (verified B1)
 
@@ -49,7 +48,7 @@ npm run nocodb:dev
 npm run dev
 ```
 
-`.env.local` is rewritten by `db:embedded` with `DATABASE_URL`, `MIGRATION_DATABASE_URL`, `NOCODB_*`, `PGPORT`.
+`.env.local` is rewritten by `db:embedded` with `DATABASE_URL`, `WORKER_DATABASE_URL`, `MIGRATION_DATABASE_URL`, `NOCODB_*`, `PGPORT`.
 
 ## Staff view in NocoDB
 

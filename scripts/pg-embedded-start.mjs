@@ -72,21 +72,29 @@ const biz = postgres(
 );
 await biz.unsafe(`CREATE SCHEMA IF NOT EXISTS app AUTHORIZATION gletcher_migrator`);
 await biz.unsafe(`GRANT USAGE ON SCHEMA app TO gletcher_app, gletcher_nocodb, gletcher_worker`);
+// R02: no broad default table grants — explicit GRANTs in drizzle migrations.
 await biz.unsafe(`
 ALTER DEFAULT PRIVILEGES FOR ROLE gletcher_migrator IN SCHEMA app
-  GRANT SELECT, INSERT, UPDATE ON TABLES TO gletcher_app;
+  REVOKE ALL ON TABLES FROM gletcher_app;
 ALTER DEFAULT PRIVILEGES FOR ROLE gletcher_migrator IN SCHEMA app
-  GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO gletcher_app;
+  REVOKE ALL ON SEQUENCES FROM gletcher_app;
 ALTER DEFAULT PRIVILEGES FOR ROLE gletcher_migrator IN SCHEMA app
-  GRANT SELECT, INSERT, UPDATE ON TABLES TO gletcher_worker;
+  REVOKE ALL ON TABLES FROM gletcher_worker;
 ALTER DEFAULT PRIVILEGES FOR ROLE gletcher_migrator IN SCHEMA app
-  GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO gletcher_worker;
+  REVOKE ALL ON SEQUENCES FROM gletcher_worker;
+ALTER DEFAULT PRIVILEGES FOR ROLE gletcher_migrator IN SCHEMA app
+  REVOKE ALL ON TABLES FROM gletcher_nocodb;
+ALTER DEFAULT PRIVILEGES FOR ROLE gletcher_migrator IN SCHEMA app
+  REVOKE ALL ON SEQUENCES FROM gletcher_nocodb;
+ALTER DEFAULT PRIVILEGES FOR ROLE gletcher_migrator IN SCHEMA app
+  GRANT USAGE, SELECT ON SEQUENCES TO gletcher_app;
 `);
 await biz.end({ timeout: 2 });
 
 const envPath = path.join(root, ".env.local");
 const envLines = [
   `DATABASE_URL=postgres://gletcher_app:gletcher_app_dev@127.0.0.1:${port}/gletcher_business`,
+  `WORKER_DATABASE_URL=postgres://gletcher_worker:gletcher_worker_dev@127.0.0.1:${port}/gletcher_business`,
   `MIGRATION_DATABASE_URL=postgres://gletcher_migrator:gletcher_migrator_dev@127.0.0.1:${port}/gletcher_business`,
   `NOCODB_META_DATABASE_URL=postgres://gletcher_migrator:gletcher_migrator_dev@127.0.0.1:${port}/nocodb_meta`,
   `NOCODB_DATABASE_URL=postgres://gletcher_nocodb:gletcher_nocodb_dev@127.0.0.1:${port}/gletcher_business`,
@@ -102,6 +110,7 @@ const kept = existing
     (l) =>
       l &&
       !l.startsWith("DATABASE_URL=") &&
+      !l.startsWith("WORKER_DATABASE_URL=") &&
       !l.startsWith("MIGRATION_DATABASE_URL=") &&
       !l.startsWith("NOCODB_META_DATABASE_URL=") &&
       !l.startsWith("NOCODB_DATABASE_URL=") &&

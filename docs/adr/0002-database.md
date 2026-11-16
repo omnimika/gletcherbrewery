@@ -33,11 +33,10 @@ snapshot 31.10; auth — Tilda Members. Retail source metadata проверен�
 
 Local B1 choices уже реализованы: PG17, Drizzle/postgres.js (ADR0003),
 NocoDB0.301.2 с отдельной metadata, staff read-only projection (ADR0008).
-Не выбирать их повторно. Новый scope: effective least privileges всей текущей
-схемы и полный restore, а не только Contacts.
+Не выбирать их повторно. R02 least privilege (16.11): explicit grants + revoke
+defaults, `WORKER_DATABASE_URL`, append-only ledger privileges, negative tests.
+Полный restore / R10 ещё Open.
 [Ревью R02/R10](../reviews/2026-11-12-agent-crm-and-migration.md).
-Широкие default grants app/worker требуют исправления forward migration;
-append-only ledger должен обеспечиваться правами, не только соглашением кода.
 
 ## Исторические Open на входе B1 (решены в local scope, staging отдельно)
 

@@ -114,7 +114,7 @@ migration не нужна для анонимной contact формы и staff 
 expired `leased`; finalize/cancel — atomic UPDATE WHERE lease owner+token+status;
 replay — row lock + conditional status (active lease/delivered blocked); Telegram
 HTML fit ≤4096 with stable ID+CRM link, `retry_after`, request+body deadline.
-Remaining M2-2: R02 roles, R03–R05 loyalty races, CRM patch concurrency.
+R02 roles Done 16.11. Remaining M2-2: R03–R05 loyalty races, CRM patch concurrency.
 
 
 - Outbox lives в PostgreSQL, не в process memory/Promise после HTTP response.

@@ -1,4 +1,4 @@
-import { createDb, closeDb } from "../src/server/db/client";
+import { createDb, getWorkerDatabaseUrl } from "../src/server/db/client";
 import {
   processDeliveryBatch,
   runDeliveryWorkerLoop,
@@ -7,8 +7,11 @@ import {
 async function main() {
   const once = process.argv.includes("--once");
 
-  if (!process.env.DATABASE_URL) {
-    console.error("DATABASE_URL is required");
+  let workerUrl: string;
+  try {
+    workerUrl = getWorkerDatabaseUrl();
+  } catch (err) {
+    console.error(err instanceof Error ? err.message : err);
     process.exit(1);
   }
 
@@ -16,10 +19,10 @@ async function main() {
     process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID,
   );
   console.log(
-    `[delivery-worker] start once=${once} telegram_configured=${tg} sheets=cancelled_152fz`,
+    `[delivery-worker] start once=${once} telegram_configured=${tg} sheets=cancelled_152fz role=gletcher_worker`,
   );
 
-  const { db } = createDb();
+  const { db, sql } = createDb(workerUrl);
 
   try {
     if (once) {
@@ -34,7 +37,7 @@ async function main() {
       await runDeliveryWorkerLoop({ db, intervalMs: 2000 });
     }
   } finally {
-    await closeDb();
+    await sql.end({ timeout: 5 });
   }
 }
 

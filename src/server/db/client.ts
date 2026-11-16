@@ -14,6 +14,20 @@ export function getDatabaseUrl(): string {
   return url;
 }
 
+/**
+ * Delivery worker credential (gletcher_worker). Required for `worker:delivery`.
+ * Never fall back to DATABASE_URL (app role) — that would bypass R02 isolation.
+ */
+export function getWorkerDatabaseUrl(): string {
+  const url = process.env.WORKER_DATABASE_URL?.trim();
+  if (!url) {
+    throw new Error(
+      "WORKER_DATABASE_URL is required (gletcher_worker role; do not reuse DATABASE_URL)",
+    );
+  }
+  return url;
+}
+
 export function createDb(url = getDatabaseUrl()): { sql: postgres.Sql; db: AppDb } {
   const sql = postgres(url, {
     max: 10,
