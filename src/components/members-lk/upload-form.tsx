@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Field, TextInput } from "@/components/ui/field";
 import { FormStatus } from "@/components/ui/feedback";
 import { LK_BUY_PLACES } from "@/content/members-lk";
+import { PhotoDropzone } from "./photo-dropzone";
 import styles from "./upload-form.module.css";
 
 export function LkUploadForm({ defaultCity }: { defaultCity?: string }) {
@@ -13,6 +14,7 @@ export function LkUploadForm({ defaultCity }: { defaultCity?: string }) {
   const [pending, start] = useTransition();
   const [message, setMessage] = useState<string | null>(null);
   const [ok, setOk] = useState(false);
+  const [photoVersion, setPhotoVersion] = useState(0);
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -20,6 +22,17 @@ export function LkUploadForm({ defaultCity }: { defaultCity?: string }) {
     const data = new FormData(form);
     const place = String(data.get("venueNetwork") || "");
     const other = String(data.get("venueName") || "").trim();
+    const photo = data.get("photo");
+    const hasPhoto =
+      photo != null &&
+      typeof photo !== "string" &&
+      "size" in photo &&
+      (photo as File).size > 0;
+    if (!hasPhoto) {
+      setMessage("Добавьте фото чека (клик или drag-and-drop)");
+      setOk(false);
+      return;
+    }
     if (place && place !== "Другой") {
       data.set("venueName", place);
     } else if (!other) {
@@ -57,21 +70,19 @@ export function LkUploadForm({ defaultCity }: { defaultCity?: string }) {
             : ""),
       );
       form.reset();
+      setPhotoVersion((v) => v + 1);
       router.refresh();
     });
   }
 
   return (
     <form onSubmit={onSubmit} className={styles.form}>
-      <Field id="lk-photo" label="Фото чека" help="Желательно с читаемым QR">
-        <input
-          id="lk-photo"
-          name="photo"
-          type="file"
-          accept="image/*"
-          capture="environment"
-          className={styles.file}
-        />
+      <Field
+        id="lk-photo"
+        label="Фото чека"
+        help="Желательно с читаемым QR — клик или перетащите в область"
+      >
+        <PhotoDropzone key={photoVersion} name="photo" />
       </Field>
       <Field id="lk-sum" label="Сумма только Gletcher, ₽">
         <TextInput

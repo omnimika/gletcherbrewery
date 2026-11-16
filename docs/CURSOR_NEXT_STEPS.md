@@ -13,8 +13,9 @@
   301 в `next.config`); task-first IA, status/level/prize (11.11).
 - Agent application API/table/UI уже добавлены в рабочем дереве. Это save/read
   срез; staff queue и полный workflow ещё предстоят.
-- **Owner defer:** Postbox/SMTP, GTIN export — позже; магазин/spend UI — после
-  отдельного решения по магазину. Не возвращать их в текущий обязательный scope.
+- SMTP Яндекс для magic-link — локально Confirmed 16.11 (`forms@` employee +
+  app password). GTIN export — позже; магазин/spend UI — после решения по магазину.
+- UX: cabinet photo dropzone + staff local photo preview (objectKey готов к S3).
 - Lead Google Sheets отменён. CRM = PostgreSQL + read-only NocoDB + staff commands.
   /about acceptance и публичный backlog сохраняются без блокировки data stream.
 

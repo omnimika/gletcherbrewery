@@ -11,6 +11,7 @@ import {
 import { StaffLoginForm } from "../../staff-login-form";
 import { ManualReceiptForm } from "./manual-receipt-form";
 import { ReceiptActions } from "./receipt-actions";
+import { ReceiptPhotoPreview } from "./receipt-photo";
 
 export const dynamic = "force-dynamic";
 
@@ -79,13 +80,17 @@ export default async function StaffLoyaltyReceiptsPage() {
                   <p className="mt-2 text-sm">
                     Gletcher {receipt.gletcherSumRub ?? "—"} ₽ →{" "}
                     <strong>{receipt.proposedEarn ?? "—"}₿</strong>
-                    {receipt.photoObjectKey ? (
-                      <span className="type-caption text-gletcher-navy/50">
-                        {" "}
-                        · photo {receipt.photoObjectKey}
-                      </span>
-                    ) : null}
                   </p>
+                  {receipt.photoObjectKey ? (
+                    <ReceiptPhotoPreview
+                      receiptId={receipt.id}
+                      objectKey={receipt.photoObjectKey}
+                    />
+                  ) : (
+                    <p className="type-caption mt-2 text-gletcher-navy/50">
+                      Без фото
+                    </p>
+                  )}
                 </div>
                 <ReceiptActions receiptId={receipt.id} />
               </div>

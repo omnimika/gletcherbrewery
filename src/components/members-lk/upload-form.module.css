@@ -23,10 +23,3 @@
   font-size: 0.875rem;
   padding: 0.65rem 0.75rem;
 }
-
-.file {
-  display: block;
-  width: 100%;
-  font-size: 0.875rem;
-  color: var(--color-gletcher-navy);
-}
