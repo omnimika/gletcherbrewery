@@ -1,0 +1,216 @@
+/* Task-first cabinet: reading flow, design-system tokens. Not a Tilda clone. */
+
+.root {
+  width: min(100%, 42rem);
+  margin-inline: auto;
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 2.75rem);
+  padding-block: clamp(1.25rem, 3vw, 2rem) clamp(2.5rem, 6vw, 4rem);
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-gletcher-navy) 50%, transparent);
+}
+
+.title {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 5vw, 2.75rem);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-gletcher-navy);
+}
+
+.identity {
+  margin: 0.55rem 0 0;
+  font-size: 0.875rem;
+  color: color-mix(in srgb, var(--color-gletcher-navy) 65%, transparent);
+}
+
+.section {
+  display: grid;
+  gap: 0.85rem;
+  scroll-margin-top: calc(var(--header-height, 5rem) + 1rem);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.8vw, 1.45rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-gletcher-navy);
+}
+
+.lead {
+  margin: 0;
+  max-width: 38rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--color-gletcher-navy) 72%, transparent);
+}
+
+.balanceBlock {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.balanceValue {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 10vw, 4.25rem);
+  font-weight: 900;
+  line-height: 0.9;
+  color: var(--color-gletcher-navy);
+}
+
+.coin {
+  margin-left: 0.15em;
+  color: var(--color-gletcher-red);
+  font-size: 0.4em;
+  vertical-align: super;
+}
+
+.lifetime {
+  margin: 0;
+  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--color-gletcher-navy) 55%, transparent);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.surface {
+  border: 1px solid var(--color-gletcher-navy);
+  border-radius: var(--radius-card);
+  background: var(--color-gletcher-white);
+  padding: clamp(1rem, 2.5vw, 1.35rem);
+}
+
+.statusGrid {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0 0 1rem;
+}
+
+.statusGrid dt {
+  margin: 0;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-gletcher-navy) 55%, transparent);
+}
+
+.statusGrid dd {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--color-gletcher-navy);
+}
+
+.statusName {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 3vw, 1.45rem) !important;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.progressMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  font-size: 0.8rem;
+  color: var(--color-gletcher-navy);
+}
+
+.progressBar {
+  margin-top: 0.75rem;
+  height: 0.55rem;
+  border: 1px solid var(--color-gletcher-navy);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--color-gletcher-frost);
+}
+
+.progressBar > span {
+  display: block;
+  height: 100%;
+  background: var(--color-gletcher-action);
+}
+
+.referralRow {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 40rem) {
+  .referralRow {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+}
+
+.referralUrl {
+  margin: 0;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--color-gletcher-navy) 35%, transparent);
+  border-radius: var(--radius-control);
+  font-size: 0.7rem;
+  word-break: break-all;
+  color: var(--color-gletcher-navy);
+  background: var(--color-gletcher-frost);
+}
+
+.soonList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.soonList li {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-gletcher-navy) 12%, transparent);
+  font-size: 0.875rem;
+  color: color-mix(in srgb, var(--color-gletcher-navy) 70%, transparent);
+}
+
+.soonList li:last-child {
+  border-bottom: none;
+}
+
+.help {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--color-gletcher-navy);
+}
+
+.help a {
+  color: var(--color-gletcher-action);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

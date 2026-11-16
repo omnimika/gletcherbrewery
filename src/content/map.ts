@@ -36,6 +36,10 @@ export const MAP_LAYERS = [
   "perekrestok",
   "magnit",
   "lenta",
+  "aromatny-mir",
+  "maksi",
+  "yarche",
+  "hmel-i-solod",
 ] as const;
 
 const IMAGE_BASE = "https://files.gletcherbrewery.com/map";
@@ -43,7 +47,7 @@ const IMAGE_BASE = "https://files.gletcherbrewery.com/map";
 export type MapBeer = {
   key: string;
   imageFile: string;
-  series: "classic" | "craft" | "limited";
+  series: "classic" | "craft" | "limited" | "aging";
 };
 
 /** RU panel order (Confirmed). */
@@ -75,7 +79,7 @@ export const MAP_BEERS_RU: readonly MapBeer[] = [
     imageFile: "Tour De Grapefruit.png",
     series: "limited",
   },
-  { key: "CYNIC", imageFile: "CYNIC.png", series: "limited" },
+  { key: "CYNIC", imageFile: "CYNIC.png", series: "aging" },
 ];
 
 /** EN panel omits NA Amnesia + CYNIC (Observed). */
@@ -98,9 +102,14 @@ export type MapCopy = {
   /** Hero line 2 (light blue accent). */
   heroAccent: string;
   filterTitle: string;
+  chainFilterTitle: string;
+  beerFilterTitle: string;
+  clearFiltersLabel: string;
   geocoderPlaceholder: string;
   fullscreenLabel: string;
   geolocateLabel: string;
+  geolocateError: string;
+  beerUnavailableInChains: string;
   assortmentLabel: string;
   missingToken: string;
   loadError: string;
@@ -119,10 +128,16 @@ const RU: MapCopy = {
   title: "КАРТА ПРОДАЖ",
   heroLead: "Нашу продукцию можно приобрести в большинстве розничных сетей.",
   heroAccent: "Найдите ближайший к вам магазин и попробуйте наше пиво!",
-  filterTitle: "Выбор сорта",
+  filterTitle: "Фильтры карты",
+  chainFilterTitle: "Сети",
+  beerFilterTitle: "Сорта",
+  clearFiltersLabel: "Сбросить",
   geocoderPlaceholder: "Ввести адрес...",
   fullscreenLabel: "На весь экран",
   geolocateLabel: "Моё местоположение",
+  geolocateError:
+    "Не удалось определить местоположение. В Chrome нужен https:// или localhost, и разрешение «Геоданные» для этого сайта.",
+  beerUnavailableInChains: "нет в выбранных сетях",
   assortmentLabel: "Ассортимент:",
   missingToken:
     "Карта временно недоступна на этом сайте. Вы можете открыть рабочую карту на основном домене.",
@@ -136,6 +151,7 @@ const RU: MapCopy = {
     classic: "Classic",
     craft: "Craft",
     limited: "Limited",
+    aging: "Aging",
   },
 };
 
@@ -146,10 +162,16 @@ const EN: MapCopy = {
   title: "SALES MAP",
   heroLead: "Our products can be purchased at most retail chains IN RUSSIA.",
   heroAccent: "Find the store closest to you and try our beer!",
-  filterTitle: "Choose a beer",
+  filterTitle: "Map filters",
+  chainFilterTitle: "Chains",
+  beerFilterTitle: "Beers",
+  clearFiltersLabel: "Clear",
   geocoderPlaceholder: "Enter an address...",
   fullscreenLabel: "Fullscreen",
   geolocateLabel: "My location",
+  geolocateError:
+    "Could not get your location. Chrome needs https:// or localhost, and location permission for this site.",
+  beerUnavailableInChains: "not in selected chains",
   assortmentLabel: "Assortment:",
   missingToken:
     "The map is temporarily unavailable on this site. You can open the live map on the main domain.",
@@ -163,6 +185,7 @@ const EN: MapCopy = {
     classic: "Classic",
     craft: "Craft",
     limited: "Limited",
+    aging: "Aging",
   },
 };
 

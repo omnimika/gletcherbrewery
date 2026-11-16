@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1731150000000,
+      "tag": "0000_form_intake",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1731153600000,
+      "tag": "0001_staff_leads_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1731157200000,
+      "tag": "0002_staff_leads_public",
+      "breakpoints": true
+    }
+  ]
+}

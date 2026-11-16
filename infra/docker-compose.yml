@@ -1,0 +1,45 @@
+# Non-production stack for B1. Requires Docker.
+# Without Docker use scripts/db-bootstrap.sh against local PostgreSQL 17.
+#
+# Usage:
+#   docker compose -f infra/docker-compose.yml up -d
+#   npm run db:migrate
+#   npm run nocodb:dev   # or open http://localhost:8080
+
+services:
+  postgres:
+    image: postgres:17.4-alpine
+    container_name: gletcher-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_dev
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - gletcher_pg_data:/var/lib/postgresql/data
+      - ./postgres/init/01-roles.sql:/docker-entrypoint-initdb.d/01-roles.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  nocodb:
+    image: nocodb/nocodb:0.301.2
+    container_name: gletcher-nocodb
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NC_DB: "pg://postgres:postgres_dev@postgres:5432?d=nocodb_meta"
+      NC_AUTH_JWT_SECRET: "dev_only_change_me_not_for_prod"
+      NC_PUBLIC_URL: "http://localhost:8080"
+    ports:
+      - "8080:8080"
+    volumes:
+      - gletcher_nocodb_data:/usr/app/data
+
+volumes:
+  gletcher_pg_data:
+  gletcher_nocodb_data:

@@ -11,6 +11,21 @@ import {
   mapBeerImageUrl,
   type MapCopy,
 } from "@/content/map";
+import {
+  buildMapLayerFilter,
+  listMapChainOptions,
+} from "@/components/map/map-layer-filters";
+import {
+  enabledBeerKeysForChains,
+  pruneBeerSelection,
+} from "@/components/map/chain-beer-availability";
+import {
+  countUniquePointFeatures,
+  GEOLOCATE_MAX_ZOOM,
+  GEOLOCATE_MIN_MARKERS,
+  GEOLOCATE_MIN_ZOOM,
+  GEOLOCATE_ZOOM_STEP,
+} from "@/components/map/geolocate-zoom";
 import styles from "./sales-map.module.css";
 
 function escapeHtml(value: string) {
@@ -21,42 +36,139 @@ function escapeHtml(value: string) {
     .replaceAll('"', "&quot;");
 }
 
-function productFilter(selected: ReadonlySet<string>): mapboxgl.FilterSpecification | null {
-  if (selected.size === 0) return null;
-  return [
-    "any",
-    ...[...selected].map(
-      (beer) =>
-        [
-          "in",
-          beer,
-          ["coalesce", ["get", "Product"], ""],
-        ] as mapboxgl.FilterSpecification,
-    ),
-  ];
+function waitForMapIdle(map: mapboxgl.Map, timeoutMs = 2500): Promise<void> {
+  return new Promise((resolve) => {
+    if (!map.isMoving() && !map.isZooming() && map.areTilesLoaded()) {
+      resolve();
+      return;
+    }
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      map.off("idle", onIdle);
+      resolve();
+    };
+    const onIdle = () => finish();
+    map.once("idle", onIdle);
+    window.setTimeout(finish, timeoutMs);
+  });
+}
+
+async function resolveGeolocateZoom(
+  map: mapboxgl.Map,
+  center: [number, number],
+  layerIds: readonly string[],
+): Promise<number> {
+  const layers = layerIds.filter((id) => map.getLayer(id));
+  if (layers.length === 0) return Math.min(12, GEOLOCATE_MAX_ZOOM);
+
+  const countNow = () => {
+    const el = map.getCanvasContainer();
+    const features = map.queryRenderedFeatures(
+      [
+        [0, 0],
+        [el.clientWidth, el.clientHeight],
+      ],
+      { layers: [...layers] },
+    );
+    return countUniquePointFeatures(features);
+  };
+
+  // Fallback when the area has <2 filtered markers — still move in (geocoder-like).
+  const FALLBACK_ZOOM = 11;
+
+  // Wide first so the region’s tiles load; binary-search the tightest zoom
+  // that still shows ≥2 filtered markers (current beer/chain filters).
+  map.jumpTo({ center, zoom: GEOLOCATE_MIN_ZOOM });
+  await waitForMapIdle(map);
+  if (countNow() < GEOLOCATE_MIN_MARKERS) {
+    map.jumpTo({ center, zoom: FALLBACK_ZOOM });
+    return FALLBACK_ZOOM;
+  }
+
+  let lo = GEOLOCATE_MIN_ZOOM;
+  let hi = GEOLOCATE_MAX_ZOOM;
+  let best = GEOLOCATE_MIN_ZOOM;
+  while (hi - lo > GEOLOCATE_ZOOM_STEP) {
+    const mid = Math.round(((lo + hi) / 2) * 100) / 100;
+    map.jumpTo({ center, zoom: mid });
+    await waitForMapIdle(map, 1800);
+    if (countNow() >= GEOLOCATE_MIN_MARKERS) {
+      best = mid;
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+
+  map.jumpTo({ center, zoom: best });
+  return best;
 }
 
 export function SalesMap({
   copy,
   accessToken,
+  chainTitlesWithAssortment,
+  beersByChain,
 }: {
   copy: MapCopy;
   accessToken: string | undefined;
+  /** CRM titles with available SKU count > 0 (server-loaded). */
+  chainTitlesWithAssortment: readonly string[];
+  /** chain title → beer panel keys available in CRM assortment. */
+  beersByChain: Readonly<Record<string, readonly string[]>>;
 }) {
   const mapNode = useRef<HTMLDivElement | null>(null);
   const frameNode = useRef<HTMLDivElement | null>(null);
   const geocoderNode = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
-  const geolocateRef = useRef<mapboxgl.GeolocateControl | null>(null);
   const geocoderRef = useRef<MapboxGeocoder | null>(null);
-  const [selected, setSelected] = useState<Set<string>>(() => new Set());
+  const popupRef = useRef<mapboxgl.Popup | null>(null);
+  const userMarkerRef = useRef<mapboxgl.Marker | null>(null);
+  const geolocateAdjustingRef = useRef(false);
+  const copyRef = useRef(copy);
+  copyRef.current = copy;
+  const [selectedBeers, setSelectedBeers] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [selectedChains, setSelectedChains] = useState<Set<string>>(
+    () => new Set(),
+  );
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [retryKey, setRetryKey] = useState(0);
 
+  const chainOptions = useMemo(
+    () => listMapChainOptions(chainTitlesWithAssortment),
+    [chainTitlesWithAssortment],
+  );
+
+  const enabledBeers = useMemo(
+    () => enabledBeerKeysForChains(selectedChains, beersByChain),
+    [selectedChains, beersByChain],
+  );
+
+  useEffect(() => {
+    setSelectedBeers((prev) => {
+      const next = pruneBeerSelection(prev, enabledBeers);
+      if (next.size === prev.size) {
+        let same = true;
+        for (const key of prev) {
+          if (!next.has(key)) {
+            same = false;
+            break;
+          }
+        }
+        if (same) return prev;
+      }
+      return next;
+    });
+  }, [enabledBeers]);
+
   const seriesOrder = useMemo(
     () =>
-      (["classic", "craft", "limited"] as const).map((id) => ({
+      (["classic", "craft", "limited", "aging"] as const).map((id) => ({
         id,
         label: copy.seriesLabels[id],
         beers: copy.beers.filter((b) => b.series === id),
@@ -64,16 +176,46 @@ export function SalesMap({
     [copy],
   );
 
-  const applyFilters = useCallback((next: ReadonlySet<string>) => {
-    const map = mapRef.current;
-    if (!map) return;
-    const filter = productFilter(next);
-    for (const layerId of MAP_LAYERS) {
-      if (!map.getLayer(layerId)) continue;
-      map.setFilter(layerId, filter);
-      map.setLayoutProperty(layerId, "visibility", "visible");
+  /** Single-beer series share a row 50/50; multi-beer series keep a full row. */
+  const seriesRows = useMemo(() => {
+    const series = seriesOrder.filter((s) => s.beers.length > 0);
+    const rows: Array<(typeof series)[number][]> = [];
+    let i = 0;
+    while (i < series.length) {
+      const cur = series[i];
+      const next = series[i + 1];
+      if (cur.beers.length === 1 && next && next.beers.length === 1) {
+        rows.push([cur, next]);
+        i += 2;
+        continue;
+      }
+      rows.push([cur]);
+      i += 1;
     }
-  }, []);
+    return rows;
+  }, [seriesOrder]);
+
+  const applyFilters = useCallback(
+    (beers: ReadonlySet<string>, chains: ReadonlySet<string>) => {
+      const map = mapRef.current;
+      if (!map) return;
+      for (const layerId of MAP_LAYERS) {
+        if (!map.getLayer(layerId)) continue;
+        const { filter, visible } = buildMapLayerFilter(
+          layerId,
+          beers,
+          chains,
+        );
+        map.setFilter(layerId, filter as mapboxgl.FilterSpecification);
+        map.setLayoutProperty(
+          layerId,
+          "visibility",
+          visible ? "visible" : "none",
+        );
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!accessToken || !mapNode.current) return;
@@ -106,19 +248,14 @@ export function SalesMap({
 
     mapRef.current = map;
 
-    const geolocate = new mapboxgl.GeolocateControl({
-      positionOptions: { enableHighAccuracy: true },
-      trackUserLocation: true,
-      showUserHeading: true,
-    });
-    geolocateRef.current = geolocate;
-    map.addControl(geolocate);
+    // Geolocate puck/camera: driven by navigator.geolocation in the panel button
+    // (Mapbox GeolocateControl was unreliable in Chrome with a hidden control).
 
     const onLoad = () => {
       if (cancelled) return;
       setReady(true);
       setError(null);
-      applyFilters(selected);
+      applyFilters(selectedBeers, selectedChains);
       map.resize();
 
       if (geocoderHost) {
@@ -150,22 +287,30 @@ export function SalesMap({
         layers: [...MAP_LAYERS],
       });
       if (!features.length) return;
+      e.originalEvent?.stopPropagation?.();
       const feature = features[0];
       const props = feature.properties ?? {};
       const title = String(props.Title ?? "");
       const address = String(props.Adress ?? props.Address ?? "");
       const product = String(props.Product ?? "");
-      const coords = (feature.geometry as GeoJSON.Point).coordinates as [
-        number,
-        number,
-      ];
+      const geom = feature.geometry;
+      if (!geom || geom.type !== "Point") return;
+      const coords = geom.coordinates as [number, number];
 
-      new mapboxgl.Popup({ offset: [0, -15] })
+      popupRef.current?.remove();
+      // Markup matches production page__map.html; chrome styled in CSS module.
+      popupRef.current = new mapboxgl.Popup({
+        offset: [0, -15],
+        maxWidth: "280px",
+        closeButton: true,
+        closeOnClick: true,
+        className: styles.storePopup,
+      })
         .setLngLat(coords)
         .setHTML(
-          `<h2 style="color:#ff8462;font-size:1.1rem;margin:0 0 0.35rem">${escapeHtml(title)}</h2>` +
-            `<p style="margin:0 0 0.5rem">${escapeHtml(address)}</p>` +
-            `<p style="margin:0"><u>${escapeHtml(copy.assortmentLabel)}</u><br>${escapeHtml(product)}</p>`,
+          `<h2>${escapeHtml(title)}</h2>` +
+            `<p>${escapeHtml(address)}</p>` +
+            `<p><u>${escapeHtml(copy.assortmentLabel)}</u><br>${escapeHtml(product)}</p>`,
         )
         .addTo(map);
     });
@@ -175,7 +320,8 @@ export function SalesMap({
         layers: [...MAP_LAYERS],
       });
       if (features.length === 0) {
-        setSelected(new Set());
+        setSelectedBeers(new Set());
+        setSelectedChains(new Set());
       }
     });
 
@@ -191,12 +337,15 @@ export function SalesMap({
         geocoderRef.current = null;
       }
       geocoderHost?.replaceChildren();
+      popupRef.current?.remove();
+      popupRef.current = null;
+      userMarkerRef.current?.remove();
+      userMarkerRef.current = null;
       map.remove();
       mapRef.current = null;
-      geolocateRef.current = null;
       setReady(false);
     };
-    // selected intentionally omitted — filters applied via applyFilters effect
+    // selectedBeers/chains intentionally omitted — filters via applyFilters effect
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     accessToken,
@@ -209,16 +358,30 @@ export function SalesMap({
 
   useEffect(() => {
     if (!ready) return;
-    applyFilters(selected);
-  }, [selected, ready, applyFilters]);
+    applyFilters(selectedBeers, selectedChains);
+  }, [selectedBeers, selectedChains, ready, applyFilters]);
 
   const toggleBeer = (key: string) => {
-    setSelected((prev) => {
+    if (enabledBeers && !enabledBeers.has(key)) return;
+    setSelectedBeers((prev) => {
       const next = new Set(prev);
       if (next.has(key)) next.delete(key);
       else next.add(key);
       return next;
     });
+  };
+
+  const toggleChain = (id: string) => {
+    setSelectedChains((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const clearChainFilters = () => {
+    setSelectedChains(new Set());
   };
 
   const requestFullscreen = () => {
@@ -233,7 +396,60 @@ export function SalesMap({
   };
 
   const triggerGeolocate = () => {
-    geolocateRef.current?.trigger();
+    const map = mapRef.current;
+    if (!map || geolocateAdjustingRef.current) return;
+
+    if (typeof navigator === "undefined" || !navigator.geolocation) {
+      setError(copyRef.current.geolocateError);
+      return;
+    }
+    if (!window.isSecureContext) {
+      setError(copyRef.current.geolocateError);
+      return;
+    }
+
+    geolocateAdjustingRef.current = true;
+    setError(null);
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const center: [number, number] = [
+          pos.coords.longitude,
+          pos.coords.latitude,
+        ];
+
+        userMarkerRef.current?.remove();
+        const puck = document.createElement("div");
+        puck.className = styles.userPuck;
+        puck.setAttribute("aria-hidden", "true");
+        userMarkerRef.current = new mapboxgl.Marker({ element: puck })
+          .setLngLat(center)
+          .addTo(map);
+
+        // Immediate feedback (geocoder-like), then refine to ≥2 markers.
+        map.easeTo({ center, zoom: Math.max(map.getZoom(), 10), duration: 500 });
+
+        void resolveGeolocateZoom(map, center, MAP_LAYERS)
+          .then((zoom) => {
+            map.easeTo({ center, zoom, duration: 900 });
+          })
+          .catch(() => {
+            map.easeTo({ center, zoom: 11, duration: 900 });
+          })
+          .finally(() => {
+            geolocateAdjustingRef.current = false;
+          });
+      },
+      () => {
+        geolocateAdjustingRef.current = false;
+        setError(copyRef.current.geolocateError);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 30_000,
+      },
+    );
   };
 
   const retryMap = () => {
@@ -246,6 +462,7 @@ export function SalesMap({
     classic: styles.seriesClassic,
     craft: styles.seriesCraft,
     limited: styles.seriesLimited,
+    aging: styles.seriesAging,
   } as const;
 
   if (!accessToken) {
@@ -270,13 +487,6 @@ export function SalesMap({
 
   return (
     <div className={styles.page}>
-      <header className={styles.hero}>
-        <h1 id="map-hero" className={styles.heroTitle}>
-          {copy.heroLead}{" "}
-          <span className={styles.heroAccent}>{copy.heroAccent}</span>
-        </h1>
-      </header>
-
       <section className={styles.frameWrap} aria-label={copy.title}>
         <div ref={frameNode} className={styles.frame}>
           <div ref={mapNode} className={styles.map} />
@@ -303,8 +513,63 @@ export function SalesMap({
             </div>
           ) : null}
 
+          <aside
+            className={styles.chainPanel}
+            aria-label={copy.chainFilterTitle}
+          >
+            <div className={styles.filterHeading}>
+              <span className={styles.filterHeadingLabel}>
+                {copy.chainFilterTitle}
+              </span>
+              {selectedChains.size > 0 ? (
+                <button
+                  type="button"
+                  className={styles.clearBtn}
+                  onClick={clearChainFilters}
+                >
+                  {copy.clearFiltersLabel}
+                </button>
+              ) : null}
+            </div>
+            <div
+              className={styles.chainGrid}
+              role="group"
+              aria-label={copy.chainFilterTitle}
+            >
+              {chainOptions.map((chain) => {
+                const active = selectedChains.has(chain.id);
+                return (
+                  <button
+                    key={chain.id}
+                    type="button"
+                    className={`${styles.chainBtn}${active ? ` ${styles.chainBtnActive}` : ""}`}
+                    aria-pressed={active}
+                    title={chain.label}
+                    onClick={() => toggleChain(chain.id)}
+                  >
+                    {chain.logoSrc ? (
+                      // eslint-disable-next-line @next/next/no-img-element -- local filter thumbs
+                      <img
+                        src={chain.logoSrc}
+                        alt=""
+                        className={styles.chainImg}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <span className={styles.chainFallback}>
+                        {chain.label.slice(0, 2)}
+                      </span>
+                    )}
+                    <span className={styles.chainName}>{chain.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </aside>
+
           {/* Production comments out the h3 title; keep aria-label on aside. */}
-          <aside className={styles.panel} aria-label={copy.filterTitle}>
+          <aside className={styles.panel} aria-label={copy.beerFilterTitle}>
             <div className={styles.controls}>
               <div className={styles.controlsRow}>
                 <button
@@ -332,40 +597,65 @@ export function SalesMap({
             {error && ready ? <p className={styles.error}>{error}</p> : null}
 
             <div className={styles.seriesList}>
-              {seriesOrder.map((series) => (
+              {seriesRows.map((row) => (
                 <div
-                  key={series.id}
-                  className={`${styles.series} ${seriesClass[series.id]}`}
+                  key={row.map((s) => s.id).join("-")}
+                  className={styles.seriesRow}
                 >
-                  <span className={styles.seriesLabel}>{series.label}</span>
-                  {series.beers.map((beer) => {
-                    const active = selected.has(beer.key);
-                    return (
-                      <button
-                        key={beer.key}
-                        type="button"
-                        className={`${styles.beerBtn}${active ? ` ${styles.beerBtnActive}` : ""}`}
-                        aria-pressed={active}
-                        title={beer.key}
-                        onClick={() => toggleBeer(beer.key)}
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element -- remote filter thumbs */}
-                        <img
-                          src={mapBeerImageUrl(beer)}
-                          alt={beer.key}
-                          className={styles.beerImg}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </button>
-                    );
-                  })}
+                  {row.map((series) => (
+                    <div
+                      key={series.id}
+                      className={`${styles.series} ${seriesClass[series.id]}${
+                        row.length > 1 ? ` ${styles.seriesHalf}` : ""
+                      }`}
+                    >
+                      <span className={styles.seriesLabel}>{series.label}</span>
+                      {series.beers.map((beer) => {
+                        const active = selectedBeers.has(beer.key);
+                        const disabled = Boolean(
+                          enabledBeers && !enabledBeers.has(beer.key),
+                        );
+                        return (
+                          <button
+                            key={beer.key}
+                            type="button"
+                            className={`${styles.beerBtn}${active ? ` ${styles.beerBtnActive}` : ""}${disabled ? ` ${styles.beerBtnDisabled}` : ""}`}
+                            aria-pressed={active}
+                            aria-disabled={disabled}
+                            disabled={disabled}
+                            title={
+                              disabled
+                                ? `${beer.key} — ${copy.beerUnavailableInChains}`
+                                : beer.key
+                            }
+                            onClick={() => toggleBeer(beer.key)}
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element -- remote filter thumbs */}
+                            <img
+                              src={mapBeerImageUrl(beer)}
+                              alt={beer.key}
+                              className={styles.beerImg}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
           </aside>
         </div>
       </section>
+
+      <header className={styles.hero}>
+        <h1 id="map-hero" className={styles.heroTitle}>
+          {copy.heroLead}{" "}
+          <span className={styles.heroAccent}>{copy.heroAccent}</span>
+        </h1>
+      </header>
     </div>
   );
 }

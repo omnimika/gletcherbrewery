@@ -1,0 +1,80 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "Type": "chain",
+        "Title": "Перекрёсток",
+        "City": "Москва",
+        "Adress": "ул. Тестовая, 1",
+        "Product": "Friday Avenue, Bowler IPA",
+        "Packing": "0.5"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [37.618423, 55.751244]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Type": "chain",
+        "Title": "Перекрёсток",
+        "City": "Москва",
+        "Adress": "ул. Тестовая, 1",
+        "Product": "Friday Avenue",
+        "Packing": "0.5"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [37.618423, 55.751244]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Type": "independent",
+        "Title": "Synthetic Bar",
+        "City": "Санкт-Петербург",
+        "Adress": "Невский пр., 1",
+        "Product": "Ausweis",
+        "Packing": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3522, 48.8566]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Type": "chain",
+        "Title": "Магнит",
+        "City": "Клин",
+        "Adress": "",
+        "Product": "Friday Avenue APA",
+        "Packing": "1.0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [36.729, 56.333]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Type": "chain",
+        "Title": "",
+        "City": "Тверь",
+        "Adress": "ул. Без названия",
+        "Product": "",
+        "Packing": ""
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [null, null]
+      }
+    }
+  ]
+}

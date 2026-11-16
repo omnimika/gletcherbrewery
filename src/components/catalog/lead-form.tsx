@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { useTranslations } from "next-intl";
+import { useId, useRef, useState, type FormEvent } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname } from "@/i18n/navigation";
 import {
   CompositionGrid,
   CompositionPanel,
@@ -10,28 +11,76 @@ import {
 } from "@/components/layout";
 import { Reveal } from "@/components/motion/reveal";
 import { Button } from "@/components/ui/button";
+import {
+  CATALOG_LEAD_FORM_ID,
+  POLICY_SITE_VERSION,
+} from "@/content/forms/form-ids";
+import {
+  clearIdempotencyKey,
+  ensureIdempotencyKey,
+  postFormSubmission,
+} from "@/lib/forms/client-submit";
 
-type Status = "idle" | "unavailable" | "error";
+type Status = "idle" | "pending" | "accepted" | "unavailable" | "error";
 
-/**
- * Catalog lead form — DS-3 halves-x content section.
- * Online submit unavailable until backend; keeps input and shows email contact.
- */
 export function LeadForm() {
   const [status, setStatus] = useState<Status>("idle");
+  const [submissionId, setSubmissionId] = useState<string | null>(null);
   const t = useTranslations("leadForm");
+  const locale = useLocale();
+  const pathname = usePathname();
+  const formDomId = useId();
+  const storageKey = `catalog-lead-idempotency:${formDomId}`;
+  const submittingRef = useRef(false);
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
+    event.preventDefault();
     if (!form.reportValidity()) {
-      event.preventDefault();
       setStatus("error");
       return;
     }
-    event.preventDefault();
-    // No delivery yet — keep values, do not pretend success.
-    setStatus("unavailable");
+    if (submittingRef.current) return;
+    submittingRef.current = true;
+    setStatus("pending");
+
+    const data = new FormData(form);
+    const fields = {
+      name: String(data.get("name") ?? ""),
+      email: String(data.get("email") ?? ""),
+      comment: String(data.get("comment") ?? ""),
+    };
+    const idempotencyKey = ensureIdempotencyKey(storageKey);
+
+    try {
+      const result = await postFormSubmission({
+        schemaVersion: "catalog-lead-v1",
+        formId: CATALOG_LEAD_FORM_ID,
+        locale,
+        sourcePath: pathname || "/beer",
+        placement: "catalog_lead",
+        idempotencyKey,
+        fields,
+        consent: { accepted: true, policyVersion: POLICY_SITE_VERSION },
+      });
+
+      if (result.ok) {
+        setSubmissionId(result.submissionId);
+        setStatus("accepted");
+        clearIdempotencyKey(storageKey);
+        return;
+      }
+      if (result.status === 503 || result.status === 0) {
+        setStatus("unavailable");
+        return;
+      }
+      setStatus("error");
+    } finally {
+      submittingRef.current = false;
+    }
   };
+
+  const locked = status === "pending" || status === "accepted";
 
   return (
     <SectionFrame
@@ -63,15 +112,21 @@ export function LeadForm() {
 
           <CompositionPanel>
             <Reveal>
-              <form className="space-y-4" onSubmit={onSubmit} noValidate>
+              <form
+                className="space-y-4"
+                onSubmit={onSubmit}
+                noValidate
+                aria-busy={status === "pending"}
+              >
                 <label className="block">
                   <span className="sr-only">{t("name")}</span>
                   <input
                     name="name"
                     placeholder={t("name")}
                     autoComplete="name"
-                    className="w-full border border-gletcher-navy/25 bg-gletcher-white px-4 py-3 text-sm outline-none focus:border-gletcher-navy"
+                    className="w-full border border-gletcher-navy/25 bg-gletcher-white px-4 py-3 text-sm outline-none focus:border-gletcher-navy disabled:opacity-70"
                     required
+                    disabled={locked}
                   />
                 </label>
                 <label className="block">
@@ -81,8 +136,9 @@ export function LeadForm() {
                     type="email"
                     placeholder={t("email")}
                     autoComplete="email"
-                    className="w-full border border-gletcher-navy/25 bg-gletcher-white px-4 py-3 text-sm outline-none focus:border-gletcher-navy"
+                    className="w-full border border-gletcher-navy/25 bg-gletcher-white px-4 py-3 text-sm outline-none focus:border-gletcher-navy disabled:opacity-70"
                     required
+                    disabled={locked}
                   />
                 </label>
                 <label className="block">
@@ -91,17 +147,24 @@ export function LeadForm() {
                     name="comment"
                     placeholder={t("comment")}
                     rows={4}
-                    className="w-full resize-y border border-gletcher-navy/25 bg-gletcher-white px-4 py-3 text-sm outline-none focus:border-gletcher-navy"
+                    disabled={locked}
+                    className="w-full resize-y border border-gletcher-navy/25 bg-gletcher-white px-4 py-3 text-sm outline-none focus:border-gletcher-navy disabled:opacity-70"
                   />
                 </label>
                 <Button
                   type="submit"
                   variant="secondary"
                   className="w-full sm:w-auto"
+                  disabled={locked}
                 >
-                  {t("submit")}
+                  {status === "pending" ? "…" : t("submit")}
                 </Button>
                 <p className="text-xs text-gletcher-navy/60">{t("note")}</p>
+                {status === "accepted" && submissionId ? (
+                  <p className="text-sm text-gletcher-navy" role="status">
+                    OK · <span className="font-mono text-xs">{submissionId}</span>
+                  </p>
+                ) : null}
                 {status === "unavailable" ? (
                   <p className="text-sm text-gletcher-navy" role="status">
                     {t("unavailable")}{" "}

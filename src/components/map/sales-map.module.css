@@ -8,17 +8,16 @@
 }
 
 .hero {
-  /* Production T396 artboard: 310px / text top ~100px / 40px Gratimo 900 */
+  /* Below the map; same horizontal span as header chrome (--pad-x). */
   box-sizing: border-box;
+  width: 100%;
   margin-inline: auto;
-  max-width: 1200px;
-  min-height: 19.375rem;
-  padding: 6.25rem 1.25rem 1.5rem;
+  padding: 1rem var(--pad-x, 1.25rem) 2.5rem;
 }
 
 .heroTitle {
   margin: 0;
-  max-width: 72.5rem;
+  max-width: none;
   color: #0d0f49;
   font-family: var(--font-display), sans-serif;
   font-size: 2.5rem; /* 40px */
@@ -30,33 +29,18 @@
 }
 
 @media (max-width: 1199px) {
-  .hero {
-    min-height: 18.125rem;
-    padding-top: 5rem;
-  }
-
   .heroTitle {
     font-size: 2.125rem; /* 34px */
   }
 }
 
 @media (max-width: 959px) {
-  .hero {
-    min-height: 14.375rem;
-    padding-top: 3.5rem;
-  }
-
   .heroTitle {
     font-size: 1.5rem; /* 24px */
   }
 }
 
 @media (max-width: 639px) {
-  .hero {
-    min-height: 15.625rem;
-    padding-top: 3.25rem;
-  }
-
   .heroTitle {
     font-size: 1.25rem; /* 20px */
   }
@@ -68,14 +52,18 @@
 }
 
 .frameWrap {
+  /* Align map with header: locale switch left → menu button right (--pad-x). */
+  box-sizing: border-box;
   display: flex;
+  width: 100%;
   justify-content: center;
-  padding: 0 0 2.5rem;
+  padding: calc(var(--header-height, var(--hh, 5.25rem)) + 0.75rem)
+    var(--pad-x, 1.25rem) 1.25rem;
 }
 
 .frame {
   position: relative;
-  width: 90%;
+  width: 100%;
   height: 80vh;
   min-height: 28rem;
   padding: 5px;
@@ -103,6 +91,93 @@
   pointer-events: none;
 }
 
+/* Mapbox Popup className hook (styles below target .map descendants). */
+.storePopup {
+  z-index: 20;
+}
+
+.userPuck {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #1da1f2;
+  box-shadow:
+    0 0 0 2px rgb(29 161 242 / 40%),
+    0 2px 6px rgb(0 0 0 / 30%);
+  pointer-events: none;
+}
+
+/* Popup — production page__map.html «стиль попапа» */
+.map :global(.mapboxgl-popup-content) {
+  max-width: 280px;
+  padding: 14px 16px 12px;
+  border: 3px solid #0d0f49;
+  border-radius: 15px !important;
+  background: #fff;
+  color: #0d0f49;
+  font-size: 15px;
+  line-height: 1.35;
+  box-shadow: none;
+}
+
+.map :global(.mapboxgl-popup-content h2) {
+  margin: 0 0 0.4rem;
+  color: #ff8462;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.map :global(.mapboxgl-popup-content p) {
+  margin: 0 0 0.5rem;
+  color: #0d0f49;
+  font-size: 15px;
+}
+
+.map :global(.mapboxgl-popup-content p:last-child) {
+  margin-bottom: 0;
+}
+
+.map :global(.mapboxgl-popup-tip) {
+  border-top-color: #0d0f49 !important;
+}
+
+.map :global(.mapboxgl-popup-close-button) {
+  top: 4px;
+  right: 6px;
+  width: 28px;
+  height: 28px;
+  color: #0d0f49;
+  font-size: 25px;
+  line-height: 24px;
+}
+
+.map :global(.mapboxgl-popup-close-button:hover) {
+  background: transparent;
+  color: #e5373c;
+}
+
+@media (max-width: 600px) {
+  .map :global(.mapboxgl-popup-content) {
+    max-width: 90vw !important;
+    padding: 12px !important;
+    border-radius: 12px !important;
+    font-size: 15px !important;
+  }
+
+  .map :global(.mapboxgl-popup-close-button) {
+    top: 8px !important;
+    right: 8px !important;
+    font-size: 28px !important;
+  }
+
+  .map :global(.mapboxgl-popup-tip) {
+    display: none !important;
+  }
+}
+
 .panel {
   /* Production uses content-box: max-width 320 + padding 15*2 ≈ 350 outer */
   box-sizing: content-box;
@@ -124,6 +199,30 @@
   border-bottom: 3px solid #0d0f49;
   border-left: 3px solid #0d0f49;
   border-radius: 10px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+}
+
+.chainPanel {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.7vh, 8px);
+  width: min(18vw, 220px);
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  padding: clamp(8px, 1.2vh, 12px);
+  background-color: #e6eefc;
+  border-top: none;
+  border-right: 3px solid #0d0f49;
+  border-bottom: none;
+  border-left: none;
+  border-radius: 0 10px 10px 0;
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
 }
 
@@ -216,6 +315,127 @@
   font-size: 13px !important;
 }
 
+.filterHeading {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.filterHeadingLabel {
+  color: #0d0f49;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.clearBtn {
+  padding: 2px 8px;
+  border: 1px solid #0d0f49;
+  border-radius: 999px;
+  background: transparent;
+  color: #0d0f49;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.clearBtn:hover {
+  background: #0d0f49;
+  color: #e6eefc;
+}
+
+.chainGrid {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: clamp(2px, 0.45vh, 6px);
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.chainBtn {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+  gap: clamp(4px, 0.6vh, 6px);
+  padding: 0 clamp(6px, 0.8vh, 8px) 0 clamp(4px, 0.6vh, 6px);
+  border: 1px solid rgb(13 15 73 / 18%);
+  border-radius: clamp(6px, 0.9vh, 10px);
+  background: #fff;
+  color: #0d0f49;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.chainBtn:hover {
+  border-color: #e5373c;
+}
+
+.chainBtnActive {
+  border-color: #e5373c;
+  background: #e5373c;
+  color: #fff;
+}
+
+.chainBtnActive::after {
+  content: "✓";
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  z-index: 2;
+  width: clamp(12px, 1.6vh, 16px);
+  height: clamp(12px, 1.6vh, 16px);
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 2px #e6eefc;
+  color: #fff;
+  font-size: clamp(9px, 1.2vh, 11px);
+  line-height: clamp(12px, 1.6vh, 16px);
+  text-align: center;
+  pointer-events: none;
+}
+
+.chainImg {
+  flex: 0 0 auto;
+  width: clamp(18px, 2.6vh, 28px);
+  height: clamp(18px, 2.6vh, 28px);
+  border-radius: clamp(4px, 0.6vh, 6px);
+  object-fit: contain;
+  background: #e6eefc;
+}
+
+.chainFallback {
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: clamp(18px, 2.6vh, 28px);
+  height: clamp(18px, 2.6vh, 28px);
+  align-items: center;
+  justify-content: center;
+  border-radius: clamp(4px, 0.6vh, 6px);
+  background: #e6eefc;
+  color: #0d0f49;
+  font-size: clamp(8px, 1.1vh, 10px);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.chainName {
+  overflow: hidden;
+  font-size: clamp(8px, 1.15vh, 10px);
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .seriesList {
   display: flex;
   flex-direction: column;
@@ -223,18 +443,30 @@
   width: 100%;
 }
 
+.seriesRow {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+}
+
 .series {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   gap: 4px;
   min-height: 80px;
-  margin-bottom: 4px;
   padding: 10px;
   border-radius: 16px;
   box-sizing: border-box;
+}
+
+.seriesHalf {
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .seriesClassic {
@@ -249,9 +481,14 @@
   background: #aac3ff;
 }
 
-/* Label is first child; flex-end packs [label]+[btns] to the right → label left of icons */
+.seriesAging {
+  background: #c9b8a0;
+}
+
+/* Label first; flex-end packs [label]+[btns] to the right */
 .seriesLabel {
   display: inline-block;
+  flex: 0 0 auto;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   min-width: 18px;
@@ -293,6 +530,15 @@
 .beerBtnActive {
   background-color: #e5373c;
   color: #fff;
+}
+
+.beerBtnDisabled,
+.beerBtnDisabled:hover {
+  background-color: #e6eefc;
+  color: #1c1c1c;
+  cursor: not-allowed;
+  opacity: 0.32;
+  filter: grayscale(0.7);
 }
 
 .beerBtnActive::after {
@@ -368,18 +614,21 @@
 
 @media (max-width: 959px) {
   .frame {
-    width: 92%;
     border-radius: 30px;
   }
 
   .panel {
     width: min(42vw, 280px);
   }
+
+  .chainPanel {
+    width: min(22vw, 200px);
+  }
 }
 
 @media (max-width: 600px) {
   .frameWrap {
-    padding-bottom: 0;
+    padding: var(--header-height, var(--hh, 5.25rem)) 0 0;
   }
 
   .frame {
@@ -390,6 +639,10 @@
     padding: 0;
   }
 
+  .hero {
+    padding: 1.25rem 1.25rem 2rem;
+  }
+
   .panel {
     top: auto;
     right: 0;
@@ -397,12 +650,29 @@
     left: 0;
     width: 100vw;
     max-width: 100vw;
-    max-height: 42vh;
+    max-height: 36vh;
     border-left: none;
     border-top: 3px solid #0d0f49;
     border-bottom: none;
     border-radius: 16px 16px 0 0;
     box-shadow: 0 -2px 12px rgb(0 0 0 / 15%);
+  }
+
+  .chainPanel {
+    top: auto;
+    right: 0;
+    bottom: 36vh;
+    left: 0;
+    width: 100vw;
+    max-width: 100vw;
+    height: 22vh;
+    max-height: 22vh;
+    overflow: hidden;
+    border-left: none;
+    border-right: none;
+    border-top: 3px solid #0d0f49;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -2px 12px rgb(0 0 0 / 12%);
   }
 
   .beerBtn,
@@ -418,5 +688,25 @@
     height: 16px;
     font-size: 12px;
     line-height: 16px;
+  }
+
+  .chainGrid {
+    display: grid;
+    flex: 1 1 auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 4px;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .chainBtn {
+    flex: unset;
+    min-height: 0;
+    padding: 2px 4px;
+  }
+
+  .chainName {
+    font-size: 8px;
   }
 }

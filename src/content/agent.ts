@@ -13,7 +13,8 @@ export const AGENT_PAGE = {
   metaDescription:
     "Бонусная и реферальная программа для ценителей пива. Стань амбассадором Gletcher и получай ценные призы от нашей пивоварни!",
   signupHref: "/members/signup",
-  loginHref: "/members/login",
+  /** Spike: magic-link login until /members/login + Postbox. */
+  loginHref: "/agent/login",
   videos: {
     bottle: {
       hevc: "https://files.gletcherbrewery.com/vid/comp-960-hevc-safari.mp4",

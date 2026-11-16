@@ -1,0 +1,113 @@
+import { NextResponse } from "next/server";
+import { getDb } from "@/server/db/client";
+import {
+  createAgentApplication,
+  latestOpenAgentApplication,
+  listAgentApplicationsForMember,
+} from "@/server/loyalty/agent-applications";
+import { requireMemberSession } from "@/server/loyalty/member-auth";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export async function GET() {
+  const auth = await requireMemberSession();
+  if (!auth.ok) return auth.response;
+  try {
+    const applications = await listAgentApplicationsForMember(
+      getDb(),
+      auth.member.id,
+    );
+    return NextResponse.json({ ok: true, applications });
+  } catch (err) {
+    console.error(
+      "[loyalty/agent-applications GET]",
+      err instanceof Error ? err.message : err,
+    );
+    return NextResponse.json(
+      { ok: false, code: "db_error" },
+      { status: 503 },
+    );
+  }
+}
+
+export async function POST(request: Request) {
+  const auth = await requireMemberSession();
+  if (!auth.ok) return auth.response;
+
+  let body: Record<string, unknown>;
+  try {
+    body = (await request.json()) as Record<string, unknown>;
+  } catch {
+    return NextResponse.json(
+      { ok: false, code: "invalid_json" },
+      { status: 400 },
+    );
+  }
+
+  const phone = String(body.phone ?? auth.member.phone ?? "").trim();
+  const city = String(body.city ?? auth.member.city ?? "").trim();
+  const venueName = String(body.venueName ?? "").trim();
+  const venueType = String(body.venueType ?? "").trim();
+  const venueAddress = String(body.venueAddress ?? "").trim();
+  const venueBoss = String(body.venueBoss ?? "").trim() || null;
+  const comment = String(body.comment ?? "").trim() || null;
+
+  if (!phone || !city || !venueName || !venueType || !venueAddress) {
+    return NextResponse.json(
+      { ok: false, code: "missing_fields" },
+      { status: 400 },
+    );
+  }
+
+  try {
+    const open = await latestOpenAgentApplication(getDb(), auth.member.id);
+    if (open) {
+      return NextResponse.json(
+        {
+          ok: false,
+          code: "already_pending",
+          application: open,
+        },
+        { status: 409 },
+      );
+    }
+
+    const application = await createAgentApplication(getDb(), {
+      memberId: auth.member.id,
+      phone,
+      city,
+      venueName,
+      venueType,
+      venueAddress,
+      venueBoss,
+      comment,
+    });
+
+    return NextResponse.json(
+      {
+        ok: true,
+        application: {
+          id: application.id,
+          status: application.status,
+          venueName: application.venueName,
+          createdAt: application.createdAt,
+        },
+      },
+      { status: 201 },
+    );
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (msg === "invalid_agent_application") {
+      return NextResponse.json(
+        { ok: false, code: "invalid_fields" },
+        { status: 400 },
+      );
+    }
+    console.error("[loyalty/agent-applications POST]", msg);
+    return NextResponse.json(
+      { ok: false, code: "db_error" },
+      { status: 503 },
+    );
+  }
+}

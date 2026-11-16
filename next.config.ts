@@ -6,11 +6,26 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   // Preserve the project's existing AGENTS.md during local development.
   agentRules: false,
-  // Allow LAN preview (e.g. http://10.10.10.189:3000) without blocking assets.
-  allowedDevOrigins: ["10.10.10.189"],
+  // Allow LAN / 127.0.0.1 preview without blocking /_next assets (localhost ≠ 127.0.0.1).
+  allowedDevOrigins: ["10.10.10.189", "127.0.0.1", "localhost"],
   images: {
     // Local media under /public (catalog, about, blog, …)
     formats: ["image/avif", "image/webp"],
+  },
+  async redirects() {
+    // Legacy Tilda Members URL → canonical agent cabinet (no App Router page).
+    return [
+      {
+        source: "/members/lk",
+        destination: "/agent/cabinet",
+        permanent: true,
+      },
+      {
+        source: "/:locale(en)/members/lk",
+        destination: "/agent/cabinet",
+        permanent: true,
+      },
+    ];
   },
   turbopack: {
     rules: {

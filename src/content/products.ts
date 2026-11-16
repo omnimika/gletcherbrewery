@@ -206,13 +206,14 @@ export const CATALOG_PRODUCTS: CatalogProduct[] = [
   },
 ];
 
-/** ALL: NEW first, out-of-stock last; relative order from listing-order.ts. */
+/** ALL: CLASSIC→CRAFT→LIMITED→AGING, then OOS last (`listing-order.ts`). */
 export function productsForAllView(
   products: CatalogProduct[] = CATALOG_PRODUCTS,
 ): CatalogProduct[] {
   return sortAllViewOrder(
     products.map((p) => ({
       id: p.slug,
+      category: p.category,
       badges: p.badges,
       outOfStock: p.outOfStock,
       product: p,

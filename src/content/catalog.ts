@@ -228,7 +228,7 @@ export function getCatalogCards(locale: PublishedLocale): CatalogCard[] {
       href,
     });
   }
-  /** Default ALL order: NEW first, out-of-stock last (see listing-order.ts). */
+  /** Default ALL order: series then OOS last (see listing-order.ts). */
   return sortAllViewOrder(cards);
 }
 

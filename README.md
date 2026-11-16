@@ -3,15 +3,23 @@
 Поэтапный перенос действующего сайта на Next.js App Router, TypeScript strict
 и Tailwind CSS. Подключён next-intl; реализованы дизайн-фундамент, каталог/product,
 home/blog, B2B/legal и публичные agent/tours/map/shop. DS-1/DS-2 уже реализованы.
-Текущий приоритет — **Q1: функциональная надёжность**, затем UI/UX regression,
-URL/SEO coverage, обязательный /about с анимацией/логикой и подтверждённые
-campaigns. Backend — следующий этап.
+Q1–Q3 и код /about реализованы; отдельные visual sign-offs Open.
+Статус **12.11.2026**: B1–B3 реализованы, M1 map/CRM принят; есть ledger,
+QR/OCR/manual receipt queue и magic-link spike. Кабинет /members/lk и agent
+application развиваются. Дальше — **M2-2: надёжность данных**, M2-3: member↔staff
+workflow, M2-4: настоящий row-level import/reconciliation/restore.
+CRM = PostgreSQL + read-only NocoDB + staff commands. Lead Google Sheets отменён.
+Postbox/GTIN и shop UI отложены владельцем; они не блокируют CRM/importer.
 
 - [Инструкции агентов](AGENTS.md)
 - [Текущее задание Cursor](docs/CURSOR_NEXT_STEPS.md)
 - [Дизайн-код и сетка](docs/design/DESIGN_SYSTEM.md)
 - [Архитектура дизайн-системы](docs/adr/0010-design-system-and-section-layout.md)
-- [Актуальное ревью](docs/reviews/2026-11-05-public-integrity.md)
+- [Актуальное ревью и проверки](docs/reviews/2026-11-12-agent-crm-and-migration.md)
+- [Кабинет и CRM workflow](docs/backend/AGENT_CRM_WORKFLOWS.md)
+- [План переноса loyalty данных](docs/data/LOYALTY_MIGRATION_PLAN.md)
+- [Контракт форм и доставки](docs/backend/FORMS_DATA_PIPELINE.md)
+- [Источники данных и назначения](docs/data/SOURCE_INVENTORY.md)
 - [Публичные маршруты и границы](docs/discovery/PUBLIC_ROUTE_MATRIX.md)
 - [Следующая серия спринтов](docs/SPRINT_PLAN.md)
 - [Baseline главной](docs/discovery/HOME_PAGE_BASELINE.md)

@@ -1,12 +1,12 @@
 # Локальная разработка
 
-Статус на 05.11.2026, d6011d2: DS-1/DS-2 реализованы, DS-3 широко перенесён;
-map/shop и остальные основные public templates в коде. Текущая работа — Q1:
-[функциональная надёжность](CURSOR_NEXT_STEPS.md), затем Q2/Q3 и public gate.
-RU без префикса, EN под `/en`; новые языки ещё не публикуются.
-Текущие проверки и дефекты описаны
-в [текущем задании Cursor](CURSOR_NEXT_STEPS.md) и `ROADMAP.md`.
-Серверные бизнес-интеграции относятся к последующим этапам.
+Статус **12.11**: B1–B3 реализованы, M1 принят; M2-1 ledger/receipt/auth spike
+и /members/lk существуют, agent application часть в рабочем дереве.
+Текущая работа — [M2-2 надёжность данных](CURSOR_NEXT_STEPS.md).
+Следом [member↔staff](backend/AGENT_CRM_WORKFLOWS.md) и
+[row-level миграция](data/LOYALTY_MIGRATION_PLAN.md).
+RU без префикса, EN под `/en`. Non-prod DB: [B1_RUNBOOK](backend/B1_RUNBOOK.md),
+[contract](backend/FORMS_DATA_PIPELINE.md), [sources](data/SOURCE_INVENTORY.md).
 
 ## Требования и запуск
 
@@ -15,29 +15,38 @@ RU без префикса, EN под `/en`; новые языки ещё не �
 Нижняя граница учитывает ESLint и его зависимости.
 
 В shell текущего ревью default Node 20.15.1 не соответствует engines;
-проверки выполнены установленным Node 25.5.0. Перед npm-командами активировать
+проверки12.11 выполнены установленным Node 22.23.4. Перед npm-командами активировать
 совместимую установленную версию; это не повод обновлять зависимости проекта.
 
 ```sh
 npm ci
-npm run dev
+npm run db:embedded   # terminal 1 — PostgreSQL + migrate (port 54329)
+npm run nocodb:dev    # terminal 2 — http://127.0.0.1:8080
+npm run dev           # terminal 3 — http://localhost:3000
 ```
 
-Приложение доступно по адресу http://localhost:3000. Текущие dev/start scripts
-используют `--hostname 0.0.0.0 --port 3000` для локального/LAN preview;
-allowedDevOrigins задан в `next.config.ts`. Для same-origin hero переменные
-окружения не требуются. Опциональный публичный `NEXT_PUBLIC_HERO_BOTTLE_BASE`
-описан в `.env.example`; перед внешним origin проверить CORS/canvas fallback.
+Подробности и staff view: [B1_RUNBOOK](backend/B1_RUNBOOK.md). Dev/start scripts
+используют `--hostname 0.0.0.0 --port 3000`; `allowedDevOrigins` в `next.config.ts`.
+Опциональный `NEXT_PUBLIC_HERO_BOTTLE_BASE` — в `.env.example`.
 
 Проверки:
 
 ```sh
-npm run build
+npm run test:unit
+npm run test:integration
+npm run db:restore-check
+npm run b1:smoke
+npm run typecheck
 npm run lint
-npx tsc --noEmit
+npm run build
 ```
 
-`npm run typecheck` эквивалентен последней команде. Production-сервер локально:
+`npm run typecheck` запускает `tsc --noEmit`; при строгом read-only ревью
+добавлять `--incremental false`. Integration tests пишут в DATABASE_URL:
+использовать отдельную synthetic test DB, не production или существующую
+локальную базу с пользовательскими данными. `db:restore-check` пока B1-only,
+не доказательство восстановления всей схемы; см. M2 migration plan.
+Production-сервер локально:
 
 ```sh
 npm run build
@@ -52,12 +61,17 @@ src/
   components/   # Общие компоненты интерфейса
   content/      # Catalog/blog/public templates, секции и публикация RU/EN
   lib/          # Focus, scroll, formatting и навигационные helpers
-  types/        # Будущие общие типы
+  server/       # Domain services, PostgreSQL, intake/worker/loyalty/staff/retail
+  types/        # Общие типы
 ```
 
 Псевдоним `@/*` указывает на `src/*`. `types` пока содержит `.gitkeep`.
 Страницы и `SiteShell` — серверные компоненты; меню, age gate, фильтры,
-карусель и форма используют клиентские компоненты. Отправка формы — stub.
+карусель и форма используют клиентские компоненты. Все allowlisted формы пишут
+через `/api/forms/submissions` в PostgreSQL с consent/outbox. Locale/field contract —
+`src/server/forms/contracts.ts`; только Telegram destination, lead Sheets отменён.
+Member auth/receipts/agent applications — `src/server/loyalty`, member-scoped API.
+Staff lead/receipt/retail UI реализован; agent application staff loop ещё впереди.
 `product-props.ts` и listing assets объединяет `src/content/catalog.ts`:
 карточки и detail routes используют стабильный ID и published translations.
 Маршруты находятся в `src/app/[locale]`, proxy — `src/proxy.ts`, конфигурация
@@ -82,7 +96,9 @@ ABC Gravity Trial используются только для локально�
 
 `build` и `dev` создают `.next` и могут обновлять `next-env.d.ts`; эти команды
 не входят в режим строгого read-only ревью. Результаты текущего ревью:
-[d6011d2, 2026-11-05](reviews/2026-11-05-public-integrity.md).
+[4a4eb01 + diff, 2026-11-12](reviews/2026-11-12-agent-crm-and-migration.md):
+unit77 PASS, tsc/lint FAIL. Lint захватывает local tmp browser profile;
+собственные hooks errors sales-map тоже требуют исправления.
 
 Mapbox frontend использует публичный token из .env.example; его значение
 задаётся локально вне Git. Без token должна работать публичная fallback-ссылка.
@@ -112,11 +128,12 @@ MCP не требуется для локального запуска Next.js.
 
 ## Сохранность исходных материалов
 
-При Bootstrap исходные материалы были сохранены. README и `.gitingnore`
-сохраняются; `AGENTS.md` и документация далее обновляются по разрешению владельца.
+При Bootstrap исходные материалы были сохранены; `AGENTS.md`, README и
+документация далее обновляются по разрешению владельца. Опечаточный
+`.gitingnore` позже удалён в истории, настоящий `.gitignore` сохранён.
 В `next.config.ts` задано `agentRules: false`, чтобы `next dev` автоматически
 не дописывал инструкции в пользовательский `AGENTS.md`.
-Добавлен отдельный `.gitignore`: файл `.gitingnore` Git не использует.
+Рабочий ignore-файл — `.gitignore`; опечаточное имя Git не использовал.
 Зависимости, сборка, локальные env-файлы и генерируемые типы Next.js исключены
 из Git; `package-lock.json` и `.env.example` предназначены для хранения в нём.
 

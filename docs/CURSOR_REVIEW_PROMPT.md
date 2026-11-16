@@ -1,68 +1,71 @@
-# Готовый промпт Cursor Agent — Q1
+# Промпт Cursor — M2-2, затем кабинет/CRM и миграция
 
-Дата: **05.11.2026**. [Задание](CURSOR_NEXT_STEPS.md),
-[ревью](reviews/2026-11-05-public-integrity.md), [план](SPRINT_PLAN.md),
-[route matrix](discovery/PUBLIC_ROUTE_MATRIX.md), [AGENTS](../AGENTS.md).
-
-Скопировать в Cursor:
+Дата: **12.11.2026**. [Задание](CURSOR_NEXT_STEPS.md), [серия](SPRINT_PLAN.md),
+[ревью](reviews/2026-11-12-agent-crm-and-migration.md).
 
 ~~~text
-Продолжи gletcherbrewery. Выполни только Q1 — функциональную надёжность
-публичного сайта. Сначала прочитай:
+Продолжи gletcherbrewery. Приоритет владельца — перенос баз, работающие формы/
+данные, кабинет Agent и CRM. Выполни следующий спринт M2-2: надёжность текущего
+контура; затем подготовь переход к M2-3/M2-4 по плану.
+
+Сначала прочитай:
 @AGENTS.md
 @docs/ROADMAP.md
 @docs/CURSOR_NEXT_STEPS.md
 @docs/SPRINT_PLAN.md
-@docs/reviews/2026-11-05-public-integrity.md
-@docs/discovery/PUBLIC_ROUTE_MATRIX.md
-@docs/design/DESIGN_SYSTEM.md
-@docs/adr/0001-i18n-routing-and-content.md
-@docs/adr/0010-design-system-and-section-layout.md
-@docs/discovery/TILDA_MCP_WORKFLOW.md
-@docs/discovery/ABOUT_PAGE_BASELINE.md
+@docs/reviews/2026-11-12-agent-crm-and-migration.md
+@docs/backend/FORMS_DATA_PIPELINE.md
+@docs/backend/AGENT_CRM_WORKFLOWS.md
+@docs/data/LOYALTY_MIGRATION_PLAN.md
+@docs/data/SOURCE_INVENTORY.md
+@docs/data/AIRTABLE_LOYALTY_SCHEMA.md
+@docs/data/LOYALTY_WRITERS_MAP.md
+@docs/discovery/LOYALTY_OWNER_QUESTIONS.md
+@docs/adr/0002-database.md
+@docs/adr/0003-orm-and-migrations.md
+@docs/adr/0007-background-jobs.md
+@docs/adr/0008-hosting-dev.md
+@docs/adr/0011-loyalty-ledger.md
 
-Baseline ревью d6011d2, дерево тогда чистое. Перепроверь текущие status/diff/log,
-сохрани чужие изменения. DS-1/DS-2 уже реализованы, DS-3 широко перенесён;
-не начинай их заново. Agent @320 polish уже в commit, отдельный visual QA Open.
+Проверь actual Git status/diff/log. Codex проверил HEAD4a4eb01, second-front,
+и незакоммиченный diff task-first /members/lk, agent application API/0012/
+schema/level. Сохрани чужую работу. B1-B3 уже реализованы, M1 принят10.11;
+не повторяй их и не возвращай Google lead Sheets (Cancelled).
 
-Дай короткий план/критерии, затем выполни Q1:
-1. R01: tours/contacts не обещают доставку без отправки. Проверь все пять lead
-   форм, сохрани ввод и покажи честное unavailable state с подтверждённым
-   контактным/legacy путём. Не создавай backend ради устранения false success.
-2. R02: published peer vs unavailable/fallback contract для LocaleSwitch.
-   EN на RU-only B2B не ведёт в 404; чужой hash не переносится на fallback,
-   а настоящий product/article peer и существующие anchors сохраняются.
-3. R05/R06: восстанови Mapbox logo/attribution и корректную mobile panel
-   border-box width. Сохрани Product singular и существующую фильтрацию.
-4. R07: единый shop dialog close/cancel/hash contract, Escape/reopen,
-   Back/Forward, query preservation и focus restoration.
-5. R08: graceful WebGL init/load failures, внешний map fallback/retry,
-   корректный geocoder teardown при repeated mount/locale transition.
-   Пользовательский fallback не показывает env setup инструкции.
+Дай краткий implementation plan и DoD. В M2-2 исправь подтверждённые R01-R07:
+expired leased recovery вместе с atomic fencing/finalize/replay; отдельная
+worker DB роль и узкие grants (revoke уже выданных прав + оба bootstrap paths);
+append-only ledger; atomic magic-link consume+member+session и fail-closed
+debug guard без raw sign-in links в логах; receipt approve/reject+ledger+audit
+в одной tx; CRM patches без lost update. Telegram: bounded summary, retry_after,
+timeout до конца body. Intake/login/upload: bounded read/rate limits и честный
+retry UX. Новые бизнес-правила не выдумывай.
 
-Соблюдай scopes и DoD из CURSOR_NEXT_STEPS. Свежие lint/typecheck/build,
-local start и targeted browser scenarios: forms valid/invalid/no loss,
-RU/EN/anchors, map token/no-token/errors/320/390/desktop, shop dialog history.
-Запиши реальные команды/outcomes/screenshots и ограничения; не выдавай
-неисполненные browser/production проверки за PASS. Обнови docs после кода.
-Проверь docs delivery: .gitignore исключает /docs/, новые review/matrix/baseline/archive
-пока ignored. Подготовь точечный список безопасных .md для будущего разрешённого
-коммита; не раскрывай массово raw/source packs и не делай staging сейчас.
+Сначала верни PASS проверки: Codex12.11 получил 77 unit PASS, но tsc FAIL
+(null LK и narrowing map test), lint FAIL (2 hooks errors в sales-map плюс
+локальные generated browser profile files). Не удаляй tmp пользователя и не
+отключай hooks rules глобально. Карта принята, визуальный redesign не нужен.
 
-Q2 design/motion/reflow, Q3 URL/SEO, A1 /about, campaigns и Stage5 — отдельные следующие
-спринты. Не подключай NocoDB/PostgreSQL/CMS/cart/payment, не публикуй новые
-языки. Mapbox frontend уже установлен — не удаляй его как «преждевременный».
-MCP Tilda только read-only; editor/published раздельно. Klin campaign в
-snapshot unpublished/password, доступ к исходникам не разрешает публикацию.
+Tests на isolated synthetic PostgreSQL, без загрузки live env/доставки:
+two workers/crash/restart/expired lease/stale ack/replay race; actual grants
+negative checks; concurrent token consume+rollback; approve-vs-reject/repeat+
+ledger failure; parallel CRM patches. Обязательны meaningful DB integration,
+unit/lint/typecheck/build/local smoke. Моки/skip не называй live или DB PASS.
 
-Обязательное дополнение владельца: A1 реализует /about по Tilda page71867465,
-project1212341, вместе с анимацией и логикой landing. В A1 изучи свежие records,
-SBS/timelines/triggers, breakpoint overrides и интерактивы через read-only MCP.
-Сохрани характер движения и сценарии; не подменяй landing статичной «О нас»
-или одним generic Reveal. Browser parity, mobile/reduced-motion/keyboard — DoD.
-Сейчас A1 не выполнять вместо Q1; /about обязателен до stage-4 exit.
+Параллельно подготовь source manifest/mapping/synthetic row fixtures для
+M2-4. Нынешний aggregate policy test не является переносом; B1-only restore
+не является backup всей текущей схемы. Legacy approved НЕТ→verified привязать
+к согласованному snapshot/record set. Сверять lifetime и available отдельно,
+не складывать opening с полной историей повторно. Уже применённые SQL не менять.
 
-Прежние visual acceptances — regression baseline, а не отмена конкретных
-подтверждённых дефектов. Не делай общий редизайн. Commit/push/production/DNS
-не выполнять без отдельного запроса.
+Следующий M2-3: agent application→staff queue/status/audit→member result,
+private receipt photo→review→один earn→кабинет; nine source agent statuses
+сохранить по mapping. Убрать неподтверждённое referral "+1%". Детали в workflow.
+M2-4 — реальный import/reconciliation/restore; M2-5 — staging readiness.
+
+Postbox/SMTP, GTIN export и shop/spend UI owner отложил; не делай их gate для
+M2-2/CRM/importer. /about и другие public sign-offs сохранены в backlog.
+Production import/legacy changes/auth cutover/DNS/onboarding рассылки,
+commit/push не выполнять без отдельного задания. В конце обнови docs/evidence:
+R-ID, файлы, команды/результаты, ограничения и следующий проверяемый результат.
 ~~~
