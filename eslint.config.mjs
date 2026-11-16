@@ -12,6 +12,16 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local scratch / browser scrape profiles (not app source; do not delete).
+    "tmp/**",
+    ".tmp/**",
+    // Local design/agent skills (gitignored; AGENTS.md §6) — not app source.
+    ".agents/**",
+    ".claude/**",
+    ".cursor/skills/**",
+    ".cursor/agents/**",
+    ".codex/**",
+    "skills-lock.json",
   ]),
 ]);
 

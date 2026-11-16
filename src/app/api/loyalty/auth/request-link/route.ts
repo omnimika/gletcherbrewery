@@ -8,6 +8,14 @@ import {
   deliverMagicLinkEmail,
   getMagicLinkDelivery,
 } from "@/server/loyalty/mail";
+import {
+  AUTH_JSON_MAX_BYTES,
+  boundaryJsonResponse,
+  checkRateLimit,
+  clientIpFromRequest,
+  MAGIC_LINK_RATE,
+  readJsonBody,
+} from "@/server/http/public-boundary";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,16 +26,26 @@ export const dynamic = "force-dynamic";
  * Production email = SMTP now / Postbox later — never debug on deployment-like hosts.
  */
 export async function POST(request: Request) {
-  let email = "";
-  try {
-    const body = (await request.json()) as { email?: unknown };
-    email = String(body.email ?? "");
-  } catch {
+  const limited = checkRateLimit({
+    key: `magic-link:${clientIpFromRequest(request)}`,
+    ...MAGIC_LINK_RATE,
+  });
+  if (!limited.ok) return boundaryJsonResponse(limited);
+
+  const parsed = await readJsonBody(request, AUTH_JSON_MAX_BYTES);
+  if (!parsed.ok) {
     return NextResponse.json(
-      { ok: false, code: "invalid_body" },
-      { status: 400 },
+      { ok: false, code: parsed.code, message: parsed.message },
+      { status: parsed.status },
     );
   }
+
+  const email =
+    parsed.value &&
+    typeof parsed.value === "object" &&
+    "email" in parsed.value
+      ? String((parsed.value as { email?: unknown }).email ?? "")
+      : "";
 
   try {
     const issued = await issueMagicLink(getDb(), {

@@ -2,11 +2,17 @@ import { NextResponse } from "next/server";
 import { getDb } from "@/server/db/client";
 import { submitForm } from "@/server/forms/submit";
 import { parseEnvelopeMeta, validateEnvelope } from "@/server/forms/validate";
+import {
+  boundaryJsonResponse,
+  checkRateLimit,
+  clientIpFromRequest,
+  FORM_JSON_MAX_BYTES,
+  FORM_RATE,
+  readJsonBody,
+} from "@/server/http/public-boundary";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-const MAX_BYTES = 32_768;
 
 function errorResponse(
   status: number,
@@ -26,19 +32,18 @@ export async function POST(request: Request) {
     return errorResponse(415, "unsupported_media", "Expected application/json");
   }
 
-  const buf = Buffer.from(await request.arrayBuffer());
-  if (buf.byteLength > MAX_BYTES) {
-    return errorResponse(413, "payload_too_large", "Request body too large");
+  const limited = checkRateLimit({
+    key: `forms:${clientIpFromRequest(request)}`,
+    ...FORM_RATE,
+  });
+  if (!limited.ok) return boundaryJsonResponse(limited);
+
+  const body = await readJsonBody(request, FORM_JSON_MAX_BYTES);
+  if (!body.ok) {
+    return errorResponse(body.status, body.code, body.message);
   }
 
-  let raw: unknown;
-  try {
-    raw = JSON.parse(buf.toString("utf8"));
-  } catch {
-    return errorResponse(400, "invalid_json", "Malformed JSON");
-  }
-
-  const validated = validateEnvelope(raw, buf.byteLength);
+  const validated = validateEnvelope(body.value, body.bytes);
   if (!validated.ok) {
     const status =
       validated.code === "payload_too_large"
@@ -49,7 +54,7 @@ export async function POST(request: Request) {
     return errorResponse(status, validated.code, validated.message, validated.details);
   }
 
-  const meta = parseEnvelopeMeta(raw);
+  const meta = parseEnvelopeMeta(body.value);
   if (!meta) {
     return errorResponse(400, "invalid_payload", "Missing envelope fields");
   }

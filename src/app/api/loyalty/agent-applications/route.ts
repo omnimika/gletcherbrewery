@@ -6,6 +6,14 @@ import {
   listAgentApplicationsForMember,
 } from "@/server/loyalty/agent-applications";
 import { requireMemberSession } from "@/server/loyalty/member-auth";
+import {
+  AGENT_APP_JSON_MAX_BYTES,
+  AGENT_APP_RATE,
+  boundaryJsonResponse,
+  checkRateLimit,
+  clientIpFromRequest,
+  readJsonBody,
+} from "@/server/http/public-boundary";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -35,15 +43,26 @@ export async function POST(request: Request) {
   const auth = await requireMemberSession();
   if (!auth.ok) return auth.response;
 
-  let body: Record<string, unknown>;
-  try {
-    body = (await request.json()) as Record<string, unknown>;
-  } catch {
+  const limited = checkRateLimit({
+    key: `agent-app:${auth.member.id}:${clientIpFromRequest(request)}`,
+    ...AGENT_APP_RATE,
+  });
+  if (!limited.ok) return boundaryJsonResponse(limited);
+
+  const parsed = await readJsonBody(request, AGENT_APP_JSON_MAX_BYTES);
+  if (!parsed.ok) {
+    return NextResponse.json(
+      { ok: false, code: parsed.code, message: parsed.message },
+      { status: parsed.status },
+    );
+  }
+  if (!parsed.value || typeof parsed.value !== "object") {
     return NextResponse.json(
       { ok: false, code: "invalid_json" },
       { status: 400 },
     );
   }
+  const body = parsed.value as Record<string, unknown>;
 
   const phone = String(body.phone ?? auth.member.phone ?? "").trim();
   const city = String(body.city ?? auth.member.city ?? "").trim();

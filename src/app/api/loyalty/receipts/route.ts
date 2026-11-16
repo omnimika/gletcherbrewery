@@ -10,6 +10,15 @@ import {
   createManualReceipt,
   listReceiptsForMember,
 } from "@/server/loyalty/receipts";
+import {
+  boundaryJsonResponse,
+  checkRateLimit,
+  clientIpFromRequest,
+  enforceContentLength,
+  RECEIPT_MULTIPART_MAX_BYTES,
+  RECEIPT_PHOTO_MAX_BYTES,
+  RECEIPT_UPLOAD_RATE,
+} from "@/server/http/public-boundary";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -49,6 +58,15 @@ export async function POST(request: Request) {
   const auth = await requireMemberSession();
   if (!auth.ok) return auth.response;
 
+  const limited = checkRateLimit({
+    key: `receipt-upload:${auth.member.id}:${clientIpFromRequest(request)}`,
+    ...RECEIPT_UPLOAD_RATE,
+  });
+  if (!limited.ok) return boundaryJsonResponse(limited);
+
+  const sized = enforceContentLength(request, RECEIPT_MULTIPART_MAX_BYTES);
+  if (!sized.ok) return boundaryJsonResponse(sized);
+
   let gletcherSumRub: number | null = null;
   let city = auth.member.city?.trim() || "";
   let purchaseAt = "";
@@ -82,10 +100,10 @@ export async function POST(request: Request) {
     const photo = form.get("photo");
     if (photo && typeof photo !== "string" && "arrayBuffer" in photo) {
       photoBuf = Buffer.from(await photo.arrayBuffer());
-      if (photoBuf.length > 8_000_000) {
+      if (photoBuf.length > RECEIPT_PHOTO_MAX_BYTES) {
         return NextResponse.json(
           { ok: false, code: "photo_too_large", message: "Max 8MB" },
-          { status: 400 },
+          { status: 413 },
         );
       }
       photoContentType = photo.type || "image/jpeg";

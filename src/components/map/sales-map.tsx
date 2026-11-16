@@ -128,7 +128,9 @@ export function SalesMap({
   const userMarkerRef = useRef<mapboxgl.Marker | null>(null);
   const geolocateAdjustingRef = useRef(false);
   const copyRef = useRef(copy);
-  copyRef.current = copy;
+  useEffect(() => {
+    copyRef.current = copy;
+  }, [copy]);
   const [selectedBeers, setSelectedBeers] = useState<Set<string>>(
     () => new Set(),
   );
@@ -149,22 +151,11 @@ export function SalesMap({
     [selectedChains, beersByChain],
   );
 
-  useEffect(() => {
-    setSelectedBeers((prev) => {
-      const next = pruneBeerSelection(prev, enabledBeers);
-      if (next.size === prev.size) {
-        let same = true;
-        for (const key of prev) {
-          if (!next.has(key)) {
-            same = false;
-            break;
-          }
-        }
-        if (same) return prev;
-      }
-      return next;
-    });
-  }, [enabledBeers]);
+  /** Derived filter set — avoids setState-in-effect when chain availability changes. */
+  const activeBeers = useMemo(
+    () => pruneBeerSelection(selectedBeers, enabledBeers),
+    [selectedBeers, enabledBeers],
+  );
 
   const seriesOrder = useMemo(
     () =>
@@ -255,7 +246,7 @@ export function SalesMap({
       if (cancelled) return;
       setReady(true);
       setError(null);
-      applyFilters(selectedBeers, selectedChains);
+      applyFilters(activeBeers, selectedChains);
       map.resize();
 
       if (geocoderHost) {
@@ -345,7 +336,7 @@ export function SalesMap({
       mapRef.current = null;
       setReady(false);
     };
-    // selectedBeers/chains intentionally omitted — filters via applyFilters effect
+    // activeBeers/chains intentionally omitted — filters via applyFilters effect
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     accessToken,
@@ -358,8 +349,8 @@ export function SalesMap({
 
   useEffect(() => {
     if (!ready) return;
-    applyFilters(selectedBeers, selectedChains);
-  }, [selectedBeers, selectedChains, ready, applyFilters]);
+    applyFilters(activeBeers, selectedChains);
+  }, [activeBeers, selectedChains, ready, applyFilters]);
 
   const toggleBeer = (key: string) => {
     if (enabledBeers && !enabledBeers.has(key)) return;
@@ -611,10 +602,11 @@ export function SalesMap({
                     >
                       <span className={styles.seriesLabel}>{series.label}</span>
                       {series.beers.map((beer) => {
-                        const active = selectedBeers.has(beer.key);
                         const disabled = Boolean(
                           enabledBeers && !enabledBeers.has(beer.key),
                         );
+                        const active =
+                          !disabled && activeBeers.has(beer.key);
                         return (
                           <button
                             key={beer.key}
