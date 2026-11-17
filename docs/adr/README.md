@@ -20,7 +20,7 @@ ADR 0002/0003/0008 — **Accepted** для B1 non-prod (09.11), 0007 — **Accep
 | [0008-hosting-dev.md](0008-hosting-dev.md) | Local non-prod topology | **Accepted** (B1); YC staging Open |
 | [0005-cms.md](0005-cms.md) | Rich-content / Puck / Tilda block map | **Proposed** (editor preference Confirmed) |
 | [0010-design-system-and-section-layout.md](0010-design-system-and-section-layout.md) | Design tokens, секции/сетка/anchors/UI/state/motion | **Direction Confirmed**; DS-1/DS-2 implemented, rollout reviewable |
-| [0011-loyalty-ledger.md](0011-loyalty-ledger.md) | «Агент Глетчер» ledger, QR-verify, legacy→ДА | **Proposed** (policies Confirmed10–11.11; row-level import/restore Open) |
+| [0011-loyalty-ledger.md](0011-loyalty-ledger.md) | «Агент Глетчер» ledger, QR-verify, legacy→ДА | **Accepted** 17.11 (CSV rehearsal + reconcile 212338; cutover Open) |
 
 Два исторических файла с префиксом `0000` сохранены по существующим путям.
 В ссылках использовать полное имя файла.

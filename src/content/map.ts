@@ -106,6 +106,8 @@ export type MapCopy = {
   chainFilterTitle: string;
   beerFilterTitle: string;
   clearFiltersLabel: string;
+  /** Mobile sheet dismiss control. */
+  closeSheetLabel: string;
   geocoderPlaceholder: string;
   fullscreenLabel: string;
   geolocateLabel: string;
@@ -134,6 +136,7 @@ const RU: MapCopy = {
   chainFilterTitle: "Сети",
   beerFilterTitle: "Сорта",
   clearFiltersLabel: "Сбросить",
+  closeSheetLabel: "Закрыть",
   geocoderPlaceholder: "Ввести адрес...",
   fullscreenLabel: "На весь экран",
   geolocateLabel: "Моё местоположение",
@@ -169,6 +172,7 @@ const EN: MapCopy = {
   chainFilterTitle: "Chains",
   beerFilterTitle: "Beers",
   clearFiltersLabel: "Clear",
+  closeSheetLabel: "Close",
   geocoderPlaceholder: "Enter an address...",
   fullscreenLabel: "Fullscreen",
   geolocateLabel: "My location",

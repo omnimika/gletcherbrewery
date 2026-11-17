@@ -199,13 +199,14 @@ Public acceptance и production cutover остаются отдельными р
    Сохранять task-first `/agent/cabinet` (не `/members/lk`), agent application API/0012/schema/level.
    B1–B3 реализованы; M1 map/CRM Owner Accepted 10.11. Их не повторять.
 2. M2-0 inventory/policies и M2-1 ledger/QR/OCR/manual/auth spike реализованы.
-   **Production row-level snapshot / ADR0011 Accepted ещё Open.**
+   **ADR0011 Accepted 17.11** (CSV snapshot + reconcile 212338; orphan −5823 ок).
+   Production cutover / writer freeze / DNS остаются Open.
 3. **M2-2 Done 16.11:** R01–R07 + quality baseline + public boundary. R01–R12:
    `docs/reviews/2026-11-12-agent-crm-and-migration.md`.
 4. **M2-3 Done 16.11** + Pre-M2-4 tails. **M2-4 foundation Done 16.11**;
    **protected CSV batch Done 17.11** (`tmp/Airtable`, `Чеки-xls.csv`,
-   cutoff=today, reconcile available/lifetime **212338** PASS). ADR0011 →
-   Accepted после owner review. Дальше **M2-5** / cutover proposal.
+   cutoff=today, reconcile available/lifetime **212338** PASS).
+   Дальше **M2-5** / cutover proposal.
 5. `/agent/cabinet` — canonical RU кабинет; `/members/lk` только 301 → cabinet; `/agent/login` для входа.
    Postbox/GTIN/shop отложены; не обещать email delivery/referral earn без backend.
 6. PostgreSQL source of truth; NocoDB read-only. Изменения бизнес-данных —
@@ -226,7 +227,7 @@ Public acceptance и production cutover остаются отдельными р
 - `docs/discovery/FNS_OPEN_API_APPLICATION_DRAFT.md` — черновик параллельной заявки ФНС.
 - `docs/discovery/RECEIPT_FNS_PROVIDER_RESEARCH.md` — справочно (платные отклонены).
 - `docs/discovery/LOYALTY_OWNER_QUESTIONS.md` — ответы владельца.
-- `docs/adr/0011-loyalty-ledger.md` — Proposed ledger + opening-balance / spendable policy.
+- `docs/adr/0011-loyalty-ledger.md` — **Accepted** ledger + opening-balance / spendable policy (17.11).
 - `docs/backend/FORMS_DATA_PIPELINE.md` — intake/CRM/Telegram, consistency/retry/PII; lead Sheets Cancelled.
 - `docs/backend/AGENT_CRM_WORKFLOWS.md` — member↔staff сценарии чеков/agent applications.
 - `docs/data/LOYALTY_MIGRATION_PLAN.md` — row-level import, reconciliation, full restore.

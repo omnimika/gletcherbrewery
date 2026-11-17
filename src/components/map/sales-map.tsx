@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type TouchEvent,
+} from "react";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -132,6 +139,7 @@ export function SalesMap({
 }) {
   const mapNode = useRef<HTMLDivElement | null>(null);
   const frameNode = useRef<HTMLDivElement | null>(null);
+  const beerStackRef = useRef<HTMLDivElement | null>(null);
   const geocoderNode = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const geocoderRef = useRef<MapboxGeocoder | null>(null);
@@ -154,6 +162,12 @@ export function SalesMap({
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [retryKey, setRetryKey] = useState(0);
+  const [mobileSheet, setMobileSheet] = useState<null | "chains" | "beers">(
+    null,
+  );
+  const [isMobile, setIsMobile] = useState(false);
+  const sheetCloseRef = useRef<HTMLButtonElement | null>(null);
+  const sheetTouchStartY = useRef<number | null>(null);
 
   const chainOptions = useMemo(
     () => listMapChainOptions(chainTitlesWithAssortment),
@@ -430,6 +444,103 @@ export function SalesMap({
     applyFilters(activeBeers, selectedChains, selectedBranded);
   }, [activeBeers, selectedChains, selectedBranded, ready, applyFilters]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(max-width: 599px)");
+    const sync = () => {
+      setIsMobile(mq.matches);
+      if (!mq.matches) setMobileSheet(null);
+    };
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    if (!mobileSheet) {
+      document.body.style.removeProperty("overflow");
+      return;
+    }
+    document.body.style.overflow = "hidden";
+    sheetCloseRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileSheet(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.removeProperty("overflow");
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [mobileSheet]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !ready) return;
+    // Sheet open/close and breakpoint changes alter the visible map box.
+    requestAnimationFrame(() => map.resize());
+  }, [mobileSheet, isMobile, ready]);
+
+  /**
+   * Desktop beer card hugs content. If it would exceed the map frame height,
+   * shrink --beer-d (no scrollbar, no full-height empty stretch).
+   */
+  useEffect(() => {
+    if (isMobile) return;
+    const stack = beerStackRef.current;
+    const frame = frameNode.current;
+    if (!stack || !frame) return;
+
+    let raf = 0;
+    const fit = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        stack.style.removeProperty("--beer-d");
+        // Second frame: measure natural width-based size, then shrink if needed.
+        requestAnimationFrame(() => {
+          const maxH = frame.clientHeight;
+          for (let i = 0; i < 5; i += 1) {
+            if (stack.offsetHeight <= maxH + 1) break;
+            const btn = stack.querySelector<HTMLElement>(
+              `.${styles.beerBtn}`,
+            );
+            const cur = btn?.getBoundingClientRect().width ?? 48;
+            const scale = maxH / Math.max(stack.offsetHeight, 1);
+            const next = Math.max(22, Math.floor(cur * scale * 0.94));
+            if (next >= cur) break;
+            stack.style.setProperty("--beer-d", `${next}px`);
+            void stack.offsetHeight;
+          }
+        });
+      });
+    };
+
+    const ro = new ResizeObserver(fit);
+    ro.observe(frame);
+    window.addEventListener("resize", fit);
+    fit();
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener("resize", fit);
+      stack.style.removeProperty("--beer-d");
+    };
+  }, [isMobile, ready, seriesRows]);
+
+  const closeMobileSheet = useCallback(() => setMobileSheet(null), []);
+
+  const onSheetTouchStart = (e: TouchEvent) => {
+    sheetTouchStartY.current = e.touches[0]?.clientY ?? null;
+  };
+
+  const onSheetTouchEnd = (e: TouchEvent) => {
+    const start = sheetTouchStartY.current;
+    sheetTouchStartY.current = null;
+    if (start == null) return;
+    const end = e.changedTouches[0]?.clientY;
+    if (end == null) return;
+    if (end - start > 64) closeMobileSheet();
+  };
+
   const toggleBeer = (key: string) => {
     if (enabledBeers && !enabledBeers.has(key)) return;
     setSelectedBeers((prev) => {
@@ -462,6 +573,13 @@ export function SalesMap({
     setSelectedChains(new Set());
     setSelectedBranded(new Set());
   };
+
+  const clearBeerFilters = () => {
+    setSelectedBeers(new Set());
+  };
+
+  const leftFilterCount = selectedChains.size + selectedBranded.size;
+  const beerFilterCount = activeBeers.size;
 
   const requestFullscreen = () => {
     const target = frameNode.current ?? document.documentElement;
@@ -569,6 +687,7 @@ export function SalesMap({
 
   return (
     <div className={styles.page}>
+      <div className={styles.mapScreen}>
       <section className={styles.frameWrap} aria-label={copy.title}>
         <div ref={frameNode} className={styles.frame}>
           <div ref={mapNode} className={styles.map} />
@@ -595,114 +714,144 @@ export function SalesMap({
             </div>
           ) : null}
 
+          {mobileSheet ? (
+            <button
+              type="button"
+              className={styles.sheetBackdrop}
+              aria-label={copy.closeSheetLabel}
+              onClick={closeMobileSheet}
+            />
+          ) : null}
+
           <aside
-            className={styles.chainPanel}
+            className={`${styles.chainPanel}${
+              mobileSheet === "chains" ? ` ${styles.sheetOpen}` : ""
+            }`}
             aria-label={copy.filterTitle}
+            role={isMobile ? "dialog" : undefined}
+            aria-modal={isMobile && mobileSheet === "chains" ? true : undefined}
+            aria-hidden={isMobile && mobileSheet !== "chains" ? true : undefined}
+            onTouchStart={onSheetTouchStart}
+            onTouchEnd={onSheetTouchEnd}
           >
+            <div className={styles.sheetHandle} aria-hidden />
             <div className={styles.filterHeading}>
               <span className={styles.filterHeadingLabel}>
                 {copy.filterTitle}
               </span>
-              {selectedChains.size > 0 || selectedBranded.size > 0 ? (
+              <div className={styles.sheetHeadingActions}>
+                {leftFilterCount > 0 ? (
+                  <button
+                    type="button"
+                    className={styles.clearBtn}
+                    onClick={clearLeftFilters}
+                  >
+                    {copy.clearFiltersLabel}
+                  </button>
+                ) : null}
                 <button
                   type="button"
-                  className={styles.clearBtn}
-                  onClick={clearLeftFilters}
+                  ref={
+                    mobileSheet === "chains" ? sheetCloseRef : undefined
+                  }
+                  className={styles.sheetClose}
+                  onClick={closeMobileSheet}
                 >
-                  {copy.clearFiltersLabel}
+                  {copy.closeSheetLabel}
                 </button>
-              ) : null}
-            </div>
-
-            <div className={styles.filterSection}>
-              <span className={styles.filterSectionLabel}>
-                {copy.brandedFilterTitle}
-              </span>
-              <div
-                className={styles.brandedGrid}
-                role="group"
-                aria-label={copy.brandedFilterTitle}
-              >
-                {MAP_BRANDED_STORE_OPTIONS.map((store) => {
-                  const active = selectedBranded.has(store.id);
-                  return (
-                    <button
-                      key={store.id}
-                      type="button"
-                      className={`${styles.chainBtn}${active ? ` ${styles.chainBtnActive}` : ""}`}
-                      aria-pressed={active}
-                      title={store.filterLabel}
-                      onClick={() => toggleBranded(store.id)}
-                    >
-                      {store.logoSrc ? (
-                        // eslint-disable-next-line @next/next/no-img-element -- local filter thumbs
-                        <img
-                          src={store.logoSrc}
-                          alt=""
-                          className={styles.chainImg}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      ) : (
-                        <span className={styles.chainFallback}>
-                          {store.filterLabel.slice(0, 2)}
-                        </span>
-                      )}
-                      <span className={styles.chainName}>
-                        {store.filterLabel}
-                      </span>
-                    </button>
-                  );
-                })}
               </div>
             </div>
 
-            <div className={styles.filterSectionGrow}>
-              <span className={styles.filterSectionLabel}>
-                {copy.chainFilterTitle}
-              </span>
-              <div
-                className={styles.chainGrid}
-                role="group"
-                aria-label={copy.chainFilterTitle}
-              >
-                {chainOptions.map((chain) => {
-                  const active = selectedChains.has(chain.id);
-                  return (
-                    <button
-                      key={chain.id}
-                      type="button"
-                      className={`${styles.chainBtn}${active ? ` ${styles.chainBtnActive}` : ""}`}
-                      aria-pressed={active}
-                      title={chain.label}
-                      onClick={() => toggleChain(chain.id)}
-                    >
-                      {chain.logoSrc ? (
-                        // eslint-disable-next-line @next/next/no-img-element -- local filter thumbs
-                        <img
-                          src={chain.logoSrc}
-                          alt=""
-                          className={styles.chainImg}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      ) : (
-                        <span className={styles.chainFallback}>
-                          {chain.label.slice(0, 2)}
+            <div className={styles.sheetBody}>
+              <div className={styles.filterSection}>
+                <span className={styles.filterSectionLabel}>
+                  {copy.brandedFilterTitle}
+                </span>
+                <div
+                  className={styles.brandedGrid}
+                  role="group"
+                  aria-label={copy.brandedFilterTitle}
+                >
+                  {MAP_BRANDED_STORE_OPTIONS.map((store) => {
+                    const active = selectedBranded.has(store.id);
+                    return (
+                      <button
+                        key={store.id}
+                        type="button"
+                        className={`${styles.chainBtn}${active ? ` ${styles.chainBtnActive}` : ""}`}
+                        aria-pressed={active}
+                        title={store.filterLabel}
+                        onClick={() => toggleBranded(store.id)}
+                      >
+                        {store.logoSrc ? (
+                          // eslint-disable-next-line @next/next/no-img-element -- local filter thumbs
+                          <img
+                            src={store.logoSrc}
+                            alt=""
+                            className={styles.chainImg}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          <span className={styles.chainFallback}>
+                            {store.filterLabel.slice(0, 2)}
+                          </span>
+                        )}
+                        <span className={styles.chainName}>
+                          {store.filterLabel}
                         </span>
-                      )}
-                      <span className={styles.chainName}>{chain.label}</span>
-                    </button>
-                  );
-                })}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className={styles.filterSectionGrow}>
+                <span className={styles.filterSectionLabel}>
+                  {copy.chainFilterTitle}
+                </span>
+                <div
+                  className={styles.chainGrid}
+                  role="group"
+                  aria-label={copy.chainFilterTitle}
+                >
+                  {chainOptions.map((chain) => {
+                    const active = selectedChains.has(chain.id);
+                    return (
+                      <button
+                        key={chain.id}
+                        type="button"
+                        className={`${styles.chainBtn}${active ? ` ${styles.chainBtnActive}` : ""}`}
+                        aria-pressed={active}
+                        title={chain.label}
+                        onClick={() => toggleChain(chain.id)}
+                      >
+                        {chain.logoSrc ? (
+                          // eslint-disable-next-line @next/next/no-img-element -- local filter thumbs
+                          <img
+                            src={chain.logoSrc}
+                            alt=""
+                            className={styles.chainImg}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        ) : (
+                          <span className={styles.chainFallback}>
+                            {chain.label.slice(0, 2)}
+                          </span>
+                        )}
+                        <span className={styles.chainName}>{chain.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </aside>
 
-          {/* Production comments out the h3 title; keep aria-label on aside. */}
-          <aside className={styles.panel} aria-label={copy.beerFilterTitle}>
-            <div className={styles.controls}>
-              <div className={styles.controlsRow}>
+          <div ref={beerStackRef} className={styles.beerStack}>
+            <div className={styles.mapControls}>
+              <div className={styles.controlsRowDesktop}>
                 <button
                   type="button"
                   className={styles.controlBtn}
@@ -723,62 +872,164 @@ export function SalesMap({
                 </button>
               </div>
               <div ref={geocoderNode} className={styles.geocoder} />
+              {error && ready ? (
+                <p className={styles.error}>{error}</p>
+              ) : null}
             </div>
 
-            {error && ready ? <p className={styles.error}>{error}</p> : null}
-
-            <div className={styles.seriesList}>
-              {seriesRows.map((row) => (
-                <div
-                  key={row.map((s) => s.id).join("-")}
-                  className={styles.seriesRow}
-                >
-                  {row.map((series) => (
-                    <div
-                      key={series.id}
-                      className={`${styles.series} ${seriesClass[series.id]}${
-                        row.length > 1 ? ` ${styles.seriesHalf}` : ""
-                      }`}
+            <aside
+              className={`${styles.panel}${
+                mobileSheet === "beers" ? ` ${styles.sheetOpen}` : ""
+              }`}
+              aria-label={copy.beerFilterTitle}
+              role={isMobile ? "dialog" : undefined}
+              aria-modal={
+                isMobile && mobileSheet === "beers" ? true : undefined
+              }
+              aria-hidden={
+                isMobile && mobileSheet !== "beers" ? true : undefined
+              }
+              onTouchStart={onSheetTouchStart}
+              onTouchEnd={onSheetTouchEnd}
+            >
+              <div className={styles.sheetHandle} aria-hidden />
+              <div className={styles.sheetBeerHeading}>
+                <span className={styles.filterHeadingLabel}>
+                  {copy.beerFilterTitle}
+                </span>
+                <div className={styles.sheetHeadingActions}>
+                  {beerFilterCount > 0 ? (
+                    <button
+                      type="button"
+                      className={styles.clearBtn}
+                      onClick={clearBeerFilters}
                     >
-                      <span className={styles.seriesLabel}>{series.label}</span>
-                      {series.beers.map((beer) => {
-                        const disabled = Boolean(
-                          enabledBeers && !enabledBeers.has(beer.key),
-                        );
-                        const active =
-                          !disabled && activeBeers.has(beer.key);
-                        return (
-                          <button
-                            key={beer.key}
-                            type="button"
-                            className={`${styles.beerBtn}${active ? ` ${styles.beerBtnActive}` : ""}${disabled ? ` ${styles.beerBtnDisabled}` : ""}`}
-                            aria-pressed={active}
-                            aria-disabled={disabled}
-                            disabled={disabled}
-                            title={
-                              disabled
-                                ? `${beer.key} — ${copy.beerUnavailableInChains}`
-                                : beer.key
-                            }
-                            onClick={() => toggleBeer(beer.key)}
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element -- remote filter thumbs */}
-                            <img
-                              src={mapBeerImageUrl(beer)}
-                              alt={beer.key}
-                              className={styles.beerImg}
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          </button>
-                        );
-                      })}
+                      {copy.clearFiltersLabel}
+                    </button>
+                  ) : null}
+                  <button
+                    type="button"
+                    ref={
+                      mobileSheet === "beers" ? sheetCloseRef : undefined
+                    }
+                    className={styles.sheetClose}
+                    onClick={closeMobileSheet}
+                  >
+                    {copy.closeSheetLabel}
+                  </button>
+                </div>
+              </div>
+
+              <div className={styles.sheetBody}>
+                <div className={styles.seriesList}>
+                  {seriesRows.map((row) => (
+                    <div
+                      key={row.map((s) => s.id).join("-")}
+                      className={styles.seriesRow}
+                    >
+                      {row.map((series) => (
+                        <div
+                          key={series.id}
+                          className={`${styles.series} ${seriesClass[series.id]}${
+                            row.length > 1 ? ` ${styles.seriesHalf}` : ""
+                          }`}
+                        >
+                          <span className={styles.seriesLabel}>
+                            {series.label}
+                          </span>
+                          <div className={styles.seriesBeers}>
+                            {series.beers.map((beer) => {
+                              const disabled = Boolean(
+                                enabledBeers && !enabledBeers.has(beer.key),
+                              );
+                              const active =
+                                !disabled && activeBeers.has(beer.key);
+                              return (
+                                <button
+                                  key={beer.key}
+                                  type="button"
+                                  className={`${styles.beerBtn}${active ? ` ${styles.beerBtnActive}` : ""}${disabled ? ` ${styles.beerBtnDisabled}` : ""}`}
+                                  aria-pressed={active}
+                                  aria-disabled={disabled}
+                                  disabled={disabled}
+                                  title={
+                                    disabled
+                                      ? `${beer.key} — ${copy.beerUnavailableInChains}`
+                                      : beer.key
+                                  }
+                                  onClick={() => toggleBeer(beer.key)}
+                                >
+                                  {/* eslint-disable-next-line @next/next/no-img-element -- remote filter thumbs */}
+                                  <img
+                                    src={mapBeerImageUrl(beer)}
+                                    alt={beer.key}
+                                    className={styles.beerImg}
+                                    loading="lazy"
+                                    decoding="async"
+                                  />
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>
-              ))}
-            </div>
-          </aside>
+              </div>
+            </aside>
+          </div>
+
+          <div className={styles.mobileFabBar} role="toolbar" aria-label={copy.filterTitle}>
+            <button
+              type="button"
+              className={`${styles.mobileFabBtn}${
+                mobileSheet === "chains" ? ` ${styles.mobileFabBtnActive}` : ""
+              }`}
+              aria-pressed={mobileSheet === "chains"}
+              onClick={() =>
+                setMobileSheet((s) => (s === "chains" ? null : "chains"))
+              }
+            >
+              {copy.chainFilterTitle}
+              {leftFilterCount > 0 ? (
+                <span className={styles.mobileFabBadge}>{leftFilterCount}</span>
+              ) : null}
+            </button>
+            <button
+              type="button"
+              className={`${styles.mobileFabBtn}${
+                mobileSheet === "beers" ? ` ${styles.mobileFabBtnActive}` : ""
+              }`}
+              aria-pressed={mobileSheet === "beers"}
+              onClick={() =>
+                setMobileSheet((s) => (s === "beers" ? null : "beers"))
+              }
+            >
+              {copy.beerFilterTitle}
+              {beerFilterCount > 0 ? (
+                <span className={styles.mobileFabBadge}>{beerFilterCount}</span>
+              ) : null}
+            </button>
+            <button
+              type="button"
+              className={styles.mobileFabIconBtn}
+              onClick={triggerGeolocate}
+              aria-label={copy.geolocateLabel}
+              title={copy.geolocateLabel}
+            >
+              <LocateIcon />
+            </button>
+            <button
+              type="button"
+              className={styles.mobileFabIconBtn}
+              onClick={requestFullscreen}
+              aria-label={copy.fullscreenLabel}
+              title={copy.fullscreenLabel}
+            >
+              <FullscreenIcon />
+            </button>
+          </div>
         </div>
       </section>
 
@@ -788,6 +1039,7 @@ export function SalesMap({
           <span className={styles.heroAccent}>{copy.heroAccent}</span>
         </h1>
       </header>
+      </div>
     </div>
   );
 }
