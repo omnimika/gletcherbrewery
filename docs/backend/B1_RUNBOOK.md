@@ -78,6 +78,13 @@ npm run typecheck && npm run lint && npm run build
 5. Audit actor = staff email from DB session; `x-staff-actor` ignored.
 6. NocoDB remains read-only for leads; audit in `app.staff_lead_events`.
 
+## Queue health (M2-5.2)
+
+- `curl -s http://127.0.0.1:3000/api/health` — DB + worker heartbeat + coarse counts
+- Staff UI: `/staff/ops` (admin / loyalty_manager)
+- Keep `npm run worker:delivery` running so heartbeat stays fresh
+- Details: [DELIVERY_QUEUE_RUNBOOK.md](./DELIVERY_QUEUE_RUNBOOK.md)
+
 ## B1 boundary
 
 Accepted status after DB commit only. Telegram delivery is **B2** (Sheets cancelled).

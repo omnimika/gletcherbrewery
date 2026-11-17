@@ -1,6 +1,7 @@
 # ADR 0012 — Staff auth and RBAC
 
-Дата: **17.11.2026**. Status: **Proposed** (M2-5 slice 1).
+Дата: **17.11.2026**. Status: **Accepted** (M2-5 slice 1).
+Owner: локальный вход `/staff` email+token проверен 17.11 — OK.
 Контекст: [AGENT_CRM_WORKFLOWS](../backend/AGENT_CRM_WORKFLOWS.md),
 [FORMS_DATA_PIPELINE](../backend/FORMS_DATA_PIPELINE.md),
 [CURSOR_NEXT_STEPS](../CURSOR_NEXT_STEPS.md).
@@ -12,7 +13,7 @@ Shared `STAFF_API_TOKEN` + cookie с тем же секретом и загол�
 один токен не разделяет роли loyalty / retail / admin. Shared staging требует
 server-side identity и audited actor из БД.
 
-## Решение (Proposed)
+## Решение (Accepted)
 
 1. Таблицы `app.staff_users` (email, role, active) и `app.staff_sessions`
    (token hash, expiry, revoke). Сырой session token только в httpOnly cookie /
@@ -36,4 +37,4 @@ Postbox/email magic для staff, Yandex/OIDC SSO, production cutover, Object St
 ## Acceptance (slice 1)
 
 Без валидной DB-сессии → 401; forged actor header не меняет audit; wrong role → 403;
-logout revoke; ADR Accepted только после owner review списка email/ролей.
+logout revoke. Owner: login `/staff` OK 17.11.

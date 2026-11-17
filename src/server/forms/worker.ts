@@ -390,7 +390,13 @@ export async function runDeliveryWorkerLoop(
 ): Promise<void> {
   const intervalMs = options.intervalMs ?? 2_000;
   const maxRounds = options.maxRounds ?? Infinity;
+  const { touchWorkerHeartbeat } = await import("@/server/ops/worker-heartbeat");
   for (let round = 0; round < maxRounds; round++) {
+    try {
+      await touchWorkerHeartbeat();
+    } catch {
+      /* non-fatal: health may show stale */
+    }
     const { processed, results } = await processDeliveryBatch(options);
     if (processed > 0) {
       const summary = results.map((r) => r.outcome).join(",");

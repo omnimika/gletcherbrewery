@@ -29,8 +29,16 @@ async function main() {
 
   try {
     if (once) {
+      const { touchWorkerHeartbeat } = await import(
+        "../src/server/ops/worker-heartbeat"
+      );
       let rounds = 0;
       while (rounds < 20) {
+        try {
+          await touchWorkerHeartbeat();
+        } catch {
+          /* ignore */
+        }
         const { processed } = await processDeliveryBatch({ db });
         rounds += 1;
         if (processed === 0) break;

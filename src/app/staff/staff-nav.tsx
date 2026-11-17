@@ -25,6 +25,11 @@ const LINKS = [
     label: "Агенты",
     match: (path: string) => path.startsWith("/staff/loyalty/agents"),
   },
+  {
+    href: "/staff/ops",
+    label: "Очередь",
+    match: (path: string) => path.startsWith("/staff/ops"),
+  },
 ] as const;
 
 /** Primary staff CRM sections — lives in the sticky header. */

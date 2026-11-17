@@ -206,8 +206,8 @@ Public acceptance и production cutover остаются отдельными р
 4. **M2-3 Done 16.11** + Pre-M2-4 tails. **M2-4 foundation Done 16.11**;
    **protected CSV batch Done 17.11** (`tmp/Airtable`, `Чеки-xls.csv`,
    cutoff=today, reconcile available/lifetime **212338** PASS).
-   **M2-5.1** staff identity/RBAC (ADR0012 Proposed): sessions + roles;
-   далее health/queue → Object Storage → Postbox → cutover proposal.
+   **M2-5.1 Done 17.11** (ADR0012 Accepted); **M2-5.2 Done 17.11**
+   (health + `/staff/ops` queue); далее Object Storage → Postbox → cutover.
 5. `/agent/cabinet` — canonical RU кабинет; `/members/lk` только 301 → cabinet; `/agent/login` для входа.
    Postbox/GTIN/shop отложены; не обещать email delivery/referral earn без backend.
 6. PostgreSQL source of truth; NocoDB read-only. Изменения бизнес-данных —
@@ -229,7 +229,7 @@ Public acceptance и production cutover остаются отдельными р
 - `docs/discovery/RECEIPT_FNS_PROVIDER_RESEARCH.md` — справочно (платные отклонены).
 - `docs/discovery/LOYALTY_OWNER_QUESTIONS.md` — ответы владельца.
 - `docs/adr/0011-loyalty-ledger.md` — **Accepted** ledger + opening-balance / spendable policy (17.11).
-- `docs/adr/0012-staff-auth-and-rbac.md` — **Proposed** staff users/sessions/roles (M2-5.1).
+- `docs/adr/0012-staff-auth-and-rbac.md` — **Accepted** staff users/sessions/roles (M2-5.1, 17.11).
 - `docs/backend/FORMS_DATA_PIPELINE.md` — intake/CRM/Telegram, consistency/retry/PII; lead Sheets Cancelled.
 - `docs/backend/AGENT_CRM_WORKFLOWS.md` — member↔staff сценарии чеков/agent applications.
 - `docs/data/LOYALTY_MIGRATION_PLAN.md` — row-level import, reconciliation, full restore.
