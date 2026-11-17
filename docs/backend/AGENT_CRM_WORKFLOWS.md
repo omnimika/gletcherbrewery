@@ -19,9 +19,9 @@
   переходе и не принимать произвольный внешний return URL.
 - Telegram — уведомление с ID и закрытой CRM ссылкой. Отказ уведомления не
   отменяет принятую запись. Inbound bot commands — отдельный будущий scope.
-- Shared `STAFF_API_TOKEN` допустим для локального spike. Actor label от клиента
-  не является доказанной identity. Перед доступом сотрудников в shared staging
-  оформить auth ADR и защищённую server-side identity/roles.
+- Shared `STAFF_API_TOKEN` — только bootstrap login. Identity = `app.staff_users` +
+  `app.staff_sessions` (ADR 0012 Proposed). Actor label от клиента (`x-staff-actor`)
+  не принимается. Перед shared staging — Accept ADR0012 и seed allowlist.
 
 ## Agent application — M2-3
 

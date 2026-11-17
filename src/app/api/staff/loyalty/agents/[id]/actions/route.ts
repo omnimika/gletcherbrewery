@@ -4,7 +4,8 @@ import {
   listAgentApplicationEvents,
   setAgentApplicationStatus,
 } from "@/server/loyalty/agent-applications";
-import { requireStaffAuth } from "@/server/staff/request-auth";
+import { requireStaffAuth, requireStaffRole } from "@/server/staff/request-auth";
+import { LOYALTY_STAFF_ROLES } from "@/server/staff/roles";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -14,6 +15,8 @@ type RouteParams = { params: Promise<{ id: string }> };
 export async function GET(request: Request, { params }: RouteParams) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, LOYALTY_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
 
   const { id } = await params;
   if (!id || !/^[0-9a-f-]{36}$/i.test(id)) {
@@ -41,6 +44,8 @@ export async function GET(request: Request, { params }: RouteParams) {
 export async function POST(request: Request, { params }: RouteParams) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, LOYALTY_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
 
   const { id } = await params;
   if (!id || !/^[0-9a-f-]{36}$/i.test(id)) {

@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { getDb } from "@/server/db/client";
 import { isWorkflowStatus } from "@/server/staff/contracts";
 import { listStaffLeads } from "@/server/staff/commands";
-import { requireStaffAuth } from "@/server/staff/request-auth";
+import { requireStaffAuth, requireStaffRole } from "@/server/staff/request-auth";
+import { LEADS_STAFF_ROLES } from "@/server/staff/roles";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,6 +11,8 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, LEADS_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
 
   const url = new URL(request.url);
   const workflowStatusRaw = url.searchParams.get("workflowStatus");

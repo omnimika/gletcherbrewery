@@ -1,13 +1,8 @@
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { StaffListToolbar } from "@/components/staff/list-toolbar";
 import { getDb } from "@/server/db/client";
 import { parseStaffSort } from "@/lib/staff-sort";
-import {
-  isStaffAuthConfigured,
-  STAFF_COOKIE_NAME,
-  verifyStaffToken,
-} from "@/server/staff/auth";
+import { isStaffAuthConfigured } from "@/server/staff/auth";
 import {
   WORKFLOW_STATUS_LABELS_RU,
   type WorkflowStatus,
@@ -16,6 +11,8 @@ import {
   listStaffLeads,
   STAFF_LEAD_SORT_FIELDS,
 } from "@/server/staff/commands";
+import { getStaffPageSession } from "@/server/staff/request-auth";
+import { LEADS_STAFF_ROLES, roleAllows } from "@/server/staff/roles";
 import { Banner } from "@/components/ui/card";
 import { EmptyState, FormStatus } from "@/components/ui/feedback";
 import { StaffLoginForm } from "./staff-login-form";
@@ -55,10 +52,22 @@ export default async function StaffHomePage({
     );
   }
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get(STAFF_COOKIE_NAME)?.value;
-  if (!verifyStaffToken(token)) {
+  const session = await getStaffPageSession();
+  if (!session) {
     return <StaffLoginForm />;
+  }
+  if (!roleAllows(session.role, LEADS_STAFF_ROLES)) {
+    return (
+      <Banner tone="frost" className="border-gletcher-action/40">
+        <p className="font-display text-lg uppercase tracking-wide text-gletcher-action">
+          Недостаточно прав
+        </p>
+        <p className="type-body-small mt-2 text-gletcher-navy/80">
+          Роль <code className="rounded bg-gletcher-white/80 px-1.5 py-0.5 text-xs">{session.role}</code>{" "}
+          не открывает leads CRM. Нужны admin или loyalty_manager.
+        </p>
+      </Banner>
+    );
   }
 
   const params = await searchParams;

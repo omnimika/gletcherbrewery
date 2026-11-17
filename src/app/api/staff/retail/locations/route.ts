@@ -5,7 +5,8 @@ import {
   listLocations,
 } from "@/server/retail/locations";
 import { createLocation } from "@/server/retail/location-mutations";
-import { requireStaffAuth } from "@/server/staff/request-auth";
+import { requireStaffAuth, requireStaffRole } from "@/server/staff/request-auth";
+import { RETAIL_STAFF_ROLES } from "@/server/staff/roles";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -13,6 +14,8 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, RETAIL_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
 
   try {
     const url = new URL(request.url);
@@ -43,6 +46,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, RETAIL_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
 
   let body: unknown;
   try {
@@ -66,8 +71,7 @@ export async function POST(request: Request) {
   const adress = typeof record.adress === "string" ? record.adress : "";
   const longitude = Number(record.longitude);
   const latitude = Number(record.latitude);
-  const actor =
-    request.headers.get("x-staff-actor")?.trim() || auth.actor.id || "staff";
+  const actor = auth.actor.id;
 
   try {
     const result = await createLocation(getDb(), {

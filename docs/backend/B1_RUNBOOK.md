@@ -68,12 +68,15 @@ npm run b1:smoke           # Contacts API → public.staff_contact_leads + grant
 npm run typecheck && npm run lint && npm run build
 ```
 
-## Staff triage (`/staff`)
+## Staff triage (`/staff`) — M2-5 identity
 
-1. Set `STAFF_API_TOKEN` (≥16 chars) in `.env.local`, restart Next.
-2. Open `http://localhost:3000/staff`, paste token, set actor name.
-3. Change workflow status / assignee / note; replay failed Telegram jobs from lead detail.
-4. NocoDB remains read-only for leads; audit lives in `app.staff_lead_events`.
+1. Set `STAFF_API_TOKEN` (≥16 chars) in `.env.local`.
+2. Seed allowlist (migrator URL):  
+   `STAFF_SEED_USERS='you@example.com:admin' npm run staff:seed`
+3. Restart Next; open `http://localhost:3000/staff`, login **email + token**.
+4. Roles: `admin` | `loyalty_manager` (leads/loyalty) | `retail_editor` (map CRM).
+5. Audit actor = staff email from DB session; `x-staff-actor` ignored.
+6. NocoDB remains read-only for leads; audit in `app.staff_lead_events`.
 
 ## B1 boundary
 

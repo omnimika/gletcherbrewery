@@ -652,6 +652,47 @@ export const loyaltyImportIdentityMap = appSchema.table(
   ],
 );
 
+/** M2-5 staff allowlist + roles (server-side identity). */
+export const staffUsers = appSchema.table(
+  "staff_users",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    email: text("email").notNull(),
+    displayName: text("display_name"),
+    role: text("role").notNull(),
+    active: boolean("active").notNull().default(true),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [uniqueIndex("staff_users_email_uidx").on(t.email)],
+);
+
+/** Opaque staff browser/API sessions (sha256 of cookie/Bearer). */
+export const staffSessions = appSchema.table(
+  "staff_sessions",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => staffUsers.id, { onDelete: "cascade" }),
+    tokenHash: text("token_hash").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+    lastSeenAt: timestamp("last_seen_at", { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex("staff_sessions_token_hash_uidx").on(t.tokenHash),
+    index("staff_sessions_user_idx").on(t.userId, t.expiresAt),
+  ],
+);
+
 /** P1 magic-link one-time tokens (sha256 hash only). */
 export const loyaltyMagicLinkTokens = appSchema.table(
   "loyalty_magic_link_tokens",

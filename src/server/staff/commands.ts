@@ -20,9 +20,15 @@ import {
   type WorkflowStatus,
 } from "./contracts";
 
+import type { StaffRole } from "./roles";
+
 export type StaffActor = {
-  /** Stable label for audit (token holder id / display name). */
+  /** Audit label — normalized staff email. */
   id: string;
+  email: string;
+  role: StaffRole;
+  userId: string;
+  sessionId: string;
 };
 
 export const STAFF_LEAD_SORT_FIELDS = ["createdAt", "updatedAt"] as const;

@@ -4,12 +4,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormStatus } from "@/components/ui/feedback";
 
-function actorHeader(): HeadersInit {
-  const actor =
-    typeof window !== "undefined"
-      ? window.sessionStorage.getItem("gletcher_staff_actor") || "staff"
-      : "staff";
-  return { "x-staff-actor": actor };
+function jsonHeaders(): HeadersInit {
+  return { "content-type": "application/json" };
 }
 
 export function DeleteLocationButton({ locationId }: { locationId: string }) {
@@ -30,7 +26,7 @@ export function DeleteLocationButton({ locationId }: { locationId: string }) {
     try {
       const res = await fetch(`/api/staff/retail/locations/${locationId}`, {
         method: "DELETE",
-        headers: actorHeader(),
+        headers: jsonHeaders(),
       });
       const json = (await res.json()) as { ok: boolean; message?: string };
       if (!res.ok || !json.ok) {

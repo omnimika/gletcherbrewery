@@ -4,12 +4,8 @@ import { useState } from "react";
 import { FormStatus } from "@/components/ui/feedback";
 import type { LocationAssortmentDetail } from "@/server/retail/location-assortment";
 
-function actorHeader(): HeadersInit {
-  const actor =
-    typeof window !== "undefined"
-      ? window.sessionStorage.getItem("gletcher_staff_actor") || "staff"
-      : "staff";
-  return { "content-type": "application/json", "x-staff-actor": actor };
+function jsonHeaders(): HeadersInit {
+  return { "content-type": "application/json" };
 }
 
 export function LocationAssortmentEditor({
@@ -31,7 +27,7 @@ export function LocationAssortmentEditor({
         `/api/staff/retail/locations/${detail.id}/assortment`,
         {
           method: "PATCH",
-          headers: actorHeader(),
+          headers: jsonHeaders(),
           body: JSON.stringify(body),
         },
       );

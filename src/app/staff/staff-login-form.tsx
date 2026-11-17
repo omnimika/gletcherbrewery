@@ -14,8 +14,8 @@ import { FormStatus } from "@/components/ui/feedback";
 
 export function StaffLoginForm() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
   const [token, setToken] = useState("");
-  const [actor, setActor] = useState("staff");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
@@ -27,7 +27,7 @@ export function StaffLoginForm() {
       const res = await fetch("/api/staff/session", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ email, token }),
       });
       const json = (await res.json()) as { ok?: boolean; message?: string };
       if (!res.ok || !json.ok) {
@@ -35,10 +35,7 @@ export function StaffLoginForm() {
         return;
       }
       if (typeof window !== "undefined") {
-        window.sessionStorage.setItem(
-          "gletcher_staff_actor",
-          actor.trim() || "staff",
-        );
+        window.sessionStorage.removeItem("gletcher_staff_actor");
       }
       router.refresh();
     } catch {
@@ -55,23 +52,19 @@ export function StaffLoginForm() {
       </CardHeading>
       <CardBody className="space-y-4 !text-gletcher-navy">
         <p>
-          Токен из{" "}
+          Email из staff allowlist + bootstrap{" "}
           <code className="rounded bg-gletcher-frost px-1.5 py-0.5 text-xs">
             STAFF_API_TOKEN
           </code>
-          . Правки заявок идут через audited API, NocoDB остаётся только для
-          просмотра.
+          . Сессия серверная; audit пишет ваш email, не произвольное имя.
         </p>
         <form id="staff-login" onSubmit={onSubmit} className="space-y-4">
-          <Field
-            id="staff-actor"
-            label="Имя исполнителя"
-            help="Попадёт в audit-события"
-          >
+          <Field id="staff-email" label="Email" help="Должен быть в staff_users">
             <TextInput
-              id="staff-actor"
-              value={actor}
-              onChange={(e) => setActor(e.target.value)}
+              id="staff-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               autoComplete="username"
               required
             />

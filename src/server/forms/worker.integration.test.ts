@@ -174,7 +174,8 @@ describeDb("delivery worker lease recovery", () => {
       })
       .where(eq(deliveryJobs.id, job.id));
 
-    const replay = await replayDeliveryJob(db, job.id, { id: "tester" });
+    const { testStaffActor } = await import("@/server/staff/test-actor");
+    const replay = await replayDeliveryJob(db, job.id, testStaffActor());
     assert.equal(replay.ok, false);
     if (!replay.ok) assert.equal(replay.code, "active_lease");
 
@@ -192,7 +193,8 @@ describeDb("delivery worker lease recovery", () => {
       .set({ status: "delivered", remoteReference: "tg:test:1" })
       .where(eq(deliveryJobs.id, job.id));
 
-    const replay = await replayDeliveryJob(db, job.id, { id: "tester" });
+    const { testStaffActor } = await import("@/server/staff/test-actor");
+    const replay = await replayDeliveryJob(db, job.id, testStaffActor());
     assert.equal(replay.ok, false);
     if (!replay.ok) assert.equal(replay.code, "not_replayable");
   });

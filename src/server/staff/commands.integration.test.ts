@@ -61,7 +61,13 @@ describeDb("staff commands integration", () => {
 
   it("set_status + assign + note write audit events", async () => {
     const id = await createLead();
-    const actor = { id: "tester" };
+    const actor = {
+      id: "tester@example.com",
+      email: "tester@example.com",
+      role: "admin" as const,
+      userId: "00000000-0000-4000-8000-000000000001",
+      sessionId: "00000000-0000-4000-8000-000000000002",
+    };
 
     const status = await applyStaffCommand(db, id, actor, {
       action: "set_status",
@@ -113,7 +119,13 @@ describeDb("staff commands integration", () => {
       .set({ status: "failed", lastError: "synthetic_fail", attempts: 3 })
       .where(eq(deliveryJobs.id, job!.id));
 
-    const replay = await replayDeliveryJob(db, job!.id, { id: "tester" });
+    const replay = await replayDeliveryJob(db, job!.id, {
+      id: "tester@example.com",
+      email: "tester@example.com",
+      role: "admin",
+      userId: "00000000-0000-4000-8000-000000000001",
+      sessionId: "00000000-0000-4000-8000-000000000002",
+    });
     assert.equal(replay.ok, true);
 
     const refreshed = await db
@@ -127,15 +139,45 @@ describeDb("staff commands integration", () => {
     const id = await createLead();
 
     const [status, assign, note] = await Promise.all([
-      applyStaffCommand(db, id, { id: "actor-status" }, {
+      applyStaffCommand(
+        db,
+        id,
+        {
+          id: "actor-status@example.com",
+          email: "actor-status@example.com",
+          role: "admin",
+          userId: "00000000-0000-4000-8000-000000000011",
+          sessionId: "00000000-0000-4000-8000-000000000012",
+        },
+        {
         action: "set_status",
         workflowStatus: "waiting",
       }),
-      applyStaffCommand(db, id, { id: "actor-assign" }, {
+      applyStaffCommand(
+        db,
+        id,
+        {
+          id: "actor-assign@example.com",
+          email: "actor-assign@example.com",
+          role: "admin",
+          userId: "00000000-0000-4000-8000-000000000013",
+          sessionId: "00000000-0000-4000-8000-000000000014",
+        },
+        {
         action: "assign",
         assignee: "mika",
       }),
-      applyStaffCommand(db, id, { id: "actor-note" }, {
+      applyStaffCommand(
+        db,
+        id,
+        {
+          id: "actor-note@example.com",
+          email: "actor-note@example.com",
+          role: "admin",
+          userId: "00000000-0000-4000-8000-000000000015",
+          sessionId: "00000000-0000-4000-8000-000000000016",
+        },
+        {
         action: "note",
         note: "parallel note",
       }),

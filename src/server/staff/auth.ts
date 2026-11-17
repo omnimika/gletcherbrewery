@@ -15,8 +15,13 @@ export function isStaffAuthConfigured(): boolean {
   return configuredToken() !== null;
 }
 
-/** Compare Bearer / cookie token to STAFF_API_TOKEN (constant-time). */
-export function verifyStaffToken(candidate: string | null | undefined): boolean {
+/**
+ * Compare candidate to STAFF_API_TOKEN (bootstrap secret for login only).
+ * Session cookies must NOT use this — they are opaque DB-backed tokens.
+ */
+export function verifyStaffBootstrapToken(
+  candidate: string | null | undefined,
+): boolean {
   const expected = configuredToken();
   if (!expected || !candidate) return false;
   const a = digest(candidate);
@@ -24,6 +29,9 @@ export function verifyStaffToken(candidate: string | null | undefined): boolean 
   if (a.length !== b.length) return false;
   return timingSafeEqual(a, b);
 }
+
+/** @deprecated use verifyStaffBootstrapToken — name kept for call-site clarity during slice. */
+export const verifyStaffToken = verifyStaffBootstrapToken;
 
 export function readBearerToken(request: Request): string | null {
   const header = request.headers.get("authorization");
@@ -36,6 +44,13 @@ export function staffUnauthorizedResponse(message = "Staff auth required") {
   return Response.json(
     { ok: false, code: "unauthorized", message },
     { status: 401 },
+  );
+}
+
+export function staffForbiddenResponse(message = "Insufficient staff role") {
+  return Response.json(
+    { ok: false, code: "forbidden", message },
+    { status: 403 },
   );
 }
 

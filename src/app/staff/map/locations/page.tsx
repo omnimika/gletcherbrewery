@@ -1,12 +1,8 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getDb } from "@/server/db/client";
-import {
-  isStaffAuthConfigured,
-  STAFF_COOKIE_NAME,
-  verifyStaffToken,
-} from "@/server/staff/auth";
+import { RETAIL_STAFF_ROLES } from "@/server/staff/roles";
+import { gateStaffPage } from "@/server/staff/page-gate";
 import { getAssortmentMatrix } from "@/server/retail/assortment";
 import {
   getLocationSummary,
@@ -46,12 +42,8 @@ export default async function StaffMapLocationsPage({
     page?: string;
   }>;
 }) {
-  if (!isStaffAuthConfigured()) {
-    redirect("/staff");
-  }
-
-  const cookieStore = await cookies();
-  if (!verifyStaffToken(cookieStore.get(STAFF_COOKIE_NAME)?.value)) {
+  const gate = await gateStaffPage(RETAIL_STAFF_ROLES);
+  if (gate.status !== "ok") {
     redirect("/staff");
   }
 

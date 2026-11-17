@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/server/db/client";
 import { deleteLocation } from "@/server/retail/location-mutations";
-import { requireStaffAuth } from "@/server/staff/request-auth";
+import { requireStaffAuth, requireStaffRole } from "@/server/staff/request-auth";
+import { RETAIL_STAFF_ROLES } from "@/server/staff/roles";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,12 +12,13 @@ type Ctx = { params: Promise<{ id: string }> };
 export async function DELETE(request: Request, ctx: Ctx) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, RETAIL_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
   const { id } = await ctx.params;
 
   const url = new URL(request.url);
   const syncGeoJson = url.searchParams.get("syncGeoJson") !== "0";
-  const actor =
-    request.headers.get("x-staff-actor")?.trim() || auth.actor.id || "staff";
+  const actor = auth.actor.id;
 
   try {
     const result = await deleteLocation(getDb(), {

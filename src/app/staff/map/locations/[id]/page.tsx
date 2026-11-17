@@ -1,12 +1,8 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { redirect, notFound } from "next/navigation";
 import { getDb } from "@/server/db/client";
-import {
-  isStaffAuthConfigured,
-  STAFF_COOKIE_NAME,
-  verifyStaffToken,
-} from "@/server/staff/auth";
+import { RETAIL_STAFF_ROLES } from "@/server/staff/roles";
+import { gateStaffPage } from "@/server/staff/page-gate";
 import { getLocationAssortment } from "@/server/retail/location-assortment";
 import { Banner } from "@/components/ui/card";
 import { FormStatus } from "@/components/ui/feedback";
@@ -20,12 +16,8 @@ export default async function StaffLocationDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  if (!isStaffAuthConfigured()) {
-    redirect("/staff");
-  }
-
-  const cookieStore = await cookies();
-  if (!verifyStaffToken(cookieStore.get(STAFF_COOKIE_NAME)?.value)) {
+  const gate = await gateStaffPage(RETAIL_STAFF_ROLES);
+  if (gate.status !== "ok") {
     redirect("/staff");
   }
 

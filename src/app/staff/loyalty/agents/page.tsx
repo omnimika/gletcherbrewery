@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { StaffListToolbar } from "@/components/staff/list-toolbar";
 import { Banner } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/feedback";
@@ -14,11 +13,8 @@ import {
   listAgentApplicationsForStaff,
   STAFF_AGENT_SORT_FIELDS,
 } from "@/server/loyalty/agent-applications";
-import {
-  isStaffAuthConfigured,
-  STAFF_COOKIE_NAME,
-  verifyStaffToken,
-} from "@/server/staff/auth";
+import { LOYALTY_STAFF_ROLES } from "@/server/staff/roles";
+import { gateStaffPage } from "@/server/staff/page-gate";
 import { StaffLoginForm } from "../../staff-login-form";
 import { AgentActions } from "./agent-actions";
 
@@ -40,17 +36,24 @@ export default async function StaffLoyaltyAgentsPage({
     email?: string;
   }>;
 }) {
-  if (!isStaffAuthConfigured()) {
+  const gate = await gateStaffPage(LOYALTY_STAFF_ROLES);
+  if (gate.status === "unconfigured") {
     return (
       <Banner tone="frost">
         <p className="font-display text-lg uppercase">STAFF_API_TOKEN не задан</p>
       </Banner>
     );
   }
-
-  const token = (await cookies()).get(STAFF_COOKIE_NAME)?.value;
-  if (!verifyStaffToken(token)) {
+  if (gate.status === "login") {
     return <StaffLoginForm />;
+  }
+  if (gate.status === "forbidden") {
+    return (
+      <Banner tone="frost">
+        <p className="font-display text-lg uppercase">Недостаточно прав</p>
+        <p className="type-body-small mt-2">Роль {gate.actor.role} не открывает loyalty.</p>
+      </Banner>
+    );
   }
 
   const sp = await searchParams;

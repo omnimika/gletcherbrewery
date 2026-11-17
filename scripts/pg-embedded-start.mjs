@@ -61,6 +61,9 @@ async function ensureDb(name, owner) {
 
 await ensureDb("gletcher_business", "gletcher_migrator");
 await ensureDb("nocodb_meta", "gletcher_migrator");
+// Persistent clusters may predate OWNER=gletcher_migrator — reassert ownership.
+await sql.unsafe(`ALTER DATABASE gletcher_business OWNER TO gletcher_migrator`);
+await sql.unsafe(`ALTER DATABASE nocodb_meta OWNER TO gletcher_migrator`);
 await sql.unsafe(
   `GRANT CONNECT ON DATABASE gletcher_business TO gletcher_app, gletcher_nocodb, gletcher_worker`,
 );
@@ -120,11 +123,18 @@ const kept = existing
 fs.writeFileSync(envPath, [...kept, ...envLines, ""].join("\n"));
 console.log("wrote", envPath);
 
-// Run migrations
+const migrationUrl = envLines
+  .find((l) => l.startsWith("MIGRATION_DATABASE_URL="))
+  ?.slice("MIGRATION_DATABASE_URL=".length);
+if (!migrationUrl) {
+  throw new Error("MIGRATION_DATABASE_URL missing from envLines");
+}
+
+// Run migrations as migrator (not app/worker — they lack CREATE on the DB).
 const migrate = spawn(process.execPath, [path.join(root, "scripts/db-migrate.mjs")], {
   env: {
     ...process.env,
-    MIGRATION_DATABASE_URL: envLines[1].split("=").slice(1).join("="),
+    MIGRATION_DATABASE_URL: migrationUrl,
   },
   stdio: "inherit",
 });
