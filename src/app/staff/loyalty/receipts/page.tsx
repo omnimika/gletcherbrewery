@@ -12,6 +12,7 @@ import {
   STAFF_RECEIPT_STATUS_FILTERS,
   STAFF_RECEIPT_STATUS_LABELS_RU,
 } from "@/server/loyalty/receipts";
+import { loadCabinetBuyPlaces } from "@/server/loyalty/buy-places";
 import { LOYALTY_STAFF_ROLES } from "@/server/staff/roles";
 import { gateStaffPage } from "@/server/staff/page-gate";
 import { StaffLoginForm } from "../../staff-login-form";
@@ -68,9 +69,12 @@ export default async function StaffLoyaltyReceiptsPage({
   );
   let pageResult: Awaited<ReturnType<typeof listReceiptsForStaff>> | null =
     null;
+  let buyPlaces: readonly string[] = [];
   let error: string | null = null;
   try {
-    pageResult = await listReceiptsForStaff(getDb(), {
+    const db = getDb();
+    buyPlaces = await loadCabinetBuyPlaces(db);
+    pageResult = await listReceiptsForStaff(db, {
       status: statusFilter,
       email: emailFilter,
       page: sp.page,
@@ -80,6 +84,7 @@ export default async function StaffLoyaltyReceiptsPage({
     });
   } catch {
     error = "База недоступна — проверьте embedded PostgreSQL.";
+    buyPlaces = await loadCabinetBuyPlaces(null);
   }
 
   const rows = pageResult?.rows ?? [];
@@ -112,7 +117,7 @@ export default async function StaffLoyaltyReceiptsPage({
         просмотром над PostgreSQL.
       </p>
 
-      <ManualReceiptForm />
+      <ManualReceiptForm buyPlaces={buyPlaces} />
 
       <div className="flex flex-wrap gap-2" role="navigation" aria-label="Фильтр по статусу">
         {STAFF_RECEIPT_STATUS_FILTERS.map((s) => (
