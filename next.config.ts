@@ -4,6 +4,9 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  experimental: {
+    agentUpgrade: "security",
+  },
   // Preserve the project's existing AGENTS.md during local development.
   agentRules: false,
   // Allow LAN / 127.0.0.1 preview without blocking /_next assets (localhost ≠ 127.0.0.1).
