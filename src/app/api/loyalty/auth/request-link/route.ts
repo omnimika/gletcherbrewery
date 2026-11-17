@@ -1,30 +1,51 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/server/db/client";
-import { issueMagicLink } from "@/server/loyalty/magic-link";
+import {
+  isMagicLinkDebugEnabled,
+  issueMagicLink,
+} from "@/server/loyalty/magic-link";
 import {
   deliverMagicLinkEmail,
   getMagicLinkDelivery,
 } from "@/server/loyalty/mail";
+import {
+  AUTH_JSON_MAX_BYTES,
+  boundaryJsonResponse,
+  checkRateLimit,
+  clientIpFromRequest,
+  MAGIC_LINK_RATE,
+  readJsonBody,
+} from "@/server/http/public-boundary";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 /**
  * Request a P1 magic link for member LK.
- * Local spike: LOYALTY_MAGIC_LINK_DEBUG=1 returns verifyUrl (no email).
- * Production email = Yandex Postbox/SMTP — not wired until credentials Confirmed.
+ * Local-only debug (R04): verifyUrl in response when isMagicLinkDebugEnabled().
+ * Production email = SMTP now / Postbox later — never debug on deployment-like hosts.
  */
 export async function POST(request: Request) {
-  let email = "";
-  try {
-    const body = (await request.json()) as { email?: unknown };
-    email = String(body.email ?? "");
-  } catch {
+  const limited = checkRateLimit({
+    key: `magic-link:${clientIpFromRequest(request)}`,
+    ...MAGIC_LINK_RATE,
+  });
+  if (!limited.ok) return boundaryJsonResponse(limited);
+
+  const parsed = await readJsonBody(request, AUTH_JSON_MAX_BYTES);
+  if (!parsed.ok) {
     return NextResponse.json(
-      { ok: false, code: "invalid_body" },
-      { status: 400 },
+      { ok: false, code: parsed.code, message: parsed.message },
+      { status: parsed.status },
     );
   }
+
+  const email =
+    parsed.value &&
+    typeof parsed.value === "object" &&
+    "email" in parsed.value
+      ? String((parsed.value as { email?: unknown }).email ?? "")
+      : "";
 
   try {
     const issued = await issueMagicLink(getDb(), {
@@ -41,6 +62,7 @@ export async function POST(request: Request) {
     }
 
     const deliveryMeta = getMagicLinkDelivery();
+    const debugOk = isMagicLinkDebugEnabled();
     const delivered = await deliverMagicLinkEmail({
       to: issued.emailNormalized,
       verifyUrl: issued.verifyUrl,
@@ -52,12 +74,12 @@ export async function POST(request: Request) {
       delivery: deliveryMeta.mode,
       emailSent: delivered.ok && delivered.mode === "smtp",
       expiresAt: issued.expiresAt.toISOString(),
-      ...(deliveryMeta.mode === "debug"
+      ...(debugOk && deliveryMeta.mode === "debug"
         ? {
             verifyUrl: issued.verifyUrl,
             debug: true,
             message:
-              "Письмо не отправляется: включён LOYALTY_MAGIC_LINK_DEBUG. Откройте ссылку ниже.",
+              "Письмо не отправляется: локальный debug. Откройте ссылку ниже.",
           }
         : deliveryMeta.mode === "none"
           ? {

@@ -29,8 +29,33 @@ function safeEqualHex(a: string, b: string): boolean {
   }
 }
 
-export function isMagicLinkDebugEnabled(): boolean {
-  return (process.env.LOYALTY_MAGIC_LINK_DEBUG || "").trim() === "1";
+/**
+ * R04: treat managed/prod-like hosts as deployment — debug magic-link must stay off.
+ * Local `next dev` (NODE_ENV=development, no cloud markers) is not deployment-like.
+ */
+export function isDeploymentLikeEnvironment(
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  if ((env.LOYALTY_FORCE_SECURE_AUTH || "").trim() === "1") return true;
+  if ((env.NODE_ENV || "").trim() === "production") return true;
+  if ((env.VERCEL || "").trim() === "1") return true;
+  if ((env.VERCEL_ENV || "").trim().length > 0) return true;
+  if ((env.YANDEX_CLOUD || "").trim().length > 0) return true;
+  if ((env.YC_SERVERLESS_FUNCTION || "").trim().length > 0) return true;
+  if ((env.K_SERVICE || "").trim().length > 0) return true;
+  return false;
+}
+
+/**
+ * Debug bearer links only when explicitly enabled AND not on a deployment-like host.
+ * Fail-closed: production/cloud markers win over LOYALTY_MAGIC_LINK_DEBUG=1.
+ */
+export function isMagicLinkDebugEnabled(
+  env: NodeJS.ProcessEnv = process.env,
+): boolean {
+  if ((env.LOYALTY_MAGIC_LINK_DEBUG || "").trim() !== "1") return false;
+  if (isDeploymentLikeEnvironment(env)) return false;
+  return true;
 }
 
 export function publicSiteOrigin(): string {
@@ -73,18 +98,29 @@ export async function issueMagicLink(
   return { ok: true, emailNormalized, verifyUrl, expiresAt };
 }
 
-export async function consumeMagicLink(
-  db: AppDb,
-  rawToken: string,
-): Promise<
+export type ConsumeMagicLinkResult =
   | {
       ok: true;
       member: typeof loyaltyMembers.$inferSelect;
       sessionToken: string;
       expiresAt: Date;
     }
-  | { ok: false; code: "invalid_token" | "expired" | "consumed" }
-> {
+  | { ok: false; code: "invalid_token" | "expired" | "consumed" };
+
+/** Test seam: throw here to prove token consume rolls back with the transaction. */
+export type ConsumeMagicLinkOptions = {
+  beforeSessionInsert?: (tx: AppDb) => Promise<void>;
+};
+
+/**
+ * R03: unused→used + member upsert/onboarding + session in one transaction.
+ * Concurrent use of the same token yields a single session.
+ */
+export async function consumeMagicLink(
+  db: AppDb,
+  rawToken: string,
+  options?: ConsumeMagicLinkOptions,
+): Promise<ConsumeMagicLinkResult> {
   const token = rawToken.trim();
   if (!token || token.length < 20) {
     return { ok: false, code: "invalid_token" };
@@ -92,55 +128,65 @@ export async function consumeMagicLink(
   const tokenHash = sha256Hex(token);
   const now = new Date();
 
-  const rows = await db
-    .select()
-    .from(loyaltyMagicLinkTokens)
-    .where(eq(loyaltyMagicLinkTokens.tokenHash, tokenHash))
-    .limit(1);
-  const row = rows[0];
-  if (!row) return { ok: false, code: "invalid_token" };
-  if (row.consumedAt) return { ok: false, code: "consumed" };
-  if (row.expiresAt.getTime() < now.getTime()) {
-    return { ok: false, code: "expired" };
-  }
+  return db.transaction(async (tx) => {
+    const claimed = await tx
+      .update(loyaltyMagicLinkTokens)
+      .set({ consumedAt: now })
+      .where(
+        and(
+          eq(loyaltyMagicLinkTokens.tokenHash, tokenHash),
+          isNull(loyaltyMagicLinkTokens.consumedAt),
+          gt(loyaltyMagicLinkTokens.expiresAt, now),
+        ),
+      )
+      .returning();
 
-  await db
-    .update(loyaltyMagicLinkTokens)
-    .set({ consumedAt: now })
-    .where(eq(loyaltyMagicLinkTokens.id, row.id));
-
-  const member = await upsertMemberByEmail(db, {
-    email: row.emailNormalized,
-  });
-
-  if (!member.onboardedAt) {
-    await db
-      .update(loyaltyMembers)
-      .set({ onboardedAt: now, updatedAt: now })
-      .where(eq(loyaltyMembers.id, member.id));
-  }
-
-  const sessionToken = randomBytes(32).toString("base64url");
-  const sessionHash = sha256Hex(sessionToken);
-  const expiresAt = new Date(Date.now() + SESSION_TTL_MS);
-
-  await db.insert(loyaltyMemberSessions).values({
-    memberId: member.id,
-    sessionHash,
-    expiresAt,
-    lastSeenAt: now,
-  });
-
-  const refreshed =
-    (
-      await db
+    if (!claimed[0]) {
+      const existing = await tx
         .select()
-        .from(loyaltyMembers)
-        .where(eq(loyaltyMembers.id, member.id))
-        .limit(1)
-    )[0] ?? member;
+        .from(loyaltyMagicLinkTokens)
+        .where(eq(loyaltyMagicLinkTokens.tokenHash, tokenHash))
+        .limit(1);
+      const row = existing[0];
+      if (!row) return { ok: false, code: "invalid_token" };
+      if (row.consumedAt) return { ok: false, code: "consumed" };
+      if (row.expiresAt.getTime() < now.getTime()) {
+        return { ok: false, code: "expired" };
+      }
+      return { ok: false, code: "invalid_token" };
+    }
 
-  return { ok: true, member: refreshed, sessionToken, expiresAt };
+    const row = claimed[0];
+    let member = await upsertMemberByEmail(tx, {
+      email: row.emailNormalized,
+    });
+
+    if (!member.onboardedAt) {
+      const onboarded = await tx
+        .update(loyaltyMembers)
+        .set({ onboardedAt: now, updatedAt: now })
+        .where(eq(loyaltyMembers.id, member.id))
+        .returning();
+      if (onboarded[0]) member = onboarded[0];
+    }
+
+    if (options?.beforeSessionInsert) {
+      await options.beforeSessionInsert(tx);
+    }
+
+    const sessionToken = randomBytes(32).toString("base64url");
+    const sessionHash = sha256Hex(sessionToken);
+    const expiresAt = new Date(Date.now() + SESSION_TTL_MS);
+
+    await tx.insert(loyaltyMemberSessions).values({
+      memberId: member.id,
+      sessionHash,
+      expiresAt,
+      lastSeenAt: now,
+    });
+
+    return { ok: true, member, sessionToken, expiresAt };
+  });
 }
 
 export async function resolveMemberSession(

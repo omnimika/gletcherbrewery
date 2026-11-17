@@ -8,11 +8,24 @@ export type LedgerEntryLike = {
   status: string;
 };
 
-const EARN_KINDS = new Set([
+/** Journal kinds that affect spendable (available) balance. */
+const SPENDABLE_EARN_KINDS = new Set([
   "check_earn",
   "shop_earn",
   "agent_earn",
   "opening",
+  "adjustment",
+]);
+
+/**
+ * Lifetime earn for status/level/prize — historical positive earns only.
+ * R11: exclude `opening` so a net opening residual is not double-counted
+ * into lifetime when full earn history is also imported.
+ */
+const LIFETIME_EARN_KINDS = new Set([
+  "check_earn",
+  "shop_earn",
+  "agent_earn",
   "adjustment",
 ]);
 
@@ -27,7 +40,7 @@ export function spendableBalance(entries: LedgerEntryLike[]): number {
     .filter((e) => e.status === "posted")
     .reduce((acc, e) => {
       if (e.entryKind === "spend") return acc + e.amount; // amount negative
-      if (EARN_KINDS.has(e.entryKind)) return acc + e.amount;
+      if (SPENDABLE_EARN_KINDS.has(e.entryKind)) return acc + e.amount;
       return acc;
     }, 0);
 }
@@ -53,10 +66,10 @@ export async function spendableBalanceForMember(
   return spendableBalance(await loadMemberLedger(db, memberId));
 }
 
-/** Posted positive earns only (for provisional level UI). */
+/** Posted positive historical earns only (excludes opening). */
 export function lifetimeEarnBircoins(entries: LedgerEntryLike[]): number {
   return entries
-    .filter((e) => e.status === "posted" && EARN_KINDS.has(e.entryKind))
+    .filter((e) => e.status === "posted" && LIFETIME_EARN_KINDS.has(e.entryKind))
     .reduce((acc, e) => acc + Math.max(0, e.amount), 0);
 }
 

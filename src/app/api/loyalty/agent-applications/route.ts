@@ -6,6 +6,14 @@ import {
   listAgentApplicationsForMember,
 } from "@/server/loyalty/agent-applications";
 import { requireMemberSession } from "@/server/loyalty/member-auth";
+import {
+  AGENT_APP_JSON_MAX_BYTES,
+  AGENT_APP_RATE,
+  boundaryJsonResponse,
+  checkRateLimit,
+  clientIpFromRequest,
+  readJsonBody,
+} from "@/server/http/public-boundary";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -35,15 +43,26 @@ export async function POST(request: Request) {
   const auth = await requireMemberSession();
   if (!auth.ok) return auth.response;
 
-  let body: Record<string, unknown>;
-  try {
-    body = (await request.json()) as Record<string, unknown>;
-  } catch {
+  const limited = checkRateLimit({
+    key: `agent-app:${auth.member.id}:${clientIpFromRequest(request)}`,
+    ...AGENT_APP_RATE,
+  });
+  if (!limited.ok) return boundaryJsonResponse(limited);
+
+  const parsed = await readJsonBody(request, AGENT_APP_JSON_MAX_BYTES);
+  if (!parsed.ok) {
+    return NextResponse.json(
+      { ok: false, code: parsed.code, message: parsed.message },
+      { status: parsed.status },
+    );
+  }
+  if (!parsed.value || typeof parsed.value !== "object") {
     return NextResponse.json(
       { ok: false, code: "invalid_json" },
       { status: 400 },
     );
   }
+  const body = parsed.value as Record<string, unknown>;
 
   const phone = String(body.phone ?? auth.member.phone ?? "").trim();
   const city = String(body.city ?? auth.member.city ?? "").trim();
@@ -61,19 +80,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const open = await latestOpenAgentApplication(getDb(), auth.member.id);
-    if (open) {
-      return NextResponse.json(
-        {
-          ok: false,
-          code: "already_pending",
-          application: open,
-        },
-        { status: 409 },
-      );
-    }
-
-    const application = await createAgentApplication(getDb(), {
+    const result = await createAgentApplication(getDb(), {
       memberId: auth.member.id,
       phone,
       city,
@@ -84,26 +91,41 @@ export async function POST(request: Request) {
       comment,
     });
 
-    return NextResponse.json(
-      {
-        ok: true,
-        application: {
-          id: application.id,
-          status: application.status,
-          venueName: application.venueName,
-          createdAt: application.createdAt,
-        },
-      },
-      { status: 201 },
-    );
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    if (msg === "invalid_agent_application") {
+    if (!result.ok) {
+      if (result.code === "open_limit_reached") {
+        return NextResponse.json(
+          {
+            ok: false,
+            code: "open_limit_reached",
+            openCount: result.openCount,
+            application: result.application,
+          },
+          { status: 409 },
+        );
+      }
       return NextResponse.json(
         { ok: false, code: "invalid_fields" },
         { status: 400 },
       );
     }
+
+    return NextResponse.json(
+      {
+        ok: true,
+        replay: result.replay,
+        application: {
+          id: result.application.id,
+          status: result.application.status,
+          statusLabel: result.application.statusLabel,
+          venueName: result.application.venueName,
+          publicNote: result.application.publicNote,
+          createdAt: result.application.createdAt,
+        },
+      },
+      { status: result.replay ? 200 : 201 },
+    );
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
     console.error("[loyalty/agent-applications POST]", msg);
     return NextResponse.json(
       { ok: false, code: "db_error" },

@@ -4,9 +4,8 @@ import { checkEarnBircoins } from "./earn";
 import { receiptFingerprint, parseFiscalQrPayload } from "./fingerprint";
 import { matchGletcherLines } from "./match-lines";
 import { normalizeReceiptAlias, normalizeMemberEmail } from "./normalize-alias";
-import { spendableBalance } from "./spendable";
+import { lifetimeEarnBircoins, spendableBalance } from "./spendable";
 import { bootstrapAliasRows } from "./seed-aliases";
-import { legacyCheckImportStatus } from "./legacy-policy";
 
 describe("loyalty earn 5%", () => {
   it("rounds gletcher sum * 0.05", () => {
@@ -38,7 +37,7 @@ describe("normalize + match", () => {
   });
 });
 
-describe("fingerprint + legacy", () => {
+describe("fingerprint", () => {
   it("parses QR and builds fingerprint", () => {
     const p = parseFiscalQrPayload(
       "t=20261110T1842&s=1249.90&fn=8710000100518392&i=54812&fp=3522207165&n=1",
@@ -53,15 +52,9 @@ describe("fingerprint + legacy", () => {
     });
     assert.equal(fp, "8710000100518392|54812|3522207165|1");
   });
-
-  it("upgrades legacy НЕТ to verified", () => {
-    const r = legacyCheckImportStatus("НЕТ");
-    assert.equal(r.receiptStatus, "verified");
-    assert.equal(r.legacyPaidFlag, "НЕТ");
-  });
 });
 
-describe("spendable", () => {
+describe("spendable + lifetime R11", () => {
   it("sums posted earns and spends", () => {
     assert.equal(
       spendableBalance([
@@ -70,6 +63,20 @@ describe("spendable", () => {
         { entryKind: "spend", amount: -15, status: "posted" },
       ]),
       35,
+    );
+  });
+
+  it("lifetime excludes opening; available uses history earn−spend", () => {
+    const entries = [
+      { entryKind: "check_earn", amount: 9000, status: "posted" },
+      { entryKind: "spend", amount: -8800, status: "posted" },
+      { entryKind: "opening", amount: 200, status: "posted" },
+    ];
+    assert.equal(lifetimeEarnBircoins(entries), 9000);
+    // Correct import boundary = history only (no second opening residual):
+    assert.equal(
+      spendableBalance(entries.filter((e) => e.entryKind !== "opening")),
+      200,
     );
   });
 });

@@ -56,12 +56,8 @@ const SECTIONS: Array<{
   },
 ];
 
-function actorHeader(): HeadersInit {
-  const actor =
-    typeof window !== "undefined"
-      ? window.sessionStorage.getItem("gletcher_staff_actor") || "staff"
-      : "staff";
-  return { "content-type": "application/json", "x-staff-actor": actor };
+function jsonHeaders(): HeadersInit {
+  return { "content-type": "application/json" };
 }
 
 function statusBadgeClass(status: ChainMapStatus): string {
@@ -136,7 +132,7 @@ export function AssortmentMatrix({
     try {
       const res = await fetch("/api/staff/retail/assortment", {
         method: "PATCH",
-        headers: actorHeader(),
+        headers: jsonHeaders(),
         body: JSON.stringify({ chainId, productSlug, available: next }),
       });
       const json = (await res.json()) as { ok?: boolean; message?: string };

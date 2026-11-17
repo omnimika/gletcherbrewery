@@ -1,0 +1,89 @@
+.wrap {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.listBlock {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.listTitle {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-gletcher-navy) 70%, transparent);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.listItem {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--color-gletcher-navy) 18%, transparent);
+  border-radius: var(--radius-control);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--color-gletcher-navy);
+}
+
+.listItem p {
+  margin: 0;
+}
+
+.listEmpty {
+  margin: 0;
+  font-size: 0.9rem;
+  color: color-mix(in srgb, var(--color-gletcher-navy) 65%, transparent);
+}
+
+.grid2 {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 40rem) {
+  .grid2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.select {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--color-gletcher-navy) 40%, transparent);
+  border-radius: var(--radius-control);
+  background: var(--color-gletcher-white);
+  color: var(--color-gletcher-navy);
+  font-size: 0.875rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.pending {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--color-gletcher-navy);
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pending p {
+  margin: 0;
+}
+
+.note {
+  color: color-mix(in srgb, var(--color-gletcher-navy) 75%, transparent);
+}

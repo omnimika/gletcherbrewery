@@ -13,6 +13,7 @@ import { submitForm } from "@/server/forms/submit";
 import { CONTACTS_FORM_ID } from "@/content/forms/contacts-contract";
 import {
   applyStaffCommand,
+  listStaffLeads,
   replayDeliveryJob,
 } from "./commands";
 import type postgres from "postgres";
@@ -60,7 +61,13 @@ describeDb("staff commands integration", () => {
 
   it("set_status + assign + note write audit events", async () => {
     const id = await createLead();
-    const actor = { id: "tester" };
+    const actor = {
+      id: "tester@example.com",
+      email: "tester@example.com",
+      role: "admin" as const,
+      userId: "00000000-0000-4000-8000-000000000001",
+      sessionId: "00000000-0000-4000-8000-000000000002",
+    };
 
     const status = await applyStaffCommand(db, id, actor, {
       action: "set_status",
@@ -112,7 +119,13 @@ describeDb("staff commands integration", () => {
       .set({ status: "failed", lastError: "synthetic_fail", attempts: 3 })
       .where(eq(deliveryJobs.id, job!.id));
 
-    const replay = await replayDeliveryJob(db, job!.id, { id: "tester" });
+    const replay = await replayDeliveryJob(db, job!.id, {
+      id: "tester@example.com",
+      email: "tester@example.com",
+      role: "admin",
+      userId: "00000000-0000-4000-8000-000000000001",
+      sessionId: "00000000-0000-4000-8000-000000000002",
+    });
     assert.equal(replay.ok, true);
 
     const refreshed = await db
@@ -120,5 +133,104 @@ describeDb("staff commands integration", () => {
       .from(deliveryJobs)
       .where(eq(deliveryJobs.id, job!.id));
     assert.equal(refreshed[0]?.status, "pending");
+  });
+
+  it("R06 concurrent status+assign+note keep all three changes", async () => {
+    const id = await createLead();
+
+    const [status, assign, note] = await Promise.all([
+      applyStaffCommand(
+        db,
+        id,
+        {
+          id: "actor-status@example.com",
+          email: "actor-status@example.com",
+          role: "admin",
+          userId: "00000000-0000-4000-8000-000000000011",
+          sessionId: "00000000-0000-4000-8000-000000000012",
+        },
+        {
+        action: "set_status",
+        workflowStatus: "waiting",
+      }),
+      applyStaffCommand(
+        db,
+        id,
+        {
+          id: "actor-assign@example.com",
+          email: "actor-assign@example.com",
+          role: "admin",
+          userId: "00000000-0000-4000-8000-000000000013",
+          sessionId: "00000000-0000-4000-8000-000000000014",
+        },
+        {
+        action: "assign",
+        assignee: "mika",
+      }),
+      applyStaffCommand(
+        db,
+        id,
+        {
+          id: "actor-note@example.com",
+          email: "actor-note@example.com",
+          role: "admin",
+          userId: "00000000-0000-4000-8000-000000000015",
+          sessionId: "00000000-0000-4000-8000-000000000016",
+        },
+        {
+        action: "note",
+        note: "parallel note",
+      }),
+    ]);
+
+    assert.equal(status.ok, true);
+    assert.equal(assign.ok, true);
+    assert.equal(note.ok, true);
+
+    const publicRows = await sql`
+      SELECT workflow_status, assignee, staff_note
+      FROM public.staff_contact_leads
+      WHERE submission_id = ${id}::uuid
+    `;
+    assert.equal(publicRows[0]?.workflow_status, "waiting");
+    assert.equal(publicRows[0]?.assignee, "mika");
+    assert.equal(publicRows[0]?.staff_note, "parallel note");
+
+    const events = await db
+      .select()
+      .from(staffLeadEvents)
+      .where(eq(staffLeadEvents.submissionId, id));
+    const byAction = Object.fromEntries(
+      events.map((e) => [e.action, e] as const),
+    );
+    assert.equal(byAction.set_status?.payload?.to, "waiting");
+    assert.equal(byAction.set_status?.payload?.from, "new");
+    assert.equal(byAction.assign?.payload?.to, "mika");
+    assert.equal(byAction.note?.payload?.to, "parallel note");
+  });
+
+  it("listStaffLeads paginates when total > pageSize", async () => {
+    const ids = await Promise.all([
+      createLead(),
+      createLead(),
+      createLead(),
+    ]);
+    assert.equal(ids.length, 3);
+
+    const page1 = await listStaffLeads(db, { page: 1, pageSize: 2 });
+    assert.ok(page1.total >= 3);
+    assert.equal(page1.page, 1);
+    assert.equal(page1.pageSize, 2);
+    assert.equal(page1.rows.length, 2);
+    assert.ok(page1.totalPages >= 2);
+
+    const page2 = await listStaffLeads(db, { page: 2, pageSize: 2 });
+    assert.equal(page2.page, 2);
+    assert.equal(page2.pageSize, 2);
+    assert.ok(page2.rows.length >= 1);
+    assert.notEqual(
+      page1.rows[0]?.submissionId,
+      page2.rows[0]?.submissionId,
+    );
   });
 });

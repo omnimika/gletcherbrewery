@@ -2,11 +2,17 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition, type FormEvent } from "react";
+import { CABINET_BUY_PLACE_OTHER } from "@/content/cabinet";
 
-export function ManualReceiptForm() {
+export function ManualReceiptForm({
+  buyPlaces,
+}: {
+  buyPlaces: readonly string[];
+}) {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [message, setMessage] = useState<string | null>(null);
+  const [place, setPlace] = useState("");
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -31,6 +37,7 @@ export function ManualReceiptForm() {
         `Создано · pending_staff · earn ${json.receipt?.proposedEarn ?? "?"}₿`,
       );
       form.reset();
+      setPlace("");
       router.refresh();
     });
   }
@@ -80,21 +87,38 @@ export function ManualReceiptForm() {
           className="rounded border border-gletcher-navy/30 px-3 py-2"
         />
       </label>
-      <label className="grid gap-1 text-sm">
+      <label className="grid gap-1 text-sm md:col-span-2">
         Сеть
-        <input
+        <select
+          required
           name="venueNetwork"
-          placeholder="Лента / …"
+          value={place}
+          onChange={(e) => setPlace(e.target.value)}
           className="rounded border border-gletcher-navy/30 px-3 py-2"
-        />
+        >
+          <option value="" disabled>
+            Выбрать… (как на карте / в кабинете)
+          </option>
+          {buyPlaces.map((p) => (
+            <option key={p} value={p}>
+              {p}
+            </option>
+          ))}
+        </select>
       </label>
-      <label className="grid gap-1 text-sm">
-        Магазин / бар / ресторан
-        <input
-          name="venueName"
-          className="rounded border border-gletcher-navy/30 px-3 py-2"
-        />
-      </label>
+      {place === CABINET_BUY_PLACE_OTHER ? (
+        <label className="grid gap-1 text-sm md:col-span-2">
+          Название места
+          <input
+            required
+            name="venueName"
+            placeholder="Свободный ввод"
+            className="rounded border border-gletcher-navy/30 px-3 py-2"
+          />
+        </label>
+      ) : (
+        <input type="hidden" name="venueName" value="" />
+      )}
       <label className="grid gap-1 text-sm md:col-span-2">
         QR payload (опционально)
         <input
@@ -120,8 +144,8 @@ export function ManualReceiptForm() {
         ) : null}
       </div>
       <p className="type-caption text-gletcher-navy/55 md:col-span-2">
-        Нужна сеть или точка. После одобрения — 5% в ledger (Оплачено=ДА /
-        verified).
+        Список сетей = карта + фирменные точки + «Другой». После одобрения — 5%
+        в ledger (Оплачено=ДА / verified).
       </p>
     </form>
   );

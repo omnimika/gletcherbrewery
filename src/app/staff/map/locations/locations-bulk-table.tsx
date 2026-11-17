@@ -23,12 +23,8 @@ export type BulkLocationRow = {
 
 const CUSTOM_VALUE = "__custom__";
 
-function actorHeader(): HeadersInit {
-  const actor =
-    typeof window !== "undefined"
-      ? window.sessionStorage.getItem("gletcher_staff_actor") || "staff"
-      : "staff";
-  return { "content-type": "application/json", "x-staff-actor": actor };
+function jsonHeaders(): HeadersInit {
+  return { "content-type": "application/json" };
 }
 
 type Panel = null | "chain" | "city";
@@ -91,7 +87,7 @@ export function LocationsBulkTable({
     try {
       const res = await fetch("/api/staff/retail/locations/bulk", {
         method: "POST",
-        headers: actorHeader(),
+        headers: jsonHeaders(),
         body: JSON.stringify({
           ...body,
           locationIds: [...selected],

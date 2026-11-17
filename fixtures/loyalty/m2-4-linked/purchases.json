@@ -1,0 +1,12 @@
+{
+  "records": [
+    {
+      "id": "recPurchase1",
+      "fields": {
+        "orderId": "recOrderSpend",
+        "sku": "friday-avenue",
+        "qty": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "records": [
+    {
+      "id": "recPromo1",
+      "fields": {
+        "title": "Synthetic promo",
+        "active": false
+      }
+    }
+  ]
+}

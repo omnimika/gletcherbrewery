@@ -1,4 +1,15 @@
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, asc, count, desc, eq, inArray, like } from "drizzle-orm";
+import {
+  escapeLikePattern,
+  parseStaffEmailFilter,
+} from "@/lib/staff-email-filter";
+import {
+  clampPageParams,
+  clampPageToTotal,
+  toPageResult,
+  type PageResult,
+} from "@/lib/pagination";
+import { parseStaffSort } from "@/lib/staff-sort";
 import type { AppDb } from "@/server/db/client";
 import {
   loyaltyLedgerEntries,
@@ -11,14 +22,76 @@ import {
   receiptFingerprint,
 } from "./fingerprint";
 import { upsertMemberByEmail } from "./members";
+import { enqueueLoyaltyTelegramJob } from "./notify-outbox";
 
-const PENDING_STATUSES = [
+function memberEmailWhere(emailQ: string | null) {
+  if (!emailQ) return undefined;
+  if (emailQ.includes("@")) {
+    return eq(loyaltyMembers.emailNormalized, emailQ);
+  }
+  return like(
+    loyaltyMembers.emailNormalized,
+    `%${escapeLikePattern(emailQ)}%`,
+  );
+}
+
+export const RECEIPT_PENDING_STATUSES = [
   "pending_upload",
   "pending_qr",
   "pending_ocr",
   "pending_manual",
   "pending_staff",
 ] as const;
+
+/** Staff list filter buckets (not raw DB status). Default = queue. */
+export const STAFF_RECEIPT_STATUS_FILTERS = [
+  "pending",
+  "verified",
+  "rejected",
+  "all",
+] as const;
+export type StaffReceiptStatusFilter =
+  (typeof STAFF_RECEIPT_STATUS_FILTERS)[number];
+
+export const STAFF_RECEIPT_STATUS_LABELS_RU: Record<
+  StaffReceiptStatusFilter,
+  string
+> = {
+  pending: "Очередь",
+  verified: "Одобренные",
+  rejected: "Отклонённые",
+  all: "Все",
+};
+
+export function isStaffReceiptStatusFilter(
+  value: string,
+): value is StaffReceiptStatusFilter {
+  return (STAFF_RECEIPT_STATUS_FILTERS as readonly string[]).includes(value);
+}
+
+export function parseStaffReceiptStatusFilter(
+  raw: string | null | undefined,
+): StaffReceiptStatusFilter {
+  return raw && isStaffReceiptStatusFilter(raw) ? raw : "pending";
+}
+
+export function isPendingReceiptStatus(status: string): boolean {
+  return (RECEIPT_PENDING_STATUSES as readonly string[]).includes(status);
+}
+
+const RECEIPT_STATUS_LABELS_RU: Record<string, string> = {
+  pending_upload: "Черновик",
+  pending_qr: "QR",
+  pending_ocr: "OCR",
+  pending_manual: "Ручная проверка",
+  pending_staff: "На проверке",
+  verified: "Одобрен",
+  rejected: "Отклонён",
+};
+
+export function receiptStatusLabelRu(status: string): string {
+  return RECEIPT_STATUS_LABELS_RU[status] ?? status;
+}
 
 export type ManualReceiptInput = {
   email: string;
@@ -34,6 +107,12 @@ export type ManualReceiptInput = {
   ocrLines?: unknown[];
   ocrEligibleSum?: number | null;
   sourceHint?: "manual" | "qr" | "ocr";
+};
+
+/** Test seam: throw to prove verdict rolls back with the transaction. */
+export type ReceiptDecisionOptions = {
+  beforeLedgerInsert?: (tx: AppDb) => Promise<void>;
+  beforeRejectCommit?: (tx: AppDb) => Promise<void>;
 };
 
 export async function createManualReceipt(db: AppDb, input: ManualReceiptInput) {
@@ -117,35 +196,118 @@ export async function createManualReceipt(db: AppDb, input: ManualReceiptInput) 
         : "manual");
   const status = "pending_staff";
 
-  const [row] = await db
-    .insert(loyaltyReceipts)
-    .values({
-      memberId: member.id,
-      status,
-      source,
-      photoObjectKey: input.photoObjectKey ?? null,
-      qrPayload: input.qrPayload?.trim() || null,
-      fiscalFn,
-      fiscalFd,
-      fiscalFp,
-      fiscalOperation,
-      receiptFingerprint: fingerprint,
-      purchaseAt: input.purchaseAt,
-      city: input.city.trim(),
-      venueNetwork: input.venueNetwork?.trim() || null,
-      venueName: input.venueName?.trim() || null,
-      gletcherSumRub: String(gletcherSumRub),
-      proposedEarn,
-      ocrText: input.ocrText ?? null,
-      ocrLines: input.ocrLines ?? [],
-    })
-    .returning();
+  const row = await db.transaction(async (tx) => {
+    const [inserted] = await tx
+      .insert(loyaltyReceipts)
+      .values({
+        memberId: member.id,
+        status,
+        source,
+        photoObjectKey: input.photoObjectKey ?? null,
+        qrPayload: input.qrPayload?.trim() || null,
+        fiscalFn,
+        fiscalFd,
+        fiscalFp,
+        fiscalOperation,
+        receiptFingerprint: fingerprint,
+        purchaseAt: input.purchaseAt,
+        city: input.city.trim(),
+        venueNetwork: input.venueNetwork?.trim() || null,
+        venueName: input.venueName?.trim() || null,
+        gletcherSumRub: String(gletcherSumRub),
+        proposedEarn,
+        ocrText: input.ocrText ?? null,
+        ocrLines: input.ocrLines ?? [],
+      })
+      .returning();
 
-  return { ok: true as const, receipt: row! };
+    await enqueueLoyaltyTelegramJob(tx, {
+      sourceKind: "loyalty_receipt",
+      sourceId: inserted!.id,
+      eventType: "receipt_submitted",
+    });
+
+    return inserted!;
+  });
+
+  return { ok: true as const, receipt: row };
 }
 
-export async function listPendingReceipts(db: AppDb, limit = 50) {
-  return db
+export type StaffReceiptListRow = {
+  receipt: typeof loyaltyReceipts.$inferSelect;
+  email: string;
+  displayName: string | null;
+  statusLabel: string;
+};
+
+/** @deprecated use StaffReceiptListRow */
+export type PendingReceiptListRow = StaffReceiptListRow;
+
+export const STAFF_RECEIPT_SORT_FIELDS = ["createdAt", "purchaseAt"] as const;
+export type StaffReceiptSortField = (typeof STAFF_RECEIPT_SORT_FIELDS)[number];
+
+function receiptStatusWhere(filter: StaffReceiptStatusFilter) {
+  if (filter === "all") return undefined;
+  if (filter === "verified") return eq(loyaltyReceipts.status, "verified");
+  if (filter === "rejected") return eq(loyaltyReceipts.status, "rejected");
+  return inArray(loyaltyReceipts.status, [...RECEIPT_PENDING_STATUSES]);
+}
+
+export async function listReceiptsForStaff(
+  db: AppDb,
+  opts: {
+    status?: string | null;
+    email?: string | null;
+    page?: number | string;
+    pageSize?: number | string;
+    limit?: number;
+    sort?: string | null;
+    dir?: string | null;
+  } = {},
+): Promise<PageResult<StaffReceiptListRow>> {
+  const statusFilter = parseStaffReceiptStatusFilter(opts.status);
+  const emailQ = parseStaffEmailFilter(opts.email);
+  const initial = clampPageParams({
+    page: opts.page,
+    pageSize: opts.pageSize ?? opts.limit ?? 50,
+    defaultPageSize: 50,
+    maxPageSize: 100,
+  });
+  const { sort, dir } = parseStaffSort(
+    opts,
+    STAFF_RECEIPT_SORT_FIELDS,
+    "createdAt",
+    "desc",
+  );
+  const statusWhere = receiptStatusWhere(statusFilter);
+  const emailWhere = memberEmailWhere(emailQ);
+  const where =
+    statusWhere && emailWhere
+      ? and(statusWhere, emailWhere)
+      : (statusWhere ?? emailWhere);
+
+  const [totalRow] = await db
+    .select({ c: count() })
+    .from(loyaltyReceipts)
+    .innerJoin(
+      loyaltyMembers,
+      eq(loyaltyReceipts.memberId, loyaltyMembers.id),
+    )
+    .where(where);
+  const total = Number(totalRow?.c ?? 0);
+  const { page, pageSize, offset } = clampPageToTotal(
+    initial.page,
+    initial.pageSize,
+    total,
+  );
+
+  const sortCol =
+    sort === "purchaseAt"
+      ? loyaltyReceipts.purchaseAt
+      : loyaltyReceipts.createdAt;
+  const order = dir === "asc" ? asc(sortCol) : desc(sortCol);
+
+  const rows = await db
     .select({
       receipt: loyaltyReceipts,
       email: loyaltyMembers.emailNormalized,
@@ -156,9 +318,36 @@ export async function listPendingReceipts(db: AppDb, limit = 50) {
       loyaltyMembers,
       eq(loyaltyReceipts.memberId, loyaltyMembers.id),
     )
-    .where(inArray(loyaltyReceipts.status, [...PENDING_STATUSES]))
-    .orderBy(desc(loyaltyReceipts.createdAt))
-    .limit(limit);
+    .where(where)
+    .orderBy(order, desc(loyaltyReceipts.id))
+    .limit(pageSize)
+    .offset(offset);
+
+  return toPageResult(
+    rows.map(({ receipt, email, displayName }) => ({
+      receipt,
+      email,
+      displayName,
+      statusLabel: receiptStatusLabelRu(receipt.status),
+    })),
+    total,
+    page,
+    pageSize,
+  );
+}
+
+/** Queue-only alias — same as listReceiptsForStaff({ status: "pending" }). */
+export async function listPendingReceipts(
+  db: AppDb,
+  opts: {
+    page?: number | string;
+    pageSize?: number | string;
+    limit?: number;
+    sort?: string | null;
+    dir?: string | null;
+  } = {},
+): Promise<PageResult<StaffReceiptListRow>> {
+  return listReceiptsForStaff(db, { ...opts, status: "pending" });
 }
 
 export async function listReceiptsForMember(
@@ -174,103 +363,132 @@ export async function listReceiptsForMember(
     .limit(limit);
 }
 
+function pendingWhere(receiptId: string) {
+  return and(
+    eq(loyaltyReceipts.id, receiptId),
+    inArray(loyaltyReceipts.status, [...RECEIPT_PENDING_STATUSES]),
+  );
+}
+
+/**
+ * R05: claim pending→verified + check_earn ledger in one transaction.
+ * Concurrent reject/other approve cannot overwrite an established verdict.
+ */
 export async function approveReceipt(
   db: AppDb,
   input: { receiptId: string; actor: string; note?: string | null },
+  options?: ReceiptDecisionOptions,
 ) {
-  const [receipt] = await db
-    .select()
-    .from(loyaltyReceipts)
-    .where(eq(loyaltyReceipts.id, input.receiptId))
-    .limit(1);
-  if (!receipt) return { ok: false as const, code: "not_found" as const };
-  if (receipt.status === "verified") {
-    return { ok: true as const, receipt, already: true as const };
-  }
-  if (!PENDING_STATUSES.includes(receipt.status as (typeof PENDING_STATUSES)[number])) {
-    return { ok: false as const, code: "invalid_status" as const };
-  }
+  const now = new Date();
 
-  const sum = Number(receipt.gletcherSumRub ?? 0);
-  const earn = receipt.proposedEarn ?? checkEarnBircoins(sum);
-
-  await db.transaction(async (tx) => {
-    await tx
+  return db.transaction(async (tx) => {
+    const claimed = await tx
       .update(loyaltyReceipts)
       .set({
         status: "verified",
         reviewedBy: input.actor,
-        reviewedAt: new Date(),
-        staffNote: input.note ?? receipt.staffNote,
-        updatedAt: new Date(),
+        reviewedAt: now,
+        updatedAt: now,
+        ...(input.note != null ? { staffNote: input.note } : {}),
       })
-      .where(eq(loyaltyReceipts.id, receipt.id));
+      .where(pendingWhere(input.receiptId))
+      .returning();
 
-    await tx
-      .insert(loyaltyLedgerEntries)
-      .values({
-        memberId: receipt.memberId,
-        entryKind: "check_earn",
-        amount: earn,
-        status: "posted",
-        sourceSystem: "loyalty_receipt",
-        sourceRecordId: receipt.id,
-        receiptId: receipt.id,
-        eligibleSumRub: String(sum),
-        rewardRate: "0.05",
-        metadata: {
-          approvedBy: input.actor,
-          source: receipt.source,
-        },
-      })
-      .onConflictDoNothing({
-        target: [
-          loyaltyLedgerEntries.sourceSystem,
-          loyaltyLedgerEntries.sourceRecordId,
-          loyaltyLedgerEntries.entryKind,
-        ],
-      });
+    if (!claimed[0]) {
+      const [current] = await tx
+        .select()
+        .from(loyaltyReceipts)
+        .where(eq(loyaltyReceipts.id, input.receiptId))
+        .limit(1);
+      if (!current) return { ok: false as const, code: "not_found" as const };
+      if (current.status === "verified") {
+        return { ok: true as const, receipt: current, already: true as const };
+      }
+      return { ok: false as const, code: "conflict" as const };
+    }
+
+    const receipt = claimed[0];
+    const sum = Number(receipt.gletcherSumRub ?? 0);
+    const earn = receipt.proposedEarn ?? checkEarnBircoins(sum);
+
+    if (options?.beforeLedgerInsert) {
+      await options.beforeLedgerInsert(tx);
+    }
+
+    await tx.insert(loyaltyLedgerEntries).values({
+      memberId: receipt.memberId,
+      entryKind: "check_earn",
+      amount: earn,
+      status: "posted",
+      sourceSystem: "loyalty_receipt",
+      sourceRecordId: receipt.id,
+      receiptId: receipt.id,
+      eligibleSumRub: String(sum),
+      rewardRate: "0.05",
+      metadata: {
+        approvedBy: input.actor,
+        source: receipt.source,
+        decision: "verified",
+        decidedAt: now.toISOString(),
+      },
+    });
+
+    return { ok: true as const, receipt, already: false as const };
   });
-
-  const [updated] = await db
-    .select()
-    .from(loyaltyReceipts)
-    .where(eq(loyaltyReceipts.id, receipt.id))
-    .limit(1);
-  return { ok: true as const, receipt: updated!, already: false as const };
 }
 
+/**
+ * R05: claim pending→rejected only; never overwrites verified.
+ * No ledger row on reject.
+ */
 export async function rejectReceipt(
   db: AppDb,
   input: { receiptId: string; actor: string; note?: string | null },
+  options?: ReceiptDecisionOptions,
 ) {
-  const [receipt] = await db
-    .select()
-    .from(loyaltyReceipts)
-    .where(eq(loyaltyReceipts.id, input.receiptId))
-    .limit(1);
-  if (!receipt) return { ok: false as const, code: "not_found" as const };
-  if (receipt.status === "verified") {
-    return { ok: false as const, code: "already_verified" as const };
-  }
+  const now = new Date();
 
-  const [updated] = await db
-    .update(loyaltyReceipts)
-    .set({
+  return db.transaction(async (tx) => {
+    const patch: {
+      status: string;
+      reviewedBy: string;
+      reviewedAt: Date;
+      updatedAt: Date;
+      staffNote?: string | null;
+    } = {
       status: "rejected",
       reviewedBy: input.actor,
-      reviewedAt: new Date(),
-      staffNote: input.note ?? receipt.staffNote,
-      updatedAt: new Date(),
-    })
-    .where(
-      and(
-        eq(loyaltyReceipts.id, receipt.id),
-        inArray(loyaltyReceipts.status, [...PENDING_STATUSES]),
-      ),
-    )
-    .returning();
+      reviewedAt: now,
+      updatedAt: now,
+    };
+    if (input.note != null) patch.staffNote = input.note;
 
-  if (!updated) return { ok: false as const, code: "invalid_status" as const };
-  return { ok: true as const, receipt: updated };
+    const claimed = await tx
+      .update(loyaltyReceipts)
+      .set(patch)
+      .where(pendingWhere(input.receiptId))
+      .returning();
+
+    if (!claimed[0]) {
+      const [current] = await tx
+        .select()
+        .from(loyaltyReceipts)
+        .where(eq(loyaltyReceipts.id, input.receiptId))
+        .limit(1);
+      if (!current) return { ok: false as const, code: "not_found" as const };
+      if (current.status === "verified") {
+        return { ok: false as const, code: "already_verified" as const };
+      }
+      if (current.status === "rejected") {
+        return { ok: true as const, receipt: current, already: true as const };
+      }
+      return { ok: false as const, code: "conflict" as const };
+    }
+
+    if (options?.beforeRejectCommit) {
+      await options.beforeRejectCommit(tx);
+    }
+
+    return { ok: true as const, receipt: claimed[0], already: false as const };
+  });
 }

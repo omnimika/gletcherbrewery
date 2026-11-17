@@ -7,9 +7,11 @@ import { storeReceiptPhotoLocal } from "@/server/loyalty/photo-store";
 import { decodeFiscalQrFromImage } from "@/server/loyalty/qr-decode";
 import {
   createManualReceipt,
-  listPendingReceipts,
+  listReceiptsForStaff,
+  parseStaffReceiptStatusFilter,
 } from "@/server/loyalty/receipts";
-import { requireStaffAuth } from "@/server/staff/request-auth";
+import { requireStaffAuth, requireStaffRole } from "@/server/staff/request-auth";
+import { LOYALTY_STAFF_ROLES } from "@/server/staff/roles";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -25,16 +27,35 @@ function parseOptionalSum(raw: unknown): number | null {
 export async function GET(request: Request) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, LOYALTY_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
 
   try {
-    const rows = await listPendingReceipts(getDb(), 100);
+    const url = new URL(request.url);
+    const status = parseStaffReceiptStatusFilter(url.searchParams.get("status"));
+    const email = url.searchParams.get("email");
+    const result = await listReceiptsForStaff(getDb(), {
+      status,
+      email,
+      page: url.searchParams.get("page") ?? undefined,
+      pageSize: url.searchParams.get("pageSize") ?? 50,
+      sort: url.searchParams.get("sort"),
+      dir: url.searchParams.get("dir"),
+    });
     return NextResponse.json({
       ok: true,
-      receipts: rows.map((r) => ({
+      status,
+      email: email ?? null,
+      receipts: result.rows.map((r) => ({
         ...r.receipt,
+        statusLabel: r.statusLabel,
         memberEmail: r.email,
         memberName: r.displayName,
       })),
+      total: result.total,
+      page: result.page,
+      pageSize: result.pageSize,
+      totalPages: result.totalPages,
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : "unknown";
@@ -55,6 +76,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, LOYALTY_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
 
   let email = "";
   let gletcherSumRub: number | null = null;

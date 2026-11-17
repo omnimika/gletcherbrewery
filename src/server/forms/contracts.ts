@@ -175,9 +175,15 @@ export const FORM_DEFINITIONS: Record<string, FormDefinition> = {
  * Active outbox destinations for new submissions.
  * Google Sheets lead export cancelled by owner 09.11.2026 (152-FZ / PII).
  */
+/** Public form leads → TELEGRAM_CHAT_ID. */
 export const DELIVERY_DESTINATIONS = ["telegram"] as const;
 export type ActiveDeliveryDestination = (typeof DELIVERY_DESTINATIONS)[number];
-export type DeliveryDestination = ActiveDeliveryDestination | "sheets";
+/** Loyalty cabinet (receipts / agent apps) → TELEGRAM_AGENT_CHAT_ID. */
+export const LOYALTY_TELEGRAM_DESTINATION = "telegram_agent" as const;
+export type DeliveryDestination =
+  | ActiveDeliveryDestination
+  | typeof LOYALTY_TELEGRAM_DESTINATION
+  | "sheets";
 
 export type ConsentEvidence = {
   channel: "form_submit";

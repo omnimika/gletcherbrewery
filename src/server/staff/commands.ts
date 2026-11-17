@@ -1,4 +1,11 @@
-import { and, desc, eq, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, inArray, or, sql } from "drizzle-orm";
+import {
+  clampPageParams,
+  clampPageToTotal,
+  toPageResult,
+  type PageResult,
+} from "@/lib/pagination";
+import { parseStaffSort } from "@/lib/staff-sort";
 import type { AppDb } from "@/server/db/client";
 import {
   deliveryJobs,
@@ -7,21 +14,56 @@ import {
 } from "@/server/db/schema";
 import {
   isReplayableJobStatus,
+  REPLAYABLE_JOB_STATUSES,
   isWorkflowStatus,
   type StaffAction,
   type WorkflowStatus,
 } from "./contracts";
 
+import type { StaffRole } from "./roles";
+
 export type StaffActor = {
-  /** Stable label for audit (token holder id / display name). */
+  /** Audit label — normalized staff email. */
   id: string;
+  email: string;
+  role: StaffRole;
+  userId: string;
+  sessionId: string;
 };
+
+export const STAFF_LEAD_SORT_FIELDS = ["createdAt", "updatedAt"] as const;
+export type StaffLeadSortField = (typeof STAFF_LEAD_SORT_FIELDS)[number];
 
 export type LeadListFilter = {
   workflowStatus?: WorkflowStatus;
   formId?: string;
+  /** @deprecated use page/pageSize */
   limit?: number;
+  /** @deprecated use page/pageSize */
   offset?: number;
+  page?: number | string;
+  pageSize?: number | string;
+  sort?: string | null;
+  dir?: string | null;
+};
+
+export type StaffLeadListRow = {
+  submissionId: string;
+  formId: string;
+  locale: string;
+  sourcePath: string;
+  intakeStatus: string;
+  workflowStatus: string;
+  createdAt: Date;
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  company: string | null;
+  city: string | null;
+  assignee: string | null;
+  staffNote: string | null;
+  updatedAt: Date | null;
+  updatedBy: string | null;
 };
 
 export type StaffCommandInput =
@@ -57,9 +99,23 @@ async function syncPublicLead(
   `);
 }
 
-export async function listStaffLeads(db: AppDb, filter: LeadListFilter = {}) {
-  const limit = Math.min(Math.max(filter.limit ?? 50, 1), 200);
-  const offset = Math.max(filter.offset ?? 0, 0);
+export async function listStaffLeads(
+  db: AppDb,
+  filter: LeadListFilter = {},
+): Promise<PageResult<StaffLeadListRow>> {
+  const initial =
+    filter.page != null || filter.pageSize != null
+      ? clampPageParams({
+          page: filter.page,
+          pageSize: filter.pageSize,
+          defaultPageSize: 50,
+          maxPageSize: 100,
+        })
+      : {
+          page: Math.floor((filter.offset ?? 0) / Math.max(filter.limit ?? 50, 1)) + 1,
+          pageSize: Math.min(Math.max(filter.limit ?? 50, 1), 100),
+          offset: Math.max(filter.offset ?? 0, 0),
+        };
 
   const conditions = [];
   if (filter.workflowStatus) {
@@ -75,6 +131,29 @@ export async function listStaffLeads(db: AppDb, filter: LeadListFilter = {}) {
       : conditions.length === 1
         ? conditions[0]
         : and(...conditions);
+
+  const [totalRow] = await db
+    .select({ c: count() })
+    .from(staffContactLeads)
+    .where(where);
+  const total = Number(totalRow?.c ?? 0);
+  const { page, pageSize, offset } = clampPageToTotal(
+    initial.page,
+    initial.pageSize,
+    total,
+  );
+
+  const { sort, dir } = parseStaffSort(
+    filter,
+    STAFF_LEAD_SORT_FIELDS,
+    "createdAt",
+    "desc",
+  );
+  const sortCol =
+    sort === "updatedAt"
+      ? staffContactLeads.updatedAt
+      : staffContactLeads.createdAt;
+  const order = dir === "asc" ? asc(sortCol) : desc(sortCol);
 
   const rows = await db
     .select({
@@ -97,11 +176,11 @@ export async function listStaffLeads(db: AppDb, filter: LeadListFilter = {}) {
     })
     .from(staffContactLeads)
     .where(where)
-    .orderBy(desc(staffContactLeads.createdAt))
-    .limit(limit)
+    .orderBy(order, desc(staffContactLeads.submissionId))
+    .limit(pageSize)
     .offset(offset);
 
-  return rows;
+  return toPageResult(rows, total, page, pageSize);
 }
 
 export async function getStaffLeadDetail(db: AppDb, submissionId: string) {
@@ -148,74 +227,97 @@ export type StaffCommandResult =
   | { ok: true; lead: typeof staffContactLeads.$inferSelect }
   | { ok: false; code: string; message: string };
 
+/**
+ * R06: row lock + patch only the commanded field so parallel status/assign/note
+ * do not overwrite each other. Audit payload uses locked before/after values.
+ */
 export async function applyStaffCommand(
   db: AppDb,
   submissionId: string,
   actor: StaffActor,
   input: StaffCommandInput,
 ): Promise<StaffCommandResult> {
-  const existing = await db
-    .select()
-    .from(staffContactLeads)
-    .where(eq(staffContactLeads.submissionId, submissionId))
-    .limit(1);
-  const lead = existing[0];
-  if (!lead) {
-    return { ok: false, code: "not_found", message: "Lead not found" };
-  }
-
-  const now = new Date();
-  let nextWorkflow = lead.workflowStatus;
-  let nextAssignee = lead.assignee;
-  let nextNote = lead.staffNote;
-  const action: StaffAction = input.action;
-  let eventPayload: Record<string, unknown> = {};
-
-  if (input.action === "set_status") {
-    if (!isWorkflowStatus(input.workflowStatus)) {
-      return {
-        ok: false,
-        code: "invalid_status",
-        message: "Unknown workflow status",
-      };
-    }
-    nextWorkflow = input.workflowStatus;
-    eventPayload = {
-      from: lead.workflowStatus,
-      to: input.workflowStatus,
+  // Validate shape before taking a lock.
+  if (input.action === "set_status" && !isWorkflowStatus(input.workflowStatus)) {
+    return {
+      ok: false,
+      code: "invalid_status",
+      message: "Unknown workflow status",
     };
-  } else if (input.action === "assign") {
-    const trimmed =
-      input.assignee === null || input.assignee === undefined
-        ? null
-        : input.assignee.trim().slice(0, 120) || null;
-    nextAssignee = trimmed;
-    eventPayload = { from: lead.assignee, to: trimmed };
-  } else if (input.action === "note") {
+  }
+  if (input.action === "note") {
     const note = input.note.trim().slice(0, 4000);
     if (!note) {
       return { ok: false, code: "invalid_note", message: "Note is empty" };
     }
-    nextNote = note;
-    eventPayload = { note };
-  } else {
+  }
+  if (
+    input.action !== "set_status" &&
+    input.action !== "assign" &&
+    input.action !== "note"
+  ) {
     return { ok: false, code: "invalid_action", message: "Unknown action" };
   }
 
-  const updated = await db.transaction(async (tx) => {
+  const now = new Date();
+  const action: StaffAction = input.action;
+
+  return db.transaction(async (tx) => {
+    const locked = await tx
+      .select()
+      .from(staffContactLeads)
+      .where(eq(staffContactLeads.submissionId, submissionId))
+      .limit(1)
+      .for("update");
+    const lead = locked[0];
+    if (!lead) {
+      return { ok: false, code: "not_found", message: "Lead not found" };
+    }
+
+    const patch: {
+      workflowStatus?: string;
+      assignee?: string | null;
+      staffNote?: string | null;
+      updatedAt: Date;
+      updatedBy: string;
+    } = {
+      updatedAt: now,
+      updatedBy: actor.id,
+    };
+    let eventPayload: Record<string, unknown> = {};
+
+    if (input.action === "set_status") {
+      patch.workflowStatus = input.workflowStatus;
+      eventPayload = {
+        from: lead.workflowStatus,
+        to: input.workflowStatus,
+      };
+    } else if (input.action === "assign") {
+      const trimmed =
+        input.assignee === null || input.assignee === undefined
+          ? null
+          : input.assignee.trim().slice(0, 120) || null;
+      patch.assignee = trimmed;
+      eventPayload = { from: lead.assignee, to: trimmed };
+    } else {
+      const note = input.note.trim().slice(0, 4000);
+      patch.staffNote = note;
+      eventPayload = { from: lead.staffNote, to: note };
+    }
+
     const [row] = await tx
       .update(staffContactLeads)
-      .set({
-        workflowStatus: nextWorkflow,
-        assignee: nextAssignee,
-        staffNote: nextNote,
-        updatedAt: now,
-        updatedBy: actor.id,
-      })
+      .set(patch)
       .where(eq(staffContactLeads.submissionId, submissionId))
       .returning();
 
-    if (!row) throw new Error("staff lead update returned no row");
+    if (!row) {
+      return {
+        ok: false,
+        code: "conflict",
+        message: "Lead disappeared during update",
+      };
+    }
 
     await tx.insert(staffLeadEvents).values({
       submissionId,
@@ -225,18 +327,17 @@ export async function applyStaffCommand(
       createdAt: now,
     });
 
+    // Public mirror follows the merged row after the field-only patch.
     await syncPublicLead(tx, submissionId, {
-      workflowStatus: nextWorkflow,
-      assignee: nextAssignee,
-      staffNote: nextNote,
+      workflowStatus: row.workflowStatus,
+      assignee: row.assignee,
+      staffNote: row.staffNote,
       updatedAt: now,
       updatedBy: actor.id,
     });
 
-    return row;
+    return { ok: true, lead: row };
   });
-
-  return { ok: true, lead: updated };
 }
 
 export type ReplayResult =
@@ -246,42 +347,73 @@ export type ReplayResult =
 /**
  * Controlled manual replay: re-queue a terminal/stuck delivery job.
  * Does not touch Sheets (cancelled_policy) or already-delivered jobs.
+ * R06: conditional UPDATE — active lease / delivered cannot be reset by race.
  */
 export async function replayDeliveryJob(
   db: AppDb,
   jobId: string,
   actor: StaffActor,
 ): Promise<ReplayResult> {
-  const rows = await db
-    .select()
-    .from(deliveryJobs)
-    .where(eq(deliveryJobs.id, jobId))
-    .limit(1);
-  const job = rows[0];
-  if (!job) {
-    return { ok: false, code: "not_found", message: "Delivery job not found" };
-  }
-
-  if (job.destination === "sheets" || job.status === "cancelled_policy") {
-    return {
-      ok: false,
-      code: "not_replayable",
-      message: "Sheets destination is cancelled (152-FZ)",
-    };
-  }
-
-  if (!isReplayableJobStatus(job.status)) {
-    return {
-      ok: false,
-      code: "not_replayable",
-      message: `Job status '${job.status}' cannot be replayed`,
-    };
-  }
-
   const now = new Date();
+  const nowIso = now.toISOString();
 
-  await db.transaction(async (tx) => {
-    await tx
+  return db.transaction(async (tx) => {
+    const rows = await tx
+      .select()
+      .from(deliveryJobs)
+      .where(eq(deliveryJobs.id, jobId))
+      .limit(1)
+      .for("update");
+    const job = rows[0];
+    if (!job) {
+      return { ok: false, code: "not_found", message: "Delivery job not found" };
+    }
+
+    if (job.destination === "sheets" || job.status === "cancelled_policy") {
+      return {
+        ok: false,
+        code: "not_replayable",
+        message: "Sheets destination is cancelled (152-FZ)",
+      };
+    }
+
+    if (job.status === "delivered") {
+      return {
+        ok: false,
+        code: "not_replayable",
+        message: "Job status 'delivered' cannot be replayed",
+      };
+    }
+
+    const leaseActive =
+      job.status === "leased" &&
+      job.leaseExpiresAt != null &&
+      job.leaseExpiresAt.getTime() > now.getTime();
+    if (leaseActive) {
+      return {
+        ok: false,
+        code: "active_lease",
+        message: "Job has an active worker lease; wait for expiry or completion",
+      };
+    }
+
+    const expiredLeased =
+      job.status === "leased" &&
+      job.leaseExpiresAt != null &&
+      job.leaseExpiresAt.getTime() <= now.getTime();
+
+    if (!isReplayableJobStatus(job.status) && !expiredLeased) {
+      return {
+        ok: false,
+        code: "not_replayable",
+        message: `Job status '${job.status}' cannot be replayed`,
+      };
+    }
+
+    const previousStatus = job.status;
+
+    // Atomic fence: status must still be replayable (or expired leased).
+    const updated = await tx
       .update(deliveryJobs)
       .set({
         status: "pending",
@@ -292,23 +424,49 @@ export async function replayDeliveryJob(
         lastError: null,
         updatedAt: now,
       })
-      .where(eq(deliveryJobs.id, jobId));
+      .where(
+        and(
+          eq(deliveryJobs.id, jobId),
+          or(
+            inArray(deliveryJobs.status, [...REPLAYABLE_JOB_STATUSES]),
+            and(
+              eq(deliveryJobs.status, "leased"),
+              sql`${deliveryJobs.leaseExpiresAt} IS NOT NULL`,
+              sql`${deliveryJobs.leaseExpiresAt} <= ${nowIso}::timestamptz`,
+            ),
+          ),
+        ),
+      )
+      .returning();
 
-    await tx.insert(staffLeadEvents).values({
-      submissionId: job.submissionId,
-      action: "replay_delivery",
-      actor: actor.id,
-      payload: {
-        jobId,
-        destination: job.destination,
-        fromStatus: job.status,
-        attempts: job.attempts,
-      },
-      createdAt: now,
-    });
+    if (!updated[0]) {
+      return {
+        ok: false,
+        code: "conflict",
+        message: "Job changed concurrently; refresh and retry",
+      };
+    }
+
+    // Form leads only — loyalty outbox jobs have no form submission_id.
+    if (job.submissionId) {
+      await tx.insert(staffLeadEvents).values({
+        submissionId: job.submissionId,
+        action: "replay_delivery",
+        actor: actor.id,
+        payload: {
+          jobId,
+          destination: job.destination,
+          fromStatus: previousStatus,
+          attempts: job.attempts,
+          sourceKind: job.sourceKind,
+          sourceId: job.sourceId,
+        },
+        createdAt: now,
+      });
+    }
+
+    return { ok: true, jobId, previousStatus };
   });
-
-  return { ok: true, jobId, previousStatus: job.status };
 }
 
 export function parseStaffCommandBody(

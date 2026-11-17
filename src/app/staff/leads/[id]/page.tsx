@@ -1,13 +1,9 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import { getDb } from "@/server/db/client";
-import {
-  isStaffAuthConfigured,
-  STAFF_COOKIE_NAME,
-  verifyStaffToken,
-} from "@/server/staff/auth";
 import { getStaffLeadDetail } from "@/server/staff/commands";
+import { LEADS_STAFF_ROLES } from "@/server/staff/roles";
+import { gateStaffPage } from "@/server/staff/page-gate";
 import {
   CardBody,
   CardHeading,
@@ -24,12 +20,8 @@ export default async function StaffLeadDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  if (!isStaffAuthConfigured()) {
-    redirect("/staff");
-  }
-
-  const cookieStore = await cookies();
-  if (!verifyStaffToken(cookieStore.get(STAFF_COOKIE_NAME)?.value)) {
+  const gate = await gateStaffPage(LEADS_STAFF_ROLES);
+  if (gate.status !== "ok") {
     redirect("/staff");
   }
 

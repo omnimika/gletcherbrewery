@@ -5,7 +5,8 @@ import {
   setLocationAssortmentMode,
   setLocationProductAvailability,
 } from "@/server/retail/location-assortment";
-import { requireStaffAuth } from "@/server/staff/request-auth";
+import { requireStaffAuth, requireStaffRole } from "@/server/staff/request-auth";
+import { RETAIL_STAFF_ROLES } from "@/server/staff/roles";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -15,6 +16,8 @@ type Ctx = { params: Promise<{ id: string }> };
 export async function GET(request: Request, ctx: Ctx) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, RETAIL_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
   const { id } = await ctx.params;
 
   try {
@@ -39,6 +42,8 @@ export async function GET(request: Request, ctx: Ctx) {
 export async function PATCH(request: Request, ctx: Ctx) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, RETAIL_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
   const { id } = await ctx.params;
 
   let body: unknown;
@@ -52,7 +57,6 @@ export async function PATCH(request: Request, ctx: Ctx) {
   }
 
   const actor =
-    request.headers.get("x-staff-actor")?.trim() ||
     auth.actor.id ||
     "staff";
 

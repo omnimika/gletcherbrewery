@@ -148,6 +148,17 @@ export const CHAIN_MAP_BINDINGS: readonly ChainMapBinding[] = [
     layerId: "hmel-i-solod",
     sourceTitles: ["ХМЕЛЬ И СОЛОД", "Хмель и Солод"],
   },
+  // Branded / own stores — layer locals-abroad (GeoJSON overlay until Studio)
+  {
+    title: "Gletcher Brewery",
+    layerId: "locals-abroad",
+    sourceTitles: ["Gletcher Brewery"],
+  },
+  {
+    title: "SVAM Group",
+    layerId: "locals-abroad",
+    sourceTitles: ["SVAM Group"],
+  },
   // CRM-only (no Mapbox layer yet)
   { title: "ВКУСВИЛЛ", layerId: null, sourceTitles: [] },
   { title: "ВЕРНЫЙ", layerId: null, sourceTitles: [] },

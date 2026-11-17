@@ -1,6 +1,9 @@
 import { checkEarnBircoins } from "./earn";
 import { legacyCheckImportStatus } from "./legacy-policy";
-import { spendableBalance } from "./spendable";
+import {
+  lifetimeEarnBircoins,
+  spendableBalance,
+} from "./spendable";
 
 /** Targets from docs/data/fixtures/loyalty-m2-aggregates.json (no PII). */
 export const M2_AGGREGATE_TARGETS = {
@@ -16,38 +19,47 @@ export const M2_AGGREGATE_TARGETS = {
 } as const;
 
 /**
- * Simulate legacy import policy: all checks → verified, preserve CRM Σ available.
- * Does not invent per-user history — only aggregate continuity check.
+ * Aggregate continuity smoke for an *eligible* legacy batch.
+ * Not row-level import evidence (R10/M2-4). Eligibility is required.
  */
 export function rehearseLegacyOpeningBalance(input: {
   sumAvailableAsIs: number;
   unpaidCheckEarn: number;
   paidCheckEarn: number;
+  /** Sample record id that must be in the approved set. */
+  sampleRecordId?: string;
 }): {
-  policy: "legacy_all_verified";
+  policy: "legacy_eligible_verified";
   spendableAfterImport: number;
   unpaidBecameVerified: boolean;
   matchesCrmAvailable: boolean;
+  scope: "aggregate_smoke_not_row_level";
 } {
-  const unpaid = legacyCheckImportStatus("НЕТ");
-  const paid = legacyCheckImportStatus("ДА");
-  assertVerified(unpaid.receiptStatus);
-  assertVerified(paid.receiptStatus);
+  const sampleId = input.sampleRecordId ?? "rec_eligible_sample";
+  const unpaid = legacyCheckImportStatus("НЕТ", {
+    mode: "approved_set",
+    recordIds: [sampleId],
+  }, { recordId: sampleId });
+  const paid = legacyCheckImportStatus("ДА", {
+    mode: "approved_set",
+    recordIds: [sampleId],
+  }, { recordId: sampleId });
+
+  if (unpaid.receiptStatus !== "verified" || paid.receiptStatus !== "verified") {
+    throw new Error("eligible legacy sample must verify");
+  }
 
   // Under owner policy, CRM available already includes unpaid earn → keep it.
   const spendableAfterImport = input.sumAvailableAsIs;
   return {
-    policy: "legacy_all_verified",
+    policy: "legacy_eligible_verified",
     spendableAfterImport,
     unpaidBecameVerified: true,
     matchesCrmAvailable:
       spendableAfterImport === input.sumAvailableAsIs &&
       input.unpaidCheckEarn + input.paidCheckEarn > 0,
+    scope: "aggregate_smoke_not_row_level",
   };
-}
-
-function assertVerified(status: string) {
-  if (status !== "verified") throw new Error(`expected verified, got ${status}`);
 }
 
 /** Future path: only verified earn is spendable; pending does not post ledger. */
@@ -57,4 +69,29 @@ export function rehearseFutureSpendableRule(): number {
     // pending receipt must NOT create a posted row — simulate by absence
     { entryKind: "spend", amount: -10, status: "posted" },
   ]);
+}
+
+/**
+ * R11 fixture: historical earn 9000, spend −8800 → available 200;
+ * lifetime stays 9000 (opening residual must not inflate lifetime).
+ */
+export function rehearseAvailableVsLifetimeFixture(): {
+  available: number;
+  lifetime: number;
+} {
+  const entries = [
+    { entryKind: "check_earn", amount: 9000, status: "posted" },
+    { entryKind: "spend", amount: -8800, status: "posted" },
+    // Mistaken double-path residual — must affect available only if posted,
+    // never lifetime:
+    { entryKind: "opening", amount: 200, status: "posted" },
+  ];
+  // If both full history AND opening residual were posted, available would be
+  // wrong (9000-8800+200=400). Correct import chooses ONE boundary.
+  // Demonstrate lifetime excludes opening; correct available uses history only:
+  const historyOnly = entries.filter((e) => e.entryKind !== "opening");
+  return {
+    available: spendableBalance(historyOnly),
+    lifetime: lifetimeEarnBircoins(entries),
+  };
 }

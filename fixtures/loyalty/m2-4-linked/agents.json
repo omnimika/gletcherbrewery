@@ -1,0 +1,29 @@
+{
+  "records": [
+    {
+      "id": "recAgentUnderReview",
+      "fields": {
+        "member": ["recUserAgent"],
+        "status": "На рассмотрении",
+        "phone": "+70000000001",
+        "city": "Москва",
+        "venueName": "Бар Фикстура",
+        "venueType": "bar",
+        "venueAddress": "ул. Тестовая, 1"
+      }
+    },
+    {
+      "id": "recAgentActive",
+      "fields": {
+        "member": ["recUserAgent"],
+        "status": "Действующий клиент",
+        "phone": "+70000000001",
+        "city": "Москва",
+        "venueName": "Магазин Фикстура",
+        "venueType": "shop",
+        "venueAddress": "ул. Тестовая, 2",
+        "earnAmount": 0
+      }
+    }
+  ]
+}

@@ -4,7 +4,8 @@ import {
   bulkDeleteLocations,
   bulkUpdateLocations,
 } from "@/server/retail/location-mutations";
-import { requireStaffAuth } from "@/server/staff/request-auth";
+import { requireStaffAuth, requireStaffRole } from "@/server/staff/request-auth";
+import { RETAIL_STAFF_ROLES } from "@/server/staff/roles";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,6 +13,8 @@ export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, RETAIL_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
 
   let body: unknown;
   try {
@@ -29,8 +32,7 @@ export async function POST(request: Request) {
     ? record.locationIds.filter((id): id is string => typeof id === "string")
     : [];
   const syncGeoJson = record.syncGeoJson !== false;
-  const actor =
-    request.headers.get("x-staff-actor")?.trim() || auth.actor.id || "staff";
+  const actor = auth.actor.id;
 
   if (
     action !== "delete" &&

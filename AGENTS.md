@@ -1,8 +1,8 @@
 # Gletcher Brewery — AGENTS.md
 
-> Версия: 0.15 (12 ноября 2026 г.)
+> Версия: 0.16 (16 ноября 2026 г.)
 > Назначение: единые постоянные инструкции для Cursor Agent и OpenAI Codex.  
-> Подробный план реализации: `docs/ROADMAP.md` (при размещении файла из поставки в проекте).  
+> Подробный план реализации: `docs/ROADMAP.md` (локальный; см. `docs/README.md`).  
 > **Не считать этот документ подтверждением неизвестных деталей исходной системы.**
 
 ## 1. Цель проекта
@@ -169,6 +169,26 @@
 - Не удалять старые страницы/аккаунты/таблицы и не переключать DNS без отдельного плана отката.
 - Документировать любые изменения архитектуры в `docs/adr/` как Architecture Decision Record.
 – В случае необходимости, при наличии неопределенности в дальнейших действиях, рекомендуется задавать уточняющие вопросы пользователю, предлагая варианты действий и аргументацию.
+- Локальные design skills (Impeccable, Taste, Emil Animation) и их hooks/lockfile —
+  **gitignored**; не коммитить `.agents/`, `.cursor/skills|agents|hooks`,
+  `.claude/skills|agents`, `.codex/`, `skills-lock.json`. Политика вызова:
+  `docs/design/AGENT_DESIGN_SKILLS.md`. Они не входят в DoD data-stream и не
+  перекрывают `DESIGN_SYSTEM` / Tilda baselines / текущий спринт M2.
+- Partial ignore для `docs/`: публичны `adr/`, `design/`, `backend/`,
+  `development.md`, discovery baselines; локальны ROADMAP/SPRINT/CURSOR_*,
+  `reviews/`, `archive/`, `discovery/_raw/`, loyalty/FNS inventory и brand PDF.
+  Карта: `docs/README.md`. Не коммитить локальные docs после untrack.
+
+### 6.1. Design skills — когда читать
+
+- **Не** подключать на M2 data/CRM/backend задачах по умолчанию.
+- На явной UI/motion задаче: сначала `docs/design/DESIGN_SYSTEM.md` + baseline
+  страницы; затем узкий skill (`animate` / `review-animations` / impeccable
+  critique|polish|harden). Taste — только anti-slop review, не greenfield.
+- Запрещено без запроса владельца: new-work redesign identity, смена палитры/
+  сетки, scroll-hijack, whole-UI scale, установка альтернативного UI kit.
+- CLI skills требует Node ≥22.20; для обычных npm-скриптов проекта см.
+  `docs/development.md` (`engines.node`).
 
 ## 7. Текущий порядок работ Cursor Agent
 
@@ -179,14 +199,15 @@ Public acceptance и production cutover остаются отдельными р
    Сохранять task-first `/agent/cabinet` (не `/members/lk`), agent application API/0012/schema/level.
    B1–B3 реализованы; M1 map/CRM Owner Accepted 10.11. Их не повторять.
 2. M2-0 inventory/policies и M2-1 ledger/QR/OCR/manual/auth spike реализованы.
-   **Row-level migration и full restore ещё Open**; ADR0011 Proposed.
-3. **M2-2 сейчас:** вернуть lint/tsc PASS; worker recovery/fencing, узкие роли,
-   magic-link atomic consume/debug guard, receipt verdict+ledger+audit,
-   CRM concurrency/replay. Точные R01–R12 и evidence:
+   **ADR0011 Accepted 17.11** (CSV snapshot + reconcile 212338; orphan −5823 ок).
+   Production cutover / writer freeze / DNS остаются Open.
+3. **M2-2 Done 16.11:** R01–R07 + quality baseline + public boundary. R01–R12:
    `docs/reviews/2026-11-12-agent-crm-and-migration.md`.
-4. **M2-3:** agent application → staff queue/audit → member result; private
-   receipt photo → decision → ledger → кабинет. Потом **M2-4**: persisted
-   importer/reconciliation/restore. Manifest/fixtures готовить уже параллельно.
+4. **M2-3 Done 16.11** + Pre-M2-4 tails. **M2-4 foundation Done 16.11**;
+   **protected CSV batch Done 17.11** (`tmp/Airtable`, `Чеки-xls.csv`,
+   cutoff=today, reconcile available/lifetime **212338** PASS).
+   **M2-5.1 Done 17.11** (ADR0012 Accepted); **M2-5.2 Done 17.11**
+   (health + `/staff/ops` queue); далее Object Storage → Postbox → cutover.
 5. `/agent/cabinet` — canonical RU кабинет; `/members/lk` только 301 → cabinet; `/agent/login` для входа.
    Postbox/GTIN/shop отложены; не обещать email delivery/referral earn без backend.
 6. PostgreSQL source of truth; NocoDB read-only. Изменения бизнес-данных —
@@ -207,7 +228,8 @@ Public acceptance и production cutover остаются отдельными р
 - `docs/discovery/FNS_OPEN_API_APPLICATION_DRAFT.md` — черновик параллельной заявки ФНС.
 - `docs/discovery/RECEIPT_FNS_PROVIDER_RESEARCH.md` — справочно (платные отклонены).
 - `docs/discovery/LOYALTY_OWNER_QUESTIONS.md` — ответы владельца.
-- `docs/adr/0011-loyalty-ledger.md` — Proposed ledger + opening-balance / spendable policy.
+- `docs/adr/0011-loyalty-ledger.md` — **Accepted** ledger + opening-balance / spendable policy (17.11).
+- `docs/adr/0012-staff-auth-and-rbac.md` — **Accepted** staff users/sessions/roles (M2-5.1, 17.11).
 - `docs/backend/FORMS_DATA_PIPELINE.md` — intake/CRM/Telegram, consistency/retry/PII; lead Sheets Cancelled.
 - `docs/backend/AGENT_CRM_WORKFLOWS.md` — member↔staff сценарии чеков/agent applications.
 - `docs/data/LOYALTY_MIGRATION_PLAN.md` — row-level import, reconciliation, full restore.
@@ -219,6 +241,7 @@ Public acceptance и production cutover остаются отдельными р
 - `docs/adr/0001-i18n-routing-and-content.md` — маршрутизация и модель контента для `ru`/`en`/`sr`/`hy`/`ka`/`de`.
 - `docs/CURSOR_NEXT_STEPS.md` — актуальное задание Cursor с критериями приёмки; обновлять после подтверждённых изменений.
 - `docs/design/DESIGN_SYSTEM.md` — дизайн-код, containers/grids, anchors/scroll, UI/state/motion и DoD.
+- `docs/design/AGENT_DESIGN_SKILLS.md` — локальные Impeccable/Taste/Animation skills: ignore, reinstall, precedence.
 - `docs/adr/0010-design-system-and-section-layout.md` — архитектура дизайн-системы и границы rollout.
 - `docs/reviews/2026-11-09-data-and-forms.md` — историческое ревью 2095221, начало data/forms потока.
 - `docs/reviews/2026-11-05-public-integrity.md` — историческое ревью d6011d2 и Q1–Q3 outcomes.

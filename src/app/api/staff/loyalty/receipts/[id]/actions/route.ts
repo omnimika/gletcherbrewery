@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/server/db/client";
 import { approveReceipt, rejectReceipt } from "@/server/loyalty/receipts";
-import { requireStaffAuth } from "@/server/staff/request-auth";
+import { requireStaffAuth, requireStaffRole } from "@/server/staff/request-auth";
+import { LOYALTY_STAFF_ROLES } from "@/server/staff/roles";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,6 +12,8 @@ type RouteParams = { params: Promise<{ id: string }> };
 export async function POST(request: Request, { params }: RouteParams) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, LOYALTY_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
 
   const { id } = await params;
   if (!id || !/^[0-9a-f-]{36}$/i.test(id)) {
@@ -42,7 +45,12 @@ export async function POST(request: Request, { params }: RouteParams) {
         note,
       });
       if (!result.ok) {
-        const status = result.code === "not_found" ? 404 : 400;
+        const status =
+          result.code === "not_found"
+            ? 404
+            : result.code === "conflict"
+              ? 409
+              : 400;
         return NextResponse.json(
           { ok: false, code: result.code },
           { status },
@@ -61,13 +69,22 @@ export async function POST(request: Request, { params }: RouteParams) {
         note,
       });
       if (!result.ok) {
-        const status = result.code === "not_found" ? 404 : 400;
+        const status =
+          result.code === "not_found"
+            ? 404
+            : result.code === "conflict" || result.code === "already_verified"
+              ? 409
+              : 400;
         return NextResponse.json(
           { ok: false, code: result.code },
           { status },
         );
       }
-      return NextResponse.json({ ok: true, receipt: result.receipt });
+      return NextResponse.json({
+        ok: true,
+        receipt: result.receipt,
+        already: result.already ?? false,
+      });
     }
     return NextResponse.json(
       { ok: false, code: "invalid_action", message: "approve|reject" },

@@ -25,7 +25,7 @@ export async function upsertMemberByEmail(
     .limit(1);
   if (existing[0]) return existing[0];
 
-  const [row] = await db
+  const inserted = await db
     .insert(loyaltyMembers)
     .values({
       emailNormalized,
@@ -34,6 +34,17 @@ export async function upsertMemberByEmail(
       city: input.city ?? null,
       airtableRecordId: input.airtableRecordId ?? null,
     })
+    .onConflictDoNothing({ target: loyaltyMembers.emailNormalized })
     .returning();
-  return row!;
+  if (inserted[0]) return inserted[0];
+
+  const again = await db
+    .select()
+    .from(loyaltyMembers)
+    .where(eq(loyaltyMembers.emailNormalized, emailNormalized))
+    .limit(1);
+  if (!again[0]) {
+    throw new Error("member_upsert_failed");
+  }
+  return again[0];
 }

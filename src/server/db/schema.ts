@@ -64,13 +64,19 @@ export const submissionConsents = appSchema.table(
   (t) => [index("submission_consents_submission_idx").on(t.submissionId)],
 );
 
+/**
+ * Outbox jobs. Forms: source_kind=form_submission, submission_id=source_id.
+ * Loyalty cabinet: submission_id NULL; source_kind receipt|agent_application.
+ */
 export const deliveryJobs = appSchema.table(
   "delivery_jobs",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    submissionId: uuid("submission_id")
-      .notNull()
-      .references(() => formSubmissions.id, { onDelete: "cascade" }),
+    submissionId: uuid("submission_id").references(() => formSubmissions.id, {
+      onDelete: "cascade",
+    }),
+    sourceKind: text("source_kind").notNull().default("form_submission"),
+    sourceId: uuid("source_id").notNull(),
     destination: text("destination").notNull(),
     eventType: text("event_type").notNull().default("submission_accepted"),
     schemaVersion: text("schema_version").notNull().default("1"),
@@ -93,7 +99,8 @@ export const deliveryJobs = appSchema.table(
   },
   (t) => [
     uniqueIndex("delivery_jobs_unique_uidx").on(
-      t.submissionId,
+      t.sourceKind,
+      t.sourceId,
       t.destination,
       t.eventType,
       t.schemaVersion,
@@ -405,6 +412,8 @@ export const loyaltyReceipts = appSchema.table(
     status: text("status").notNull().default("pending_upload"),
     source: text("source").notNull(),
     photoObjectKey: text("photo_object_key"),
+    /** External legacy image URL (Airtable/Tilda `check`) until Object Storage. */
+    legacyPhotoUrl: text("legacy_photo_url"),
     qrPayload: text("qr_payload"),
     fiscalFn: text("fiscal_fn"),
     fiscalFd: text("fiscal_fd"),
@@ -496,7 +505,7 @@ export const productReceiptAliases = appSchema.table(
 
 /**
  * «Стать агентом» — mirrors Make mod 50 → Airtable Агенты writes.
- * status values: under_review | approved | rejected | … (staff may extend).
+ * Nine Airtable statuses (snake_case). See AGENT_APP_STATUSES.
  */
 export const loyaltyAgentApplications = appSchema.table(
   "loyalty_agent_applications",
@@ -513,6 +522,10 @@ export const loyaltyAgentApplications = appSchema.table(
     venueAddress: text("venue_address").notNull(),
     venueBoss: text("venue_boss"),
     comment: text("comment"),
+    /** Idempotent create key (member + normalized payload hash). */
+    intentKey: text("intent_key").notNull(),
+    /** Staff→member note (safe to show in cabinet). */
+    publicNote: text("public_note"),
     legacyOrderId: text("legacy_order_id"),
     airtableAgentId: text("airtable_agent_id"),
     reviewedBy: text("reviewed_by"),
@@ -524,8 +537,159 @@ export const loyaltyAgentApplications = appSchema.table(
   },
   (t) => [
     uniqueIndex("loyalty_agent_applications_airtable_uidx").on(t.airtableAgentId),
+    uniqueIndex("loyalty_agent_applications_member_intent_uidx").on(
+      t.memberId,
+      t.intentKey,
+    ),
     index("loyalty_agent_applications_member_idx").on(t.memberId, t.createdAt),
     index("loyalty_agent_applications_status_idx").on(t.status, t.createdAt),
+  ],
+);
+
+/** Append-only staff audit for agent application transitions. */
+export const loyaltyAgentApplicationEvents = appSchema.table(
+  "loyalty_agent_application_events",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    applicationId: uuid("application_id")
+      .notNull()
+      .references(() => loyaltyAgentApplications.id, { onDelete: "cascade" }),
+    action: text("action").notNull(),
+    actor: text("actor").notNull(),
+    payload: jsonb("payload").notNull().$type<Record<string, unknown>>(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    index("loyalty_agent_application_events_app_idx").on(
+      t.applicationId,
+      t.createdAt,
+    ),
+  ],
+);
+
+/** M2-4 loyalty Airtable import batches (staging → apply). */
+export const loyaltyImportBatches = appSchema.table(
+  "loyalty_import_batches",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    sourceLabel: text("source_label").notNull(),
+    checksum: text("checksum").notNull(),
+    policyVersion: text("policy_version").notNull(),
+    mappingVersion: text("mapping_version").notNull(),
+    status: text("status").notNull().default("loaded"),
+    manifest: jsonb("manifest").notNull().$type<Record<string, unknown>>().default({}),
+    report: jsonb("report").notNull().$type<Record<string, unknown>>().default({}),
+    rowCount: integer("row_count").notNull().default(0),
+    quarantineCount: integer("quarantine_count").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex("loyalty_import_batches_checksum_uidx").on(
+      t.checksum,
+      t.sourceLabel,
+    ),
+  ],
+);
+
+export const loyaltyStagingRows = appSchema.table(
+  "loyalty_staging_rows",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    batchId: uuid("batch_id")
+      .notNull()
+      .references(() => loyaltyImportBatches.id, { onDelete: "cascade" }),
+    sourceTableId: text("source_table_id").notNull(),
+    sourceRecordId: text("source_record_id").notNull(),
+    sourceFile: text("source_file").notNull(),
+    rawJson: jsonb("raw_json").notNull().$type<Record<string, unknown>>(),
+    parseStatus: text("parse_status").notNull().default("ok"),
+    anomalyCodes: text("anomaly_codes").array().notNull().default([]),
+    quarantineReason: text("quarantine_reason"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("loyalty_staging_rows_source_uidx").on(
+      t.batchId,
+      t.sourceTableId,
+      t.sourceRecordId,
+    ),
+    index("loyalty_staging_rows_batch_idx").on(t.batchId),
+    index("loyalty_staging_rows_table_idx").on(t.batchId, t.sourceTableId),
+  ],
+);
+
+export const loyaltyImportIdentityMap = appSchema.table(
+  "loyalty_import_identity_map",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    batchId: uuid("batch_id")
+      .notNull()
+      .references(() => loyaltyImportBatches.id, { onDelete: "cascade" }),
+    sourceSystem: text("source_system").notNull().default("airtable"),
+    tableId: text("table_id").notNull(),
+    recordId: text("record_id").notNull(),
+    entityKind: text("entity_kind").notNull(),
+    targetUuid: uuid("target_uuid").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("loyalty_import_identity_source_uidx").on(
+      t.sourceSystem,
+      t.tableId,
+      t.recordId,
+    ),
+    index("loyalty_import_identity_batch_idx").on(t.batchId),
+    index("loyalty_import_identity_target_idx").on(t.targetUuid),
+  ],
+);
+
+/** M2-5 staff allowlist + roles (server-side identity). */
+export const staffUsers = appSchema.table(
+  "staff_users",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    email: text("email").notNull(),
+    displayName: text("display_name"),
+    role: text("role").notNull(),
+    active: boolean("active").notNull().default(true),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [uniqueIndex("staff_users_email_uidx").on(t.email)],
+);
+
+/** Opaque staff browser/API sessions (sha256 of cookie/Bearer). */
+export const staffSessions = appSchema.table(
+  "staff_sessions",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => staffUsers.id, { onDelete: "cascade" }),
+    tokenHash: text("token_hash").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+    lastSeenAt: timestamp("last_seen_at", { withTimezone: true }),
+  },
+  (t) => [
+    uniqueIndex("staff_sessions_token_hash_uidx").on(t.tokenHash),
+    index("staff_sessions_user_idx").on(t.userId, t.expiresAt),
   ],
 );
 

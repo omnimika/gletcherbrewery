@@ -102,9 +102,12 @@ export type MapCopy = {
   /** Hero line 2 (light blue accent). */
   heroAccent: string;
   filterTitle: string;
+  brandedFilterTitle: string;
   chainFilterTitle: string;
   beerFilterTitle: string;
   clearFiltersLabel: string;
+  /** Mobile sheet dismiss control. */
+  closeSheetLabel: string;
   geocoderPlaceholder: string;
   fullscreenLabel: string;
   geolocateLabel: string;
@@ -129,9 +132,11 @@ const RU: MapCopy = {
   heroLead: "Нашу продукцию можно приобрести в большинстве розничных сетей.",
   heroAccent: "Найдите ближайший к вам магазин и попробуйте наше пиво!",
   filterTitle: "Фильтры карты",
+  brandedFilterTitle: "Фирменные магазины",
   chainFilterTitle: "Сети",
   beerFilterTitle: "Сорта",
   clearFiltersLabel: "Сбросить",
+  closeSheetLabel: "Закрыть",
   geocoderPlaceholder: "Ввести адрес...",
   fullscreenLabel: "На весь экран",
   geolocateLabel: "Моё местоположение",
@@ -163,9 +168,11 @@ const EN: MapCopy = {
   heroLead: "Our products can be purchased at most retail chains IN RUSSIA.",
   heroAccent: "Find the store closest to you and try our beer!",
   filterTitle: "Map filters",
+  brandedFilterTitle: "Brand stores",
   chainFilterTitle: "Chains",
   beerFilterTitle: "Beers",
   clearFiltersLabel: "Clear",
+  closeSheetLabel: "Close",
   geocoderPlaceholder: "Enter an address...",
   fullscreenLabel: "Fullscreen",
   geolocateLabel: "My location",

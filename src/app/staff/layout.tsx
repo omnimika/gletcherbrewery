@@ -2,13 +2,9 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { cookies } from "next/headers";
 import { Container } from "@/components/layout/container";
-import {
-  isStaffAuthConfigured,
-  STAFF_COOKIE_NAME,
-  verifyStaffToken,
-} from "@/server/staff/auth";
+import { isStaffAuthConfigured } from "@/server/staff/auth";
+import { getStaffPageSession } from "@/server/staff/request-auth";
 import { LogoutButton } from "./logout-button";
 import { StaffNav } from "./staff-nav";
 import "../globals.css";
@@ -24,10 +20,8 @@ export default async function StaffLayout({
 }: {
   children: ReactNode;
 }) {
-  const cookieStore = await cookies();
-  const authed =
-    isStaffAuthConfigured() &&
-    verifyStaffToken(cookieStore.get(STAFF_COOKIE_NAME)?.value);
+  const session =
+    isStaffAuthConfigured() ? await getStaffPageSession() : null;
 
   return (
     <html lang="ru">
@@ -51,10 +45,15 @@ export default async function StaffLayout({
                 Staff
               </span>
             </Link>
-            {authed ? (
+            {session ? (
               <>
                 <StaffNav />
-                <div className="ml-auto shrink-0">
+                <div className="ml-auto flex shrink-0 items-center gap-3">
+                  <p className="type-caption hidden text-gletcher-navy/60 sm:block">
+                    {session.email}
+                    <span className="mx-1 text-gletcher-navy/30">·</span>
+                    {session.role}
+                  </p>
                   <LogoutButton />
                 </div>
               </>

@@ -13,6 +13,7 @@ import {
 import { type PublishedLocale, isPublishedLocale } from "@/i18n/locales";
 import { routing } from "@/i18n/routing";
 import { getDb } from "@/server/db/client";
+import { loadBrandedMapStorePoints } from "@/server/retail/branded-map-stores";
 import { loadPublicMapAssortment } from "@/server/retail/public-map-chains";
 
 type PageProps = {
@@ -56,7 +57,10 @@ export default async function MapPage({ params }: PageProps) {
   } catch {
     db = null;
   }
-  const publicAssortment = await loadPublicMapAssortment(db);
+  const [publicAssortment, brandedStorePoints] = await Promise.all([
+    loadPublicMapAssortment(db),
+    loadBrandedMapStorePoints(db),
+  ]);
 
   return (
     <SiteShell
@@ -70,6 +74,7 @@ export default async function MapPage({ params }: PageProps) {
         accessToken={accessToken}
         chainTitlesWithAssortment={publicAssortment.chainTitles}
         beersByChain={publicAssortment.beersByChain}
+        brandedStorePoints={brandedStorePoints}
       />
     </SiteShell>
   );

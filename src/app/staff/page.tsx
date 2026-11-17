@@ -1,16 +1,18 @@
-import { cookies } from "next/headers";
 import Link from "next/link";
+import { StaffListToolbar } from "@/components/staff/list-toolbar";
 import { getDb } from "@/server/db/client";
-import {
-  isStaffAuthConfigured,
-  STAFF_COOKIE_NAME,
-  verifyStaffToken,
-} from "@/server/staff/auth";
+import { parseStaffSort } from "@/lib/staff-sort";
+import { isStaffAuthConfigured } from "@/server/staff/auth";
 import {
   WORKFLOW_STATUS_LABELS_RU,
   type WorkflowStatus,
 } from "@/server/staff/contracts";
-import { listStaffLeads } from "@/server/staff/commands";
+import {
+  listStaffLeads,
+  STAFF_LEAD_SORT_FIELDS,
+} from "@/server/staff/commands";
+import { getStaffPageSession } from "@/server/staff/request-auth";
+import { LEADS_STAFF_ROLES, roleAllows } from "@/server/staff/roles";
 import { Banner } from "@/components/ui/card";
 import { EmptyState, FormStatus } from "@/components/ui/feedback";
 import { StaffLoginForm } from "./staff-login-form";
@@ -18,10 +20,20 @@ import { WorkflowBadge } from "./workflow-badge";
 
 export const dynamic = "force-dynamic";
 
+const LEAD_SORT_OPTIONS = [
+  { key: "createdAt", label: "Дата" },
+  { key: "updatedAt", label: "Обновлено" },
+] as const;
+
 export default async function StaffHomePage({
   searchParams,
 }: {
-  searchParams: Promise<{ workflowStatus?: string }>;
+  searchParams: Promise<{
+    workflowStatus?: string;
+    page?: string;
+    sort?: string;
+    dir?: string;
+  }>;
 }) {
   if (!isStaffAuthConfigured()) {
     return (
@@ -40,10 +52,22 @@ export default async function StaffHomePage({
     );
   }
 
-  const cookieStore = await cookies();
-  const token = cookieStore.get(STAFF_COOKIE_NAME)?.value;
-  if (!verifyStaffToken(token)) {
+  const session = await getStaffPageSession();
+  if (!session) {
     return <StaffLoginForm />;
+  }
+  if (!roleAllows(session.role, LEADS_STAFF_ROLES)) {
+    return (
+      <Banner tone="frost" className="border-gletcher-action/40">
+        <p className="font-display text-lg uppercase tracking-wide text-gletcher-action">
+          Недостаточно прав
+        </p>
+        <p className="type-body-small mt-2 text-gletcher-navy/80">
+          Роль <code className="rounded bg-gletcher-white/80 px-1.5 py-0.5 text-xs">{session.role}</code>{" "}
+          не открывает leads CRM. Нужны admin или loyalty_manager.
+        </p>
+      </Banner>
+    );
   }
 
   const params = await searchParams;
@@ -54,14 +78,37 @@ export default async function StaffHomePage({
     )
       ? (params.workflowStatus as WorkflowStatus)
       : undefined;
+  const { sort, dir } = parseStaffSort(
+    params,
+    STAFF_LEAD_SORT_FIELDS,
+    "createdAt",
+    "desc",
+  );
 
-  let leads: Awaited<ReturnType<typeof listStaffLeads>> = [];
+  let pageResult: Awaited<ReturnType<typeof listStaffLeads>> | null = null;
   let error: string | null = null;
   try {
-    leads = await listStaffLeads(getDb(), { workflowStatus, limit: 100 });
+    pageResult = await listStaffLeads(getDb(), {
+      workflowStatus,
+      page: params.page,
+      pageSize: 50,
+      sort,
+      dir,
+    });
   } catch {
     error = "База недоступна — проверьте embedded PostgreSQL.";
   }
+
+  const leads = pageResult?.rows ?? [];
+  const filterQs = [
+    workflowStatus ? `workflowStatus=${workflowStatus}` : null,
+    `sort=${sort}`,
+    `dir=${dir}`,
+  ]
+    .filter(Boolean)
+    .join("&");
+  const qsPrefix = filterQs ? `${filterQs}&` : "";
+  const statusBaseQs = `sort=${sort}&dir=${dir}`;
 
   return (
     <div className="space-y-[var(--grid-gap)]">
@@ -73,12 +120,16 @@ export default async function StaffHomePage({
         className="flex flex-wrap gap-2"
         aria-label="Фильтр по статусу workflow"
       >
-        <FilterChip href="/staff" active={!workflowStatus} label="Все" />
+        <FilterChip
+          href={`/staff?${statusBaseQs}`}
+          active={!workflowStatus}
+          label="Все"
+        />
         {(Object.keys(WORKFLOW_STATUS_LABELS_RU) as WorkflowStatus[]).map(
           (s) => (
             <FilterChip
               key={s}
-              href={`/staff?workflowStatus=${s}`}
+              href={`/staff?workflowStatus=${s}&${statusBaseQs}`}
               active={workflowStatus === s}
               label={WORKFLOW_STATUS_LABELS_RU[s]}
             />
@@ -92,6 +143,28 @@ export default async function StaffHomePage({
         </FormStatus>
       ) : null}
 
+      {!error && pageResult ? (
+        <StaffListToolbar
+          options={LEAD_SORT_OPTIONS}
+          sort={sort}
+          dir={dir}
+          buildSortHref={(s, d) =>
+            `/staff?${[
+              workflowStatus ? `workflowStatus=${workflowStatus}` : null,
+              `sort=${s}`,
+              `dir=${d}`,
+            ]
+              .filter(Boolean)
+              .join("&")}`
+          }
+          page={pageResult.page}
+          totalPages={pageResult.totalPages}
+          total={pageResult.total}
+          pageSize={pageResult.pageSize}
+          buildPageHref={(p) => `/staff?${qsPrefix}page=${p}`}
+        />
+      ) : null}
+
       {!error && leads.length === 0 ? (
         <EmptyState
           title="Нет заявок"
@@ -101,7 +174,6 @@ export default async function StaffHomePage({
 
       {leads.length > 0 ? (
         <>
-          {/* Mobile: stacked cards */}
           <ul className="grid gap-3 md:hidden">
             {leads.map((lead) => (
               <li key={lead.submissionId}>
@@ -138,7 +210,6 @@ export default async function StaffHomePage({
             ))}
           </ul>
 
-          {/* Desktop: dense table */}
           <div className="hidden overflow-x-auto rounded-[var(--radius-card)] border border-gletcher-navy bg-gletcher-white md:block">
             <table className="min-w-full text-left text-sm">
               <thead className="border-b border-gletcher-navy/15 bg-gletcher-frost/60">

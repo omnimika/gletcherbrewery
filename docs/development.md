@@ -18,6 +18,11 @@ RU без префикса, EN под `/en`. Non-prod DB: [B1_RUNBOOK](backend/B
 проверки12.11 выполнены установленным Node 22.23.4. Перед npm-командами активировать
 совместимую установленную версию; это не повод обновлять зависимости проекта.
 
+Опциональные локальные design skills (Impeccable / Taste / Emil Animation)
+требуют отдельный Node ≥22.20 для `npx skills`; каталоги gitignored.
+Политика: [AGENT_DESIGN_SKILLS](design/AGENT_DESIGN_SKILLS.md). Не смешивать
+их установку с обязательным DoD data-stream спринтов.
+
 ```sh
 npm ci
 npm run db:embedded   # terminal 1 — PostgreSQL + migrate (port 54329)
@@ -44,8 +49,10 @@ npm run build
 `npm run typecheck` запускает `tsc --noEmit`; при строгом read-only ревью
 добавлять `--incremental false`. Integration tests пишут в DATABASE_URL:
 использовать отдельную synthetic test DB, не production или существующую
-локальную базу с пользовательскими данными. `db:restore-check` пока B1-only,
-не доказательство восстановления всей схемы; см. M2 migration plan.
+локальную базу с пользовательскими данными. `db:restore-check` покрывает
+текущий `app.*` schema (loyalty/retail/outbox) и гасит restored delivery jobs;
+private files — отдельно; synthetic loyalty import —
+`npm run loyalty:import-rehearsal` (M2-4 foundation); production snapshot — Open.
 Production-сервер локально:
 
 ```sh

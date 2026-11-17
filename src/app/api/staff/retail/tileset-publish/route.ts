@@ -4,7 +4,8 @@ import {
   listRecentTilesetPublishRuns,
   runTilesetPublish,
 } from "@/server/retail/tileset-publish";
-import { requireStaffAuth } from "@/server/staff/request-auth";
+import { requireStaffAuth, requireStaffRole } from "@/server/staff/request-auth";
+import { RETAIL_STAFF_ROLES } from "@/server/staff/roles";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,6 +13,8 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, RETAIL_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
 
   try {
     const runs = await listRecentTilesetPublishRuns(getDb(), 8);
@@ -29,6 +32,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const auth = await requireStaffAuth(request);
   if (!auth.ok) return auth.response;
+  const roleGate = requireStaffRole(auth, RETAIL_STAFF_ROLES);
+  if (roleGate) return roleGate.response;
 
   let body: unknown = {};
   try {

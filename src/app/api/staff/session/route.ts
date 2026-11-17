@@ -1,15 +1,23 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { getDb } from "@/server/db/client";
 import {
   isStaffAuthConfigured,
   STAFF_COOKIE_NAME,
   staffMisconfiguredResponse,
-  verifyStaffToken,
+  verifyStaffBootstrapToken,
 } from "@/server/staff/auth";
+import {
+  createStaffSession,
+  revokeStaffSession,
+} from "@/server/staff/sessions";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/** Exchange STAFF_API_TOKEN for an httpOnly session cookie (local staff UI). */
+/**
+ * Login: email (allowlist) + STAFF_API_TOKEN bootstrap → opaque session cookie.
+ */
 export async function POST(request: Request) {
   if (!isStaffAuthConfigured()) {
     return staffMisconfiguredResponse();
@@ -25,22 +33,44 @@ export async function POST(request: Request) {
     );
   }
 
+  const email =
+    body && typeof body === "object" && "email" in body
+      ? String((body as { email?: unknown }).email ?? "")
+      : "";
   const token =
     body && typeof body === "object" && "token" in body
       ? String((body as { token?: unknown }).token ?? "")
       : "";
 
-  if (!verifyStaffToken(token)) {
+  if (!verifyStaffBootstrapToken(token)) {
     return NextResponse.json(
       { ok: false, code: "unauthorized", message: "Invalid token" },
       { status: 401 },
     );
   }
 
-  const res = NextResponse.json({ ok: true });
+  const created = await createStaffSession(getDb(), { email });
+  if (!created.ok) {
+    const message =
+      created.code === "inactive"
+        ? "Staff user inactive"
+        : created.code === "invalid_role"
+          ? "Staff user role invalid"
+          : "Unknown staff email";
+    return NextResponse.json(
+      { ok: false, code: created.code, message },
+      { status: 401 },
+    );
+  }
+
+  const res = NextResponse.json({
+    ok: true,
+    email: created.actor.email,
+    role: created.actor.role,
+  });
   res.cookies.set({
     name: STAFF_COOKIE_NAME,
-    value: token,
+    value: created.rawToken,
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -51,6 +81,13 @@ export async function POST(request: Request) {
 }
 
 export async function DELETE() {
+  const cookieStore = await cookies();
+  const raw = cookieStore.get(STAFF_COOKIE_NAME)?.value ?? null;
+  try {
+    await revokeStaffSession(getDb(), raw);
+  } catch {
+    /* still clear cookie */
+  }
   const res = NextResponse.json({ ok: true });
   res.cookies.set({
     name: STAFF_COOKIE_NAME,

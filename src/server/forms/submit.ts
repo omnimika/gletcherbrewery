@@ -128,6 +128,8 @@ export async function submitForm(
       await tx.insert(deliveryJobs).values(
         DELIVERY_DESTINATIONS.map((destination) => ({
           submissionId: submission.id,
+          sourceKind: "form_submission",
+          sourceId: submission.id,
           destination,
           eventType: "submission_accepted",
           schemaVersion: "1",
